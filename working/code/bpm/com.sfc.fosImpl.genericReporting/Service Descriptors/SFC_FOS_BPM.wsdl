@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:ns1="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:ns10="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema3.xsd" xmlns:ns11="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd" xmlns:ns2="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema2.xsd" xmlns:ns3="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns4="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" xmlns:ns5="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema1.xsd" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:ns7="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:ns8="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:ns9="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema2.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://xmlns.example.com/1512642084073" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1512642084073" tibex:src="file:/C:/Users/ideshpan/Downloads/SFC_FOS_BPM.wsdl">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="response" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema3.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema3.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="request">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="email" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="orgModelName" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="flag" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="entity" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd">
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="entity" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="flag" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="ormodelName" type="xs:string"/>
+            <xs:element name="outputString" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns11:firstName"/>
+                        <xs:element ref="ns11:lastName"/>
+                        <xs:element ref="ns11:email"/>
+                        <xs:element ref="ns11:password"/>
+                        <xs:element ref="ns11:ormodelName"/>
+                        <xs:element ref="ns11:flag"/>
+                        <xs:element ref="ns11:entity"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns11:outputString"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns11:request"/>
+                        <xs:element ref="ns11:response"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd">
+            <xs:simpleType name="processname">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:element name="Fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="faultMessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="processname" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:pi_complete"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:pi_started"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:pi_halted"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:pi_cancelled"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pi_cancelled">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process_instance" type="xs:string"/>
+                        <xs:element name="customer_name" type="xs:string"/>
+                        <xs:element name="sibelcircuitId" type="xs:string"/>
+                        <xs:element name="project_manager" type="xs:string"/>
+                        <xs:element name="cur_activity" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="exec_mills" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pi_complete">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process_instance" type="xs:string"/>
+                        <xs:element name="customer_name" type="xs:string"/>
+                        <xs:element name="sibelcircuitId" type="xs:string"/>
+                        <xs:element name="project_manager" type="xs:string"/>
+                        <xs:element name="cur_activity" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="exec_mills" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pi_halted">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process_instance" type="xs:string"/>
+                        <xs:element name="customer_name" type="xs:string"/>
+                        <xs:element name="sibelcircuitId" type="xs:string"/>
+                        <xs:element name="project_manager" type="xs:string"/>
+                        <xs:element name="cur_activity" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="exec_mills" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="pi_started">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process_instance" type="xs:string"/>
+                        <xs:element name="customer_name" type="xs:string"/>
+                        <xs:element name="sibelcircuitId" type="xs:string"/>
+                        <xs:element name="project_manager" type="xs:string"/>
+                        <xs:element name="cur_activity" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="exec_mills" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns3:Request"/>
+                        <xs:element ref="ns3:Response"/>
+                        <xs:element ref="ns3:Fault"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema1.xsd">
+            <xs:element name="faultMessage" type="xs:string"/>
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns5:faultMessage"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd">
+            <xs:element name="Details">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" ref="ns4:Request"/>
+                        <xs:element ref="ns4:Response"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GrpName" type="xs:string"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="OrgName" type="xs:string"/>
+            <xs:element name="Request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" ref="ns4:Name"/>
+                        <xs:element minOccurs="0" ref="ns4:OrgName"/>
+                        <xs:element minOccurs="0" ref="ns4:flag"/>
+                        <xs:element minOccurs="0" ref="ns4:entityname"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Response" type="xs:string"/>
+            <xs:element name="entityname" type="xs:string"/>
+            <xs:element name="flag" type="xs:string"/>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2">
+            <xs:element name="Fault" type="xs:string"/>
+            <xs:element name="Request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="xs:string"/>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="Record">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="sibelcircuitId" type="xs:string"/>
+                                    <xs:element name="project_manager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns6:Request"/>
+                        <xs:element ref="ns6:Response"/>
+                        <xs:element ref="ns6:Fault"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="SibelCircuitid" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema2.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema2.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="faultMsg" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema2.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema2.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="faultmsg" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd">
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="resources">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="guid" type="xs:string"/>
+                                    <xs:element name="label" type="xs:string"/>
+                                    <xs:element name="name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="FOSBPMInterface">
+        <wsdl:port binding="tns:PortTypeEndpoint2Binding" name="PortTypeEndpoint2">
+            <soap:address location="http://localhost:7020/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="getResources">
+            <wsdl:input message="tns:FetchResourceinput"/>
+            <wsdl:output message="tns:FetchResourceoutput"/>
+            <wsdl:fault message="tns:FetchResourcefault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessInstances">
+            <wsdl:input message="tns:getProcessInstancesInput"/>
+            <wsdl:output message="tns:getProcessInstancesOutput"/>
+            <wsdl:fault message="tns:getProcessInstancesFault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResourceCreation">
+            <wsdl:input message="tns:ResorceCreationiput"/>
+            <wsdl:output message="tns:ResorceCreationoutput"/>
+            <wsdl:fault message="tns:ResorceCreationfault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="seachProcessInstances">
+            <wsdl:input message="tns:seachProcessInstancesInput"/>
+            <wsdl:output message="tns:seachProcessInstancesOutput"/>
+            <wsdl:fault message="tns:seachProcessInstancesFault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="WorkCompletion">
+            <wsdl:input message="tns:WorkCompletioninput"/>
+            <wsdl:output message="tns:WorkCompletionoutput"/>
+            <wsdl:fault message="tns:WorkCompletionfault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="Onboarding">
+            <wsdl:input message="tns:Onbordinginput"/>
+            <wsdl:output message="tns:Onbordingoutput"/>
+            <wsdl:fault message="tns:Onbordingfault" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint2Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getResources">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/getResources" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessInstances">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/getProcessInstances" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ResourceCreation">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/ResourceCreation" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="seachProcessInstances">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/seachProcessInstances" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="WorkCompletion">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/WorkCompletion" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="Onboarding">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/TEMPSERVICE/fetchResources-service2.serviceagent/PortTypeEndpoint2/Onboarding" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="FetchResourceinput">
+        <wsdl:part element="ns0:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="FetchResourceoutput">
+        <wsdl:part element="ns1:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="FetchResourcefault">
+        <wsdl:part element="ns2:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesInput">
+        <wsdl:part element="ns3:Request" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesOutput">
+        <wsdl:part element="ns3:Response" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesFault">
+        <wsdl:part element="ns3:Fault" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ResorceCreationiput">
+        <wsdl:part element="ns4:Request" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ResorceCreationoutput">
+        <wsdl:part element="ns4:Response" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ResorceCreationfault">
+        <wsdl:part element="ns5:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesInput">
+        <wsdl:part element="ns6:Request" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesOutput">
+        <wsdl:part element="ns6:Response" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesFault">
+        <wsdl:part element="ns6:Fault" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletioninput">
+        <wsdl:part element="ns7:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletionoutput">
+        <wsdl:part element="ns8:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletionfault">
+        <wsdl:part element="ns9:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordinginput">
+        <wsdl:part element="ns10:root" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordingoutput">
+        <wsdl:part element="ns11:response" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordingfault">
+        <wsdl:part element="ns5:root" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

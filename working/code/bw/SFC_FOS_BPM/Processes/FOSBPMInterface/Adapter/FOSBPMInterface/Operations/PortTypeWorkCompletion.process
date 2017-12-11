@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:ns1="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema1.xsd">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeWorkCompletion.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:WorkCompletioninput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>65</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:WorkCompletionoutput>
+            <part1>
+                <ns1:root>
+                    <ns1:response>
+                        <xsl:value-of select="$Call-Process/wsdlPfx:WorkCompletionoutput/part1/ns1:root/ns1:response"/>
+                    </ns1:response>
+                </ns1:root>
+            </part1>
+        </wsdlPfx:WorkCompletionoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:WorkCompletionoutput"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>65</pd:endY>
+    <pd:errorSchemas>
+        <Schema1 wsMsgRef="wsdlPfx:WorkCompletionfault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1512730529266</pd:targetNamespace>
+    <pd:activity name="Call Process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/MainProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <wsdlPfx:WorkCompletioninput>
+                <part1>
+                    <ns:root>
+                        <ns:SibelCircuitid>
+                            <xsl:value-of select="$Start/wsdlPfx:WorkCompletioninput/part1/ns:root/ns:SibelCircuitid"/>
+                        </ns:SibelCircuitid>
+                    </ns:root>
+                </part1>
+            </wsdlPfx:WorkCompletioninput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Call Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Process</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

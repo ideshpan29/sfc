@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/mapResource.xsd" xmlns:pfx7="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/mapresource1.xsd" xmlns:pfx8="http://www.tibco.com/schemas/ResourceCreationAndMapping/ResourceCreationSchema/Schema.xsd" xmlns:pfx="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx9="http://www.tibco.com/schemas/ResourceCreationAndMapping/ResourceCreationSchema/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/UserOnboard/SharedResources/Schema.xsd" xmlns:ns="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:pfx3="http://www.tibco.com/schemas/UserOnboard/SharedResources/Schema1.xsd" xmlns:pfx4="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/createResource.xsd" xmlns:pfx5="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/schemas/ResourceCreationAndMapping/Schemas/Schema.xsd" xmlns:ns3="www.tibco.com/plugin/Sleep" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx11="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" xmlns:pfx12="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd" xmlns:pfx10="http://www.tibco.com/schemas/OnboardingProjectBW/ResourceCreationSchema/Schema.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/UserOnboard/SharedResources/Schema.xsd" schemaLocation="/SharedResources/inputSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/UserOnboard/SharedResources/Schema1.xsd" schemaLocation="/SharedResources/outputSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/createResource.xsd" schemaLocation="/SharedResources/createResource.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/mapResource.xsd" schemaLocation="/SharedResources/mapResource.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/mapresource1.xsd" schemaLocation="/SharedResources/mapresource1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/ResourceCreationAndMapping/ResourceCreationSchema/Schema.xsd" schemaLocation="/ResourceCreationSchema/inputSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/ResourceCreationAndMapping/ResourceCreationSchema/Schema.xsd2" schemaLocation="/ResourceCreationSchema/outputSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/OnboardingProjectBW/ResourceCreationSchema/Schema.xsd" schemaLocation="/ResourceCreationSchema/LdapEntrySchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/CreateResourceSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/LdapEntrySchema.xsd"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx12:request"/>
+    <pd:startX>59</pd:startX>
+    <pd:startY>34</pd:startY>
+    <pd:returnBindings>
+        <pfx11:Response>
+            <xsl:value-of select="$Call-Resource-Mapping-Process/pfx11:Response"/>
+        </pfx11:Response>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx11:Response"/>
+    <pd:endX>775</pd:endX>
+    <pd:endY>34</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1509441068367</pd:targetNamespace>
+    <pd:activity name="Call Resource Mapping Process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>524</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx11:Request>
+                <pfx11:Name>
+                    <xsl:value-of select="if ($Start/pfx12:request/pfx12:lastName!='') then concat($Start/pfx12:request/pfx12:firstName,&quot; &quot;,$Start/pfx12:request/pfx12:lastName)  else $Start/pfx12:request/pfx12:firstName"/>
+                </pfx11:Name>
+                <pfx11:OrgName>
+                    <xsl:value-of select="$Start/pfx12:request/pfx12:ormodelName"/>
+                </pfx11:OrgName>
+                <pfx11:flag>
+                    <xsl:value-of select="$Start/pfx12:request/pfx12:flag"/>
+                </pfx11:flag>
+                <pfx11:entityname>
+                    <xsl:value-of select="$Start/pfx12:request/pfx12:entity"/>
+                </pfx11:entityname>
+            </pfx11:Request>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Failure LDAP Entry Log">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>452</pd:x>
+        <pd:y>185</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+        </config>
+        <pd:inputBindings>
+            <ns5:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Createresource/FileNanes/logsFile"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="&quot;******LDAP Entry Not Created*****&quot;"/>
+                </textContent>
+            </ns5:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Ldap Entry Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>196</pd:x>
+        <pd:y>34</pd:y>
+        <config>
+            <javaArchive>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/SharedResources/AliasLibrary.aliaslib</javaArchive>
+            <fileName>LdapEntryLdapEntryCode</fileName>
+            <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.SubProcesses.ResourceCreationAndMapping.Processes.LdapEntry</packageName>
+            <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.SubProcesses.ResourceCreationAndMapping.Processes.LdapEntry;
+import java.util.*;
+import java.io.*;
+import java.io.IOException;
+import org.apache.directory.api.ldap.model.cursor.CursorException;
+import org.apache.directory.api.ldap.model.cursor.EntryCursor;
+import org.apache.directory.api.ldap.model.cursor.SearchCursor;
+import org.apache.directory.api.ldap.model.entry.DefaultEntry;
+import org.apache.directory.api.ldap.model.entry.Entry;
+import org.apache.directory.api.ldap.model.exception.LdapException;
+import org.apache.directory.api.ldap.model.exception.LdapInvalidDnException;
+import org.apache.directory.api.ldap.model.message.AddRequest;
+import org.apache.directory.api.ldap.model.message.AddRequestImpl;
+import org.apache.directory.api.ldap.model.message.AddResponse;
+import org.apache.directory.api.ldap.model.message.Response;
+import org.apache.directory.api.ldap.model.message.ResultCodeEnum;
+import org.apache.directory.api.ldap.model.message.SearchRequest;
+import org.apache.directory.api.ldap.model.message.SearchRequestImpl;
+import org.apache.directory.api.ldap.model.message.SearchResultEntry;
+import org.apache.directory.api.ldap.model.message.SearchScope;
+import org.apache.directory.api.ldap.model.message.controls.ManageDsaITImpl;
+import org.apache.directory.api.ldap.model.name.Dn;
+import org.apache.directory.ldap.client.api.LdapConnection;
+import org.apache.directory.ldap.client.api.LdapConnectionConfig;
+import org.apache.directory.ldap.client.api.LdapNetworkConnection;
+import org.apache.directory.api.ldap.model.exception.*;
+import org.apache.log4j.*;
+
+public class LdapEntryLdapEntryCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String Name = "";
+	protected String mail = "";
+	protected String password = "";
+	protected String LDapHostName = "";
+	protected String LDapUserName = "";
+	protected String LDapPassword = "";
+	protected String LDapPartitionName = "";
+	protected String resourceCreationDN = "";
+	protected String SucessoutputMessage = "";
+	protected String FailureOutputMessage = "";
+	protected String outputMessage = "";
+	public String getName() {
+		return Name;
+	}
+	public void setName(String val) {
+		Name = val;
+	}
+	public String getmail() {
+		return mail;
+	}
+	public void setmail(String val) {
+		mail = val;
+	}
+	public String getpassword() {
+		return password;
+	}
+	public void setpassword(String val) {
+		password = val;
+	}
+	public String getLDapHostName() {
+		return LDapHostName;
+	}
+	public void setLDapHostName(String val) {
+		LDapHostName = val;
+	}
+	public String getLDapUserName() {
+		return LDapUserName;
+	}
+	public void setLDapUserName(String val) {
+		LDapUserName = val;
+	}
+	public String getLDapPassword() {
+		return LDapPassword;
+	}
+	public void setLDapPassword(String val) {
+		LDapPassword = val;
+	}
+	public String getLDapPartitionName() {
+		return LDapPartitionName;
+	}
+	public void setLDapPartitionName(String val) {
+		LDapPartitionName = val;
+	}
+	public String getresourceCreationDN() {
+		return resourceCreationDN;
+	}
+	public void setresourceCreationDN(String val) {
+		resourceCreationDN = val;
+	}
+	public String getSucessoutputMessage() {
+		return SucessoutputMessage;
+	}
+	public void setSucessoutputMessage(String val) {
+		SucessoutputMessage = val;
+	}
+	public String getFailureOutputMessage() {
+		return FailureOutputMessage;
+	}
+	public void setFailureOutputMessage(String val) {
+		FailureOutputMessage = val;
+	}
+	public String getoutputMessage() {
+		return outputMessage;
+	}
+	public void setoutputMessage(String val) {
+		outputMessage = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public LdapEntryLdapEntryCode() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : String Name
+	In  : String mail
+	In  : String password
+	In  : String LDapHostName
+	In  : String LDapUserName
+	In  : String LDapPassword
+	In  : String LDapPartitionName
+	In  : String resourceCreationDN
+	In  : String SucessoutputMessage
+	In  : String FailureOutputMessage
+	Out : String outputMessage
+* Available Variables: DO NOT MODIFY *****/
+
+LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
+		try {
+			conn.bind(getLDapUserName(),getLDapPassword());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		SearchRequest req = new SearchRequestImpl();
+	    req.setScope( SearchScope.SUBTREE );
+	    req.addAttributes( "*" );
+	    req.setTimeLimit( 0 );
+	    try {
+			req.setBase( new Dn( getLDapPartitionName() ) );
+		} catch (LdapInvalidDnException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    try {
+			req.setFilter( "(mail="+getmail()+")" );
+		} catch (LdapException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    // Process the request
+	    SearchCursor searchCursor;
+		try {
+			searchCursor = conn.search( req );
+			try {
+				while ( searchCursor.next() )
+				{
+				    Response response = searchCursor.get();
+
+				    // process the SearchResultEntry
+				    if ( response instanceof SearchResultEntry )
+				    {	
+					//flag=1;
+					
+				        Entry resultEntry = ( ( SearchResultEntry ) response ).getEntry();
+				        //System.out.println( flag );
+				    }
+				}
+			} catch (CursorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (LdapException e) {;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		//if(flag==1){  
+		try {
+			conn.add(
+			        new DefaultEntry(
+			            "OU="+getName()+","+getresourceCreationDN(), // The Dn
+			            "ObjectClass:inetOrgPerson",
+			            "ObjectClass:person ",
+			            "ObjectClass: top",
+			            "cn: "+getName(),
+			            "sn: "+getName(),
+				    "mail: "+getmail(),
+				    "userpassword: "+getpassword()
+			            ) );
+					setoutputMessage(getSucessoutputMessage());
+		} catch (LdapEntryAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			setoutputMessage(getFailureOutputMessage());
+		}
+
+}
+}
+</fullsource>
+            <outputData>
+                <row>
+                    <fieldName>outputMessage</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <inputData>
+                <row>
+                    <fieldName>Name</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>mail</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>password</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>LDapHostName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>LDapUserName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>LDapPassword</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>LDapPartitionName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>resourceCreationDN</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>SucessoutputMessage</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>FailureOutputMessage</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </inputData>
+            <byteCode>
+                <class>
+                    <name>LdapEntryLdapEntryCode</name>
+                    <byteCode>yv66vgAAADQA7gkASwCCCQBLAIMJAEsAhAkASwCFCQBLAIYJAEsAhwkASwCICQBLAIkJAEsAigkASwCLCQBLAIwKADsAjQgAjgcAjwoASwCQCgAOAJEKAEsAkgoASwCTCwCUAJUHAJYKABQAlwcAmAoAFgCNCQCZAJoLAJsAnAcAnQgAngsAmwCfCwCbAKAHAKEKAEsAogoAHgCjCwCbAKQHAKUKACIAlwcApgoAJACNCACnCgAkAKgKAEsAqQgAqgoAJACrCwCbAKwHAK0KACwAlwsAlACuCwCvALALAK8AsQcAsgcAswsAMgC0BwC1CgA0AJcHALYIALcKAEsAuAgAuQoASwC6BwC7CAC8CAC9CAC+CAC/CADACADBCADCCgBLAMMKADYAxAsAlADFCgBLAMYKAEsAxwcAyAoASACXCgBLAMkHAMoBAAROYW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQAEbWFpbAEACHBhc3N3b3JkAQAMTERhcEhvc3ROYW1lAQAMTERhcFVzZXJOYW1lAQAMTERhcFBhc3N3b3JkAQARTERhcFBhcnRpdGlvbk5hbWUBABJyZXNvdXJjZUNyZWF0aW9uRE4BABNTdWNlc3NvdXRwdXRNZXNzYWdlAQAURmFpbHVyZU91dHB1dE1lc3NhZ2UBAA1vdXRwdXRNZXNzYWdlAQAHZ2V0TmFtZQEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAB3NldE5hbWUBABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdnZXRtYWlsAQAHc2V0bWFpbAEAC2dldHBhc3N3b3JkAQALc2V0cGFzc3dvcmQBAA9nZXRMRGFwSG9zdE5hbWUBAA9zZXRMRGFwSG9zdE5hbWUBAA9nZXRMRGFwVXNlck5hbWUBAA9zZXRMRGFwVXNlck5hbWUBAA9nZXRMRGFwUGFzc3dvcmQBAA9zZXRMRGFwUGFzc3dvcmQBABRnZXRMRGFwUGFydGl0aW9uTmFtZQEAFHNldExEYXBQYXJ0aXRpb25OYW1lAQAVZ2V0cmVzb3VyY2VDcmVhdGlvbkROAQAVc2V0cmVzb3VyY2VDcmVhdGlvbkROAQAWZ2V0U3VjZXNzb3V0cHV0TWVzc2FnZQEAFnNldFN1Y2Vzc291dHB1dE1lc3NhZ2UBABdnZXRGYWlsdXJlT3V0cHV0TWVzc2FnZQEAF3NldEZhaWx1cmVPdXRwdXRNZXNzYWdlAQAQZ2V0b3V0cHV0TWVzc2FnZQEAEHNldG91dHB1dE1lc3NhZ2UBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwDKBwDLBwCWBwDMBwClBwCtBwDNBwC1BwDIAQAKRXhjZXB0aW9ucwEAClNvdXJjZUZpbGUBABtMZGFwRW50cnlMZGFwRW50cnlDb2RlLmphdmEMAEwATQwATgBNDABPAE0MAFAATQwAUQBNDABSAE0MAFMATQwAVABNDABVAE0MAFYATQwAVwBNDAByAHMBAAABADpvcmcvYXBhY2hlL2RpcmVjdG9yeS9sZGFwL2NsaWVudC9hcGkvTGRhcE5ldHdvcmtDb25uZWN0aW9uDABiAFkMAHIAzgwAZABZDABmAFkHAMsMAM8A0AEAE2phdmEvbGFuZy9FeGNlcHRpb24MANEAcwEAPW9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdEltcGwHANIMANMA1AcAzAwA1QDWAQAQamF2YS9sYW5nL1N0cmluZwEAASoMANcA2AwA2QDaAQArb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbmFtZS9EbgwAaABZDAByANsMANwA3QEARG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2V4Y2VwdGlvbi9MZGFwSW52YWxpZERuRXhjZXB0aW9uAQAXamF2YS9sYW5nL1N0cmluZ0J1aWxkZXIBAAYobWFpbD0MAN4A3wwAXgBZAQABKQwA4ABZDADhAOIBADtvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEV4Y2VwdGlvbgwA4wDkBwDNDADlAOYMAOcA6AEANG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvUmVzcG9uc2UBAD1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlc3VsdEVudHJ5DADpAOoBADpvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9jdXJzb3IvQ3Vyc29yRXhjZXB0aW9uAQA2b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZW50cnkvRGVmYXVsdEVudHJ5AQADT1U9DABYAFkBAAEsDABqAFkBABBqYXZhL2xhbmcvT2JqZWN0AQAZT2JqZWN0Q2xhc3M6aW5ldE9yZ1BlcnNvbgEAE09iamVjdENsYXNzOnBlcnNvbiABABBPYmplY3RDbGFzczogdG9wAQAEY246IAEABHNuOiABAAZtYWlsOiABAA51c2VycGFzc3dvcmQ6IAwAYABZDAByAOsMAOwA7QwAbABZDABxAF0BAE1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEVudHJ5QWxyZWFkeUV4aXN0c0V4Y2VwdGlvbgwAbgBZAQCEUHJvY2Vzc2VzL0ZPU0JQTUludGVyZmFjZS9BZGFwdGVyL0ZPU0JQTUludGVyZmFjZS9TdWJQcm9jZXNzZXMvUmVzb3VyY2VDcmVhdGlvbkFuZE1hcHBpbmcvUHJvY2Vzc2VzL0xkYXBFbnRyeS9MZGFwRW50cnlMZGFwRW50cnlDb2RlAQAzb3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBDb25uZWN0aW9uAQA5b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0AQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL1NlYXJjaEN1cnNvcgEAFihMamF2YS9sYW5nL1N0cmluZztJKVYBAARiaW5kAQAnKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOylWAQAPcHJpbnRTdGFja1RyYWNlAQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZQEAB1NVQlRSRUUBADlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTsBAAhzZXRTY29wZQEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAA1hZGRBdHRyaWJ1dGVzAQBQKFtMamF2YS9sYW5nL1N0cmluZzspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAxzZXRUaW1lTGltaXQBAD4oSSlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdzZXRCYXNlAQBqKExvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9uYW1lL0RuOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABmFwcGVuZAEALShMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmdCdWlsZGVyOwEACHRvU3RyaW5nAQAJc2V0RmlsdGVyAQBPKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABnNlYXJjaAEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL1NlYXJjaEN1cnNvcjsBAARuZXh0AQADKClaAQADZ2V0AQAUKClMamF2YS9sYW5nL09iamVjdDsBAAhnZXRFbnRyeQEAMygpTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2VudHJ5L0VudHJ5OwEAKChMamF2YS9sYW5nL1N0cmluZztbTGphdmEv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</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <Name>
+                    <xsl:value-of select="concat($Start/pfx12:request/pfx12:firstName,&quot; &quot;,$Start/pfx12:request/pfx12:lastName)"/>
+                </Name>
+                <mail>
+                    <xsl:value-of select="$Start/pfx12:request/pfx12:email"/>
+                </mail>
+                <password>
+                    <xsl:value-of select="$Start/pfx12:request/pfx12:password"/>
+                </password>
+                <LDapHostName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/LDAPHost"/>
+                </LDapHostName>
+                <LDapUserName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/LDAPUsername"/>
+                </LDapUserName>
+                <LDapPassword>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/LDAPPassword"/>
+                </LDapPassword>
+                <LDapPartitionName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/LDAPPartitionName"/>
+                </LDapPartitionName>
+                <resourceCreationDN>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/ResourceCreationName"/>
+                </resourceCreationDN>
+                <SucessoutputMessage>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/SuccessOutputMessage"/>
+                </SucessoutputMessage>
+                <FailureOutputMessage>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/DNCredentials/FailureOutputMessage"/>
+                </FailureOutputMessage>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Successfull LDAP Entry Log">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>359</pd:x>
+        <pd:y>42</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+        </config>
+        <pd:inputBindings>
+            <ns5:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/WorkResources/CreateResource/FileNames/LogsFile"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="&quot;LDAP Entry Created Succesfully &quot;"/>
+                </textContent>
+            </ns5:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Ldap Entry Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Ldap Entry Code</pd:from>
+        <pd:to>Failure LDAP Entry Log</pd:to>
+        <pd:xpathDescription>Failure</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Ldap-Entry-Code/javaCodeActivityOutput/outputMessage="Failure"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Resource Mapping Process</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Failure LDAP Entry Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Ldap Entry Code</pd:from>
+        <pd:to>Successfull LDAP Entry Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Successfull LDAP Entry Log</pd:from>
+        <pd:to>Call Resource Mapping Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,461 @@
+<html>
+	<head>
+<style>
+
+</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src = "https://code.highcharts.com/highcharts.js"></script>  
+		
+		</head>
+		<body onload="cleardata()" style="background-color:#ECECEA">
+	<div class="container-fluid">
+
+		<p>	<form id="homebutton" action="/">
+				<input type="submit" name="submit" class="btn btn-Info" style="margin-left:20px;" value="Get Processes" id="submit" />
+			</form>
+			<form id="ProcessTaksWise-Form" action="/">
+					
+					<input type="submit" name="Submit" class="btn btn-success" style="margin-left:20px;" id="btntest" value="TaskWiseAnalysis" />
+					
+			</form>
+			<div class="clearfix"></div>
+			<form action="/" id="getProcess-Form" >
+				
+				<div class="form-group col-lg-4"><label for="getProcessoption" style="margin-left:20px;">Select Process name:</label>
+				<select align="center" class="form-control" id="getProcessoption" style="text-align: center;" disabled>
+					<input type="submit" name="Submit" class="btn btn-primary" id="getProcessoptionbtn" value="GetprocessData" disabled style="margin-top:3px"/>
+				</select></div>
+			</form></p>
+			<div class="clearfix"></div>
+			<form id="searchform" action="/">
+		<div class="form-group col-lg-4">Search By : <select name="searchby" class="form-control" id="searchby">
+				<option value="select">---Select---</option>
+				<option value="attribute2">Siebel Circuit Id</option>
+				<option value="attribute9">Project manager</option>
+				<option value="attribute3">Client name</option>
+				<option value="attribute4">Contractor</option>
+				<option value="attribute8">ServiceType</option>
+			</select>
+			<input type="text" class="" id="searchinput" required="required" />
+			<input type="submit" name="Submit"  class="btn btn-primary" id="Searchbtntest" value="Search" /></div>
+			
+		</form>
+			<div class="clearfix"></div>
+			
+			<form id="ProcessDetails-Form" action="/">
+					<div id="ProcessDetailsCompleted">
+					
+					</div>
+					<div class="clearfix"></div>
+					<input type="submit" name="Submit" class="btn btn-primary" id="GetProcessInstancedatabtntest" value="GetProcessInstancedata" />
+					
+			</form>
+			
+			<div class="clearfix"></div>
+			
+			<form id="ProcessInstanceDetails-Form" action="/">
+			<div id="ProcessInstanceDetails">
+			</div>
+				
+			</form>
+			<div class="clearfix"></div>
+			<form id="ProcessTaskAnalysis" action="/">
+			<div id="ProcessTaskAnalysisDetails">
+			</div>
+			<div class="clearfix"></div>
+			<!--<input type="submit" value="Get PieChart"  class="btn btn-success" data-toggle="modal" data-target="#myModal"/>-->
+			</form>
+			<div class="clearfix"></div>
+			
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body" id="piecontainer">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+			
+		</body>
+		<script type="text/javascript">
+/*		$(document).on("click", "table tr", function(e) {
+    alert($(this).attr('value'));
+});*/
+		
+$(document).ready(function(){
+ 	
+		$("#ProcessTaskAnalysis").change(function(event){
+		event.preventDefault();
+		selected_value = $("input[name='actitvityname']:checked").val();
+			            console.log(selected_value);
+						
+		var selectedradiobutton=selected_value;
+		//$('input[name=actitvityname]:checked').val();
+		
+			var getProcessInstancesvalues = $.post('http://localhost:7020/getPieChart',{'activitynameforpie' : selectedradiobutton});
+			getProcessInstancesvalues.done(function(data){
+			var xmlData=data;
+			parser = new DOMParser();
+			xmlDoc = parser.parseFromString(xmlData,"text/xml");
+			console.log(xmlDoc);
+			var x=xmlDoc.getElementsByTagName("ProcessTask");
+				console.log(x.length);
+							
+				if(x.length==0){
+				alert("No data Found");
+					return false;
+				}
+				else{
+				var Completedcount=Number(x[0].getElementsByTagName("Completed")[0].childNodes[0].nodeValue);
+				var Offeredcount=Number(x[0].getElementsByTagName("Offered")[0].childNodes[0].nodeValue);
+				var Openedcount=Number(x[0].getElementsByTagName("Opened")[0].childNodes[0].nodeValue);
+				var Cancelledcount=Number(x[0].getElementsByTagName("Cancelled")[0].childNodes[0].nodeValue);
+				//console.log(Completedcount);
+				//console.log(Offeredcount);
+				//console.log(Openedcount);
+				//console.log(Cancelledcount);
+		var chart = {
+               plotBackgroundColor: null,
+               plotBorderWidth: null,
+               plotShadow: false
+            };
+            var title = {
+               text: selectedradiobutton  
+            };
+            var tooltip = {
+               pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            };
+            var plotOptions = {
+               pie: {
+                  allowPointSelect: true,
+                  cursor: 'pointer',
+                  
+                  dataLabels: {
+                     enabled: true,
+                     format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+                     style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor)||
+                        'black'
+                     }
+                  },
+				  showInLegend: true
+               }
+            };
+			var abc=[{name: 'Completed', y: Completedcount,sliced: true,selected: true},{name: 'Offered', y: Offeredcount},{name: 'Opened',y: Openedcount},{name: 'Cancelled', y: Cancelledcount}];
+            var series = [{
+               type: 'pie',
+               name: 'Process Task Details',
+               data: abc,
+            }];
+            var json = {};   
+            json.chart = chart; 
+            json.title = title;     
+            json.tooltip = tooltip;  
+            json.series = series;
+            json.plotOptions = plotOptions;
+            $('#piecontainer').highcharts(json);				
+				}
+			
+			})
+	})
+		});
+		
+		$("#ProcessTaksWise-Form").submit(function(event){
+		event.preventDefault();
+		$("#ProcessTaskAnalysis").show();
+		$("#getProcess-Form").hide();
+		$("#searchform").hide();
+		$("#ProcessDetails-Form").hide();
+		$("#ProcessInstanceDetails-Form").hide();
+		var getprocesstasks = $.post('http://localhost:7020/getProcessTasks');
+		getprocesstasks.done(function(data){
+			var xmlData=data;
+			var TaskWiseTable="<hr/><div class='col-lg-8'><div class='row'><table border='1' class='table table-bordered table-striped'><legend class='text-center text-info'>TaskWise Analysis </legend><tr><th>Operation</th><th>Sr.No.</th><th>Activity_Name</th><th>TotalCount</th><th>Total Work Duration</th><th>Max Work Duration</th><th>Min Work Duration</th><th>Average Work Duration</th><th>Completed</th><th>Offered</th><th>Opened</th><th>Cancelled</th></tr>";
+				console.log(xmlData);
+					var optionvalues="";
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(xmlData,"text/xml");
+				console.log(xmlDoc);
+				var x=xmlDoc.getElementsByTagName("Record");
+				console.log(x.length);
+							
+				if(x.length==0){
+				alert("No data Found");
+					return false;
+				}
+				else{
+				
+				var index=1;
+
+
+				for (i = 0; i <x.length; i++) {
+				TaskWiseTable+= "<tr id='aaa' style='height:10px !important;' value='"+x[i].getElementsByTagName("ACTIVITY_NAME")[0].childNodes[0].nodeValue+"'><td><input type='radio' name='actitvityname' class='sampleradio' data-toggle='modal' data-target='#myModal' value='"+x[i].getElementsByTagName("ACTIVITY_NAME")[0].childNodes[0].nodeValue+"'></td><td>"+index+"</td><td>"+
+					x[i].getElementsByTagName("ACTIVITY_NAME")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("ACTIVITYCOUNT")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("TOTALWORKTIME")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("MAXWORKTIME")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("MINWORKTIME")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("AVGWORKTIME")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("COMPLETED")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("OFFERED")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("OPENED")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("CANCELLED")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+					index++;
+					}	
+					TaskWiseTable+="</table></div></div>";
+					console.log(TaskWiseTable);
+document.getElementById("ProcessTaskAnalysisDetails").innerHTML=TaskWiseTable;					
+				}
+				
+				
+		
+		})
+		});
+		
+		
+		
+		function cleardata()
+			{
+				$("#searchform").hide();
+			   $("#ProcessDetails-Form").hide();
+			   $("#ProcessInstanceDetails-Form").hide();
+			   $("#getProcess-Form").hide();
+			   $("#ProcessTaskAnalysis").hide();
+$("#getProcess-Form").hide();			   
+			   
+			   }		
+
+/*$("#homebutton").click(function(event){
+
+			event.preventDefault();
+			 $("#getProcessoption").removeAttr("disabled");
+			  $("#getProcessoptionbtn").removeAttr("disabled");
+			
+			  $("#searchform").hide();
+			  $("#ProcessTaskAnalysis").hide();
+			  
+			   $("#ProcessDetails-Form").hide();
+			   $("#ProcessInstanceDetails-Form").hide();
+			  $("#getProcess-Form").show(); 
+			var getProcessnames = $.post('http://rbapat-t470:7020/getProcessnames');
+			getProcessnames.done(function(data){
+			var xmlData=data;
+				console.log(xmlData);
+					var optionvalues="";
+
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(xmlData,"text/xml");
+				console.log(xmlDoc);
+				var x=xmlDoc.getElementsByTagName("process");
+				console.log(x.length);
+				if(x.length==0){
+
+					alert("No data Found");
+					return false;
+				}
+				else{
+				for (i = 0; i <x.length; i++) { 
+					optionvalues += "<option value="+x[i].getElementsByTagName('name')[0].childNodes[0].nodeValue+"'>"+x[i].getElementsByTagName('name')[0].childNodes[0].nodeValue+"</option>";
+				}
+		document.getElementById("getProcessoption").innerHTML = optionvalues;
+
+			}
+			})
+});*/
+
+$("#homebutton").submit(function(event){
+ // Stop form from submitting normally
+			event.preventDefault();
+			 $("#searchform").show();
+			   $("#ProcessDetails-Form").show();
+			 $("#ProcessInstanceDetails-Form").hide();
+			  $("#ProcessTaskAnalysis").hide();
+			
+			 
+			var selectedvalue="SFC_Provisioning_ToBeProcess";
+		
+			var getProcessInstancesvalues = $.post('http://localhost:7020/getProcessInstances',{'processname' : selectedvalue});
+			getProcessInstancesvalues.done(function(data){
+			var xmlData=data;
+			var table="<div class='col-lg-8'><div class='row'><table border='1' class='table table-bordered table-striped'><legend class='text-center text-info'>Process Instances </legend><tr><th>Operation</th><th>Sr.No</th><th>Process Template</th><th>Process Instance</th><th>SibelCircuit Id</th><th>Client Name</th><th>Project manager</th><th>Status</th><th>Execution Time</th></tr>";
+				var table1="<table border='1'><tr><th>Operation</th><th>Sr.No</th><th>Process Template</th><th>Process Instance</th><th>Status</th><th>Time</th></tr>";
+				console.log(xmlData);
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(xmlData,"text/xml");
+				console.log(xmlDoc);
+				var x=xmlDoc.getElementsByTagName("Record");
+				console.log(x.length);
+				if(x.length==0){
+				
+					$("#searchform").hide();
+					$("#ProcessDetails-Form").hide();
+					alert("No data Found For Given Input");
+					return false;
+				}
+				else{
+				var j=1;
+				var k=1;
+				for (i = 0; i <x.length; i++) { 
+					table += "<tr><td><input type='radio' name='completed' value='"+x[i].getElementsByTagName("process_instance")[0].childNodes[0].nodeValue+"'></td><td>"+j+"</td><td>"+
+					x[i].getElementsByTagName("process_template")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("process_instance")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					
+					x[i].getElementsByTagName("SibelCircuitId")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ClientName")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ProjectManager")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("status")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("time")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+					j++;	
+					
+				
+				}
+				table+="</div></div>"
+		document.getElementById("ProcessDetailsCompleted").innerHTML = table;
+			}
+			})
+});
+
+$("#ProcessDetails-Form").submit(function(event){
+
+var selectedradiobutton=$('input[name=completed]:checked').val();
+
+event.preventDefault();
+ $("#ProcessInstanceDetails-Form").show();
+var instanceDetailsTable="<table border='1' class='table table-bordered table-striped'><legend class='text-center text-info'>Process Instance Details </legend><tr><th>Sr.No</th><th>Process Instance</th><th>First time offer</th><th>Activity_Name</th><th>activity_dur</th><th>wait_dur</th><th>work_time_dur</th><th>Status</th></tr>";
+			var getProcessInstanceDet = $.post('http://localhost:7020/getProcessInstanceDetails',{'instanceid':selectedradiobutton});
+			getProcessInstanceDet.done(function(data){
+			var xmlData=data;
+				console.log(xmlData);
+					
+
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(xmlData,"text/xml");
+				console.log(xmlDoc);
+				var x=xmlDoc.getElementsByTagName("param");
+				console.log(x.length);
+				if(x.length==0){
+
+					alert("No Data Found");
+					document.getElementById("ProcessInstanceDetails").innerHTML = "";
+					
+				}
+				else{
+					var j=1;
+				for (i = 0; i <x.length; i++) { 
+					instanceDetailsTable += "<tr><td>"+j+"</td><td>"+
+					x[i].getElementsByTagName("process_instance")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("first_time_offer")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("activity_name")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("activity_dur")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("wait_dur")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("work_time_dur")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("status")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+					j++;	
+				}
+		document.getElementById("ProcessInstanceDetails").innerHTML = instanceDetailsTable;
+			}
+			})
+});
+
+
+$("#searchform").submit(function(event){
+ $("#ProcessInstanceDetails-Form").show();
+  $("#ProcessInstanceDetails-Form").hide();
+	var selectedsearchby=$('#searchby :selected').val();
+	var selectedsearchvalue=$('#searchinput').val();
+	var selectedprocessnamevalue="SFC_Provisioning_ToBeProcess";
+	console.log(selectedsearchby);
+	console.log(selectedsearchvalue);
+	//alert(selectedsearchby);
+	if(selectedsearchby=="select")
+	{
+	alert("Please Select the Search Type");
+	return false;
+	}
+	event.preventDefault();
+	var getProcessInstancesvalues = $.post('http://localhost:7020/searchBy',{'processname' : selectedprocessnamevalue,'searchby':selectedsearchby,'searchvalue':selectedsearchvalue});
+	getProcessInstancesvalues.done(function(data){
+			var xmlData=data;
+			var table="<table border='1' class='table table-bordered table-striped'><legend class='text-align:center'>Process Instances</legend><tr><th>Operation</th><th>Sr.No</th><th>Process Template</th><th>Process Instance</th><th>SibelCircuit Id</th><th>Client Name</th><th>Project manager</th><th>Status</th><th>Time</th></tr>";
+				var table1="<table border='1'><tr><th>Operation</th><th>Sr.No</th><th>Process Template</th><th>Process Instance</th><th>Status</th><th>Time</th></tr>";
+				console.log(xmlData);
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(xmlData,"text/xml");
+				console.log(xmlDoc);
+				var x=xmlDoc.getElementsByTagName("ns0:Record");
+				console.log(x.length);
+			
+					if(x.length==0){
+					//alert("No data Found");
+					document.getElementById("ProcessDetailsCompleted").innerHTML = "<p class='text-danger'>No Data Found For Given Input!!!</p>";
+					$("#GetProcessInstancedatabtntest").attr("disabled","disabled");
+					return false;
+				}
+				else{
+				$("#GetProcessInstancedatabtntest").removeAttr("disabled");
+				var j=1;
+				var k=1;
+				for (i = 0; i <x.length; i++) { 
+					table += "<tr><td><input type='radio' name='completed' value='"+x[i].getElementsByTagName("ns0:process_instance")[0].childNodes[0].nodeValue+"'></td><td>"+j+"</td><td>"+
+					x[i].getElementsByTagName("ns0:process_instance")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("ns0:sibelcircuitId")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ns0:customer_name")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ns0:project_manager")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ns0:cur_activity")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ns0:status")[0].childNodes[0].nodeValue +
+					"</td><td>"+
+					x[i].getElementsByTagName("ns0:exec_mills")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+					j++;	
+					
+				}
+				}
+		document.getElementById("ProcessDetailsCompleted").innerHTML = table;
+})
+});
+
+
+				</script>
+
+
+
+			</html>
+			

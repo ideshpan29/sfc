@@ -1,3 +1,118 @@
+function ldPrcNames(control,logger,url,funcName) {
+	try {
+		var tmpURL = url+funcName;
+		var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp.open('GET',tmpURL,true);
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)	{		
+				var xm = xmlhttp.ResponseText;
+				var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async = false; 
+				xmlDoc.loadXML(xm);
+				var recordSet = xmlDoc.getElementsByTagName("process");
+				var lngth = recordSet.length;
+				
+				var lstPrcNames = new Array();
+				
+				for(var i=0;i<lngth;i++) {
+					recordSet = xmlDoc.getElementsByTagName("name");
+					if(recordSet[i].childNodes[0]!=null)
+					{			
+						lstPrcNames[i] = recordSet[i].childNodes[0].nodeValue;
+					}
+				}
+				control.optnSelectProcess.setOptions(lstPrcNames,lstPrcNames);
+			}
+			else {
+				//alert("Else: Error: Please contact System Administrator");
+			}
+		};
+		result = xmlhttp.send();
+	}
+	catch (e) {
+		alert("Catch: Error: Please contact System Administrator");
+	}
+}
+
+function ldPrcData(factory,pane,control,logger,url,funcName) {
+	try {
+		var tmpURL = url+funcName;
+		var xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp.open('GET',tmpURL,true);
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)	{		
+				var xm = xmlhttp.ResponseText;
+				var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async = false; 
+				xmlDoc.loadXML(xm);
+				logger.info(xm);
+				
+				var recordSet = xmlDoc.getElementsByTagName("Record");
+				var lngth = recordSet.length;
+				logger.info("Lengh of the incoming array for Records: "+lngth);
+				
+				var lstPrcNames = new Array();
+				
+				pane.CancelledInstances.getValue().clear();
+				pane.StartedInstances.getValue().clear();
+				for(var i=0;i<lngth;i++) {
+					var record = factory.com_sfc_fosImpl_genericReporting.createRecord();
+					recordSet = xmlDoc.getElementsByTagName("process_template");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setProcessTemplate(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("process_instance");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setProcessInstance(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("status");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setStatus(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("time");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setTime(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("SibelCircuitId");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setSiebelCircuitID(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("ClientName");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setClientName(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("ProjectManager");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setProjectName(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					if(record.getStatus()=="pi_cancelled") {
+						pane.CancelledInstances.getValue().add(record);
+					}
+					else if(record.getStatus()=="pi_started") {
+						pane.StartedInstances.getValue().add(record);
+					}
+				}
+			}
+			else {
+				//alert("Else: Error: Please contact System Administrator");
+			}
+		};
+		result = xmlhttp.send();
+	}
+	catch (e) {
+		alert("Catch: Error: Please contact System Administrator");
+	}
+}
+
+
+	/*
 function loadProcessnames()
 {
 	var getProcessnames = $.post('http://stalewar-t470:9801/getProcessnames');
@@ -341,3 +456,4 @@ if(currentchekboxvalue=="cancelled")
 }
 });		
 
+*/

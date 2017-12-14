@@ -38,6 +38,7 @@ theClass.ATTR_TIME = "time";
 theClass.ATTR_SIEBELCIRCUITID = "siebelCircuitID";
 theClass.ATTR_CLIENTNAME = "clientName";
 theClass.ATTR_PROJECTNAME = "projectName";
+theClass.ATTR_CURRENTACTIVITY = "currentActivity";
 
 theClass.TYPE_ARRAY = new Object();
 theClass.TYPE_ARRAY[theClass.ATTR_PROCESSINSTANCE] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
@@ -47,12 +48,13 @@ theClass.TYPE_ARRAY[theClass.ATTR_TIME] = {type:"BomPrimitiveTypes.Text", baseTy
 theClass.TYPE_ARRAY[theClass.ATTR_SIEBELCIRCUITID] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_CLIENTNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_PROJECTNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_CURRENTACTIVITY] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 
-theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_PROCESSINSTANCE, theClass.ATTR_PROCESSTEMPLATE, theClass.ATTR_STATUS, theClass.ATTR_TIME, theClass.ATTR_SIEBELCIRCUITID, theClass.ATTR_CLIENTNAME, theClass.ATTR_PROJECTNAME];
+theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_PROCESSINSTANCE, theClass.ATTR_PROCESSTEMPLATE, theClass.ATTR_STATUS, theClass.ATTR_TIME, theClass.ATTR_SIEBELCIRCUITID, theClass.ATTR_CLIENTNAME, theClass.ATTR_PROJECTNAME, theClass.ATTR_CURRENTACTIVITY];
 
 theClass.COMPOSITE_ATTRIBUTE_NAMES = [];
 
-theClass.ATTRIBUTE_NAMES = [theClass.ATTR_PROCESSINSTANCE, theClass.ATTR_PROCESSTEMPLATE, theClass.ATTR_STATUS, theClass.ATTR_TIME, theClass.ATTR_SIEBELCIRCUITID, theClass.ATTR_CLIENTNAME, theClass.ATTR_PROJECTNAME];
+theClass.ATTRIBUTE_NAMES = [theClass.ATTR_PROCESSINSTANCE, theClass.ATTR_PROCESSTEMPLATE, theClass.ATTR_STATUS, theClass.ATTR_TIME, theClass.ATTR_SIEBELCIRCUITID, theClass.ATTR_CLIENTNAME, theClass.ATTR_PROJECTNAME, theClass.ATTR_CURRENTACTIVITY];
 
 theClass.getName = function() {
     return "com.sfc.fosImpl.genericReporting.Record";
@@ -154,6 +156,15 @@ theClass.prototype.getProjectName = function(useInternal) {
 
 theClass.prototype.setProjectName = function(projectName) {
     this._setPrimitiveAttribute(this.loader.getClass("com.sfc.fosImpl.genericReporting.Record").ATTR_PROJECTNAME, projectName);
+};
+
+
+theClass.prototype.getCurrentActivity = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.sfc.fosImpl.genericReporting.Record").ATTR_CURRENTACTIVITY, useInternal);
+};
+
+theClass.prototype.setCurrentActivity = function(currentActivity) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.sfc.fosImpl.genericReporting.Record").ATTR_CURRENTACTIVITY, currentActivity);
 };
 
 theClass.getAttributeNames = function() {

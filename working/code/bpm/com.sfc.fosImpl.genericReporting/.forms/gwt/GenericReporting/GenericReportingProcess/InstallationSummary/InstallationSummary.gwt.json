@@ -1,24 +1,25 @@
 {"bindings":[],"rules":[{"name":"loadProcessList","trigger":"open",
       "cancelOnError":false}],"name":"InstallationSummary","type":"form",
-  "reverseBindings":[],"formModelId":"_pqfEkN_KEee4yOWJZ8GYTA",
+  "reverseBindings":[],"formModelId":"_UH9z4OCyEeem74WRABbcLw",
   "formPathSegmentCount":4,"formatVersion":"2.7.0.002","bomJSNames":[
     "com.sfc.fosImpl.genericReporting.GenericReportingPackage",
     "com.sfc.fosImpl.genericReporting.GenericReportingFactory",
     "com.sfc.fosImpl.genericReporting.Record"],"styleName":null,
-  "genCssClass":"fb364d47d-e003-4372-a429-dd9f0809ebe7","labelPosition":
+  "genCssClass":"fde8f63d1-311b-4338-b624-9fa2d2ea4399","labelPosition":
   "top","externalResources":[{"name":"","uri":"InstallationSummary.gwt.js",
       "localized":false},{"name":null,"uri":"InstallationSummary.gwt.css",
       "localized":false},{"name":"resource.common","uri":
       "../../../.common/properties/common.properties","localized":true},{
       "name":"resource.form","uri":"InstallationSummary.properties",
       "localized":true},{"name":"resource.safaricom","uri":
-      "../../../CSS/safaricom.css","localized":false},{"name":
+      "../../../CSS/safaricom.css","localized":true},{"name":
       "resource.loadData","uri":"../../../Javascript/loadData.js",
-      "localized":false}],"data":[{"bindings":[],"rules":[],"name":
-      "data.fetchDataURL","type":"data","reverseBindings":[],"datumType":
-      "BomPrimitiveTypes::Text","label":"fetchDataURL","inout":"INOUT",
-      "array":false,"decimalPlaces":0,"length":100,"primitive":true},{
-      "bindings":[{"name":"pane.CancelledInstances","type":"pane",
+      "localized":true},{"name":"resource.SFC","uri":
+      "../../../Images/SFC.png","localized":true}],"data":[{"bindings":[],
+      "rules":[],"name":"data.fetchDataURL","type":"data","reverseBindings":[],
+      "datumType":"BomPrimitiveTypes::Text","label":"fetchDataURL","inout":
+      "INOUT","array":false,"decimalPlaces":0,"length":100,"primitive":
+      true},{"bindings":[{"name":"pane.CancelledInstances","type":"pane",
           "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
       [],"name":"data.CancelledInstances","type":"data","reverseBindings":[],
       "datumType":"com.sfc.fosImpl.genericReporting.Record","label":
@@ -29,12 +30,30 @@
       "data.StartedInstances","type":"data","reverseBindings":[],"datumType":
       "com.sfc.fosImpl.genericReporting.Record","label":"StartedInstances",
       "inout":"INOUT","array":true,"decimalPlaces":0,"length":0,"primitive":
-      false}],"controlRefs":[{"name":"control.optnSearchCriteria","type":
-      "control"},{"name":"control.txtSearchValue","type":"control"},{"name":
+      false},{"bindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
+      [],"name":"data.HaltedInstances","type":"data","reverseBindings":[],
+      "datumType":"com.sfc.fosImpl.genericReporting.Record","label":
+      "HaltedInstances","inout":"INOUT","array":true,"decimalPlaces":0,
+      "length":0,"primitive":false},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value"]}],"rules":[],"name":
+      "data.CompletedInstances","type":"data","reverseBindings":[],
+      "datumType":"com.sfc.fosImpl.genericReporting.Record","label":
+      "CompletedInstances","inout":"INOUT","array":true,"decimalPlaces":0,
+      "length":0,"primitive":false}],"controlRefs":[{"name":
+      "control.optnSearchCriteria","type":"control"},{"name":
+      "control.txtSearchValue","type":"control"},{"name":
       "control.btnSearch","type":"control"},{"name":
       "control.optnSelectProcess","type":"control"},{"name":
       "control.rdioSearchOption","type":"control"},{"name":
-      "control.passthrough1","type":"control"},{"name":
+      "control.CompletedInstances_processInstance","type":"control"},{"name":
+      "control.CompletedInstances_processTemplate","type":"control"},{"name":
+      "control.CompletedInstances_status","type":"control"},{"name":
+      "control.CompletedInstances_time","type":"control"},{"name":
+      "control.CompletedInstances_siebelCircuitID","type":"control"},{"name":
+      "control.CompletedInstances_clientName","type":"control"},{"name":
+      "control.CompletedInstances_projectName","type":"control"},{"name":
       "control.StartedInstances_processInstance","type":"control"},{"name":
       "control.StartedInstances_processTemplate","type":"control"},{"name":
       "control.StartedInstances_status","type":"control"},{"name":
@@ -42,6 +61,13 @@
       "control.StartedInstances_siebelCircuitID","type":"control"},{"name":
       "control.StartedInstances_clientName","type":"control"},{"name":
       "control.StartedInstances_projectName","type":"control"},{"name":
+      "control.HaltedInstances_processInstance","type":"control"},{"name":
+      "control.HaltedInstances_processTemplate","type":"control"},{"name":
+      "control.HaltedInstances_status","type":"control"},{"name":
+      "control.HaltedInstances_time","type":"control"},{"name":
+      "control.HaltedInstances_siebelCircuitID","type":"control"},{"name":
+      "control.HaltedInstances_clientName","type":"control"},{"name":
+      "control.HaltedInstances_projectName","type":"control"},{"name":
       "control.CancelledInstances_processInstance","type":"control"},{"name":
       "control.CancelledInstances_processTemplate","type":"control"},{"name":
       "control.CancelledInstances_status","type":"control"},{"name":
@@ -52,21 +78,22 @@
       "control.lblSearch","type":"control"},{"name":"control.lblComplete",
       "type":"control"},{"name":"control.lblInProgress","type":"control"},{
       "name":"control.lblErroredOut","type":"control"},{"name":
-      "control.lblCancelled","type":"control"},{"name":"control.cancel",
-      "type":"control"},{"name":"control.submit","type":"control"}],
-  "rootPaneRefs":[{"name":"pane.content","type":"pane"},{"name":
-      "pane.toolbar","type":"pane"},{"name":"pane.messages","type":"pane"}],
-  "control":[{"bindings":[],"rules":[],"name":"control.optnSearchCriteria",
-      "type":"control","reverseBindings":[],"componentType":
+      "control.lblCancelled","type":"control"},{"name":"control.sfcImage",
+      "type":"control"},{"name":"control.cancel","type":"control"},{"name":
+      "control.submit","type":"control"}],"rootPaneRefs":[{"name":
+      "pane.content","type":"pane"},{"name":"pane.toolbar","type":"pane"},{
+      "name":"pane.messages","type":"pane"}],"control":[{"bindings":[],
+      "rules":[],"name":"control.optnSearchCriteria","type":"control",
+      "reverseBindings":[],"componentType":
       "com.tibco.forms.controls.optionlist","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[],"inheritsDeferInitialization":false,"readOnly":
       false,"required":false,"value":[],"tabIndex":0,"alwaysRenderControl":
-      false,"propSetChoiceListValues":["CUS_NAME","SIEBEL_ID","PM"],
-      "propSetChoiceListLabels":["Customer Name","Siebel Circuit ID",
-        "Project Manager"],"propSetChoiceListLabelsRef":"",
-      "propSetOptionListMultiSelect":false},{"bindings":[],"rules":[],"name":
-      "control.txtSearchValue","type":"control","reverseBindings":[],
+      false,"propSetChoiceListValues":["attribute3","attribute2",
+        "attribute9"],"propSetChoiceListLabels":["Customer Name",
+        "Siebel Circuit ID","Project Manager"],"propSetChoiceListLabelsRef":
+      "","propSetOptionListMultiSelect":false},{"bindings":[],"rules":[],
+      "name":"control.txtSearchValue","type":"control","reverseBindings":[],
       "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
       "","labelRef":"","hintRef":"","enabled":true,"visible":true,
       "styleName":"","validations":[],"inheritsDeferInitialization":false,
@@ -75,7 +102,8 @@
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":0,
       "propSetTextDisLen":0,"propSetTextSecret":false,"propSetTextNumeric":
       false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.btnSearch","type":"control","reverseBindings":[],
+      [{"name":"searchRule","trigger":"select","cancelOnError":false}],
+      "name":"control.btnSearch","type":"control","reverseBindings":[],
       "componentType":"com.tibco.forms.controls.button","shortLabelRef":"",
       "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
       "btnSearch","validations":[],"inheritsDeferInitialization":false,
@@ -100,13 +128,123 @@
       false,"propSetChoiceListValues":["VIEWALL","SEARCH"],
       "propSetChoiceListLabels":["View All","Search"],
       "propSetChoiceListLabelsRef":"","propSetRadioGroupFormat":"auto",
-      "propSetRadioGroupColumns":1},{"bindings":[],"rules":[],"name":
-      "control.passthrough1","type":"control","reverseBindings":[],
-      "componentType":"com.tibco.forms.controls.passthrough","shortLabelRef":
+      "propSetRadioGroupColumns":1},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","processInstance"]}],"rules":[],
+      "name":"control.CompletedInstances_processInstance","type":"control",
+      "reverseBindings":[{"name":"pane.CompletedInstances","type":"pane",
+          "sourceFeature":["value","processInstance"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_processInstance__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","processTemplate"]}],"rules":[],
+      "name":"control.CompletedInstances_processTemplate","type":"control",
+      "reverseBindings":[{"name":"pane.CompletedInstances","type":"pane",
+          "sourceFeature":["value","processTemplate"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_processTemplate__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","status"]}],"rules":[],"name":
+      "control.CompletedInstances_status","type":"control","reverseBindings":
+      [{"name":"pane.CompletedInstances","type":"pane","sourceFeature":[
+            "value","status"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
       "","labelRef":"","hintRef":"","enabled":true,"visible":true,
-      "styleName":"","validations":[],"inheritsDeferInitialization":false,
-      "readOnly":false,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false},{"bindings":[{"name":
+      "styleName":"","validations":[{"name":
+          "CompletedInstances_status__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","time"]}],"rules":[],"name":
+      "control.CompletedInstances_time","type":"control","reverseBindings":[{
+          "name":"pane.CompletedInstances","type":"pane","sourceFeature":[
+            "value","time"],"destinationFeature":["value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_time__length","message":
+          "","messageRef":"resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","siebelCircuitID"]}],"rules":[],
+      "name":"control.CompletedInstances_siebelCircuitID","type":"control",
+      "reverseBindings":[{"name":"pane.CompletedInstances","type":"pane",
+          "sourceFeature":["value","siebelCircuitID"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_siebelCircuitID__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","clientName"]}],"rules":[],"name":
+      "control.CompletedInstances_clientName","type":"control",
+      "reverseBindings":[{"name":"pane.CompletedInstances","type":"pane",
+          "sourceFeature":["value","clientName"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_clientName__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.CompletedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","projectName"]}],"rules":[],"name":
+      "control.CompletedInstances_projectName","type":"control",
+      "reverseBindings":[{"name":"pane.CompletedInstances","type":"pane",
+          "sourceFeature":["value","projectName"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"CompletedInstances_projectName__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
           "pane.StartedInstances","type":"pane","sourceFeature":["value"],
           "destinationFeature":["value","processInstance"]}],"rules":[],
       "name":"control.StartedInstances_processInstance","type":"control",
@@ -216,6 +354,120 @@
       "validations":[{"name":"StartedInstances_projectName__length",
           "message":"","messageRef":
           "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","processInstance"]}],"rules":[],
+      "name":"control.HaltedInstances_processInstance","type":"control",
+      "reverseBindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value","processInstance"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_processInstance__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","processTemplate"]}],"rules":[],
+      "name":"control.HaltedInstances_processTemplate","type":"control",
+      "reverseBindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value","processTemplate"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_processTemplate__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","status"]}],"rules":[],"name":
+      "control.HaltedInstances_status","type":"control","reverseBindings":[{
+          "name":"pane.HaltedInstances","type":"pane","sourceFeature":[
+            "value","status"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "HaltedInstances_status__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","time"]}],"rules":[],"name":
+      "control.HaltedInstances_time","type":"control","reverseBindings":[{
+          "name":"pane.HaltedInstances","type":"pane","sourceFeature":[
+            "value","time"],"destinationFeature":["value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_time__length","message":"",
+          "messageRef":"resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","siebelCircuitID"]}],"rules":[],
+      "name":"control.HaltedInstances_siebelCircuitID","type":"control",
+      "reverseBindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value","siebelCircuitID"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_siebelCircuitID__length",
+          "message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","clientName"]}],"rules":[],"name":
+      "control.HaltedInstances_clientName","type":"control",
+      "reverseBindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value","clientName"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_clientName__length","message":
+          "","messageRef":"resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.HaltedInstances","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","projectName"]}],"rules":[],"name":
+      "control.HaltedInstances_projectName","type":"control",
+      "reverseBindings":[{"name":"pane.HaltedInstances","type":"pane",
+          "sourceFeature":["value","projectName"],"destinationFeature":[
+            "value"]}],"componentType":
+      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[{"name":"HaltedInstances_projectName__length","message":
+          "","messageRef":"resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
       false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
@@ -367,12 +619,18 @@
       "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
       "lblBackground","validations":[],"inheritsDeferInitialization":false,
       "readOnly":false,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false},{"bindings":[],"rules":[{"name":
-          "cancel","trigger":"select","cancelOnError":false}],"name":
-      "control.cancel","type":"control","reverseBindings":[],"componentType":
-      "com.tibco.forms.controls.button","shortLabelRef":"","labelRef":"",
-      "hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[],"inheritsDeferInitialization":false,"readOnly":
+      "alwaysRenderControl":false},{"bindings":[],"rules":[],"name":
+      "control.sfcImage","type":"control","reverseBindings":[],
+      "componentType":"com.tibco.forms.controls.image","shortLabelRef":"",
+      "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
+      "","validations":[],"inheritsDeferInitialization":false,"readOnly":
+      false,"required":false,"value":[],"tabIndex":0,"alwaysRenderControl":
+      false,"propSetImageURL":"../../../Images/SFC.png"},{"bindings":[],
+      "rules":[{"name":"cancel","trigger":"select","cancelOnError":false}],
+      "name":"control.cancel","type":"control","reverseBindings":[],
+      "componentType":"com.tibco.forms.controls.button","shortLabelRef":"",
+      "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
+      "","validations":[],"inheritsDeferInitialization":false,"readOnly":
       false,"required":false,"value":[],"tabIndex":0,"alwaysRenderControl":
       false,"propSetButtonType":"peripheral"},{"bindings":[],"rules":[{
           "name":"submit","trigger":"select","cancelOnError":false}],"name":
@@ -412,14 +670,86 @@
       "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[
         {"name":"pane.pane3","type":"pane"}],"staticRendering":false,
       "textOnly":false,"deferRendering":false,"deferInitialization":false,
-      "staticCustomContent":{}},{"bindings":[],"rules":[],"name":
-      "pane.pneCompleted","type":"pane","reverseBindings":[],"componentType":
+      "staticCustomContent":{}},{"bindings":[{"name":
+          "control.CompletedInstances_processInstance","type":"control",
+          "sourceFeature":["value","processInstance"],"destinationFeature":[
+            "value"]},{"name":"control.CompletedInstances_processTemplate",
+          "type":"control","sourceFeature":["value","processTemplate"],
+          "destinationFeature":["value"]},{"name":
+          "control.CompletedInstances_status","type":"control",
+          "sourceFeature":["value","status"],"destinationFeature":["value"]},
+        {"name":"control.CompletedInstances_time","type":"control",
+          "sourceFeature":["value","time"],"destinationFeature":["value"]},{
+          "name":"control.CompletedInstances_siebelCircuitID","type":
+          "control","sourceFeature":["value","siebelCircuitID"],
+          "destinationFeature":["value"]},{"name":
+          "control.CompletedInstances_clientName","type":"control",
+          "sourceFeature":["value","clientName"],"destinationFeature":[
+            "value"]},{"name":"control.CompletedInstances_projectName",
+          "type":"control","sourceFeature":["value","projectName"],
+          "destinationFeature":["value"]},{"name":
+          "data.CompletedInstances","type":"data","sourceFeature":["value"],
+          "destinationFeature":["value"]}],"rules":[],"name":
+      "pane.CompletedInstances","type":"pane","reverseBindings":[{"name":
+          "control.CompletedInstances_processInstance","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "processInstance"]},{"name":
+          "control.CompletedInstances_processTemplate","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "processTemplate"]},{"name":
+          "control.CompletedInstances_status","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value","status"]},
+        {"name":"control.CompletedInstances_time","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value","time"]},{
+          "name":"control.CompletedInstances_siebelCircuitID","type":
+          "control","sourceFeature":["value"],"destinationFeature":[
+            "value","siebelCircuitID"]},{"name":
+          "control.CompletedInstances_clientName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "clientName"]},{"name":
+          "control.CompletedInstances_projectName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "projectName"]},{"name":"data.CompletedInstances","type":
+          "data","sourceFeature":["value"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.panes.grid","shortLabelRef":"",
+      "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
+      "vPaneMargin","validations":[],"inheritsDeferInitialization":false,
+      "readOnly":false,"labelPosition":"top","dataType":
+      "com.sfc.fosImpl.genericReporting.Record","concreteClassifierNames":[
+        "com.sfc.fosImpl.genericReporting.Record"],
+      "concreteClassifierLabels":["Record"],"children":[{"name":
+          "control.CompletedInstances_processInstance","type":"control"},{
+          "name":"control.CompletedInstances_processTemplate","type":
+          "control"},{"name":"control.CompletedInstances_status","type":
+          "control"},{"name":"control.CompletedInstances_time","type":
+          "control"},{"name":"control.CompletedInstances_siebelCircuitID",
+          "type":"control"},{"name":
+          "control.CompletedInstances_clientName","type":"control"},{"name":
+          "control.CompletedInstances_projectName","type":"control"}],
+      "staticRendering":false,"textOnly":false,"deferRendering":false,
+      "deferInitialization":false,"staticCustomContent":{},
+      "propSetCollectionPaneEnableButtonsWhenReadOnly":true,
+      "propSetCollectionPaneShowNavigator":false,
+      "propSetCollectionPaneSupportAddOperation":false,
+      "propSetCollectionPaneSupportDeleteOperation":false,
+      "propSetCollectionPaneAddOperationLabel":"",
+      "propSetCollectionPaneAddOperationLabelRef":"",
+      "propSetCollectionPaneDeleteOperationLabel":"",
+      "propSetCollectionPaneDeleteOperationLabelRef":"",
+      "propSetCollectionPaneButtonRenderPosition":"TOP",
+      "propSetGridPaneMaxVisibleRows":10,"propSetGridPaneMovableColumns":
+      false,"propSetGridPaneSortable":true,"propSetGridPaneSelModelMultiple":
+      false,"propSetGridPaneAlwaysRenderControls":false,
+      "propSetGridPaneRowLabel":"{0}","propSetGridPaneRowLabelRef":null,
+      "propSetGridPaneRowLabelType":"custom","propSetGridPaneSortColumn":[]},
+    {"bindings":[],"rules":[],"name":"pane.pneCompleted","type":"pane",
+      "reverseBindings":[],"componentType":
       "com.tibco.forms.panes.vertical","shortLabelRef":"","labelRef":"",
       "hintRef":"","enabled":true,"visible":true,"styleName":
       "vPaneBorderMain","validations":[],"inheritsDeferInitialization":
       false,"readOnly":false,"labelPosition":"top","dataType":null,
       "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[
-        {"name":"control.passthrough1","type":"control"}],"staticRendering":
+        {"name":"pane.CompletedInstances","type":"pane"}],"staticRendering":
       false,"textOnly":false,"deferRendering":false,"deferInitialization":
       false,"staticCustomContent":{}},{"bindings":[{"name":
           "control.StartedInstances_processInstance","type":"control",
@@ -500,26 +830,97 @@
       "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[
         {"name":"pane.StartedInstances","type":"pane"}],"staticRendering":
       false,"textOnly":false,"deferRendering":false,"deferInitialization":
-      false,"staticCustomContent":{}},{"bindings":[],"rules":[],"name":
-      "pane.pane2","type":"pane","reverseBindings":[],"componentType":
+      false,"staticCustomContent":{}},{"bindings":[{"name":
+          "control.HaltedInstances_processInstance","type":"control",
+          "sourceFeature":["value","processInstance"],"destinationFeature":[
+            "value"]},{"name":"control.HaltedInstances_processTemplate",
+          "type":"control","sourceFeature":["value","processTemplate"],
+          "destinationFeature":["value"]},{"name":
+          "control.HaltedInstances_status","type":"control","sourceFeature":[
+            "value","status"],"destinationFeature":["value"]},{"name":
+          "control.HaltedInstances_time","type":"control","sourceFeature":[
+            "value","time"],"destinationFeature":["value"]},{"name":
+          "control.HaltedInstances_siebelCircuitID","type":"control",
+          "sourceFeature":["value","siebelCircuitID"],"destinationFeature":[
+            "value"]},{"name":"control.HaltedInstances_clientName","type":
+          "control","sourceFeature":["value","clientName"],
+          "destinationFeature":["value"]},{"name":
+          "control.HaltedInstances_projectName","type":"control",
+          "sourceFeature":["value","projectName"],"destinationFeature":[
+            "value"]},{"name":"data.HaltedInstances","type":"data",
+          "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
+      [],"name":"pane.HaltedInstances","type":"pane","reverseBindings":[{
+          "name":"control.HaltedInstances_processInstance","type":
+          "control","sourceFeature":["value"],"destinationFeature":[
+            "value","processInstance"]},{"name":
+          "control.HaltedInstances_processTemplate","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "processTemplate"]},{"name":"control.HaltedInstances_status",
+          "type":"control","sourceFeature":["value"],"destinationFeature":[
+            "value","status"]},{"name":"control.HaltedInstances_time","type":
+          "control","sourceFeature":["value"],"destinationFeature":[
+            "value","time"]},{"name":
+          "control.HaltedInstances_siebelCircuitID","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "siebelCircuitID"]},{"name":
+          "control.HaltedInstances_clientName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "clientName"]},{"name":"control.HaltedInstances_projectName",
+          "type":"control","sourceFeature":["value"],"destinationFeature":[
+            "value","projectName"]},{"name":"data.HaltedInstances","type":
+          "data","sourceFeature":["value"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.panes.grid","shortLabelRef":"",
+      "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
+      "vPaneMargin","validations":[],"inheritsDeferInitialization":false,
+      "readOnly":false,"labelPosition":"top","dataType":
+      "com.sfc.fosImpl.genericReporting.Record","concreteClassifierNames":[
+        "com.sfc.fosImpl.genericReporting.Record"],
+      "concreteClassifierLabels":["Record"],"children":[{"name":
+          "control.HaltedInstances_processInstance","type":"control"},{
+          "name":"control.HaltedInstances_processTemplate","type":
+          "control"},{"name":"control.HaltedInstances_status","type":
+          "control"},{"name":"control.HaltedInstances_time","type":
+          "control"},{"name":"control.HaltedInstances_siebelCircuitID",
+          "type":"control"},{"name":"control.HaltedInstances_clientName",
+          "type":"control"},{"name":"control.HaltedInstances_projectName",
+          "type":"control"}],"staticRendering":false,"textOnly":false,
+      "deferRendering":false,"deferInitialization":false,
+      "staticCustomContent":{},
+      "propSetCollectionPaneEnableButtonsWhenReadOnly":true,
+      "propSetCollectionPaneShowNavigator":false,
+      "propSetCollectionPaneSupportAddOperation":false,
+      "propSetCollectionPaneSupportDeleteOperation":false,
+      "propSetCollectionPaneAddOperationLabel":"",
+      "propSetCollectionPaneAddOperationLabelRef":"",
+      "propSetCollectionPaneDeleteOperationLabel":"",
+      "propSetCollectionPaneDeleteOperationLabelRef":"",
+      "propSetCollectionPaneButtonRenderPosition":"TOP",
+      "propSetGridPaneMaxVisibleRows":10,"propSetGridPaneMovableColumns":
+      false,"propSetGridPaneSortable":true,"propSetGridPaneSelModelMultiple":
+      false,"propSetGridPaneAlwaysRenderControls":false,
+      "propSetGridPaneRowLabel":"{0}","propSetGridPaneRowLabelRef":null,
+      "propSetGridPaneRowLabelType":"custom","propSetGridPaneSortColumn":[]},
+    {"bindings":[],"rules":[],"name":"pane.pane2","type":"pane",
+      "reverseBindings":[],"componentType":
       "com.tibco.forms.panes.vertical","shortLabelRef":"","labelRef":"",
       "hintRef":"","enabled":true,"visible":true,"styleName":
       "vPaneBorderMain","validations":[],"inheritsDeferInitialization":
       false,"readOnly":false,"labelPosition":"top","dataType":null,
-      "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[],
-      "staticRendering":false,"textOnly":false,"deferRendering":false,
-      "deferInitialization":false,"staticCustomContent":{}},{"bindings":[{
-          "name":"control.CancelledInstances_processInstance","type":
-          "control","sourceFeature":["value","processInstance"],
+      "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[
+        {"name":"pane.HaltedInstances","type":"pane"}],"staticRendering":
+      false,"textOnly":false,"deferRendering":false,"deferInitialization":
+      false,"staticCustomContent":{}},{"bindings":[{"name":
+          "control.CancelledInstances_processInstance","type":"control",
+          "sourceFeature":["value","processInstance"],"destinationFeature":[
+            "value"]},{"name":"control.CancelledInstances_processTemplate",
+          "type":"control","sourceFeature":["value","processTemplate"],
           "destinationFeature":["value"]},{"name":
-          "control.CancelledInstances_processTemplate","type":"control",
-          "sourceFeature":["value","processTemplate"],"destinationFeature":[
-            "value"]},{"name":"control.CancelledInstances_status","type":
-          "control","sourceFeature":["value","status"],"destinationFeature":[
-            "value"]},{"name":"control.CancelledInstances_time","type":
-          "control","sourceFeature":["value","time"],"destinationFeature":[
-            "value"]},{"name":"control.CancelledInstances_siebelCircuitID",
-          "type":"control","sourceFeature":["value","siebelCircuitID"],
+          "control.CancelledInstances_status","type":"control",
+          "sourceFeature":["value","status"],"destinationFeature":["value"]},
+        {"name":"control.CancelledInstances_time","type":"control",
+          "sourceFeature":["value","time"],"destinationFeature":["value"]},{
+          "name":"control.CancelledInstances_siebelCircuitID","type":
+          "control","sourceFeature":["value","siebelCircuitID"],
           "destinationFeature":["value"]},{"name":
           "control.CancelledInstances_clientName","type":"control",
           "sourceFeature":["value","clientName"],"destinationFeature":[
@@ -611,19 +1012,19 @@
       "hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[],"inheritsDeferInitialization":false,"readOnly":
       false,"labelPosition":"top","dataType":null,"concreteClassifierNames":[],
-      "concreteClassifierLabels":[],"children":[{"name":
-          "pane.ListOfTables","type":"pane"}],"staticRendering":false,
+      "concreteClassifierLabels":[],"children":[{"name":"control.sfcImage",
+          "type":"control"},{"name":"pane.ListOfTables","type":"pane"}],
+      "staticRendering":false,"textOnly":false,"deferRendering":false,
+      "deferInitialization":false,"staticCustomContent":{}},{"bindings":[],
+      "rules":[],"name":"pane.toolbar","type":"pane","reverseBindings":[],
+      "componentType":"com.tibco.forms.panes.horizontal","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"toolbar","validations":[],"inheritsDeferInitialization":
+      false,"readOnly":false,"labelPosition":"left","dataType":null,
+      "concreteClassifierNames":[],"concreteClassifierLabels":[],"children":[
+        {"name":"control.cancel","type":"control"},{"name":
+          "control.submit","type":"control"}],"staticRendering":false,
       "textOnly":false,"deferRendering":false,"deferInitialization":false,
-      "staticCustomContent":{}},{"bindings":[],"rules":[],"name":
-      "pane.toolbar","type":"pane","reverseBindings":[],"componentType":
-      "com.tibco.forms.panes.horizontal","shortLabelRef":"","labelRef":"",
-      "hintRef":"","enabled":true,"visible":true,"styleName":"toolbar",
-      "validations":[],"inheritsDeferInitialization":false,"readOnly":
-      false,"labelPosition":"left","dataType":null,"concreteClassifierNames":
-      [],"concreteClassifierLabels":[],"children":[{"name":
-          "control.cancel","type":"control"},{"name":"control.submit","type":
-          "control"}],"staticRendering":false,"textOnly":false,
-      "deferRendering":false,"deferInitialization":false,
       "staticCustomContent":{}},{"bindings":[],"rules":[],"name":
       "pane.messages","type":"pane","reverseBindings":[],"componentType":
       "com.tibco.forms.panes.messages","shortLabelRef":"","labelRef":"",

@@ -29,9 +29,7 @@
     <form:rule name="rule.loadProcessList" label="Load Process List">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.loadProcessList" label="Load Process List">
-        <form:script>data.setFetchDataURL(&quot;http://stalewar-t470:9801/&quot;);&#xD;
-&#xD;
-&#xD;
+        <form:script>//data.setFetchDataURL(&quot;http://stalewar-t470:9801/&quot;);&#xD;
 &#xD;
 ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#xD;
 pane.pneSearchCriteria.setVisible(false);&#xD;
@@ -44,15 +42,21 @@ pane.pneSearchCriteria.setVisible(false);&#xD;
     <form:rule name="rule.search" label="Search">
       <form:event source="#control.rdioSearchOption" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.rdioSearchOption.update"/>
       <form:action xsi:type="form:ScriptAction" name="action.search" label="Search">
-        <form:script>ldPrcData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstances?processname=&quot;+control.optnSelectProcess.getValue());&#xD;
-&#xD;
+        <form:script>&#xD;
 if (control.rdioSearchOption.getValue()==&quot;SEARCH&quot;)&#xD;
 {&#xD;
+	pane.CancelledInstances.getValue().clear();&#xD;
+	pane.CompletedInstances.getValue().clear();&#xD;
+	pane.HaltedInstances.getValue().clear();&#xD;
+	pane.StartedInstances.getValue().clear();&#xD;
 	pane.pneSearchCriteria.setVisible(true);&#xD;
 }&#xD;
 else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
 {&#xD;
+	ldPrcData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstances?processname=&quot;+control.optnSelectProcess.getValue());&#xD;
 	pane.pneSearchCriteria.setVisible(false);&#xD;
+	control.optnSearchCriteria.setValue(null);&#xD;
+	control.txtSearchValue.setValue(&quot;&quot;);&#xD;
 }&#xD;
 &#xD;
 </form:script>
@@ -213,12 +217,13 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
     <form:defaults>
       <form:labelProperties position="top"/>
     </form:defaults>
-    <form:control styleClass="vPaneBorderMain" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.sfcImage">
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.sfcImage">
       <form:propertySet xsi:type="et:ImagePropertySet" sfRelative="true">
         <et:url>Images/SFC.png</et:url>
       </form:propertySet>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
+      <form:visual width="800"/>
       <form:required>false</form:required>
     </form:control>
     <form:pane generated="true" syncFlags="851968" styleClass="pneWindow" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.ListOfTables" paneType="com.tibco.forms.panes.vertical">
@@ -334,6 +339,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
           <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
@@ -441,6 +447,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
           <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
@@ -548,6 +555,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
           <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>

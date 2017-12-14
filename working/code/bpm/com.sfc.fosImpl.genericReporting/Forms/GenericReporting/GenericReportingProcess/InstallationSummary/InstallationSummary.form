@@ -3,13 +3,16 @@
   <form:externalResources>
     <form:externalResource name="resource.common" uri="pathmap://FORMS_RESOURCES/common.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.form" uri="GenericReporting/GenericReportingProcess/InstallationSummary/InstallationSummary.properties" sfRelative="true" internal="true" localized="true"/>
-    <form:externalResource name="resource.safaricom" uri="CSS/safaricom.css" sfRelative="true"/>
-    <form:externalResource name="resource.loadData" uri="Javascript/loadData.js" sfRelative="true"/>
+    <form:externalResource name="resource.safaricom" uri="CSS/safaricom.css" sfRelative="true" localized="true"/>
+    <form:externalResource name="resource.loadData" uri="Javascript/loadData.js" sfRelative="true" localized="true"/>
+    <form:externalResource name="resource.SFC" uri="Images/SFC.png" sfRelative="true" localized="true"/>
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" name="data.fetchDataURL" label="fetchDataURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
     <form:parameter generated="true" name="data.CancelledInstances" label="CancelledInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
     <form:parameter generated="true" name="data.StartedInstances" label="StartedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.HaltedInstances" label="HaltedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.CompletedInstances" label="CompletedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -27,7 +30,13 @@
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.loadProcessList" label="Load Process List">
         <form:script>data.setFetchDataURL(&quot;http://stalewar-t470:9801/&quot;);&#xD;
+&#xD;
+&#xD;
+&#xD;
 ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#xD;
+pane.pneSearchCriteria.setVisible(false);&#xD;
+&#xD;
+&#xD;
 &#xD;
 </form:script>
       </form:action>
@@ -36,74 +45,158 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
       <form:event source="#control.rdioSearchOption" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.rdioSearchOption.update"/>
       <form:action xsi:type="form:ScriptAction" name="action.search" label="Search">
         <form:script>ldPrcData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstances?processname=&quot;+control.optnSelectProcess.getValue());&#xD;
+&#xD;
+if (control.rdioSearchOption.getValue()==&quot;SEARCH&quot;)&#xD;
+{&#xD;
+	pane.pneSearchCriteria.setVisible(true);&#xD;
+}&#xD;
+else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
+{&#xD;
+	pane.pneSearchCriteria.setVisible(false);&#xD;
+}&#xD;
+&#xD;
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.searchRule" label="SearchRule">
+      <form:event source="#control.btnSearch" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.btnSearch.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.searchInstances" label="SearchInstances">
+        <form:script>ldPrcSearchData(factory,pane,control,logger,data.getFetchDataURL(),&quot;searchBy?searchby=&quot;+control.optnSearchCriteria.getValue()+&quot;&amp;searchvalue=&quot;+control.txtSearchValue.getValue()+&quot;&amp;processname=&quot;+control.optnSelectProcess.getValue());&#xD;
+&#xD;
+&#xD;
+&#xD;
 </form:script>
       </form:action>
     </form:rule>
   </form:rules>
   <form:bindings>
     <form:binding generated="true" direction="bothways" name="_fTfYYN_GEee4yOWJZ8GYTA">
-      <form:source target="data.CancelledInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.CancelledInstances.value"/>
-      <form:destination target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.CancelledInstances.value"/>
+      <form:source target="data.CancelledInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.CancelledInstances.value"></form:source>
+      <form:destination target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.CancelledInstances.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fT0IgN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.CancelledInstances.value.processInstance"/>
-      <form:destination target="control.CancelledInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_processInstance.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.CancelledInstances.value.processInstance"></form:source>
+      <form:destination target="control.CancelledInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_processInstance.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fUKGwN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.CancelledInstances.value.processTemplate"/>
-      <form:destination target="control.CancelledInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_processTemplate.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.CancelledInstances.value.processTemplate"></form:source>
+      <form:destination target="control.CancelledInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_processTemplate.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fUgFAN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.CancelledInstances.value.status"/>
-      <form:destination target="control.CancelledInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_status.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.CancelledInstances.value.status"></form:source>
+      <form:destination target="control.CancelledInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_status.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fU34cN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.CancelledInstances.value.time"/>
-      <form:destination target="control.CancelledInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_time.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.CancelledInstances.value.time"></form:source>
+      <form:destination target="control.CancelledInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_time.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fVNPoN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.CancelledInstances.value.siebelCircuitID"/>
-      <form:destination target="control.CancelledInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_siebelCircuitID.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.CancelledInstances.value.siebelCircuitID"></form:source>
+      <form:destination target="control.CancelledInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_siebelCircuitID.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fVh_wN_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.CancelledInstances.value.clientName"/>
-      <form:destination target="control.CancelledInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_clientName.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.CancelledInstances.value.clientName"></form:source>
+      <form:destination target="control.CancelledInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_clientName.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_fV2v4N_GEee4yOWJZ8GYTA">
-      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.CancelledInstances.value.projectName"/>
-      <form:destination target="control.CancelledInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_projectName.value"/>
+      <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.CancelledInstances.value.projectName"></form:source>
+      <form:destination target="control.CancelledInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_projectName.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_Qk-YsN_KEee4yOWJZ8GYTA">
-      <form:source target="data.StartedInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.StartedInstances.value"/>
-      <form:destination target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.StartedInstances.value"/>
+      <form:source target="data.StartedInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.StartedInstances.value"></form:source>
+      <form:destination target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.StartedInstances.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QlyRAN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.StartedInstances.value.processInstance"/>
-      <form:destination target="control.StartedInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_processInstance.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.StartedInstances.value.processInstance"></form:source>
+      <form:destination target="control.StartedInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_processInstance.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QmkUIN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.StartedInstances.value.processTemplate"/>
-      <form:destination target="control.StartedInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_processTemplate.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.StartedInstances.value.processTemplate"></form:source>
+      <form:destination target="control.StartedInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_processTemplate.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QnYMcN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.StartedInstances.value.status"/>
-      <form:destination target="control.StartedInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_status.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.StartedInstances.value.status"></form:source>
+      <form:destination target="control.StartedInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_status.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QoUAkN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.StartedInstances.value.time"/>
-      <form:destination target="control.StartedInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_time.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.StartedInstances.value.time"></form:source>
+      <form:destination target="control.StartedInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_time.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QpKVIN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.StartedInstances.value.siebelCircuitID"/>
-      <form:destination target="control.StartedInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_siebelCircuitID.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.StartedInstances.value.siebelCircuitID"></form:source>
+      <form:destination target="control.StartedInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_siebelCircuitID.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QqCe4N_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.StartedInstances.value.clientName"/>
-      <form:destination target="control.StartedInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_clientName.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.StartedInstances.value.clientName"></form:source>
+      <form:destination target="control.StartedInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_clientName.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_Qq4MYN_KEee4yOWJZ8GYTA">
-      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.StartedInstances.value.projectName"/>
-      <form:destination target="control.StartedInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_projectName.value"/>
+      <form:source target="pane.StartedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.StartedInstances.value.projectName"></form:source>
+      <form:destination target="control.StartedInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.StartedInstances_projectName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_auX4UN_PEeeQHIXdSwQiWA">
+      <form:source target="data.HaltedInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.HaltedInstances.value"></form:source>
+      <form:destination target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.HaltedInstances.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_aud-8N_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.HaltedInstances.value.processInstance"></form:source>
+      <form:destination target="control.HaltedInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_processInstance.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_auhpUN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.HaltedInstances.value.processTemplate"></form:source>
+      <form:destination target="control.HaltedInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_processTemplate.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_aul6wN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.HaltedInstances.value.status"></form:source>
+      <form:destination target="control.HaltedInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_status.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_auqzQN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.HaltedInstances.value.time"></form:source>
+      <form:destination target="control.HaltedInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_time.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_auvrwN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.HaltedInstances.value.siebelCircuitID"></form:source>
+      <form:destination target="control.HaltedInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_siebelCircuitID.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_au0kQN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.HaltedInstances.value.clientName"></form:source>
+      <form:destination target="control.HaltedInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_clientName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_au41sN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.HaltedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.HaltedInstances.value.projectName"></form:source>
+      <form:destination target="control.HaltedInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.HaltedInstances_projectName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_au9HIN_PEeeQHIXdSwQiWA">
+      <form:source target="data.CompletedInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.CompletedInstances.value"></form:source>
+      <form:destination target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.CompletedInstances.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avAxgN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.CompletedInstances.value.processInstance"></form:source>
+      <form:destination target="control.CompletedInstances_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_processInstance.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avFC8N_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" data="form.pane.CompletedInstances.value.processTemplate"></form:source>
+      <form:destination target="control.CompletedInstances_processTemplate" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_processTemplate.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avIGQN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" data="form.pane.CompletedInstances.value.status"></form:source>
+      <form:destination target="control.CompletedInstances_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_status.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avLJkN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" data="form.pane.CompletedInstances.value.time"></form:source>
+      <form:destination target="control.CompletedInstances_time" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_time.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avOM4N_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" data="form.pane.CompletedInstances.value.siebelCircuitID"></form:source>
+      <form:destination target="control.CompletedInstances_siebelCircuitID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_siebelCircuitID.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avR3QN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" data="form.pane.CompletedInstances.value.clientName"></form:source>
+      <form:destination target="control.CompletedInstances_clientName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_clientName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_avU6kN_PEeeQHIXdSwQiWA">
+      <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.CompletedInstances.value.projectName"></form:source>
+      <form:destination target="control.CompletedInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CompletedInstances_projectName.value"></form:destination>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -120,7 +213,15 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
     <form:defaults>
       <form:labelProperties position="top"/>
     </form:defaults>
-    <form:pane generated="true" generatorSource="GenericReporting.xpdl#_V0zJUNv1EeewD-vyNDe4_g?p=com.sfc.fosImpl.genericReporting%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=GenericReporting%3a%3aGenericReportingProcess%26n=ListOfTables?" syncFlags="851968" styleClass="pneWindow" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.ListOfTables" paneType="com.tibco.forms.panes.vertical">
+    <form:control styleClass="vPaneBorderMain" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.sfcImage">
+      <form:propertySet xsi:type="et:ImagePropertySet" sfRelative="true">
+        <et:url>Images/SFC.png</et:url>
+      </form:propertySet>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane generated="true" syncFlags="851968" styleClass="pneWindow" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.ListOfTables" paneType="com.tibco.forms.panes.vertical">
       <form:label>List Of Tables</form:label>
       <form:hint></form:hint>
       <form:visible>true</form:visible>
@@ -182,9 +283,9 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
             </form:defaults>
             <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.optnSearchCriteria">
               <form:propertySet xsi:type="et:MultiChoicePropertySet">
-                <et:choiceValues>CUS_NAME</et:choiceValues>
-                <et:choiceValues>SIEBEL_ID</et:choiceValues>
-                <et:choiceValues>PM</et:choiceValues>
+                <et:choiceValues>attribute3</et:choiceValues>
+                <et:choiceValues>attribute2</et:choiceValues>
+                <et:choiceValues>attribute9</et:choiceValues>
                 <et:choiceLabels>Customer Name</et:choiceLabels>
                 <et:choiceLabels>Siebel Circuit ID</et:choiceLabels>
                 <et:choiceLabels>Project Manager</et:choiceLabels>
@@ -218,16 +319,102 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
       <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneCompleted" paneType="com.tibco.forms.panes.vertical">
         <form:visible>true</form:visible>
         <form:enabled>true</form:enabled>
-        <form:visual height="250"/>
         <form:labelProperties visible="false"/>
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
-        <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.passthrough" controlType="com.tibco.forms.controls.passthrough" name="control.passthrough1">
-          <form:label>Passthrough 1</form:label>
+        <form:pane generated="true" generatorSource="GenericReporting.xpdl#_JMvNkN_PEeeQHIXdSwQiWA?p=com.sfc.fosImpl.genericReporting%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=GenericReporting%3a%3aGenericReportingTaskAnalysis%26n=CompletedInstances?" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.CompletedInstances" paneType="com.tibco.forms.panes.grid">
+          <form:propertySet xsi:type="et:GridPanePropertySet">
+            <et:showNavigator>false</et:showNavigator>
+            <et:editable>true</et:editable>
+            <et:sortable>true</et:sortable>
+            <et:rowLabel>{0}</et:rowLabel>
+          </form:propertySet>
+          <form:label>CompletedInstances</form:label>
+          <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
-        </form:control>
+          <form:defaults>
+            <form:labelProperties position="top"/>
+          </form:defaults>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_processInstance">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Process Instance</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_processTemplate">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Process Template</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_status">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Status</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_time">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Time</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_siebelCircuitID">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Siebel Circuit ID</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_clientName">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Client Name</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CompletedInstances_projectName">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Project Name</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+        </form:pane>
       </form:pane>
       <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblInProgress">
         <form:label>In Progress Provisioning</form:label>
@@ -251,7 +438,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
             <et:rowLabel>{0}</et:rowLabel>
           </form:propertySet>
           <form:label>StartedInstances</form:label>
-          <form:hint/>
+          <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
           <form:defaults>
@@ -263,7 +450,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Process Instance</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -274,7 +461,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Process Template</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -285,7 +472,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Status</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -296,7 +483,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Time</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -307,7 +494,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Siebel Circuit ID</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -318,7 +505,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Client Name</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -329,7 +516,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Project Name</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -350,6 +537,98 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
+        <form:pane generated="true" generatorSource="GenericReporting.xpdl#_IyxOYN_PEeeQHIXdSwQiWA?p=com.sfc.fosImpl.genericReporting%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=GenericReporting%3a%3aGenericReportingTaskAnalysis%26n=HaltedInstances?" syncFlags="16384" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.HaltedInstances" paneType="com.tibco.forms.panes.grid">
+          <form:propertySet xsi:type="et:GridPanePropertySet">
+            <et:showNavigator>false</et:showNavigator>
+            <et:editable>true</et:editable>
+            <et:sortable>true</et:sortable>
+            <et:rowLabel>{0}</et:rowLabel>
+          </form:propertySet>
+          <form:label>HaltedInstances</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:defaults>
+            <form:labelProperties position="top"/>
+          </form:defaults>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_processInstance">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Process Instance</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RKp1cN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processTemplate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_processTemplate">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Process Template</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RNqtMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=status?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_status">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Status</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RRF0oN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=time?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_time">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Time</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RTzKYN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=siebelCircuitID?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_siebelCircuitID">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Siebel Circuit ID</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_RW7W4N_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=clientName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_clientName">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Client Name</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.HaltedInstances_projectName">
+            <form:propertySet xsi:type="et:TextPropertySet">
+              <et:displayLength>40</et:displayLength>
+              <et:maxLength>50</et:maxLength>
+            </form:propertySet>
+            <form:label>Project Name</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+        </form:pane>
       </form:pane>
       <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblCancelled">
         <form:label>Provisioning Cancelled</form:label>
@@ -372,7 +651,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
             <et:rowLabel>{0}</et:rowLabel>
           </form:propertySet>
           <form:label>CancelledInstances</form:label>
-          <form:hint/>
+          <form:hint></form:hint>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
           <form:labelProperties visible="false"/>
@@ -385,7 +664,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Process Instance</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -396,7 +675,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Process Template</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -407,7 +686,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Status</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -418,7 +697,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Time</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -429,7 +708,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Siebel Circuit ID</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -440,7 +719,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Client Name</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -451,7 +730,7 @@ ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Project Name</form:label>
-            <form:hint/>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>

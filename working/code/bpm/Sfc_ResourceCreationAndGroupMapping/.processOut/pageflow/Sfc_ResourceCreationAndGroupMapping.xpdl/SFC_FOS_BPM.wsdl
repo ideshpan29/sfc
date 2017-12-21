@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707">
+    <partnerLinkType xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype" name="PortType_PLT">
+    <role name="PortTypeProvider" portType="tns:PortType"/>
+  </partnerLinkType>
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+            <xs:element name="createresource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:createresourceinput"/>
+                        <xs:element ref="ns0:createresourceoutput"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createresourceinput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="createresourcerequest">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="orgname" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="flag" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="entityname" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="email" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createresourceoutput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="outputmessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="faultmessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fetchresource">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:fetchresourceinput"/>
+                        <xs:element ref="ns0:fetchresourceoutput"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fetchresourceinput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="processname" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fetchresourceoutput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="resource">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="guid" type="xs:string"/>
+                                    <xs:element name="label" type="xs:string"/>
+                                    <xs:element name="name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getprocessinstances">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:getprocessinstancesinput"/>
+                        <xs:element ref="ns0:getprocessinstancesoutput"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getprocessinstancesinput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="processname" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getprocessinstancesoutput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_complete">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="sibelcircuit_id" type="xs:string"/>
+                                    <xs:element name="projectmanager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_started">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="sibelcircuit_id" type="xs:string"/>
+                                    <xs:element name="projectmanager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_halted">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="sibelcircuit_id" type="xs:string"/>
+                                    <xs:element name="projectmanager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_cancelled">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="sibelcircuit_id" type="xs:string"/>
+                                    <xs:element name="projectmanager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ldapentry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns0:ldapentryinput"/>
+                        <xs:element ref="ns0:ldapentryoutput"/>
+                        <xs:element ref="ns0:ldapentryinputrepeat"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ldapentryinput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="firstname" type="xs:string"/>
+                        <xs:element name="lastname" type="xs:string"/>
+                        <xs:element name="email" type="xs:string"/>
+                        <xs:element name="password" type="xs:string"/>
+                        <xs:element name="orgmodelname" type="xs:string"/>
+                        <xs:element name="flag" type="xs:string"/>
+                        <xs:element name="entity" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ldapentryinputrepeat">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="input">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="firstname" type="xs:string"/>
+                                    <xs:element name="lastname" type="xs:string"/>
+                                    <xs:element name="email" type="xs:string"/>
+                                    <xs:element name="password" type="xs:string"/>
+                                    <xs:element name="orgmodelname" type="xs:string"/>
+                                    <xs:element name="flag" type="xs:string"/>
+                                    <xs:element name="entity" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ldapentryoutput" type="xs:string"/>
+            <xs:element name="parsecsv">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="users">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="flag" type="xs:string"/>
+                                    <xs:element name="entityvalue" type="xs:string"/>
+                                    <xs:element name="orgmodelname" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reesourcecreationandmapping">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:createresource"/>
+                        <xs:element ref="ns0:ldapentry"/>
+                        <xs:element ref="ns0:parsecsv"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="reportgeneration">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:getprocessinstances"/>
+                        <xs:element ref="ns0:searchprocessinstances"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="root">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:fetchresource"/>
+                        <xs:element ref="ns0:reportgeneration"/>
+                        <xs:element ref="ns0:reesourcecreationandmapping"/>
+                        <xs:element ref="ns0:workitemcompletion"/>
+                        <xs:element ref="ns0:fault"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="searchprocessinstances">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:searchprocessinstancesinput"/>
+                        <xs:element ref="ns0:searchprocessinstancesoutput"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="searchprocessinstancesinput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="searchkey" type="xs:string"/>
+                        <xs:element name="searchvalue" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="searchprocessinstancesoutput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="searchrecord">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="process_instance" type="xs:string"/>
+                                    <xs:element name="customer_name" type="xs:string"/>
+                                    <xs:element name="sibelcircuit_id" type="xs:string"/>
+                                    <xs:element name="projectmanager" type="xs:string"/>
+                                    <xs:element name="cur_activity" type="xs:string"/>
+                                    <xs:element name="status" type="xs:string"/>
+                                    <xs:element name="exec_mills" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="workitemcompletion">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:workitemcompletioninput"/>
+                        <xs:element ref="ns0:workitemcompletionoutput"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="workitemcompletioninput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="sibelcircuitid" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="workitemcompletionoutput">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="outputmessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="FOSBPMInterface-service0">
+        <wsdl:port binding="tns:PortTypeEndpoint0Binding" name="PortTypeEndpoint0">
+            <soap:address location="http://localhost:7020/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="getResources">
+            <wsdl:input message="tns:FetchResourceinput"/>
+            <wsdl:output message="tns:FetchResourceoutput"/>
+            <wsdl:fault message="tns:FetchResourcefault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessInstances">
+            <wsdl:input message="tns:getProcessInstancesInput"/>
+            <wsdl:output message="tns:getProcessInstancesOutput"/>
+            <wsdl:fault message="tns:getProcessInstancesFault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResourceCreation">
+            <wsdl:input message="tns:ResourceCreationiput"/>
+            <wsdl:output message="tns:ResourceCreationoutput"/>
+            <wsdl:fault message="tns:ResourceCreationfault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="seachProcessInstances">
+            <wsdl:input message="tns:seachProcessInstancesInput"/>
+            <wsdl:output message="tns:seachProcessInstancesOutput"/>
+            <wsdl:fault message="tns:seachProcessInstancesFault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="WorkCompletion">
+            <wsdl:input message="tns:WorkCompletioninput"/>
+            <wsdl:output message="tns:WorkCompletionoutput"/>
+            <wsdl:fault message="tns:WorkCompletionfault" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="Onboarding">
+            <wsdl:input message="tns:Onbordinginput"/>
+            <wsdl:output message="tns:Onbordingoutput"/>
+            <wsdl:fault message="tns:Onbordingfault" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint0Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getResources">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getResources" style="document"/>
+            <wsdl:input>
+                <soap:body parts="fetchresourceinput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="fetchresourceoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessInstances">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getProcessInstances" style="document"/>
+            <wsdl:input>
+                <soap:body parts="getprocessinstancesinput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="getprocessinstancesoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ResourceCreation">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/ResourceCreation" style="document"/>
+            <wsdl:input>
+                <soap:body parts="createresourceinput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="createresourceoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="seachProcessInstances">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/seachProcessInstances" style="document"/>
+            <wsdl:input>
+                <soap:body parts="searchprocessinstancesinput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="searchprocessinstancesoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="WorkCompletion">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/WorkCompletion" style="document"/>
+            <wsdl:input>
+                <soap:body parts="workitemcompletioninput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="workitemcompletionoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="Onboarding">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/Onboarding" style="document"/>
+            <wsdl:input>
+                <soap:body parts="ldapentryinput" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="ldapentryoutput" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="FetchResourceinput">
+        <wsdl:part element="ns0:fetchresourceinput" name="fetchresourceinput"/>
+    </wsdl:message>
+    <wsdl:message name="FetchResourceoutput">
+        <wsdl:part element="ns0:fetchresourceoutput" name="fetchresourceoutput"/>
+    </wsdl:message>
+    <wsdl:message name="FetchResourcefault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesInput">
+        <wsdl:part element="ns0:getprocessinstancesinput" name="getprocessinstancesinput"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesOutput">
+        <wsdl:part element="ns0:getprocessinstancesoutput" name="getprocessinstancesoutput"/>
+    </wsdl:message>
+    <wsdl:message name="getProcessInstancesFault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="ResourceCreationiput">
+        <wsdl:part element="ns0:createresourceinput" name="createresourceinput"/>
+    </wsdl:message>
+    <wsdl:message name="ResourceCreationoutput">
+        <wsdl:part element="ns0:createresourceoutput" name="createresourceoutput"/>
+    </wsdl:message>
+    <wsdl:message name="ResourceCreationfault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesInput">
+        <wsdl:part element="ns0:searchprocessinstancesinput" name="searchprocessinstancesinput"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesOutput">
+        <wsdl:part element="ns0:searchprocessinstancesoutput" name="searchprocessinstancesoutput"/>
+    </wsdl:message>
+    <wsdl:message name="seachProcessInstancesFault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletioninput">
+        <wsdl:part element="ns0:workitemcompletioninput" name="workitemcompletioninput"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletionoutput">
+        <wsdl:part element="ns0:workitemcompletionoutput" name="workitemcompletionoutput"/>
+    </wsdl:message>
+    <wsdl:message name="WorkCompletionfault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordinginput">
+        <wsdl:part element="ns0:ldapentryinputrepeat" name="ldapentryinput"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordingoutput">
+        <wsdl:part element="ns0:ldapentryoutput" name="ldapentryoutput"/>
+    </wsdl:message>
+    <wsdl:message name="Onbordingfault">
+        <wsdl:part element="ns0:fault" name="fault"/>
+    </wsdl:message>
+</wsdl:definitions>

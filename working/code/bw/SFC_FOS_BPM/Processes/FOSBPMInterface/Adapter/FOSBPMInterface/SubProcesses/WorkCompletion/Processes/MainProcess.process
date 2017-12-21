@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:ns4="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:ns3="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema.xsd" xmlns:ns5="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns7="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema1.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+<pd:ProcessDefinition xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:ns4="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:ns3="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema.xsd" xmlns:ns5="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:ns8="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns7="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema1.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/MainProcess.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -8,22 +8,22 @@
     <pd:startY>59</pd:startY>
     <pd:returnBindings>
         <pfx:WorkCompletionoutput>
-            <part1>
-                <ns7:root>
+            <workitemcompletionoutput>
+                <ns8:workitemcompletionoutput>
                     <xsl:choose>
-                        <xsl:when test="$Variable0/root/Error!=&quot;&quot;">
-                            <ns7:response>
+                        <xsl:when test="$Variable0/root/Error!=''">
+                            <ns8:outputmessage>
                                 <xsl:value-of select="$Variable0/root/Error"/>
-                            </ns7:response>
+                            </ns8:outputmessage>
                         </xsl:when>
                         <xsl:otherwise>
-                            <ns7:response>
+                            <ns8:outputmessage>
                                 <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/CreateResource/DNCredentials/SuccessOutputMessage"/>
-                            </ns7:response>
+                            </ns8:outputmessage>
                         </xsl:otherwise>
                     </xsl:choose>
-                </ns7:root>
-            </part1>
+                </ns8:workitemcompletionoutput>
+            </workitemcompletionoutput>
         </pfx:WorkCompletionoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
@@ -71,7 +71,7 @@
         </config>
         <pd:inputBindings>
             <plan_id>
-                <xsl:value-of select="$Start/pfx:WorkCompletioninput/part1/ns6:root/ns6:SibelCircuitid"/>
+                <xsl:value-of select="$Start/pfx:WorkCompletioninput/workitemcompletioninput/ns8:workitemcompletioninput/ns8:sibelcircuitid"/>
             </plan_id>
         </pd:inputBindings>
     </pd:activity>
@@ -86,7 +86,7 @@
         <pd:inputBindings>
             <root>
                 <plan_id>
-                    <xsl:value-of select="$Start/pfx:WorkCompletioninput/part1/ns6:root/ns6:SibelCircuitid"/>
+                    <xsl:value-of select="$Start/pfx:WorkCompletioninput/workitemcompletioninput/ns8:workitemcompletioninput/ns8:sibelcircuitid"/>
                 </plan_id>
                 <resource>
                     <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/CompleteWorkListitem/resource"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:pfx7="http://services.brm.n2.tibco.com/WorkItemManagementService_1.7.0" xmlns:pfx8="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx9="http://services.brm.n2.tibco.com/WorkListService_1.7.0" xmlns:pfx2="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://orgmodel.api.de.bpm.tibco.com" xmlns:ns="http://resource.api.de.bpm.tibco.com" xmlns:pfx4="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:pfx5="http://xmlns.example.com/1509116265689" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:ns3="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx11="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Schemas/Schema1.xsd" xmlns:pfx10="http://xmlns.example.com/1512642084073">
+<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:pfx7="http://services.brm.n2.tibco.com/WorkItemManagementService_1.7.0" xmlns:pfx8="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx9="http://services.brm.n2.tibco.com/WorkListService_1.7.0" xmlns:pfx2="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://orgmodel.api.de.bpm.tibco.com" xmlns:ns="http://resource.api.de.bpm.tibco.com" xmlns:pfx4="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:pfx5="http://xmlns.example.com/1509116265689" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:ns4="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns3="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx11="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Schemas/Schema1.xsd" xmlns:pfx12="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:pfx10="http://xmlns.example.com/1512642084073">
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Wsdl/OrgResourceService.wsdl"/>
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Wsdl/orgModelService.wsdl"/>
@@ -10,23 +10,23 @@
     <pd:startY>161</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:FetchResourceoutput>
-            <part1>
-                <ns3:root>
+            <fetchresourceoutput>
+                <ns4:fetchresourceoutput>
                     <xsl:for-each select="$GetAllResources/outputMessage/ns:findResourcesResponse/resource">
-                        <ns3:resources>
-                            <ns3:guid>
+                        <ns4:resource>
+                            <ns4:guid>
                                 <xsl:value-of select="@guid"/>
-                            </ns3:guid>
-                            <ns3:label>
+                            </ns4:guid>
+                            <ns4:label>
                                 <xsl:value-of select="@label"/>
-                            </ns3:label>
-                            <ns3:name>
+                            </ns4:label>
+                            <ns4:name>
                                 <xsl:value-of select="@name"/>
-                            </ns3:name>
-                        </ns3:resources>
+                            </ns4:name>
+                        </ns4:resource>
                     </xsl:for-each>
-                </ns3:root>
-            </part1>
+                </ns4:fetchresourceoutput>
+            </fetchresourceoutput>
         </wsdlPfx:FetchResourceoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
@@ -98,7 +98,7 @@
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$groups/group/@name=$Start/wsdlPfx:FetchResourceinput/part1/pfx11:root/pfx11:name</pd:xpath>
+            <pd:xpath>$groups/group/@name=$Start/wsdlPfx:FetchResourceinput/fetchresourceinput/ns4:fetchresourceinput/ns4:processname</pd:xpath>
         </pd:transition>
         <pd:transition>
             <pd:from>start</pd:from>

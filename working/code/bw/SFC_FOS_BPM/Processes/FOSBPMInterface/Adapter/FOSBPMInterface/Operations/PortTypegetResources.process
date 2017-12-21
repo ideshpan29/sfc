@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Schemas/Schema1.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:ns1="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Schemas/Schema.xsd">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypegetResources.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -8,51 +8,51 @@
     <pd:startY>65</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:FetchResourceoutput>
-            <part1>
-                <ns1:root>
-                    <xsl:copy-of select="$Call-Process/wsdlPfx:FetchResourceoutput/part1/ns1:root/ns1:resources"/>
-                </ns1:root>
-            </part1>
+            <fetchresourceoutput>
+                <ns:fetchresourceoutput>
+                    <xsl:copy-of select="$Call-PortTypegetResources/wsdlPfx:FetchResourceoutput/fetchresourceoutput/ns:fetchresourceoutput/ns:resource"/>
+                </ns:fetchresourceoutput>
+            </fetchresourceoutput>
         </wsdlPfx:FetchResourceoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:FetchResourceoutput"/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>65</pd:endY>
+    <pd:endX>421</pd:endX>
+    <pd:endY>61</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:FetchResourcefault"/>
     </pd:errorSchemas>
     <pd:processVariables/>
-    <pd:targetNamespace>http://xmlns.example.com/1512730529184</pd:targetNamespace>
-    <pd:activity name="Call Process">
+    <pd:targetNamespace>http://xmlns.example.com/1513751864796</pd:targetNamespace>
+    <pd:activity name="Call PortTypegetResources">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>287</pd:x>
-        <pd:y>61</pd:y>
+        <pd:x>291</pd:x>
+        <pd:y>68</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Processes/PortTypegetResources.process</processName>
         </config>
         <pd:inputBindings>
             <wsdlPfx:FetchResourceinput>
-                <part1>
-                    <ns:root>
-                        <ns:name>
-                            <xsl:value-of select="$Start/wsdlPfx:FetchResourceinput/part1/ns:root/ns:name"/>
-                        </ns:name>
-                    </ns:root>
-                </part1>
+                <fetchresourceinput>
+                    <ns:fetchresourceinput>
+                        <ns:processname>
+                            <xsl:value-of select="$Start/wsdlPfx:FetchResourceinput/fetchresourceinput/ns:fetchresourceinput/ns:processname"/>
+                        </ns:processname>
+                    </ns:fetchresourceinput>
+                </fetchresourceinput>
             </wsdlPfx:FetchResourceinput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Process</pd:to>
+        <pd:to>Call PortTypegetResources</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Process</pd:from>
+        <pd:from>Call PortTypegetResources</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

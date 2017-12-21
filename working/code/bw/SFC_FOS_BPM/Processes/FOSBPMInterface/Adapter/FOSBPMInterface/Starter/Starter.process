@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/searchProcessInstanceSchema.xsd"/>
-    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/getProcessInstances.xsd"/>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/Starter.process</pd:name>
     <pd:startName>HTTP Receiver</pd:startName>
     <pd:startX>0</pd:startX>
@@ -164,6 +165,16 @@
                         </asciiContent>
                     </xsl:otherwise>
                 </xsl:choose>
+                <DynamicHeaders>
+                    <Header>
+                        <Name>
+                            <xsl:value-of select="&quot;Access-Control-Allow-Origin&quot;"/>
+                        </Name>
+                        <Value>
+                            <xsl:value-of select="&quot;*&quot;"/>
+                        </Value>
+                    </Header>
+                </DynamicHeaders>
             </ResponseActivityInput>
         </pd:inputBindings>
     </pd:activity>
@@ -173,17 +184,17 @@
         <pd:x>348</pd:x>
         <pd:y>43</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/getProcessnames.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessnames.process</processName>
         </config>
         <pd:inputBindings/>
     </pd:activity>
     <pd:activity name="Call Get Process Instances">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>347</pd:x>
-        <pd:y>139</pd:y>
+        <pd:x>348</pd:x>
+        <pd:y>138</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/getProcessInstances.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstances.process</processName>
         </config>
         <pd:inputBindings>
             <root>
@@ -199,7 +210,7 @@
         <pd:x>352</pd:x>
         <pd:y>226</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/getProcessInstanceDetails.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</processName>
         </config>
         <pd:inputBindings>
             <root>
@@ -212,20 +223,23 @@
     <pd:activity name="Call Search Process Instances">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>332</pd:x>
-        <pd:y>342</pd:y>
+        <pd:x>359</pd:x>
+        <pd:y>334</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/SearchProcessInstanceSOAP.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstanceSOAP.process</processName>
         </config>
         <pd:inputBindings>
-            <pfx:Request>
-                <pfx:key>
+            <root>
+                <searchkey>
                     <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchby"/>
-                </pfx:key>
-                <pfx:value>
+                </searchkey>
+                <searchvalue>
                     <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchvalue"/>
-                </pfx:value>
-            </pfx:Request>
+                </searchvalue>
+                <processname>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </processname>
+            </root>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Call TaskWiseAnalysis">
@@ -234,17 +248,17 @@
         <pd:x>352</pd:x>
         <pd:y>413</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/getProcessTasks.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
         </config>
         <pd:inputBindings/>
     </pd:activity>
     <pd:activity name="Call GetPieChart">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>357</pd:x>
-        <pd:y>500</pd:y>
+        <pd:x>358</pd:x>
+        <pd:y>483</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/GetPieChart.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetPieChart.process</processName>
         </config>
         <pd:inputBindings>
             <activityname>
@@ -255,24 +269,24 @@
     <pd:activity name="Call Process Names With Status">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>353</pd:x>
-        <pd:y>604</pd:y>
+        <pd:x>358</pd:x>
+        <pd:y>581</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
         </config>
         <pd:inputBindings>
-            <pfx2:Request>
-                <pfx2:processname>
+            <ns2:getprocessinstancesinput>
+                <ns2:processname>
                     <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
-                </pfx2:processname>
-            </pfx2:Request>
+                </ns2:processname>
+            </ns2:getprocessinstancesinput>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Null">
         <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
         <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>356</pd:x>
-        <pd:y>765</pd:y>
+        <pd:x>367</pd:x>
+        <pd:y>657</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:activity>
@@ -284,26 +298,31 @@
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
-            <term ref="pfx:Response"/>
+            <term ref="ns2:searchprocessinstancesoutput"/>
         </config>
         <pd:inputBindings>
-            <pfx:Response>
-                <xsl:copy-of select="$Call-Search-Process-Instances/pfx:Response/pfx:Record"/>
-            </pfx:Response>
+            <ns2:searchprocessinstancesoutput>
+                <xsl:copy-of select="$Call-Search-Process-Instances/ns2:searchprocessinstancesoutput/ns2:searchrecord"/>
+            </ns2:searchprocessinstancesoutput>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Render Process names data">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>506</pd:x>
-        <pd:y>504</pd:y>
+        <pd:x>490</pd:x>
+        <pd:y>474</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
-            <term ref="pfx2:Response"/>
+            <term ref="ns2:getprocessinstancesoutput"/>
         </config>
         <pd:inputBindings>
-            <xsl:copy-of select="$Call-Process-Names-With-Status/pfx2:Response"/>
+            <ns2:getprocessinstancesoutput>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_complete"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_started"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_halted"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_cancelled"/>
+            </ns2:getprocessinstancesoutput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>

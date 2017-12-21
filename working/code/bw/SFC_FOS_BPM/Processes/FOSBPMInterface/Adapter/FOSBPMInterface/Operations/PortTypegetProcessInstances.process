@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypegetProcessInstances.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -8,9 +8,14 @@
     <pd:startY>65</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:getProcessInstancesOutput>
-            <part1>
-                <xsl:copy-of select="$Call-Process/ns:Response"/>
-            </part1>
+            <getprocessinstancesoutput>
+                <ns:getprocessinstancesoutput>
+                    <xsl:copy-of select="$Call-getProcessInstanceswithstatus/ns:getprocessinstancesoutput/ns:pi_complete"/>
+                    <xsl:copy-of select="$Call-getProcessInstanceswithstatus/ns:getprocessinstancesoutput/ns:pi_started"/>
+                    <xsl:copy-of select="$Call-getProcessInstanceswithstatus/ns:getprocessinstancesoutput/ns:pi_halted"/>
+                    <xsl:copy-of select="$Call-getProcessInstanceswithstatus/ns:getprocessinstancesoutput/ns:pi_cancelled"/>
+                </ns:getprocessinstancesoutput>
+            </getprocessinstancesoutput>
         </wsdlPfx:getProcessInstancesOutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
@@ -21,32 +26,32 @@
         <Schema1 wsMsgRef="wsdlPfx:getProcessInstancesFault"/>
     </pd:errorSchemas>
     <pd:processVariables/>
-    <pd:targetNamespace>http://xmlns.example.com/1512730529424</pd:targetNamespace>
-    <pd:activity name="Call Process">
+    <pd:targetNamespace>http://xmlns.example.com/1513751865066</pd:targetNamespace>
+    <pd:activity name="Call getProcessInstanceswithstatus">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>269</pd:x>
-        <pd:y>60</pd:y>
+        <pd:x>302</pd:x>
+        <pd:y>74</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Processes/getProcessInstanceswithstatus.process</processName>
         </config>
         <pd:inputBindings>
-            <root>
-                <param>
-                    <xsl:value-of select="$Start/wsdlPfx:getProcessInstancesInput/part1/ns:Request/ns:processname"/>
-                </param>
-            </root>
+            <ns:getprocessinstancesinput>
+                <ns:processname>
+                    <xsl:value-of select="$Start/wsdlPfx:getProcessInstancesInput/getprocessinstancesinput/ns:getprocessinstancesinput/ns:processname"/>
+                </ns:processname>
+            </ns:getprocessinstancesinput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Process</pd:to>
+        <pd:to>Call getProcessInstanceswithstatus</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Process</pd:from>
+        <pd:from>Call getProcessInstanceswithstatus</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

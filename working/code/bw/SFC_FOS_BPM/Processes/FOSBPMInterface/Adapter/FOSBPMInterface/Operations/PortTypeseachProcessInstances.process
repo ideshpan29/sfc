@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeseachProcessInstances.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -8,11 +8,11 @@
     <pd:startY>65</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:seachProcessInstancesOutput>
-            <part1>
-                <ns:Response>
-                    <xsl:copy-of select="$Call-Process/ns:Response/ns:Record"/>
-                </ns:Response>
-            </part1>
+            <searchprocessinstancesoutput>
+                <ns:searchprocessinstancesoutput>
+                    <xsl:copy-of select="$Call-searchProcessInstance/ns:searchprocessinstancesoutput/ns:searchrecord"/>
+                </ns:searchprocessinstancesoutput>
+            </searchprocessinstancesoutput>
         </wsdlPfx:seachProcessInstancesOutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
@@ -23,35 +23,35 @@
         <Schema1 wsMsgRef="wsdlPfx:seachProcessInstancesFault"/>
     </pd:errorSchemas>
     <pd:processVariables/>
-    <pd:targetNamespace>http://xmlns.example.com/1512730529390</pd:targetNamespace>
-    <pd:activity name="Call Process">
+    <pd:targetNamespace>http://xmlns.example.com/1513751865021</pd:targetNamespace>
+    <pd:activity name="Call searchProcessInstance">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>275</pd:x>
-        <pd:y>45</pd:y>
+        <pd:x>274</pd:x>
+        <pd:y>92</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Processes/searchProcessInstance.process</processName>
         </config>
         <pd:inputBindings>
-            <ns:Request>
-                <ns:key>
-                    <xsl:value-of select="$Start/wsdlPfx:seachProcessInstancesInput/part1/ns:Request/ns:key"/>
-                </ns:key>
-                <ns:value>
-                    <xsl:value-of select="$Start/wsdlPfx:seachProcessInstancesInput/part1/ns:Request/ns:value"/>
-                </ns:value>
-            </ns:Request>
+            <ns:searchprocessinstancesinput>
+                <ns:searchkey>
+                    <xsl:value-of select="$Start/wsdlPfx:seachProcessInstancesInput/searchprocessinstancesinput/ns:searchprocessinstancesinput/ns:searchkey"/>
+                </ns:searchkey>
+                <ns:searchvalue>
+                    <xsl:value-of select="$Start/wsdlPfx:seachProcessInstancesInput/searchprocessinstancesinput/ns:searchprocessinstancesinput/ns:searchvalue"/>
+                </ns:searchvalue>
+            </ns:searchprocessinstancesinput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Process</pd:to>
+        <pd:to>Call searchProcessInstance</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Process</pd:from>
+        <pd:from>Call searchProcessInstance</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

@@ -1,139 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/getProcessInstances.xsd"/>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Processes/getProcessInstanceswithstatus.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startType>
-        <xsd:element name="root">
-            <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="param" type="xsd:string"/>
-                </xsd:sequence>
-            </xsd:complexType>
-        </xsd:element>
-    </pd:startType>
+    <pd:startType ref="pfx2:getprocessinstancesinput"/>
     <pd:startX>88</pd:startX>
     <pd:startY>93</pd:startY>
     <pd:returnBindings>
-        <pfx:Response>
-            <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+        <pfx2:getprocessinstancesoutput>
+            <xsl:for-each select="$FetchProcessInstancs/jdbcGeneralActivityOutput/unknownResultset/row">
                 <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_completed'">
-                    <pfx:pi_complete>
-                        <pfx:process_instance>
+                    <pfx2:pi_complete>
+                        <pfx2:process_instance>
                             <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                        </pfx:process_instance>
-                        <pfx:customer_name>
+                        </pfx2:process_instance>
+                        <pfx2:customer_name>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:customer_name>
-                        <pfx:sibelcircuitId>
+                        </pfx2:customer_name>
+                        <pfx2:sibelcircuit_id>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:sibelcircuitId>
-                        <pfx:project_manager>
+                        </pfx2:sibelcircuit_id>
+                        <pfx2:projectmanager>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:project_manager>
-                        <pfx:cur_activity>
+                        </pfx2:projectmanager>
+                        <pfx2:cur_activity>
                             <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:cur_activity>
-                        <pfx:status>
+                        </pfx2:cur_activity>
+                        <pfx2:status>
                             <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
-                        </pfx:status>
-                        <pfx:exec_mills>
+                        </pfx2:status>
+                        <pfx2:exec_mills>
                             <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:exec_mills>
-                    </pfx:pi_complete>
+                        </pfx2:exec_mills>
+                    </pfx2:pi_complete>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+            <xsl:for-each select="$FetchProcessInstancs/jdbcGeneralActivityOutput/unknownResultset/row">
                 <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_started'">
-                    <pfx:pi_started>
-                        <pfx:process_instance>
+                    <pfx2:pi_started>
+                        <pfx2:process_instance>
                             <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                        </pfx:process_instance>
-                        <pfx:customer_name>
+                        </pfx2:process_instance>
+                        <pfx2:customer_name>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:customer_name>
-                        <pfx:sibelcircuitId>
+                        </pfx2:customer_name>
+                        <pfx2:sibelcircuit_id>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:sibelcircuitId>
-                        <pfx:project_manager>
+                        </pfx2:sibelcircuit_id>
+                        <pfx2:projectmanager>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:project_manager>
-                        <pfx:cur_activity>
+                        </pfx2:projectmanager>
+                        <pfx2:cur_activity>
                             <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:cur_activity>
-                        <pfx:status>
+                        </pfx2:cur_activity>
+                        <pfx2:status>
                             <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
-                        </pfx:status>
-                        <pfx:exec_mills>
+                        </pfx2:status>
+                        <pfx2:exec_mills>
                             <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:exec_mills>
-                    </pfx:pi_started>
+                        </pfx2:exec_mills>
+                    </pfx2:pi_started>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+            <xsl:for-each select="$FetchProcessInstancs/jdbcGeneralActivityOutput/unknownResultset/row">
                 <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_halted'">
-                    <pfx:pi_halted>
-                        <pfx:process_instance>
+                    <pfx2:pi_halted>
+                        <pfx2:process_instance>
                             <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                        </pfx:process_instance>
-                        <pfx:customer_name>
+                        </pfx2:process_instance>
+                        <pfx2:customer_name>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:customer_name>
-                        <pfx:sibelcircuitId>
+                        </pfx2:customer_name>
+                        <pfx2:sibelcircuit_id>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:sibelcircuitId>
-                        <pfx:project_manager>
+                        </pfx2:sibelcircuit_id>
+                        <pfx2:projectmanager>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:project_manager>
-                        <pfx:cur_activity>
+                        </pfx2:projectmanager>
+                        <pfx2:cur_activity>
                             <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:cur_activity>
-                        <pfx:status>
+                        </pfx2:cur_activity>
+                        <pfx2:status>
                             <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
-                        </pfx:status>
-                        <pfx:exec_mills>
+                        </pfx2:status>
+                        <pfx2:exec_mills>
                             <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:exec_mills>
-                    </pfx:pi_halted>
+                        </pfx2:exec_mills>
+                    </pfx2:pi_halted>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+            <xsl:for-each select="$FetchProcessInstancs/jdbcGeneralActivityOutput/unknownResultset/row">
                 <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_cancelled'">
-                    <pfx:pi_cancelled>
-                        <pfx:process_instance>
+                    <pfx2:pi_cancelled>
+                        <pfx2:process_instance>
                             <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                        </pfx:process_instance>
-                        <pfx:customer_name>
+                        </pfx2:process_instance>
+                        <pfx2:customer_name>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:customer_name>
-                        <pfx:sibelcircuitId>
+                        </pfx2:customer_name>
+                        <pfx2:sibelcircuit_id>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:sibelcircuitId>
-                        <pfx:project_manager>
+                        </pfx2:sibelcircuit_id>
+                        <pfx2:projectmanager>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:project_manager>
-                        <pfx:cur_activity>
+                        </pfx2:projectmanager>
+                        <pfx2:cur_activity>
                             <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:cur_activity>
-                        <pfx:status>
+                        </pfx2:cur_activity>
+                        <pfx2:status>
                             <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
-                        </pfx:status>
-                        <pfx:exec_mills>
+                        </pfx2:status>
+                        <pfx2:exec_mills>
                             <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
-                        </pfx:exec_mills>
-                    </pfx:pi_cancelled>
+                        </pfx2:exec_mills>
+                    </pfx2:pi_cancelled>
                 </xsl:if>
             </xsl:for-each>
-        </pfx:Response>
+        </pfx2:getprocessinstancesoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
-    <pd:endType ref="pfx:Response"/>
+    <pd:endType ref="pfx2:getprocessinstancesoutput"/>
     <pd:endX>474</pd:endX>
     <pd:endY>95</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1509953050277</pd:targetNamespace>
-    <pd:activity name="SQL Direct">
+    <pd:activity name="FetchProcessInstancs">
         <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
         <pd:x>276</pd:x>
@@ -147,20 +140,20 @@
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS from  &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$Start/root/param,&quot;' &quot;)"/>
+                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS from  &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$Start/pfx2:getprocessinstancesinput/pfx2:processname,&quot;' &quot;)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>SQL Direct</pd:to>
+        <pd:to>FetchProcessInstancs</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>SQL Direct</pd:from>
+        <pd:from>FetchProcessInstancs</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema3.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeOnboarding.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="wsdlPfx:Onbordinginput"/>
     <pd:startX>150</pd:startX>
-    <pd:startY>65</pd:startY>
+    <pd:startY>79</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:Onbordingoutput>
-            <part1>
-                <ns2:response>
-                    <ns2:outputString>
-                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/CreateResource/DNCredentials/SuccessOutputMessage"/>
-                    </ns2:outputString>
-                </ns2:response>
-            </part1>
+            <ldapentryoutput>
+                <pfx:ldapentryoutput>
+                    <xsl:value-of select="&quot;Success&quot;"/>
+                </pfx:ldapentryoutput>
+            </ldapentryoutput>
         </wsdlPfx:Onbordingoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
@@ -25,22 +23,23 @@
         <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
     </pd:errorSchemas>
     <pd:processVariables/>
-    <pd:targetNamespace>http://xmlns.example.com/1512730529306</pd:targetNamespace>
+    <pd:targetNamespace>http://xmlns.example.com/1513751864936</pd:targetNamespace>
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>221</pd:x>
-        <pd:y>8</pd:y>
-        <pd:width>145</pd:width>
+        <pd:x>233</pd:x>
+        <pd:y>3</pd:y>
+        <pd:width>154</pd:width>
         <pd:height>140</pd:height>
-        <pd:collapsedWidth>52</pd:collapsedWidth>
-        <pd:collapsedHeight>69</pd:collapsedHeight>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
         <config>
             <pd:groupType>inputLoop</pd:groupType>
             <pd:serializable>false</pd:serializable>
-            <pd:over>$Start/wsdlPfx:Onbordinginput/part1/pfx:root/pfx:request</pd:over>
-            <pd:iterationElementSlot>iterate</pd:iterationElementSlot>
+            <pd:over>$Start/wsdlPfx:Onbordinginput/ldapentryinput/pfx:ldapentryinputrepeat/pfx:input</pd:over>
+            <pd:iterationElementSlot>iter</pd:iterationElementSlot>
             <pd:indexSlot>index</pd:indexSlot>
             <pd:activityOutputName/>
             <pd:accumulateOutput>false</pd:accumulateOutput>
@@ -49,51 +48,51 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Call Process</pd:to>
+            <pd:to>Call LdapEntry</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Call Process</pd:from>
+            <pd:from>Call LdapEntry</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
-        <pd:activity name="Call Process">
+        <pd:activity name="Call LdapEntry">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>283</pd:x>
-            <pd:y>72</pd:y>
+            <pd:x>299</pd:x>
+            <pd:y>67</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
             </config>
             <pd:inputBindings>
-                <xsl:for-each select="$iterate/pfx:request">
-                    <ns2:request>
-                        <ns2:firstName>
-                            <xsl:value-of select="pfx:firstName"/>
-                        </ns2:firstName>
-                        <ns2:lastName>
-                            <xsl:value-of select="pfx:lastName"/>
-                        </ns2:lastName>
-                        <ns2:email>
+                <xsl:for-each select="$iter/pfx:input">
+                    <pfx:ldapentryinput>
+                        <pfx:firstname>
+                            <xsl:value-of select="pfx:firstname"/>
+                        </pfx:firstname>
+                        <pfx:lastname>
+                            <xsl:value-of select="pfx:lastname"/>
+                        </pfx:lastname>
+                        <pfx:email>
                             <xsl:value-of select="pfx:email"/>
-                        </ns2:email>
-                        <ns2:password>
+                        </pfx:email>
+                        <pfx:password>
                             <xsl:value-of select="pfx:password"/>
-                        </ns2:password>
-                        <ns2:ormodelName>
-                            <xsl:value-of select="pfx:orgModelName"/>
-                        </ns2:ormodelName>
-                        <ns2:flag>
+                        </pfx:password>
+                        <pfx:orgmodelname>
+                            <xsl:value-of select="pfx:orgmodelname"/>
+                        </pfx:orgmodelname>
+                        <pfx:flag>
                             <xsl:value-of select="pfx:flag"/>
-                        </ns2:flag>
-                        <ns2:entity>
+                        </pfx:flag>
+                        <pfx:entity>
                             <xsl:value-of select="pfx:entity"/>
-                        </ns2:entity>
-                    </ns2:request>
+                        </pfx:entity>
+                    </pfx:ldapentryinput>
                 </xsl:for-each>
             </pd:inputBindings>
         </pd:activity>

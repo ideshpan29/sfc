@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <wsdl:import namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" location="/Processes/SFC_FOS_Interface/Integration/InitiateBPMDeComissioning/SubProcesses/InitiateDeComissioning/WSDL/removal_to_be.wsdl"/>
+    <pd:name>Processes/SFC_FOS_Interface/Integration/InitiateBPMDeComissioning/SubProcesses/InitiateDeComissioning/Processes/InitiateBPMDeComissioning.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>55</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>55</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1513938429988</pd:targetNamespace>
+    <pd:activity name="CallBPMDeComissioningProcess">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>274</pd:x>
+        <pd:y>55</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:comsfcfosImplremoval_tobeRemoval</service>
+            <servicePort>comsfcfosImplremoval_tobeRemoval_EP</servicePort>
+            <operation>CatchMessageEvent</operation>
+            <soapAction>CatchMessageEvent</soapAction>
+            <endpointURL>http://%%BPM/InitiateDeComissioning/hostname%%:%%BPM/InitiateDeComissioning/port%%/comsfcfosImplremoval_tobe/comsfcfosImplremoval_tobeRemovalv02</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <CatchMessageEvent>
+                <Provisioning_Data>
+                    <siebelCircuitID>
+                        <xsl:value-of select="'123'"/>
+                    </siebelCircuitID>
+                </Provisioning_Data>
+                <TechnicalInfo>
+                    <equipment>
+                        <type>
+                            <xsl:value-of select="'type1'"/>
+                        </type>
+                        <address>
+                            <xsl:value-of select="'pune'"/>
+                        </address>
+                        <VLAN>
+                            <xsl:value-of select="'vlan'"/>
+                        </VLAN>
+                    </equipment>
+                </TechnicalInfo>
+                <TaskName>
+                    <xsl:value-of select="'mytask'"/>
+                </TaskName>
+            </CatchMessageEvent>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>CallBPMDeComissioningProcess</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallBPMDeComissioningProcess</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -45,25 +45,39 @@ theClass.ServiceStatus.COMPLETED = "COMPLETED";
 theClass.getServiceStatus = function() {
     return this.ServiceStatus;
 };
-theClass.EmailRecipient = ["NONE", "GROUP", "PERSON"];
+theClass.EmailRecipient = ["NONE", "SPECIFIC", "PM"];
 theClass.EmailRecipient.NONE = "NONE";
-theClass.EmailRecipient.GROUP = "GROUP";
-theClass.EmailRecipient.PERSON = "PERSON";
+theClass.EmailRecipient.SPECIFIC = "SPECIFIC";
+theClass.EmailRecipient.PM = "PM";
 theClass.getEmailRecipient = function() {
     return this.EmailRecipient;
 };
-theClass.TaskRecipient = ["NONE", "GROUP", "PERSON"];
+theClass.TaskRecipient = ["NONE", "SPECIFIC", "PM"];
 theClass.TaskRecipient.NONE = "NONE";
-theClass.TaskRecipient.GROUP = "GROUP";
-theClass.TaskRecipient.PERSON = "PERSON";
+theClass.TaskRecipient.SPECIFIC = "SPECIFIC";
+theClass.TaskRecipient.PM = "PM";
 theClass.getTaskRecipient = function() {
     return this.TaskRecipient;
+};
+theClass.ProcessName = ["PROVISIONING", "DECOMISSIONING"];
+theClass.ProcessName.PROVISIONING = "PROVISIONING";
+theClass.ProcessName.DECOMISSIONING = "DECOMISSIONING";
+theClass.getProcessName = function() {
+    return this.ProcessName;
+};
+theClass.EnableDisable = ["ENABLE", "DISABLE"];
+theClass.EnableDisable.ENABLE = "ENABLE";
+theClass.EnableDisable.DISABLE = "DISABLE";
+theClass.getEnableDisable = function() {
+    return this.EnableDisable;
 };
 
 // Load the classes defined by this package.
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.ProvisioningDataModel");
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.SystemParameters");
-com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.Case1");
+com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.SLA_Configuration");
+com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.TehnicalInformation");
+com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.EquipmentDetails");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.Sfc_provisioningbomFactory");

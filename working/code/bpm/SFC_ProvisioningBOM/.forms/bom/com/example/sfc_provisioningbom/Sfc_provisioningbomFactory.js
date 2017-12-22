@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.example.sfc_provisioningbom.Sfc_provisioningbomFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.example.sfc_provisioningbom.ProvisioningDataModel", "com.example.sfc_provisioningbom.SystemParameters", "com.example.sfc_provisioningbom.Case1"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.example.sfc_provisioningbom.ProvisioningDataModel", "com.example.sfc_provisioningbom.SystemParameters", "com.example.sfc_provisioningbom.SLA_Configuration", "com.example.sfc_provisioningbom.TehnicalInformation", "com.example.sfc_provisioningbom.EquipmentDetails"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -65,15 +65,43 @@ theClass.prototype.listCreateSystemParameters = function(jsonData) {
     return classList;
 };
     
-theClass.prototype.createCase1 = function(jsonData) {
-    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.Case1", this.context);
+theClass.prototype.createSLA_Configuration = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.SLA_Configuration", this.context);
     if(jsonData != undefined)
         classObject = classObject._setValue(classObject, jsonData);
     return classObject;
 };
 
-theClass.prototype.listCreateCase1 = function(jsonData) {
-    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.Case1", this.context);
+theClass.prototype.listCreateSLA_Configuration = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.SLA_Configuration", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createTehnicalInformation = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.TehnicalInformation", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateTehnicalInformation = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.TehnicalInformation", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createEquipmentDetails = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.EquipmentDetails", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateEquipmentDetails = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.EquipmentDetails", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

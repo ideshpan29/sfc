@@ -82,7 +82,7 @@
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
-    <pd:endX>843</pd:endX>
+    <pd:endX>944</pd:endX>
     <pd:endY>326</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
@@ -90,8 +90,8 @@
     <pd:activity name="Send HTTP Response">
         <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
         <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
-        <pd:x>700</pd:x>
-        <pd:y>329</pd:y>
+        <pd:x>772</pd:x>
+        <pd:y>331</pd:y>
         <config>
             <closeConnection>true</closeConnection>
             <eventSource>HTTP Receiver</eventSource>
@@ -245,8 +245,8 @@
     <pd:activity name="Call TaskWiseAnalysis">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>352</pd:x>
-        <pd:y>413</pd:y>
+        <pd:x>368</pd:x>
+        <pd:y>415</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
         </config>
@@ -255,8 +255,8 @@
     <pd:activity name="Call GetPieChart">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>358</pd:x>
-        <pd:y>483</pd:y>
+        <pd:x>367</pd:x>
+        <pd:y>490</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetPieChart.process</processName>
         </config>
@@ -269,8 +269,8 @@
     <pd:activity name="Call Process Names With Status">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>358</pd:x>
-        <pd:y>581</pd:y>
+        <pd:x>367</pd:x>
+        <pd:y>582</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
         </config>
@@ -309,8 +309,8 @@
     <pd:activity name="Render Process names data">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>490</pd:x>
-        <pd:y>474</pd:y>
+        <pd:x>772</pd:x>
+        <pd:y>576</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -351,7 +351,7 @@
     <pd:transition>
         <pd:from>HTTP Receiver</pd:from>
         <pd:to>Call GetPieChart</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getPieChart'</pd:xpath>
@@ -359,7 +359,7 @@
     <pd:transition>
         <pd:from>HTTP Receiver</pd:from>
         <pd:to>Call TaskWiseAnalysis</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'</pd:xpath>
@@ -383,7 +383,7 @@
     <pd:transition>
         <pd:from>HTTP Receiver</pd:from>
         <pd:to>Call Process Names With Status</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnameswithstatus'</pd:xpath>
@@ -398,14 +398,14 @@
     <pd:transition>
         <pd:from>Call GetPieChart</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Call TaskWiseAnalysis</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
@@ -440,14 +440,14 @@
     <pd:transition>
         <pd:from>HTTP Receiver</pd:from>
         <pd:to>Null</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Null</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

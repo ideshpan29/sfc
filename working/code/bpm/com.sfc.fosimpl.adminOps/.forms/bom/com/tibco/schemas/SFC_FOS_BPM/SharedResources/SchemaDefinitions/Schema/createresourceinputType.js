@@ -35,7 +35,7 @@ com.tibco.data.Loader.extendClass(com.tibco.data.BomBase, theClass);
 theClass.ATTR_CREATERESOURCEREQUEST = "createresourcerequest";
 
 theClass.TYPE_ARRAY = new Object();
-theClass.TYPE_ARRAY[theClass.ATTR_CREATERESOURCEREQUEST] = {type:"com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType", baseType:"com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType", primitive:false, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_CREATERESOURCEREQUEST] = {type:"com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType", baseType:"com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType", primitive:false, multivalued:true, required:false, defaultValue:""};
 
 theClass.PRIMITIVE_ATTRIBUTE_NAMES = [];
 
@@ -84,18 +84,11 @@ theClass.prototype.getClass  = function() {
 };
 
 theClass.prototype.getCreateresourcerequest = function() {
-    return this._getComplexAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType").ATTR_CREATERESOURCEREQUEST);
+    return this._getComplexArrayAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType").ATTR_CREATERESOURCEREQUEST);
 };
 
 theClass.prototype.setCreateresourcerequest = function(createresourcerequest) {
-    var classRef = this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType");
-    var attrRef = classRef.ATTR_CREATERESOURCEREQUEST;
-    var attrType = classRef._getTypeDef(attrRef);
-    if (eval("createresourcerequest instanceof this.loader.getClass(attrType.type)")) {
-        this._setComplexAttribute(attrRef, createresourcerequest);
-    } else {
-        throw("Wrong input object type.");
-    }
+    throw("unsupported array attribute: createresourcerequest");
 };
 
 theClass.getAttributeNames = function() {

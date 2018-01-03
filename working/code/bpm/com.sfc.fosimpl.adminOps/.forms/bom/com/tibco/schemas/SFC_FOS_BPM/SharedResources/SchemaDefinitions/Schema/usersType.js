@@ -32,21 +32,25 @@ theClass.LOADER.registerClass(theClass, "com.tibco.schemas.SFC_FOS_BPM.SharedRes
 com.tibco.data.Loader.extendClass(com.tibco.data.BomBase, theClass);
 
 theClass.ATTR_NAME = "name";
+theClass.ATTR_ORGNAME = "orgname";
 theClass.ATTR_FLAG = "flag";
-theClass.ATTR_ENTITYVALUE = "entityvalue";
-theClass.ATTR_ORGMODELNAME = "orgmodelname";
+theClass.ATTR_ENTITYNAME = "entityname";
+theClass.ATTR_EMAIL = "email";
+theClass.ATTR_PASSWORD = "password";
 
 theClass.TYPE_ARRAY = new Object();
-theClass.TYPE_ARRAY[theClass.ATTR_NAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
-theClass.TYPE_ARRAY[theClass.ATTR_FLAG] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
-theClass.TYPE_ARRAY[theClass.ATTR_ENTITYVALUE] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
-theClass.TYPE_ARRAY[theClass.ATTR_ORGMODELNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_NAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_ORGNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_FLAG] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_ENTITYNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_EMAIL] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_PASSWORD] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 
-theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYVALUE, theClass.ATTR_ORGMODELNAME];
+theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD];
 
 theClass.COMPOSITE_ATTRIBUTE_NAMES = [];
 
-theClass.ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYVALUE, theClass.ATTR_ORGMODELNAME];
+theClass.ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD];
 
 theClass.getName = function() {
     return "com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType";
@@ -97,6 +101,15 @@ theClass.prototype.setName = function(name) {
 };
 
 
+theClass.prototype.getOrgname = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ORGNAME, useInternal);
+};
+
+theClass.prototype.setOrgname = function(orgname) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ORGNAME, orgname);
+};
+
+
 theClass.prototype.getFlag = function(useInternal) {
     return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_FLAG, useInternal);
 };
@@ -106,21 +119,30 @@ theClass.prototype.setFlag = function(flag) {
 };
 
 
-theClass.prototype.getEntityvalue = function(useInternal) {
-    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ENTITYVALUE, useInternal);
+theClass.prototype.getEntityname = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ENTITYNAME, useInternal);
 };
 
-theClass.prototype.setEntityvalue = function(entityvalue) {
-    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ENTITYVALUE, entityvalue);
+theClass.prototype.setEntityname = function(entityname) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ENTITYNAME, entityname);
 };
 
 
-theClass.prototype.getOrgmodelname = function(useInternal) {
-    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ORGMODELNAME, useInternal);
+theClass.prototype.getEmail = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_EMAIL, useInternal);
 };
 
-theClass.prototype.setOrgmodelname = function(orgmodelname) {
-    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ORGMODELNAME, orgmodelname);
+theClass.prototype.setEmail = function(email) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_EMAIL, email);
+};
+
+
+theClass.prototype.getPassword = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_PASSWORD, useInternal);
+};
+
+theClass.prototype.setPassword = function(password) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_PASSWORD, password);
 };
 
 theClass.getAttributeNames = function() {

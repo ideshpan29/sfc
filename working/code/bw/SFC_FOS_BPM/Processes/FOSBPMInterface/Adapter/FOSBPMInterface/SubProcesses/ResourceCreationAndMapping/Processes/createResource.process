@@ -6,8 +6,8 @@
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/OrgModelService.wsdl"/>
-    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/DirectoryService.wsdl"/>
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/OrgResourceService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/DirectoryService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx17:createresourceinput"/>
@@ -88,13 +88,13 @@
         </pd:transition>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Null-2</pd:to>
+            <pd:to>Null</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>otherwise</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Null-2</pd:from>
+            <pd:from>Null</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -121,7 +121,7 @@
                 </ContainerID>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Null-2">
+        <pd:activity name="Null">
             <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
             <pd:resourceType>ae.activities.null</pd:resourceType>
             <pd:x>315</pd:x>
@@ -154,7 +154,7 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Initialize Required Details</pd:to>
+            <pd:to>GetSpecificCandidate</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -202,40 +202,11 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Iteration To get the LDAP Details</pd:from>
-            <pd:to>GetVariable</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>GetVariable</pd:from>
-            <pd:to>createResource</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$GetVariable/root/name!=''</pd:xpath>
-        </pd:transition>
-        <pd:transition>
             <pd:from>createResource</pd:from>
             <pd:to>getLdapEntry</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>GetVariable</pd:from>
-            <pd:to>log no such user found</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Initialize Required Details</pd:from>
-            <pd:to>Iteration To get the LDAP Details</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Interation To get the Guid from Group name</pd:from>
@@ -347,11 +318,26 @@
             <pd:conditionType>xpath</pd:conditionType>
             <pd:xpath>$createResource/outputMessage/ns2:createResourceResponse/failure/@error='NAME-EXISTS'</pd:xpath>
         </pd:transition>
+        <pd:transition>
+            <pd:from>GetSpecificCandidate</pd:from>
+            <pd:to>createResource</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>count($GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry)!=0</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetSpecificCandidate</pd:from>
+            <pd:to>log no such user found</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
         <pd:activity name="createResource">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1532</pd:x>
-            <pd:y>409</pd:y>
+            <pd:x>1337</pd:x>
+            <pd:y>486</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -368,128 +354,27 @@
                     <ns2:createResource>
                         <candidate>
                             <xsl:attribute name="ldap-alias">
-                                <xsl:value-of select="$GetVariable/root/alias"/>
+                                <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-dn">
-                                <xsl:value-of select="$GetVariable/root/dn"/>
+                                <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                             </xsl:attribute>
                             <xsl:attribute name="name">
-                                <xsl:value-of select="$GetVariable/root/name"/>
+                                <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name"/>
                             </xsl:attribute>
                             <xsl:attribute name="container-id">
-                                <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:listCandidateResourcesResponse/@container-id"/>
+                                <xsl:value-of select="$LDAPContainerID/ContainerID"/>
                             </xsl:attribute>
                         </candidate>
                     </ns2:createResource>
                 </inputMessage>
             </pd:inputBindings>
         </pd:activity>
-        <pd:group name="Iteration To get the LDAP Details">
-            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
-            <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1167</pd:x>
-            <pd:y>247</pd:y>
-            <pd:width>194</pd:width>
-            <pd:height>279</pd:height>
-            <pd:collapsedWidth>57</pd:collapsedWidth>
-            <pd:collapsedHeight>70</pd:collapsedHeight>
-            <pd:groupVariables/>
-            <pd:joinToggle>inherit</pd:joinToggle>
-            <config>
-                <pd:groupType>inputLoop</pd:groupType>
-                <pd:serializable>false</pd:serializable>
-                <pd:over>$GetSpecificCandidate/outputMessage/ns:listCandidateResourcesResponse/candidate</pd:over>
-                <pd:iterationElementSlot>Candidate</pd:iterationElementSlot>
-                <pd:indexSlot>index</pd:indexSlot>
-                <pd:activityOutputName/>
-                <pd:accumulateOutput>false</pd:accumulateOutput>
-            </config>
-            <pd:inputBindings/>
-            <pd:expanded>true</pd:expanded>
-            <pd:transition>
-                <pd:from>start</pd:from>
-                <pd:to>Null</pd:to>
-                <pd:lineType>Default</pd:lineType>
-                <pd:lineColor>-16777216</pd:lineColor>
-                <pd:conditionType>otherwise</pd:conditionType>
-            </pd:transition>
-            <pd:transition>
-                <pd:from>start</pd:from>
-                <pd:to>SetDetailsAfterMatching</pd:to>
-                <pd:lineType>Default</pd:lineType>
-                <pd:lineColor>-16777216</pd:lineColor>
-                <pd:conditionType>xpath</pd:conditionType>
-                <pd:xpath>$Candidate/candidate/@name=$ParseIndex1/pfx17:users/pfx17:name</pd:xpath>
-            </pd:transition>
-            <pd:transition>
-                <pd:from>Null</pd:from>
-                <pd:to>end</pd:to>
-                <pd:lineType>Default</pd:lineType>
-                <pd:lineColor>-16777216</pd:lineColor>
-                <pd:conditionType>always</pd:conditionType>
-            </pd:transition>
-            <pd:transition>
-                <pd:from>SetDetailsAfterMatching</pd:from>
-                <pd:to>end</pd:to>
-                <pd:lineType>Default</pd:lineType>
-                <pd:lineColor>-16777216</pd:lineColor>
-                <pd:conditionType>always</pd:conditionType>
-            </pd:transition>
-            <pd:activity name="SetDetailsAfterMatching">
-                <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
-                <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
-                <pd:x>1253</pd:x>
-                <pd:y>339</pd:y>
-                <config>
-                    <variableConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/SharedVariables/Job Shared Variable.jobsharedvariable</variableConfig>
-                </config>
-                <pd:inputBindings>
-                    <root>
-                        <alias>
-                            <xsl:value-of select="$Candidate/candidate/@ldap-alias"/>
-                        </alias>
-                        <dn>
-                            <xsl:value-of select="$Candidate/candidate/@ldap-dn"/>
-                        </dn>
-                        <error>
-                            <xsl:value-of select="$Candidate/candidate/@error"/>
-                        </error>
-                        <guid>
-                            <xsl:value-of select="$Candidate/candidate/@guid"/>
-                        </guid>
-                        <name>
-                            <xsl:value-of select="$Candidate/candidate/@name"/>
-                        </name>
-                        <grpname>
-                            <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:entityname"/>
-                        </grpname>
-                    </root>
-                </pd:inputBindings>
-            </pd:activity>
-            <pd:activity name="Null">
-                <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-                <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1257</pd:x>
-                <pd:y>450</pd:y>
-                <config/>
-                <pd:inputBindings/>
-            </pd:activity>
-        </pd:group>
-        <pd:activity name="GetVariable">
-            <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
-            <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
-            <pd:x>1415</pd:x>
-            <pd:y>401</pd:y>
-            <config>
-                <variableConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/SharedVariables/Job Shared Variable.jobsharedvariable</variableConfig>
-            </config>
-            <pd:inputBindings/>
-        </pd:activity>
         <pd:activity name="MapResourceToGroup">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>2207</pd:x>
-            <pd:y>295</pd:y>
+            <pd:x>2026</pd:x>
+            <pd:y>301</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -521,8 +406,8 @@
         <pd:group name="Interation To get the Guid from Group name">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1868</pd:x>
-            <pd:y>114</pd:y>
+            <pd:x>1643</pd:x>
+            <pd:y>121</pd:y>
             <pd:width>237</pd:width>
             <pd:height>266</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -542,7 +427,7 @@
             <pd:expanded>true</pd:expanded>
             <pd:transition>
                 <pd:from>start</pd:from>
-                <pd:to>Null-1</pd:to>
+                <pd:to>Null1</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>otherwise</pd:conditionType>
@@ -553,7 +438,7 @@
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>xpath</pd:conditionType>
-                <pd:xpath>$groups/group/@name=$GetVariable/root/grpname</pd:xpath>
+                <pd:xpath>$groups/group/@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname</pd:xpath>
             </pd:transition>
             <pd:transition>
                 <pd:from>AssignGuid</pd:from>
@@ -563,7 +448,7 @@
                 <pd:conditionType>always</pd:conditionType>
             </pd:transition>
             <pd:transition>
-                <pd:from>Null-1</pd:from>
+                <pd:from>Null1</pd:from>
                 <pd:to>end</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
@@ -572,14 +457,14 @@
             <pd:activity name="AssignGuid">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>1975</pd:x>
-                <pd:y>178</pd:y>
+                <pd:x>1749</pd:x>
+                <pd:y>185</pd:y>
                 <config>
                     <variableName>groupGuid</variableName>
                 </config>
                 <pd:inputBindings>
                     <xsl:choose>
-                        <xsl:when test="$groups/group/@name=$GetVariable/root/grpname">
+                        <xsl:when test="$groups/group/@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname">
                             <guid>
                                 <xsl:value-of select="$groups/group/@guid"/>
                             </guid>
@@ -592,11 +477,11 @@
                     </xsl:choose>
                 </pd:inputBindings>
             </pd:activity>
-            <pd:activity name="Null-1">
+            <pd:activity name="Null1">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1983</pd:x>
-                <pd:y>305</pd:y>
+                <pd:x>1757</pd:x>
+                <pd:y>312</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -604,8 +489,8 @@
         <pd:activity name="log sucess">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2449</pd:x>
-            <pd:y>395</pd:y>
+            <pd:x>2355</pd:x>
+            <pd:y>401</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -618,7 +503,7 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to group&quot;,$GetVariable/root/grpname)"/>
+                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to group&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname)"/>
                     </textContent>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
@@ -626,8 +511,8 @@
         <pd:activity name="log no such user found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2011</pd:x>
-            <pd:y>735</pd:y>
+            <pd:x>1785</pd:x>
+            <pd:y>742</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -648,39 +533,11 @@
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Initialize Required Details">
-            <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
-            <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
-            <pd:x>1094</pd:x>
-            <pd:y>399</pd:y>
-            <config>
-                <variableConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/SharedVariables/Job Shared Variable.jobsharedvariable</variableConfig>
-            </config>
-            <pd:inputBindings>
-                <root>
-                    <alias>
-                        <xsl:value-of select="''"/>
-                    </alias>
-                    <dn>
-                        <xsl:value-of select="''"/>
-                    </dn>
-                    <error>
-                        <xsl:value-of select="''"/>
-                    </error>
-                    <guid>
-                        <xsl:value-of select="''"/>
-                    </guid>
-                    <name>
-                        <xsl:value-of select="''"/>
-                    </name>
-                </root>
-            </pd:inputBindings>
-        </pd:activity>
         <pd:activity name="log group not found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2459</pd:x>
-            <pd:y>270</pd:y>
+            <pd:x>2256</pd:x>
+            <pd:y>217</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -693,7 +550,7 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="concat($ParseIndex1/pfx17:users,&quot;-----&quot;,$GetVariable/root/grpname,&quot;----Invalid Group Name&#xA;&quot;)"/>
+                        <xsl:value-of select="concat($ParseIndex1/pfx17:users,&quot;-----&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname,&quot;----Invalid Group Name&#xA;&quot;)"/>
                     </textContent>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
@@ -701,8 +558,8 @@
         <pd:activity name="Resource Creation Logs">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1759</pd:x>
-            <pd:y>390</pd:y>
+            <pd:x>1532</pd:x>
+            <pd:y>412</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -723,8 +580,8 @@
         <pd:group name="Interation To get the Position ID from position name">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1871</pd:x>
-            <pd:y>403</pd:y>
+            <pd:x>1645</pd:x>
+            <pd:y>410</pd:y>
             <pd:width>240</pd:width>
             <pd:height>190</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -752,7 +609,7 @@
             </pd:transition>
             <pd:transition>
                 <pd:from>start</pd:from>
-                <pd:to>Null-1-1</pd:to>
+                <pd:to>Null2</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>otherwise</pd:conditionType>
@@ -765,7 +622,7 @@
                 <pd:conditionType>always</pd:conditionType>
             </pd:transition>
             <pd:transition>
-                <pd:from>Null-1-1</pd:from>
+                <pd:from>Null2</pd:from>
                 <pd:to>end</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
@@ -774,8 +631,8 @@
             <pd:activity name="AssignPositionId">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>1983</pd:x>
-                <pd:y>458</pd:y>
+                <pd:x>1757</pd:x>
+                <pd:y>465</pd:y>
                 <config>
                     <variableName>PositionId</variableName>
                 </config>
@@ -794,11 +651,11 @@
                     </xsl:choose>
                 </pd:inputBindings>
             </pd:activity>
-            <pd:activity name="Null-1-1">
+            <pd:activity name="Null2">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1986</pd:x>
-                <pd:y>539</pd:y>
+                <pd:x>1760</pd:x>
+                <pd:y>546</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -806,8 +663,8 @@
         <pd:activity name="MapResourceToPosition">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>2210</pd:x>
-            <pd:y>446</pd:y>
+            <pd:x>2021</pd:x>
+            <pd:y>464</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -839,8 +696,8 @@
         <pd:activity name="Position Mapped Success">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2359</pd:x>
-            <pd:y>453</pd:y>
+            <pd:x>2246</pd:x>
+            <pd:y>471</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -853,7 +710,7 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to Position&quot;,$GetVariable/root/grpname)"/>
+                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to Position&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname)"/>
                     </textContent>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
@@ -861,8 +718,8 @@
         <pd:activity name="Position Id Not Found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2350</pd:x>
-            <pd:y>526</pd:y>
+            <pd:x>2246</pd:x>
+            <pd:y>554</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -883,8 +740,8 @@
         <pd:activity name="getLdapEntry">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1529</pd:x>
-            <pd:y>286</pd:y>
+            <pd:x>1339</pd:x>
+            <pd:y>312</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -900,10 +757,10 @@
                 <inputMessage>
                     <ns:getLdapEntry>
                         <xsl:attribute name="ldap-alias">
-                            <xsl:value-of select="$GetVariable/root/alias"/>
+                            <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
                         </xsl:attribute>
                         <xsl:attribute name="ldap-dn">
-                            <xsl:value-of select="$GetVariable/root/dn"/>
+                            <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                         </xsl:attribute>
                         <attribute>
                             <xsl:attribute name="name">
@@ -917,8 +774,8 @@
         <pd:activity name="SetResourceAttributes">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1764</pd:x>
-            <pd:y>281</pd:y>
+            <pd:x>1531</pd:x>
+            <pd:y>311</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -957,8 +814,8 @@
         <pd:activity name="Assign">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>1650</pd:x>
-            <pd:y>284</pd:y>
+            <pd:x>1436</pd:x>
+            <pd:y>314</pd:y>
             <config>
                 <variableName>Attribute</variableName>
             </config>
@@ -971,8 +828,8 @@
         <pd:activity name="Send Mail To Contractor">
             <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
             <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
-            <pd:x>2356</pd:x>
-            <pd:y>298</pd:y>
+            <pd:x>2242</pd:x>
+            <pd:y>301</pd:y>
             <config>
                 <newMimeSupport>true</newMimeSupport>
                 <inputOutputVersion>5.2.0</inputOutputVersion>
@@ -1030,8 +887,8 @@
         <pd:activity name="Send Mail To Others">
             <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
             <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
-            <pd:x>2345</pd:x>
-            <pd:y>365</pd:y>
+            <pd:x>2235</pd:x>
+            <pd:y>383</pd:y>
             <config>
                 <newMimeSupport>true</newMimeSupport>
                 <inputOutputVersion>5.2.0</inputOutputVersion>
@@ -1084,8 +941,8 @@
         <pd:activity name="ResourceAlreadyExists">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2011</pd:x>
-            <pd:y>658</pd:y>
+            <pd:x>1785</pd:x>
+            <pd:y>665</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -1103,6 +960,38 @@
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
+        <pd:activity name="GetSpecificCandidate">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>1151</pd:x>
+            <pd:y>483</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx:DirectoryService_1.8.0</service>
+                <servicePort>DirectoryService.soap</servicePort>
+                <operation>executeLdapQuery</operation>
+                <soapAction>executeLdapQuery</soapAction>
+                <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns:executeLdapQuery>
+                        <xsl:attribute name="base-dn">
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/DNCredentials/ResourceCreationName"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="ldap-alias">
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/DNCredentials/LDAPContainerName"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="ldap-query">
+                            <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name,&quot;)&quot;)"/>
+                        </xsl:attribute>
+                    </ns:executeLdapQuery>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
     </pd:group>
     <pd:activity name="Catch Errors">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
@@ -1118,8 +1007,8 @@
     <pd:activity name="GetOrgModel">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>948</pd:x>
-        <pd:y>496</pd:y>
+        <pd:x>909</pd:x>
+        <pd:y>489</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1134,32 +1023,6 @@
         <pd:inputBindings>
             <inputMessage>
                 <pfx7:getOrgModel/>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="GetSpecificCandidate">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>483</pd:x>
-        <pd:y>502</pd:y>
-        <config>
-            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx:DirectoryService_1.8.0</service>
-            <servicePort>DirectoryService.soap</servicePort>
-            <operation>listCandidateResources</operation>
-            <soapAction>listCandidateResources</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns:listCandidateResources>
-                    <xsl:attribute name="container-id">
-                        <xsl:value-of select="$LDAPContainerID/ContainerID"/>
-                    </xsl:attribute>
-                </ns:listCandidateResources>
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
@@ -1188,8 +1051,8 @@
     <pd:activity name="Parse Data Error">
         <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
         <pd:resourceType>ae.activities.throw</pd:resourceType>
-        <pd:x>810</pd:x>
-        <pd:y>628</pd:y>
+        <pd:x>756</pd:x>
+        <pd:y>348</pd:y>
         <config>
             <faultName>ParseDataError</faultName>
         </config>
@@ -1208,8 +1071,8 @@
     <pd:activity name="Parse Input Data">
         <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
         <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-        <pd:x>816</pd:x>
-        <pd:y>391</pd:y>
+        <pd:x>758</pd:x>
+        <pd:y>485</pd:y>
         <config>
             <InputType>File</InputType>
             <Encoding>ASCII</Encoding>
@@ -1243,8 +1106,8 @@
     <pd:activity name="Set Batch Mode Input File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>659</pd:x>
-        <pd:y>419</pd:y>
+        <pd:x>583</pd:x>
+        <pd:y>496</pd:y>
         <config>
             <variableName>inputFile</variableName>
         </config>
@@ -1257,8 +1120,8 @@
     <pd:activity name="Set Single Entry File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>702</pd:x>
-        <pd:y>582</pd:y>
+        <pd:x>753</pd:x>
+        <pd:y>592</pd:y>
         <config>
             <variableName>inputFile</variableName>
         </config>
@@ -1271,12 +1134,13 @@
     <pd:activity name="Write Data">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>589</pd:x>
-        <pd:y>573</pd:y>
+        <pd:x>588</pd:x>
+        <pd:y>585</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
             <createMissingDirectories>true</createMissingDirectories>
+            <append>false</append>
         </config>
         <pd:inputBindings>
             <ns0:WriteActivityInputTextClass>
@@ -1319,14 +1183,6 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>GetSpecificCandidate</pd:from>
-        <pd:to>Set Batch Mode Input File Name</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name='?'  and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:orgname='?'  and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag='?' and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='?' and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:email='?'and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:password='?'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Parse Input Data</pd:from>
         <pd:to>GetOrgModel</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -1346,13 +1202,6 @@
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>GetSpecificCandidate</pd:from>
-        <pd:to>Write Data</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Write Data</pd:from>
@@ -1412,9 +1261,17 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group</pd:from>
-        <pd:to>GetSpecificCandidate</pd:to>
+        <pd:to>Set Batch Mode Input File Name</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name='?'  and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:orgname='?'  and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag='?' and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='?' and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:email='?'and $Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:password='?'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Write Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>

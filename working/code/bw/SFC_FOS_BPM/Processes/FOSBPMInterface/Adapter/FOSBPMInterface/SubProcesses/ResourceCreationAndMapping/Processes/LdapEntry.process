@@ -33,8 +33,8 @@
     <pd:activity name="Call Resource Mapping Process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>525</pd:x>
-        <pd:y>45</pd:y>
+        <pd:x>636</pd:x>
+        <pd:y>43</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
         </config>
@@ -66,8 +66,8 @@
     <pd:activity name="Failure LDAP Entry Log">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>452</pd:x>
-        <pd:y>185</pd:y>
+        <pd:x>450</pd:x>
+        <pd:y>325</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -393,11 +393,12 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
     <pd:activity name="Successfull LDAP Entry Log">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>359</pd:x>
-        <pd:y>42</pd:y>
+        <pd:x>502</pd:x>
+        <pd:y>43</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
+            <append>true</append>
         </config>
         <pd:inputBindings>
             <ns5:WriteActivityInputTextClass>
@@ -406,6 +407,28 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
                 </fileName>
                 <textContent>
                     <xsl:value-of select="&quot;LDAP Entry Created Succesfully &quot;"/>
+                </textContent>
+            </ns5:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Password Logs">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>347</pd:x>
+        <pd:y>34</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <createMissingDirectories>false</createMissingDirectories>
+            <append>true</append>
+        </config>
+        <pd:inputBindings>
+            <ns5:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/PasswordLogs"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="concat(&quot;Name : &quot;,concat($Start/pfx13:ldapentryinput/pfx13:firstname,&quot; &quot;,$Start/pfx13:ldapentryinput/pfx13:lastname),&quot;  Password : &quot;,generate-id($Start/pfx13:ldapentryinput),&quot;|||&quot;)"/>
                 </textContent>
             </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
@@ -441,15 +464,22 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Ldap Entry Code</pd:from>
-        <pd:to>Successfull LDAP Entry Log</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Successfull LDAP Entry Log</pd:from>
         <pd:to>Call Resource Mapping Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Ldap Entry Code</pd:from>
+        <pd:to>Password Logs</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Password Logs</pd:from>
+        <pd:to>Successfull LDAP Entry Log</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

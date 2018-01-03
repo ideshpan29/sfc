@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns3="http://www.tibco.com/pe/EngineTypes">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
@@ -11,8 +11,8 @@
     <pd:starter name="HTTP Receiver">
         <pd:type>com.tibco.plugin.http.HTTPEventSource</pd:type>
         <pd:resourceType>httppalette.httpEventSource</pd:resourceType>
-        <pd:x>86</pd:x>
-        <pd:y>329</pd:y>
+        <pd:x>54</pd:x>
+        <pd:y>331</pd:y>
         <config>
             <outputMode>String</outputMode>
             <defaultEncoding>ISO8859_1</defaultEncoding>
@@ -82,16 +82,163 @@
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
-    <pd:endX>944</pd:endX>
-    <pd:endY>326</pd:endY>
+    <pd:endX>956</pd:endX>
+    <pd:endY>338</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1512639133195</pd:targetNamespace>
+    <pd:activity name="Call Get Process Instance Details">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <instanceid>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/instanceid"/>
+                </instanceid>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Get Process Instances">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>354</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstances.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processname>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </processname>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Get Process Names">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>42</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessnames.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Call GetPieChart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>490</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetPieChart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <activityname>
+                <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/activitynameforpie"/>
+            </activityname>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Process Names With Status">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>582</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns2:getprocessinstancesinput>
+                <ns2:processname>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </ns2:processname>
+            </ns2:getprocessinstancesinput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Search Process Instances">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>338</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstanceSOAP.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <searchkey>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchby"/>
+                </searchkey>
+                <searchvalue>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchvalue"/>
+                </searchvalue>
+                <processname>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </processname>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call TaskWiseAnalysis">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>423</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>352</pd:x>
+        <pd:y>661</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Render Process names data">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>700</pd:x>
+        <pd:y>587</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term ref="ns2:getprocessinstancesoutput"/>
+        </config>
+        <pd:inputBindings>
+            <ns2:getprocessinstancesoutput>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_complete"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_started"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_halted"/>
+                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_cancelled"/>
+            </ns2:getprocessinstancesoutput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render Search Data">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>479</pd:x>
+        <pd:y>333</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term ref="ns2:searchprocessinstancesoutput"/>
+        </config>
+        <pd:inputBindings>
+            <ns2:searchprocessinstancesoutput>
+                <xsl:copy-of select="$Call-Search-Process-Instances/ns2:searchprocessinstancesoutput/ns2:searchrecord"/>
+            </ns2:searchprocessinstancesoutput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Send HTTP Response">
         <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
         <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
-        <pd:x>772</pd:x>
-        <pd:y>331</pd:y>
+        <pd:x>707</pd:x>
+        <pd:y>334</pd:y>
         <config>
             <closeConnection>true</closeConnection>
             <eventSource>HTTP Receiver</eventSource>
@@ -178,215 +325,148 @@
             </ResponseActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Call Get Process Names">
+    <pd:activity name="send Log Request AUDIT 1">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>348</pd:x>
-        <pd:y>43</pd:y>
+        <pd:x>166</pd:x>
+        <pd:y>340</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessnames.process</processName>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>845</pd:x>
+        <pd:y>345</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Exception Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>957</pd:x>
+        <pd:y>481</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ExceptionRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;Starter&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TestProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:TransactionID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </ns22:TransactionID>
+                    <ns22:CorrelationID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </ns22:CorrelationID>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;Starter&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;ERROR&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$_error/ns3:ErrorReport/MsgCode"/>
+                </ExceptionCode>
+                <StackTrace>
+                    <xsl:value-of select="tib:render-xml($_error/ns3:ErrorReport)"/>
+                </StackTrace>
+            </ns12:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>816</pd:x>
+        <pd:y>477</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
         </config>
         <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Call Get Process Instances">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>348</pd:x>
-        <pd:y>138</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstances.process</processName>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <processname>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
-                </processname>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Call Get Process Instance Details">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>352</pd:x>
-        <pd:y>226</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</processName>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <instanceid>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/instanceid"/>
-                </instanceid>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Call Search Process Instances">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>359</pd:x>
-        <pd:y>334</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstanceSOAP.process</processName>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <searchkey>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchby"/>
-                </searchkey>
-                <searchvalue>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/searchvalue"/>
-                </searchvalue>
-                <processname>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
-                </processname>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Call TaskWiseAnalysis">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>368</pd:x>
-        <pd:y>415</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
-        </config>
-        <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Call GetPieChart">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>367</pd:x>
-        <pd:y>490</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetPieChart.process</processName>
-        </config>
-        <pd:inputBindings>
-            <activityname>
-                <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/activitynameforpie"/>
-            </activityname>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Call Process Names With Status">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>367</pd:x>
-        <pd:y>582</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
-        </config>
-        <pd:inputBindings>
-            <ns2:getprocessinstancesinput>
-                <ns2:processname>
-                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
-                </ns2:processname>
-            </ns2:getprocessinstancesinput>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Null">
-        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-        <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>367</pd:x>
-        <pd:y>657</pd:y>
-        <config/>
-        <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Render Search Data">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>491</pd:x>
-        <pd:y>332</pd:y>
-        <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term ref="ns2:searchprocessinstancesoutput"/>
-        </config>
-        <pd:inputBindings>
-            <ns2:searchprocessinstancesoutput>
-                <xsl:copy-of select="$Call-Search-Process-Instances/ns2:searchprocessinstancesoutput/ns2:searchrecord"/>
-            </ns2:searchprocessinstancesoutput>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Render Process names data">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>772</pd:x>
-        <pd:y>576</pd:y>
-        <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term ref="ns2:getprocessinstancesoutput"/>
-        </config>
-        <pd:inputBindings>
-            <ns2:getprocessinstancesoutput>
-                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_complete"/>
-                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_started"/>
-                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_halted"/>
-                <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_cancelled"/>
-            </ns2:getprocessinstancesoutput>
-        </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call Search Process Instances</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call Get Process Instance Details</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstanceDetails'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call GetPieChart</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getPieChart'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call TaskWiseAnalysis</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call Get Process Instances</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call Get Process Names</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Call Process Names With Status</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnameswithstatus'</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>Call Process Names With Status</pd:from>
@@ -419,30 +499,23 @@
     <pd:transition>
         <pd:from>Call Get Process Instance Details</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Call Get Process Instances</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Call Get Process Names</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Null</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
+        <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Null</pd:from>
@@ -461,6 +534,97 @@
     <pd:transition>
         <pd:from>Render Process names data</pd:from>
         <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>HTTP Receiver</pd:from>
+        <pd:to>send Log Request AUDIT 1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Get Process Names</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Get Process Instances</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Get Process Instance Details</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstanceDetails'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Search Process Instances</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call TaskWiseAnalysis</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Process Names With Status</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnameswithstatus'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call GetPieChart</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getPieChart'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Exception</pd:from>
+        <pd:to>send Exception Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Exception Request</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

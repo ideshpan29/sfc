@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns3="http://www.tibco.com/pe/EngineTypes">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeResourceCreation.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="wsdlPfx:ResourceCreationiput"/>
-    <pd:startX>150</pd:startX>
-    <pd:startY>65</pd:startY>
+    <pd:startX>80</pd:startX>
+    <pd:startY>69</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:ResourceCreationoutput>
             <createresourceoutput>
                 <ns:createresourceoutput>
                     <ns:outputmessage>
-                        <xsl:value-of select="$Call-Process/ns:createresourceoutput/ns:outputmessage"/>
+                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceoutput/ns:outputmessage"/>
                     </ns:outputmessage>
                 </ns:createresourceoutput>
             </createresourceoutput>
@@ -19,14 +19,14 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:ResourceCreationoutput"/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>65</pd:endY>
+    <pd:endX>567</pd:endX>
+    <pd:endY>63</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:ResourceCreationfault"/>
     </pd:errorSchemas>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1513751864979</pd:targetNamespace>
-    <pd:activity name="Call Process">
+    <pd:activity name="Call Process createResource">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
         <pd:x>292</pd:x>
@@ -40,16 +40,180 @@
             </ns:createresourceinput>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="send Log Request AUDIT 1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>185</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>433</pd:x>
+        <pd:y>79</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Exception Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>595</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ExceptionRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TestProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:TransactionID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </ns2:TransactionID>
+                    <ns2:CorrelationID>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </ns2:CorrelationID>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeResourceCreation&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;ERRORr&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$_error/ns3:ErrorReport/MsgCode"/>
+                </ExceptionCode>
+                <StackTrace>
+                    <xsl:value-of select="tib:render-xml($_error/ns3:ErrorReport)"/>
+                </StackTrace>
+            </ns12:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>404</pd:x>
+        <pd:y>213</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Process</pd:to>
+        <pd:to>send Log Request AUDIT 1</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Process</pd:from>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call Process createResource</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Process createResource</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Exception Request</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Exception</pd:from>
+        <pd:to>send Exception Request</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

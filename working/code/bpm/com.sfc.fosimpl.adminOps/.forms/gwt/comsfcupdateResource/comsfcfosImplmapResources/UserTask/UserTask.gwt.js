@@ -2,9 +2,9 @@
 
 if (typeof(tibcoforms) == 'undefined') tibcoforms = new Object();
 if (typeof(tibcoforms.formCode) == 'undefined') tibcoforms.formCode = new Object();
-tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ'] = new Object();
-tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ']['defineActions'] = function() {
-var fc = tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ'];
+tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ'] = new Object();
+tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ']['defineActions'] = function() {
+var fc = tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ'];
     fc['rule_cancel'] = function(formId, context, thisObj) {
 	   try {
 			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "cancel", "cancel", fc['action_cancel']);
@@ -42,6 +42,32 @@ var fc = tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ'];
 pane.resourceList.getSelection().setGroupName(context.control.getValue());
 
 			}
+    fc['rule_updateDecision'] = function(formId, context, thisObj) {
+	   try {
+			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "updateDecision", "updateDecision", fc['action_updateDecision']);
+	   } catch(e) {
+	       tibcoforms.bridge.log_error("Rule(updateDecision) Error: " + e);
+	       throw e;
+	   }
+	}
+
+			fc['action_updateDecision'] = function(context, data, pane, control, factory, pkg, f , p) {
+				 if (context.form && context.form._marked4Cancel)
+					return;
+				 var resource = context.form.resource;
+			     var logger = tibcoforms.bridge.log_logger();
+				data.setDecision(context.control.getValue());
+if(context.control.getValue()=="BUSINESS") {
+	pane.resourceList.setVisible(true);
+	pane.ContractorGroup.setVisible(false);
+}
+else if(context.control.getValue()=="CONTRACTOR_MASTER") {
+	pane.resourceList.setVisible(false);
+	pane.ContractorGroup.setVisible(true);
+	data.getContractorGroup().setMasterUser("Y");
+}
+
+			}
 	fc['action_cancel'] = function(context, data, pane, control, factory, pkg, f , p) {
 		context.form.invokeAction('cancel');
 	}
@@ -70,16 +96,10 @@ pane.resourceList.getSelection().setGroupName(context.control.getValue());
         return "TIBCO Forms 4.1.0 V17 compliant";
     }
 };
-tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ']['defineActions']();
+tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ']['defineActions']();
 
-tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ']['defineValidations'] = function() {
-var fc = tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ'];
-	
-fc['validation_resourceList_loginName_resourceList_loginName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_loginName: resourceList_loginName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_loginName__length", true, true);
-}
+tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ']['defineValidations'] = function() {
+var fc = tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ'];
 	
 	
 	
@@ -90,42 +110,31 @@ fc['validation_ContractorGroup_firstName_ContractorGroup_firstName__length'] = f
 }
 	
 	
-fc['validation_ContractorGroup_contractorGroupName_ContractorGroup_contractorGroupName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_contractorGroupName: ContractorGroup_contractorGroupName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_contractorGroupName__length", true, true);
-}
-	
-fc['validation_ContractorGroup_loginName_ContractorGroup_loginName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_loginName: ContractorGroup_loginName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_loginName__length", true, true);
-}
-	
-fc['validation_ContractorGroup_masterUser_ContractorGroup_masterUser__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_masterUser: ContractorGroup_masterUser__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_masterUser__length", true, true);
-}
-	
-	
-	
-	
 fc['validation_resourceList_groupName_resourceList_groupName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_groupName: resourceList_groupName__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_groupName__length", true, true);
 }
 	
-fc['validation_ContractorGroup_lastName_ContractorGroup_lastName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	
+	
+	
+fc['validation_ContractorGroup_contractorGroupName_ContractorGroup_contractorGroupName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_lastName: ContractorGroup_lastName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_lastName__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_contractorGroupName: ContractorGroup_contractorGroupName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_contractorGroupName__length", true, true);
 }
 	
 	
 	
 	
+	
+	
+fc['validation_resourceList_loginName_resourceList_loginName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_loginName: resourceList_loginName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_loginName__length", true, true);
+}
 	
 fc['validation_ContractorGroup_emailID_ContractorGroup_emailID__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
@@ -140,7 +149,24 @@ fc['validation_resourceList_emailAddress_resourceList_emailAddress__length'] = f
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "resourceList_emailAddress__length", true, true);
 }
 	
+fc['validation_ContractorGroup_loginName_ContractorGroup_loginName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_loginName: ContractorGroup_loginName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_loginName__length", true, true);
+}
 	
+fc['validation_ContractorGroup_lastName_ContractorGroup_lastName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_lastName: ContractorGroup_lastName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_lastName__length", true, true);
+}
+	
+	
+fc['validation_ContractorGroup_masterUser_ContractorGroup_masterUser__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_masterUser: ContractorGroup_masterUser__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ContractorGroup_masterUser__length", true, true);
+}
 	fc['validate_required'] = function(formId, controlName, cloneUID, listIndex) {
 	var context = new Object();
     var form = tibcoforms.formCache[formId];
@@ -188,6 +214,12 @@ fc['validation_resourceList_emailAddress_resourceList_emailAddress__length'] = f
 		this.setContractorGroup = function(value) {
 			return this.form.dataMap['ContractorGroup'].setValue(value);
 		};
+		this.getDecision = function(useInternal) {
+			return this.form.dataMap['decision'].getValue(useInternal);
+		};
+		this.setDecision = function(value) {
+			return this.form.dataMap['decision'].setValue(value);
+		};
 	}
 	   
             
@@ -197,4 +229,4 @@ fc['validation_resourceList_emailAddress_resourceList_emailAddress__length'] = f
 	   
 	   
 };
-tibcoforms.formCode['_7EeDEPB8EeeuzZ1H_57zBQ']['defineValidations']();
+tibcoforms.formCode['_Ofhe0PCDEeeuzZ1H_57zBQ']['defineValidations']();

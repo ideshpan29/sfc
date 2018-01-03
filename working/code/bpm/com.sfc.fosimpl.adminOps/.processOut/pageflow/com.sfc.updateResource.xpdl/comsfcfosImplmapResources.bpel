@@ -6,17 +6,17 @@
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:VariableDescriptor type="PersistentBatching">
-        <task name="CreateEntryforContractorGroup">
-            <startingVariables>
-                <variable>ContractorGroup</variable>
-                <variable>ContractorGroupRef</variable>
-            </startingVariables>
-        </task>
-        <task name="UserTask">
+        <task name="UpdateResource">
             <startingVariables>
                 <variable>GroupName</variable>
                 <variable>ContractorGroup</variable>
                 <variable>resourceList</variable>
+            </startingVariables>
+        </task>
+        <task name="CreateEntryforContractorGroup">
+            <startingVariables>
+                <variable>ContractorGroup</variable>
+                <variable>ContractorGroupRef</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -32,17 +32,19 @@
             tibex:class="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="__CZRAPBXEeeuzZ1H_57zBQ"/>
         <bpws:variable name="ContractorGroupRef"
             tibex:classRef="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_a_36oPB7EeeuzZ1H_57zBQ"/>
+        <bpws:variable name="decision"
+            tibex:xpdlId="_WFbVsPCCEeeuzZ1H_57zBQ" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_8wTSwPB8EeeuzZ1H_57zBQ">
+    <bpws:flow name="_BX_flow_Oiuj0PCDEeeuzZ1H_57zBQ">
         <bpws:links>
-            <bpws:link name="FetchGroupList to UserTask" tibex:xpdlId="_y6r1IvBTEeeuzZ1H_57zBQ"/>
+            <bpws:link name="FetchGroupList to UpdateResource" tibex:xpdlId="_y6r1IvBTEeeuzZ1H_57zBQ"/>
             <bpws:link name="_7kmKEPB7EeeuzZ1H_57zBQ to End" tibex:xpdlId="_ACOBMPBWEeeuzZ1H_57zBQ"/>
             <bpws:link name="Start to FetchGroupList" tibex:xpdlId="_2cGbgfBVEeeuzZ1H_57zBQ"/>
-            <bpws:link name="UserTask to _7kmKEPB7EeeuzZ1H_57zBQ" tibex:xpdlId="_7kmKE_B7EeeuzZ1H_57zBQ"/>
+            <bpws:link name="UpdateResource to _7kmKEPB7EeeuzZ1H_57zBQ" tibex:xpdlId="_7kmKE_B7EeeuzZ1H_57zBQ"/>
         </bpws:links>
         <bpws:extensionActivity>
             <tibex:receiveEvent createInstance="yes" eventTimeout="0"
@@ -62,15 +64,15 @@
             </bpws:targets>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="UserTask"
+            <tibex:extActivity name="UpdateResource"
                 tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateResource/comsfcfosImplmapResources/UserTask/UserTask.form&#xd;&#xa;"
                 tibex:type="userTask"
                 tibex:xpdlId="_y6rOEPBTEeeuzZ1H_57zBQ" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
-                    <bpws:target linkName="FetchGroupList to UserTask"/>
+                    <bpws:target linkName="FetchGroupList to UpdateResource"/>
                 </bpws:targets>
                 <bpws:sources>
-                    <bpws:source linkName="UserTask to _7kmKEPB7EeeuzZ1H_57zBQ"/>
+                    <bpws:source linkName="UpdateResource to _7kmKEPB7EeeuzZ1H_57zBQ"/>
                 </bpws:sources>
                 <model:PageActivityDataModelType xmi:version="2.0"
                     xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
@@ -81,6 +83,8 @@
                             mode="INOUT" name="ContractorGroup"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="resourceList"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="decision"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>
@@ -90,7 +94,7 @@
                 <bpws:target linkName="Start to FetchGroupList"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="FetchGroupList to UserTask"/>
+                <bpws:source linkName="FetchGroupList to UpdateResource"/>
             </bpws:sources>
         </bpws:empty>
         <bpws:extensionActivity>
@@ -98,7 +102,7 @@
                 tibex:type="serviceTask"
                 tibex:xpdlId="_7kmKEPB7EeeuzZ1H_57zBQ" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
-                    <bpws:target linkName="UserTask to _7kmKEPB7EeeuzZ1H_57zBQ"/>
+                    <bpws:target linkName="UpdateResource to _7kmKEPB7EeeuzZ1H_57zBQ"/>
                 </bpws:targets>
                 <bpws:sources>
                     <bpws:source linkName="_7kmKEPB7EeeuzZ1H_57zBQ to End"/>

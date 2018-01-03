@@ -78,6 +78,7 @@ com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.System
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.SLA_Configuration");
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.TehnicalInformation");
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.EquipmentDetails");
+com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.ContractorGroups");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.example.sfc_provisioningbom.Sfc_provisioningbomFactory");

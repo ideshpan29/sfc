@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.brm.n2.tibco.com/WorkItemManagementService_1.7.0" xmlns:ns="http://www.tibco.com/bx/2009/management/processManagerType" xmlns:pfx3="http://services.brm.n2.tibco.com/WorkListService_1.7.0" xmlns:pfx4="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:import namespace="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Wsdl/ProcessManagementInstance.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/QueryProcessInstance.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="plan_id" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>44</pd:startX>
+    <pd:startY>68</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:for-each select="$FetchInstance/outputMessage/ns:queryProcessInstancesOutput/ns:processInstances/ns:processInstance">
+                <process_instance>
+                    <xsl:value-of select="ns:id"/>
+                </process_instance>
+            </xsl:for-each>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="process_instance" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1509019528951</pd:targetNamespace>
+    <pd:activity name="FetchInstance">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>240</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BxProcessManagementService_1.10.0</service>
+            <servicePort>N2PEProcessManagementService.soap</servicePort>
+            <operation>queryProcessInstances</operation>
+            <soapAction>queryProcessInstances</soapAction>
+            <endpointURL>http://%%WorkResources/BPMAPICall/host%%:%%WorkResources/BPMAPICall/port%%/bxEngine/node/processManagement/</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:queryProcessInstancesInput>
+                    <ns:query>
+                        <xsl:value-of select="concat(&quot;select INSTANCE.ID from PROCESS where SiebelCircuitID='&quot;, $Start/plan_id,&quot;'&quot;)"/>
+                    </ns:query>
+                    <ns:pageSize>
+                        <xsl:value-of select="10"/>
+                    </ns:pageSize>
+                    <ns:attributeMap/>
+                </ns:queryProcessInstancesInput>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>FetchInstance</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchInstance</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

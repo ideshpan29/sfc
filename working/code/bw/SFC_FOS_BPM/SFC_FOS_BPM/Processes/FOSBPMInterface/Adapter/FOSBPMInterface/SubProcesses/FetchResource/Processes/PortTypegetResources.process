@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:pfx7="http://services.brm.n2.tibco.com/WorkItemManagementService_1.7.0" xmlns:pfx8="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx9="http://services.brm.n2.tibco.com/WorkListService_1.7.0" xmlns:pfx2="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://orgmodel.api.de.bpm.tibco.com" xmlns:ns="http://resource.api.de.bpm.tibco.com" xmlns:pfx4="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:pfx5="http://xmlns.example.com/1509116265689" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:ns3="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/fetchResources.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Wsdl/OrgResourceService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Wsdl/orgModelService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/FetchResource/Processes/PortTypegetResources.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:FetchResourceinput"/>
+    <pd:startX>119</pd:startX>
+    <pd:startY>161</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:FetchResourceoutput>
+            <part1>
+                <ns3:root>
+                    <xsl:for-each select="$GetAllResources/outputMessage/ns:findResourcesResponse/resource">
+                        <ns3:resources>
+                            <ns3:guid>
+                                <xsl:value-of select="@guid"/>
+                            </ns3:guid>
+                            <ns3:label>
+                                <xsl:value-of select="@label"/>
+                            </ns3:label>
+                            <ns3:name>
+                                <xsl:value-of select="@name"/>
+                            </ns3:name>
+                        </ns3:resources>
+                    </xsl:for-each>
+                </ns3:root>
+            </part1>
+        </wsdlPfx:FetchResourceoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:FetchResourceoutput"/>
+    <pd:endX>794</pd:endX>
+    <pd:endY>171</pd:endY>
+    <pd:errorSchemas>
+        <Schema1 wsMsgRef="wsdlPfx:WorkCompletionfault"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="groupName" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1509116265811</pd:targetNamespace>
+    <pd:activity name="getGroupId">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>226</pd:x>
+        <pd:y>160</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:OrgModelService_1.8.0</service>
+            <servicePort>OrgModelService.soap</servicePort>
+            <operation>getOrgModel</operation>
+            <soapAction>getOrgModel</soapAction>
+            <endpointURL>http://%%WorkResources/BPMAPICall/host%%:%%WorkResources/BPMAPICall/port%%/amxbpm/OrgModelService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <pfx3:getOrgModel/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>296</pd:x>
+        <pd:y>16</pd:y>
+        <pd:width>273</pd:width>
+        <pd:height>278</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$getGroupId/outputMessage/pfx3:getOrgModelResponse/group</pd:over>
+            <pd:iterationElementSlot>groups</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Assign</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$groups/group/@name=$Start/wsdlPfx:FetchResourceinput/part1/pfx6:root/pfx6:name</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Null</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Null">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>426</pd:x>
+            <pd:y>223</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Assign">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>433</pd:x>
+            <pd:y>92</pd:y>
+            <config>
+                <variableName>Variable0</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <groupName>
+                        <xsl:value-of select="$groups/group/@guid"/>
+                    </groupName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="GetAllResources">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>680</pd:x>
+        <pd:y>168</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:OrgResourceService_1.8.0</service>
+            <servicePort>OrgResourceService.soap</servicePort>
+            <operation>findResources</operation>
+            <soapAction>findResources</soapAction>
+            <endpointURL>http://%%WorkResources/BPMAPICall/host%%:%%WorkResources/BPMAPICall/port%%/amxbpm/OrgResourceService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:findResources>
+                    <entity-ref>
+                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="guid">
+                            <xsl:value-of select="$Variable0/root/groupName"/>
+                        </xsl:attribute>
+                    </entity-ref>
+                </ns:findResources>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>getGroupId</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>getGroupId</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>GetAllResources</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetAllResources</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema3.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/fetchResources.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeOnboarding.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:Onbordinginput"/>
+    <pd:startX>83</pd:startX>
+    <pd:startY>111</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:Onbordingoutput>
+            <part1>
+                <ns2:response>
+                    <ns2:outputString>
+                        <xsl:value-of select="&quot;Success&quot;"/>
+                    </ns2:outputString>
+                </ns2:response>
+            </part1>
+        </wsdlPfx:Onbordingoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:Onbordingoutput"/>
+    <pd:endX>485</pd:endX>
+    <pd:endY>112</pd:endY>
+    <pd:errorSchemas>
+        <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1512120233746</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>178</pd:x>
+        <pd:y>18</pd:y>
+        <pd:width>206</pd:width>
+        <pd:height>163</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/wsdlPfx:Onbordinginput/part1/pfx:root/pfx:request</pd:over>
+            <pd:iterationElementSlot>call</pd:iterationElementSlot>
+            <pd:indexSlot>callIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Call Process</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Call Process</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Call Process">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>279</pd:x>
+            <pd:y>109</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
+            </config>
+            <pd:inputBindings>
+                <xsl:for-each select="$call/pfx:request">
+                    <ns2:request>
+                        <ns2:firstName>
+                            <xsl:value-of select="pfx:firstName"/>
+                        </ns2:firstName>
+                        <ns2:lastName>
+                            <xsl:value-of select="pfx:lastName"/>
+                        </ns2:lastName>
+                        <ns2:email>
+                            <xsl:value-of select="pfx:email"/>
+                        </ns2:email>
+                        <ns2:password>
+                            <xsl:value-of select="pfx:password"/>
+                        </ns2:password>
+                        <ns2:ormodelName>
+                            <xsl:value-of select="pfx:orgModelName"/>
+                        </ns2:ormodelName>
+                        <ns2:flag>
+                            <xsl:value-of select="pfx:flag"/>
+                        </ns2:flag>
+                        <ns2:entity>
+                            <xsl:value-of select="pfx:entity"/>
+                        </ns2:entity>
+                    </ns2:request>
+                </xsl:for-each>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

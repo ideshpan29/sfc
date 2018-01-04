@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Processes/getProcessInstanceswithstatus.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="param" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>88</pd:startX>
+    <pd:startY>93</pd:startY>
+    <pd:returnBindings>
+        <response>
+            <xsl:value-of select="$Render-XML/xmlString"/>
+        </response>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="response" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>474</pd:endX>
+    <pd:endY>95</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1509953050277</pd:targetNamespace>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>333</pd:x>
+        <pd:y>94</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="pi_complete" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="customer_name" type="xsd:string"/>
+                                        <xsd:element name="sibelcircuitId" type="xsd:string"/>
+                                        <xsd:element name="project_manager" type="xsd:string"/>
+                                        <xsd:element name="cur_activity" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="exec_mills" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="pi_started" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="customer_name" type="xsd:string"/>
+                                        <xsd:element name="sibelcircuitId" type="xsd:string"/>
+                                        <xsd:element name="project_manager" type="xsd:string"/>
+                                        <xsd:element name="cur_activity" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="exec_mills" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="pi_halted" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="customer_name" type="xsd:string"/>
+                                        <xsd:element name="sibelcircuitId" type="xsd:string"/>
+                                        <xsd:element name="project_manager" type="xsd:string"/>
+                                        <xsd:element name="cur_activity" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="exec_mills" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="pi_cancelled" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="customer_name" type="xsd:string"/>
+                                        <xsd:element name="sibelcircuitId" type="xsd:string"/>
+                                        <xsd:element name="project_manager" type="xsd:string"/>
+                                        <xsd:element name="cur_activity" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="exec_mills" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_completed'">
+                        <pi_complete>
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                            <customer_name>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                            </customer_name>
+                            <sibelcircuitId>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                            </sibelcircuitId>
+                            <project_manager>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                            </project_manager>
+                            <cur_activity>
+                                <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
+                            </cur_activity>
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                            <exec_mills>
+                                <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
+                            </exec_mills>
+                        </pi_complete>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_started'">
+                        <pi_started>
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                            <customer_name>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                            </customer_name>
+                            <sibelcircuitId>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                            </sibelcircuitId>
+                            <project_manager>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                            </project_manager>
+                            <cur_activity>
+                                <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
+                            </cur_activity>
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                            <exec_mills>
+                                <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
+                            </exec_mills>
+                        </pi_started>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_halted'">
+                        <pi_halted>
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                            <customer_name>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                            </customer_name>
+                            <sibelcircuitId>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                            </sibelcircuitId>
+                            <project_manager>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                            </project_manager>
+                            <cur_activity>
+                                <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
+                            </cur_activity>
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                            <exec_mills>
+                                <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
+                            </exec_mills>
+                        </pi_halted>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <xsl:if test="column[name=&quot;STATUS&quot;]/value='pi_cancelled'">
+                        <pi_cancelled>
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                            <customer_name>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                            </customer_name>
+                            <sibelcircuitId>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                            </sibelcircuitId>
+                            <project_manager>
+                                <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                            </project_manager>
+                            <cur_activity>
+                                <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
+                            </cur_activity>
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                            <exec_mills>
+                                <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NA&quot;"/>
+                            </exec_mills>
+                        </pi_cancelled>
+                    </xsl:if>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SQL Direct">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>200</pd:x>
+        <pd:y>94</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <statement>
+                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS from  &quot;,$_globalVariables/ns:GlobalVariables/DataBaseNames/databaseName,&quot;.EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$Start/root/param,&quot;' &quot;)"/>
+                </statement>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SQL Direct</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SQL Direct</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

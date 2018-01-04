@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <wsdl:import namespace="http://xmlns.example.com/1513751864707" location="/Concrete WSDL/SFC_FOS_BPM.wsdl"/>
     <pd:name>SharedResources/SchemaDefinitions/Process Definition.process</pd:name>
     <pd:startName>Start</pd:startName>
+    <pd:startType ref="ns:createresourceinput"/>
     <pd:startX>150</pd:startX>
     <pd:startY>64</pd:startY>
     <pd:returnBindings/>
@@ -23,18 +25,49 @@
             <timeoutType>Seconds</timeoutType>
             <service>pfx:FOSBPMInterface-service0</service>
             <servicePort>PortTypeEndpoint0</servicePort>
-            <operation>getResources</operation>
-            <soapAction>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getResources</soapAction>
+            <operation>ResourceCreation</operation>
+            <soapAction>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/ResourceCreation</soapAction>
             <endpointURL>http://localhost:7070/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
             <inputMessage>
-                <ns:fetchresourceinput>
-                    <ns:processname>
-                        <xsl:value-of select="'PM'"/>
-                    </ns:processname>
-                </ns:fetchresourceinput>
+                <ns:createresourceinput>
+                    <xsl:for-each select="$Start/ns:createresourceinput/ns:createresourcerequest">
+                        <ns:createresourcerequest>
+                            <xsl:if test="ns:name">
+                                <ns:name>
+                                    <xsl:value-of select="ns:name"/>
+                                </ns:name>
+                            </xsl:if>
+                            <xsl:if test="ns:orgname">
+                                <ns:orgname>
+                                    <xsl:value-of select="ns:orgname"/>
+                                </ns:orgname>
+                            </xsl:if>
+                            <xsl:if test="ns:flag">
+                                <ns:flag>
+                                    <xsl:value-of select="ns:flag"/>
+                                </ns:flag>
+                            </xsl:if>
+                            <xsl:if test="ns:entityname">
+                                <ns:entityname>
+                                    <xsl:value-of select="ns:entityname"/>
+                                </ns:entityname>
+                            </xsl:if>
+                            <xsl:if test="ns:email">
+                                <ns:email>
+                                    <xsl:value-of select="ns:email"/>
+                                </ns:email>
+                            </xsl:if>
+                            <xsl:if test="ns:password">
+                                <ns:password>
+                                    <xsl:value-of select="ns:password"/>
+                                </ns:password>
+                            </xsl:if>
+                        </ns:createresourcerequest>
+                    </xsl:for-each>
+                </ns:createresourceinput>
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>

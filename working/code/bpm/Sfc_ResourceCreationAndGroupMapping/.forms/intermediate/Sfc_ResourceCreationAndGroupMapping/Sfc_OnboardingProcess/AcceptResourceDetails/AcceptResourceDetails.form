@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_QiTMgPBPEeeuzZ1H_57zBQ" formatVersion="4.0.0">
+  <form:runtimeDependencies>
+    <form:package>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaPackage</form:package>
+    <form:factory>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaFactory</form:factory>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.inputType</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.ldapentryinputrepeatType</form:class>
+  </form:runtimeDependencies>
+  <form:externalResources>
+    <form:externalResource name="resource.common" uri="pathmap://FORMS_RESOURCES/common.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.form" uri="AcceptResourceDetails.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.safaricom" uri="../../safaricom.css" localized="true"/>
+  </form:externalResources>
+  <form:dataModel>
+    <form:parameter generated="true" name="data.ResouceEntry" label="ResouceEntry" dataType="uml:Class com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaldapentryinputrepeatType?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aClass%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%26n=ldapentryinputrepeatType?" type="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema::ldapentryinputrepeatType" inout="INOUT"/>
+  </form:dataModel>
+  <form:services/>
+  <form:actions/>
+  <form:conditions/>
+  <form:rules>
+    <form:rule generated="true" name="rule.cancel" label="Cancel">
+      <form:event source="#control.cancel" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.cancel.select"/>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.cancel"/>
+    </form:rule>
+    <form:rule generated="true" name="rule.submit" label="Submit">
+      <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+    </form:rule>
+    <form:rule generated="true" name="rule.ResouceEntry_input__add" label="Add ResouceEntry_input">
+      <form:event source="#control.ResouceEntry_input__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ResouceEntry_input__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ResouceEntry_input__add" label="Add ResouceEntry_input">
+        <form:script>var collectionPane = pane.ResouceEntry_input;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createInputType();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ResouceEntry_input__delete" label="Delete ResouceEntry_input">
+      <form:event source="#control.ResouceEntry_input__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ResouceEntry_input__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ResouceEntry_input__delete" label="Delete ResouceEntry_input">
+        <form:script>var collectionPane = pane.ResouceEntry_input;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
+      </form:action>
+    </form:rule>
+  </form:rules>
+  <form:bindings>
+    <form:binding generated="true" direction="bothways" name="_Cnl64OPHEeeIu-I2QAJ3Hw">
+      <form:source target="data.ResouceEntry" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ResouceEntry.value"></form:source>
+      <form:destination target="pane.resEntryPane" feature="http://www.tibco.com/forms/model/elemtypes#//SingletonPanePropertySet/value" data="form.pane.resEntryPane.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Cnl64ePHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.resEntryPane" feature="http://www.tibco.com/forms/model/elemtypes#//SingletonPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#ldapentryinputrepeatTypeinputType?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3aldapentryinputrepeatType%26n=input?" data="form.pane.resEntryPane.value.input"></form:source>
+      <form:destination target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.ResouceEntry_input.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Cnmh8OPHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypefirstname?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=firstname?" data="form.pane.ResouceEntry_input.value.firstname"></form:source>
+      <form:destination target="control.ResouceEntry_input_firstname" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_firstname.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Cnmh8ePHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypelastname?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=lastname?" data="form.pane.ResouceEntry_input.value.lastname"></form:source>
+      <form:destination target="control.ResouceEntry_input_lastname" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_lastname.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Cnmh8uPHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypeemail?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=email?" data="form.pane.ResouceEntry_input.value.email"></form:source>
+      <form:destination target="control.ResouceEntry_input_email" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_email.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_CnnJAOPHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypepassword?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=password?" data="form.pane.ResouceEntry_input.value.password"></form:source>
+      <form:destination target="control.ResouceEntry_input_password" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_password.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_CnnJAePHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypeorgmodelname?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=orgmodelname?" data="form.pane.ResouceEntry_input.value.orgmodelname"></form:source>
+      <form:destination target="control.ResouceEntry_input_orgmodelname" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_orgmodelname.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_CnnJAuPHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypeflag?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=flag?" data="form.pane.ResouceEntry_input.value.flag"></form:source>
+      <form:destination target="control.ResouceEntry_input_flag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_flag.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_CnnwEOPHEeeIu-I2QAJ3Hw">
+      <form:source target="pane.ResouceEntry_input" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#inputTypeentity?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3ainputType%26n=entity?" data="form.pane.ResouceEntry_input.value.entity"></form:source>
+      <form:destination target="control.ResouceEntry_input_entity" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResouceEntry_input_entity.value"></form:destination>
+    </form:binding>
+  </form:bindings>
+  <form:targets>
+    <form:target ref="iProcessWorkspace_10.7"/>
+  </form:targets>
+  <form:defaults>
+    <form:labelProperties position="top"/>
+  </form:defaults>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.content" paneType="com.tibco.forms.panes.vertical">
+    <form:label>Accept Resource Details</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="true"/>
+    <form:defaults>
+      <form:labelProperties position="top"/>
+    </form:defaults>
+    <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" dataType="uml:Class com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaldapentryinputrepeatType?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aClass%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%26n=ldapentryinputrepeatType?" name="pane.resEntryPane" paneType="com.tibco.forms.panes.vertical">
+      <form:label></form:label>
+      <form:hint></form:hint>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:defaults>
+        <form:labelProperties position="top"/>
+      </form:defaults>
+      <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblinputResource">
+        <form:label>Resources</form:label>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:pane generated="true" styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemainputType?p=Sfc_ResourceCreationAndGroupMapping%26s=Generated%20Business%20Objects%26t=uml%3aClass%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%26n=inputType?" name="pane.ResouceEntry_input" paneType="com.tibco.forms.panes.grid">
+        <form:propertySet xsi:type="et:GridPanePropertySet">
+          <et:showNavigator>false</et:showNavigator>
+          <et:supportAddOperation>true</et:supportAddOperation>
+          <et:supportDeleteOperation>true</et:supportDeleteOperation>
+          <et:addOperationLabelRef>resource.common.pane_new_label</et:addOperationLabelRef>
+          <et:deleteOperationLabelRef>resource.common.pane_delete_label</et:deleteOperationLabelRef>
+          <et:editable>true</et:editable>
+          <et:sortable>true</et:sortable>
+          <et:rowLabel>{0}</et:rowLabel>
+        </form:propertySet>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_multiplicity_minimum" name="ResouceEntry_input__multiplicity" type="javascript" when="onformsubmit" list="true" simple="true">
+          <form:script>typeof tibco.forms.Util.checkMultiplicity != 'undefined' ? tibco.forms.Util.checkMultiplicity(context.value, 0, 2147483647) ?  true : [this.getLabel(), '0'] : true;</form:script>
+        </form:validation>
+        <form:defaults>
+          <form:labelProperties position="top"/>
+        </form:defaults>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_firstname">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>firstname</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_lastname">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>lastname</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_email">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>email</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_password">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>password</form:label>
+          <form:hint></form:hint>
+          <form:visible>false</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_orgmodelname">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>orgmodelname</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_flag">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>flag</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResouceEntry_input_entity">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+          </form:propertySet>
+          <form:label>entity</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>true</form:required>
+        </form:control>
+      </form:pane>
+      <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.ResouceEntry_input__add_delete" paneType="com.tibco.forms.panes.horizontal">
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.ResouceEntry_input__add">
+          <form:propertySet xsi:type="et:ButtonPropertySet"/>
+          <form:label valueRef="resource.common.pane_new_label"/>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.ResouceEntry_input__delete">
+          <form:propertySet xsi:type="et:ButtonPropertySet"/>
+          <form:label valueRef="resource.common.pane_delete_label"/>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+      </form:pane>
+    </form:pane>
+  </form:pane>
+  <form:pane gwt:toolbar="true" styleClass="toolbar" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.toolbar" paneType="com.tibco.forms.panes.horizontal">
+    <form:label>Toolbar</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="false"/>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.cancel">
+      <form:propertySet xsi:type="et:ButtonPropertySet"/>
+      <form:label>Cancel</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.submit">
+      <form:propertySet xsi:type="et:ButtonPropertySet">
+        <et:type>primary</et:type>
+      </form:propertySet>
+      <form:label>Submit</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+  </form:pane>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.messages" name="pane.messages" paneType="com.tibco.forms.panes.messages">
+    <form:propertySet xsi:type="et:MessagesPanePropertySet"/>
+    <form:label>Invalid Entries</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="false"/>
+  </form:pane>
+</form:form>

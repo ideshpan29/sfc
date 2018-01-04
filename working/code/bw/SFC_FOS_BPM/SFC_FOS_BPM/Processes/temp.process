@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1513751864707" location="/Concrete WSDL/SFC_FOS_BPM.wsdl"/>
+    <pd:name>Processes/temp.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:createresourceinput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1514984211143</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>281</pd:x>
+        <pd:y>55</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:FOSBPMInterface-service0</service>
+            <servicePort>PortTypeEndpoint0</servicePort>
+            <operation>ResourceCreation</operation>
+            <soapAction>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/ResourceCreation</soapAction>
+            <endpointURL>http://localhost:7020/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <pfx2:createresourceinput>
+                    <xsl:for-each select="$Start/pfx2:createresourceinput/pfx2:createresourcerequest">
+                        <pfx2:createresourcerequest>
+                            <xsl:if test="pfx2:name">
+                                <pfx2:name>
+                                    <xsl:value-of select="pfx2:name"/>
+                                </pfx2:name>
+                            </xsl:if>
+                            <xsl:if test="pfx2:orgname">
+                                <pfx2:orgname>
+                                    <xsl:value-of select="pfx2:orgname"/>
+                                </pfx2:orgname>
+                            </xsl:if>
+                            <xsl:if test="pfx2:flag">
+                                <pfx2:flag>
+                                    <xsl:value-of select="pfx2:flag"/>
+                                </pfx2:flag>
+                            </xsl:if>
+                            <xsl:if test="pfx2:entityname">
+                                <pfx2:entityname>
+                                    <xsl:value-of select="pfx2:entityname"/>
+                                </pfx2:entityname>
+                            </xsl:if>
+                            <xsl:if test="pfx2:email">
+                                <pfx2:email>
+                                    <xsl:value-of select="pfx2:email"/>
+                                </pfx2:email>
+                            </xsl:if>
+                            <xsl:if test="pfx2:password">
+                                <pfx2:password>
+                                    <xsl:value-of select="pfx2:password"/>
+                                </pfx2:password>
+                            </xsl:if>
+                        </pfx2:createresourcerequest>
+                    </xsl:for-each>
+                </pfx2:createresourceinput>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

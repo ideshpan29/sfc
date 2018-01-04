@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/DemoProject/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/schemas/DemoProject/Schemas/Schema.xsd2" schemaLocation="/Schemas/task.xsd"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/Processnames/getProcessInstanceDetails.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="instanceid" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>116</pd:startX>
+    <pd:startY>112</pd:startY>
+    <pd:returnBindings>
+        <response>
+            <xsl:value-of select="$Render-XML/xmlString"/>
+        </response>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="response" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>487</pd:endX>
+    <pd:endY>118</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1509967891947</pd:targetNamespace>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>363</pd:x>
+        <pd:y>115</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="param" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="first_time_offer" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="activity_name" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="activity_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="wait_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="work_time_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <param>
+                        <xsl:if test="column[name=&quot;PROCESS_INSTANCE&quot;]/value">
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                        </xsl:if>
+                        <first_time_offer>
+                            <xsl:value-of select="if(column[name=&quot;FIRST_OFFER_TIME&quot;]/value!=&quot;&quot;) then column[name=&quot;FIRST_OFFER_TIME&quot;]/value else &quot;NA&quot;"/>
+                        </first_time_offer>
+                        <xsl:if test="column[name=&quot;ACTIVITY_NAME&quot;]/value">
+                            <activity_name>
+                                <xsl:value-of select="column[name=&quot;ACTIVITY_NAME&quot;]/value"/>
+                            </activity_name>
+                        </xsl:if>
+                        <activity_dur>
+                            <xsl:value-of select="if(column[name=&quot;ACTIVE_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;ACTIVE_DUR&quot;]/value else &quot;NA&quot;"/>
+                        </activity_dur>
+                        <wait_dur>
+                            <xsl:value-of select="if(column[name=&quot;WAIT_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;WAIT_DUR&quot;]/value else &quot;NA&quot;"/>
+                        </wait_dur>
+                        <work_time_dur>
+                            <xsl:value-of select="if(column[name=&quot;WORK_TIME_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;WORK_TIME_DUR&quot;]/value else &quot;NA&quot;"/>
+                        </work_time_dur>
+                        <xsl:if test="column[name=&quot;STATUS&quot;]/value">
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                        </xsl:if>
+                    </param>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SQL Direct">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>234</pd:x>
+        <pd:y>110</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <statement>
+                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE,first_offer_time, ACTIVITY_NAME,  ACTIVE_DUR, WAIT_DUR,WORK_TIME_DUR,status from &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_WI_STATUS where PROCESS_INSTANCE='&quot;,$Start/root/instanceid,&quot;'&quot;)"/>
+                </statement>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SQL Direct</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SQL Direct</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

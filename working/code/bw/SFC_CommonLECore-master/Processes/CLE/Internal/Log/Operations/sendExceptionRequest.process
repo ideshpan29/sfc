@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" schemaLocation="/SharedResources/SchemaDefinitions/CLE/Log/ExceptionRequest.xsd"/>
+    <pd:name>Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx:ExceptionRequest"/>
+    <pd:startX>108</pd:startX>
+    <pd:startY>63</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>63</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1511337245549</pd:targetNamespace>
+    <pd:activity name="MergeHeader">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>229</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/SubProcesses/mergeHeader.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:copy-of select="$Start/pfx:ExceptionRequest/ns:Header"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Publish to CLE">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>340</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/SubProcesses/publishException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx:ExceptionRequest>
+                <xsl:copy-of select="$MergeHeader/ns:Header"/>
+                <ExceptionCode>
+                    <xsl:value-of select="$Start/pfx:ExceptionRequest/ExceptionCode"/>
+                </ExceptionCode>
+                <xsl:if test="$Start/pfx:ExceptionRequest/StackTrace">
+                    <StackTrace>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/StackTrace"/>
+                    </StackTrace>
+                </xsl:if>
+                <xsl:if test="$Start/pfx:ExceptionRequest/TransactionMessage">
+                    <TransactionMessage>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/TransactionMessage"/>
+                    </TransactionMessage>
+                </xsl:if>
+                <xsl:if test="$Start/pfx:ExceptionRequest/Custom">
+                    <Custom>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/Custom"/>
+                    </Custom>
+                </xsl:if>
+                <xsl:if test="$Start/pfx:ExceptionRequest/Timeout">
+                    <Timeout>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/Timeout"/>
+                    </Timeout>
+                </xsl:if>
+                <xsl:if test="$Start/pfx:ExceptionRequest/ReplyDestination">
+                    <ReplyDestination>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/ReplyDestination"/>
+                    </ReplyDestination>
+                </xsl:if>
+                <xsl:if test="$Start/pfx:ExceptionRequest/NotificationChannel">
+                    <NotificationChannel>
+                        <xsl:value-of select="$Start/pfx:ExceptionRequest/NotificationChannel"/>
+                    </NotificationChannel>
+                </xsl:if>
+            </pfx:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>MergeHeader</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Publish to CLE</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MergeHeader</pd:from>
+        <pd:to>Publish to CLE</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

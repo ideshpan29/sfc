@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="fetchresource"/>
+				<xs:element ref="reportgeneration"/>
+				<xs:element ref="reesourcecreationandmapping"/>
+				<xs:element ref="workitemcompletion"/>
+				<xs:element ref="fault"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchresource">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="fetchresourceinput"/>
+				<xs:element ref="fetchresourceoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reportgeneration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="getprocessinstances"/>
+				<xs:element ref="searchprocessinstances"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reesourcecreationandmapping">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="createresource"/>
+				<xs:element ref="ldapentry"/>
+				<xs:element ref="parsecsv"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="workitemcompletion">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="workitemcompletioninput"/>
+				<xs:element ref="workitemcompletionoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fault">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="faultmessage" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchresourceinput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="processname" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fetchresourceoutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="guid" type="xs:string"/>
+							<xs:element name="label" type="xs:string"/>
+							<xs:element name="name" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="workitemcompletioninput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="sibelcircuitid" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="workitemcompletionoutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="outputmessage" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getprocessinstances">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="getprocessinstancesinput"/>
+				<xs:element ref="getprocessinstancesoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchprocessinstances">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="searchprocessinstancesinput"/>
+				<xs:element ref="searchprocessinstancesoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getprocessinstancesinput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="processname" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getprocessinstancesoutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pi_complete" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process_instance" type="xs:string"/>
+							<xs:element name="customer_name" type="xs:string"/>
+							<xs:element name="sibelcircuit_id" type="xs:string"/>
+							<xs:element name="projectmanager" type="xs:string"/>
+							<xs:element name="cur_activity" type="xs:string"/>
+							<xs:element name="status" type="xs:string"/>
+							<xs:element name="exec_mills" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="pi_started" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process_instance" type="xs:string"/>
+							<xs:element name="customer_name" type="xs:string"/>
+							<xs:element name="sibelcircuit_id" type="xs:string"/>
+							<xs:element name="projectmanager" type="xs:string"/>
+							<xs:element name="cur_activity" type="xs:string"/>
+							<xs:element name="status" type="xs:string"/>
+							<xs:element name="exec_mills" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="pi_halted" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process_instance" type="xs:string"/>
+							<xs:element name="customer_name" type="xs:string"/>
+							<xs:element name="sibelcircuit_id" type="xs:string"/>
+							<xs:element name="projectmanager" type="xs:string"/>
+							<xs:element name="cur_activity" type="xs:string"/>
+							<xs:element name="status" type="xs:string"/>
+							<xs:element name="exec_mills" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="pi_cancelled" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process_instance" type="xs:string"/>
+							<xs:element name="customer_name" type="xs:string"/>
+							<xs:element name="sibelcircuit_id" type="xs:string"/>
+							<xs:element name="projectmanager" type="xs:string"/>
+							<xs:element name="cur_activity" type="xs:string"/>
+							<xs:element name="status" type="xs:string"/>
+							<xs:element name="exec_mills" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchprocessinstancesinput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="searchkey" type="xs:string"/>
+				<xs:element name="searchvalue" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchprocessinstancesoutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="searchrecord" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="process_instance" type="xs:string"/>
+							<xs:element name="customer_name" type="xs:string"/>
+							<xs:element name="sibelcircuit_id" type="xs:string"/>
+							<xs:element name="projectmanager" type="xs:string"/>
+							<xs:element name="cur_activity" type="xs:string"/>
+							<xs:element name="status" type="xs:string"/>
+							<xs:element name="exec_mills" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createresource">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="createresourceinput"/>
+				<xs:element ref="createresourceoutput"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ldapentry">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ldapentryinput" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ldapentryoutput"/>
+				<xs:element ref="ldapentryinputrepeat"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parsecsv">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="users" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string" minOccurs="0"/>
+							<xs:element name="orgname" type="xs:string" minOccurs="0"/>
+							<xs:element name="flag" type="xs:string" minOccurs="0"/>
+							<xs:element name="entityname" type="xs:string" minOccurs="0"/>
+							<xs:element name="email" type="xs:string" minOccurs="0"/>
+							<xs:element name="password" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createresourceinput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="createresourcerequest" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string" minOccurs="0"/>
+							<xs:element name="orgname" type="xs:string" minOccurs="0"/>
+							<xs:element name="flag" type="xs:string" minOccurs="0"/>
+							<xs:element name="entityname" type="xs:string" minOccurs="0"/>
+							<xs:element name="email" type="xs:string" minOccurs="0"/>
+							<xs:element name="password" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="createresourceoutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="outputmessage" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ldapentryinput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="firstname" type="xs:string"/>
+				<xs:element name="lastname" type="xs:string"/>
+				<xs:element name="email" type="xs:string"/>
+				<xs:element name="password" type="xs:string" minOccurs="0"/>
+				<xs:element name="orgmodelname" type="xs:string"/>
+				<xs:element name="flag" type="xs:string"/>
+				<xs:element name="entity" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ldapentryoutput" type="xs:string"/>
+	<xs:element name="ldapentryinputrepeat">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="input" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="firstname" type="xs:string"/>
+							<xs:element name="lastname" type="xs:string"/>
+							<xs:element name="email" type="xs:string"/>
+							<xs:element name="password" type="xs:string" minOccurs="0"/>
+							<xs:element name="orgmodelname" type="xs:string"/>
+							<xs:element name="flag" type="xs:string"/>
+							<xs:element name="entity" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

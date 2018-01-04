@@ -228,15 +228,15 @@
             <pd:to>Interation To get the Guid from Group name</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$ParseIndex1/pfx17:users/pfx17:flag='G'</pd:xpath>
+            <pd:conditionType>otherwise</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Resource Creation Logs</pd:from>
             <pd:to>Interation To get the Position ID from position name</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$ParseIndex1/pfx17:users/pfx17:flag='P'</pd:xpath>
         </pd:transition>
         <pd:transition>
             <pd:from>Interation To get the Position ID from position name</pd:from>
@@ -336,8 +336,8 @@
         <pd:activity name="createResource">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1337</pd:x>
-            <pd:y>486</pd:y>
+            <pd:x>1336</pd:x>
+            <pd:y>485</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -963,7 +963,7 @@
         <pd:activity name="GetSpecificCandidate">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1151</pd:x>
+            <pd:x>1152</pd:x>
             <pd:y>484</pd:y>
             <config>
                 <timeout>0</timeout>
@@ -988,7 +988,7 @@
                                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPContainerName"/>
                                 </xsl:attribute>
                                 <xsl:attribute name="ldap-query">
-                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
+                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,&quot;)&quot;)"/>
                                 </xsl:attribute>
                             </ns:executeLdapQuery>
                         </inputMessage>
@@ -1167,7 +1167,7 @@
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/SingleInputEntryFile"/>
                 </fileName>
                 <textContent>
-                    <xsl:value-of select="concat($Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:orgname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:email,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:password)"/>
+                    <xsl:value-of select="concat($Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:flag,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:email,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:password)"/>
                 </textContent>
             </ns0:WriteActivityInputTextClass>
         </pd:inputBindings>

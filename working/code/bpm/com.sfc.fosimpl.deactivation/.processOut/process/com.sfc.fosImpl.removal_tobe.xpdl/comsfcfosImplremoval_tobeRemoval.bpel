@@ -22,9 +22,9 @@
         </task>
         <task name="ManualInstallationRemoval">
             <startingVariables>
-                <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -32,61 +32,47 @@
         </task>
         <task name="PMReview">
             <startingVariables>
-                <variable>TaskName</variable>
-                <variable>SelectedGroup</variable>
                 <variable>TechnicalInfo</variable>
+                <variable>Mail</variable>
                 <variable>GroupNames</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>Mail</variable>
+                <variable>SelectedGroup</variable>
+                <variable>TaskName</variable>
+                <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
-            </ProcessManagerScript>
-        </task>
-        <task name="RequestInitiateMail">
-            <startingVariables>
-                <variable>ClientName</variable>
-                <variable>Email</variable>
-                <variable>ClientId</variable>
-                <variable>CircuitID</variable>
-            </startingVariables>
-            <ProcessManagerScript type="Initiate">
-                <variable>ClientName</variable>
-                <variable>Email</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>ClientId</variable>
-                <variable>CircuitID</variable>
             </ProcessManagerScript>
         </task>
         <task name="DeprovisionMngementIP">
             <startingVariables>
-                <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
             </ProcessManagerScript>
         </task>
-        <task name="ScriptTask2">
+        <task name="ScriptTask3">
             <startingVariables>
-                <variable>SelectedGroup</variable>
-                <variable>MasterContractor</variable>
+                <variable>GroupNames</variable>
                 <variable>Fetch_Groups</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
         </task>
-        <task name="_BX_SPInput_CallSubProcess">
+        <task name="ScriptTask2">
             <startingVariables>
-                <variable>TaskName</variable>
-                <variable>fetchSLAFlag</variable>
-                <variable>Provisioning_Data</variable>
+                <variable>MasterContractor</variable>
+                <variable>Fetch_Groups</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
         </task>
         <task name="TESOSGVerification">
             <startingVariables>
-                <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -95,6 +81,42 @@
         <task name="SelectContractorAgency">
             <startingVariables>
                 <variable>MasterContractor</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>Mail</variable>
+                <variable>GroupNames</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>SelectedGroup</variable>
+                <variable>TaskName</variable>
+                <variable>SelectedContractor</variable>
+            </startingVariables>
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+            </ProcessManagerScript>
+            <ProcessManagerScript type="Complete">
+                <variable>MasterContractor</variable>
+                <variable>SelectedContractor</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="RequestInitiateMail">
+            <startingVariables>
+                <variable>ClientId</variable>
+                <variable>Email</variable>
+                <variable>CircuitID</variable>
+                <variable>ClientName</variable>
+            </startingVariables>
+            <ProcessManagerScript type="Initiate">
+                <variable>ClientId</variable>
+                <variable>Email</variable>
+                <variable>CircuitID</variable>
+                <variable>ClientName</variable>
+                <variable>Provisioning_Data</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="_BX_SPInput_CallSubProcess">
+            <startingVariables>
+                <variable>fetchSLAFlag</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask">
@@ -103,28 +125,28 @@
                 <variable>Fetch_Groups</variable>
             </startingVariables>
         </task>
+        <task name="DeprovisionIPs">
+            <startingVariables>
+                <variable>TechnicalInfo</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
+            </startingVariables>
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="ServiceTask">
             <startingVariables>
                 <variable>Email</variable>
-                <variable>CircuitID</variable>
                 <variable>ClientID</variable>
+                <variable>CircuitID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>Email</variable>
-                <variable>CircuitID</variable>
-                <variable>ClientName</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>ClientID</variable>
-            </ProcessManagerScript>
-        </task>
-        <task name="DeprovisionIPs">
-            <startingVariables>
-                <variable>TaskName</variable>
-                <variable>TechnicalInfo</variable>
+                <variable>ClientName</variable>
+                <variable>CircuitID</variable>
                 <variable>Provisioning_Data</variable>
-            </startingVariables>
-            <ProcessManagerScript type="Initiate">
-                <variable>TaskName</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -167,6 +189,10 @@
             tibex:xpdlId="_u93lwPENEeeJiLkPq4yokA" type="xsd:string"/>
         <bpws:variable name="MasterContractor"
             tibex:xpdlId="_SZDIIPESEeeJiLkPq4yokA" type="xsd:string"/>
+        <bpws:variable name="SelectedContractor"
+            tibex:xpdlId="_oyjvsPExEeeMCZGsP3rsrw" type="xsd:string"/>
+        <bpws:variable name="ContractorNames" tibex:array="yes"
+            tibex:xpdlId="_T9rOsPE1EeeMCZGsP3rsrw" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -182,11 +208,12 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_qYiz4PEiEeeJiLkPq4yokA">
+    <bpws:flow name="_BX_flow_HImNIPFKEeeMCZGsP3rsrw">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="TimerEvent to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
             <bpws:link name="TL2 to CatchLinkEvent2"/>
+            <bpws:link name="ScriptTask3 to SelectContractorAgency" tibex:xpdlId="_5-qWsPEuEeeJiLkPq4yokA"/>
             <bpws:link
                 name="_7k_psN_HEeec4K-r6PSjHg to _BX_scope_ServiceTask" tibex:xpdlId="_hJ4EUOR-EeeoTJ_gSITXzA"/>
             <bpws:link name="CatchMessageEvent to ScriptTask" tibex:xpdlId="_8_8ysPEIEee5fIpJptHEZA"/>
@@ -197,20 +224,19 @@
             <bpws:link name="ScriptTask2 to _l66cUOR8EeeoTJ_gSITXzA" tibex:xpdlId="_l67DYOR8EeeoTJ_gSITXzA"/>
             <bpws:link name="CatchLinkEvent to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_R0OE8N_IEeec4K-r6PSjHg"/>
             <bpws:link
-                name="SelectContractorAgency to _XqGvsN_HEeec4K-r6PSjHg" tibex:xpdlId="_YS1joN_HEeec4K-r6PSjHg"/>
+                name="SelectContractorAgency to _BX_scope_ManualInstallation" tibex:xpdlId="_YS1joN_HEeec4K-r6PSjHg"/>
             <bpws:link name="_BX_normalFlow to ScriptTask2" tibex:xpdlId="_L2C1gPEPEeeJiLkPq4yokA"/>
             <bpws:link
-                name="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_ManualInstallation" tibex:xpdlId="_q3_g4N_HEeec4K-r6PSjHg"/>
-            <bpws:link
                 name="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP" tibex:xpdlId="_LxC-gOCtEeeeKsD8kq9l7g"/>
-            <bpws:link name="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionIPs" tibex:xpdlId="_hIyxIOR8EeeoTJ_gSITXzA"/>
+            <bpws:link name="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3" tibex:xpdlId="_4kEVEPE7EeeMCZGsP3rsrw"/>
+            <bpws:link name="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionIPs" tibex:xpdlId="_Z5yjoPE8EeeMCZGsP3rsrw"/>
             <bpws:link name="_BX_continue to TL1" tibex:xpdlId="_steJsOSGEee4r8nNLd6bUg"/>
             <bpws:link
                 name="DeprovisionMngementIP to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_gxpDcOCtEeeeKsD8kq9l7g"/>
             <bpws:link name="DeprovisionIPs to LinkToCatchLinkEvent" tibex:xpdlId="_LUQX4N_IEeec4K-r6PSjHg"/>
             <bpws:link name="_BX_scope_ServiceTask to EndEvent" tibex:xpdlId="_qYVT8N_IEeec4K-r6PSjHg"/>
             <bpws:link
-                name="_l66cUOR8EeeoTJ_gSITXzA to SelectContractorAgency" tibex:xpdlId="_Tyh5A_EREeeJiLkPq4yokA"/>
+                name="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg" tibex:xpdlId="_Tyh5A_EREeeJiLkPq4yokA"/>
             <bpws:link name="CallSubProcess to EndEvent2" tibex:xpdlId="_B3LuYOSHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_normalFlow_2 to TESOSGVerification" tibex:xpdlId="_2xISEN_HEeec4K-r6PSjHg"/>
             <bpws:link name="TL1 to CatchLinkEvent2"/>
@@ -261,11 +287,11 @@
         <bpws:empty name="_BX_gateway__XqGvsN_HEeec4K-r6PSjHg"
             tibex:type="inclusiveGateway" tibex:xpdlId="_XqGvsN_HEeec4K-r6PSjHg">
             <bpws:targets>
-                <bpws:target linkName="SelectContractorAgency to _XqGvsN_HEeec4K-r6PSjHg"/>
+                <bpws:target linkName="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_ManualInstallation"/>
                 <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP"/>
+                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3"/>
                 <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionIPs"/>
             </bpws:sources>
         </bpws:empty>
@@ -419,7 +445,7 @@ Email=Provisioning_Data.email;]]></tibex:initiatedScript>
                 <bpws:target linkName="ScriptTask2 to _l66cUOR8EeeoTJ_gSITXzA"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_l66cUOR8EeeoTJ_gSITXzA to SelectContractorAgency"/>
+                <bpws:source linkName="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg"/>
             </bpws:sources>
             <bpws:variables>
                 <bpws:variable name="Email"
@@ -570,10 +596,10 @@ _BX_Provision = ScriptUtil.copy(Provisioning_Data);
 // Function for user defined mapping script: SLAFlag
 function _f1_() { 
     if(fetchSLAFlag==1){
-    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');
+    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,TaskName,'Decomissioning');
     }
     else{
-    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(2,'Process Manager Review','Decomissioning');
+    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(2,TaskName,'Decomissioning');
     }
     return ftchSla;
 }
@@ -626,7 +652,8 @@ _BX_Task = TaskName;
                 <bpws:sources>
                     <bpws:source linkName="ScriptTask to _BX_scope_PMReview"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findAll();
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "masterUser='Y'";
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);
 for(var index=0; index<Fetch_Groups.size(); index++) {
 	GroupNames.add(Fetch_Groups.get(index).readContractorGroups().contractorGroupName);
 }]]></tibex:script>
@@ -642,20 +669,21 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                 <bpws:sources>
                     <bpws:source linkName="ScriptTask2 to _l66cUOR8EeeoTJ_gSITXzA"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "contractorGroupName='"+SelectedGroup+"'";
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "contractorGroupName='"+SelectedGroup+"' and masterUser='Y'";
 Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);
 MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().loginName+"')";]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
             <tibex:extActivity name="SelectContractorAgency"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form&#xd;&#xa;"
                 tibex:type="userTask"
                 tibex:xpdlId="_Tyh5APEREeeJiLkPq4yokA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
-                    <bpws:target linkName="_l66cUOR8EeeoTJ_gSITXzA to SelectContractorAgency"/>
+                    <bpws:target linkName="ScriptTask3 to SelectContractorAgency"/>
                 </bpws:targets>
                 <bpws:sources>
-                    <bpws:source linkName="SelectContractorAgency to _XqGvsN_HEeec4K-r6PSjHg"/>
+                    <bpws:source linkName="SelectContractorAgency to _BX_scope_ManualInstallation"/>
                 </bpws:sources>
                 <model:UserTaskDataModelType
                     distributionStrategy="ALLOCATE"
@@ -670,10 +698,44 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
                     <userTaskParameters>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="MasterContractor"/>
+                        <userTaskParameter mandatory="false" mode="IN" name="TaskName"/>
+                        <userTaskParameter mandatory="false" mode="IN" name="TechnicalInfo"/>
+                        <userTaskParameter mandatory="false" mode="IN" name="Provisioning_Data"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="Mail"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="SelectedGroup"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="GroupNames"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="SelectedContractor"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="ContractorNames"/>
                     </userTaskParameters>
+                    <userTaskExtendedAttributes>
+                        <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                    </userTaskExtendedAttributes>
                     <userTaskGroupMemberships/>
                 </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Process Manager Review";]]></tibex:initiatedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Select Contractor Agency";]]></tibex:initiatedScript>
+                <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MasterContractor="resource(name='"+SelectedContractor+"')";]]></tibex:completedScript>
+            </tibex:extActivity>
+        </bpws:extensionActivity>
+        <bpws:extensionActivity>
+            <tibex:extActivity name="ScriptTask3"
+                tibex:type="scriptTask"
+                tibex:xpdlId="_47XtsPEuEeeJiLkPq4yokA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                <bpws:targets>
+                    <bpws:target linkName="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="ScriptTask3 to SelectContractorAgency"/>
+                </bpws:sources>
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "contractorGroupName='"+SelectedGroup+"' and masterUser='N'";
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);
+for(var index=0; index<Fetch_Groups.size(); index++) {
+	ContractorNames.add(Fetch_Groups.get(index).readContractorGroups().loginName);
+}]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:scope name="_BX_scope_PMReview" tibex:migrationAllowed="yes">
@@ -747,6 +809,10 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
                                 mode="INOUT" name="GroupNames"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="SelectedGroup"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="SelectedContractor"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="ContractorNames"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
@@ -769,13 +835,10 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
         </bpws:empty>
         <bpws:scope name="_BX_scope_ManualInstallationRemoval">
             <bpws:targets>
-                <bpws:target linkName="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_ManualInstallation"/>
+                <bpws:target linkName="SelectContractorAgency to _BX_scope_ManualInstallation"/>
             </bpws:targets>
             <bpws:eventHandlers>
                 <bpws:onAlarm tibex:deadline="yes">
-                    <tibex:userTaskParticipant entity="GROUP"
-                        modelVersion="1"
-                        uniqueId="_laeb8Lk-EeenBJWclYhCxA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                     <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[Log.write("At Second Task");FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Manual Installation Removal : Contractor','Decomissioning');if(FetchSLA1.readSLA_Configuration().emailTo=='PM'){FetchSLA1.readSLA_Configuration().emailConfig=Mail;Log.write("Mail Value Set");}Log.write('Out of Condition');DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__GFDmoOZAEeeJAIDoV1ZLpQ">
                         <bpws:empty name="_BX_continue_2"
@@ -808,8 +871,7 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
                         xmi:version="2.0"
                         xmlns:model="http://model.ut.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
                         <userTaskParticipants>
-                            <userTaskParticipant entity="ROLE"
-                                modelVersion="1" uniqueId="_laeb8Lk-EeenBJWclYhCxA"/>
+                            <userTaskParticipant entity="FIELD" performer="MasterContractor"/>
                         </userTaskParticipants>
                         <userTaskParameters>
                             <userTaskParameter mandatory="false"

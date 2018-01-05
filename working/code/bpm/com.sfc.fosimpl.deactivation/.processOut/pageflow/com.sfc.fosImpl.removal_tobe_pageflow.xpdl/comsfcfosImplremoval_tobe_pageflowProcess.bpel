@@ -9,11 +9,12 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ConfirmDetails">
             <startingVariables>
-                <variable>SelectedGroup</variable>
-                <variable>TechnicalInfo</variable>
                 <variable>GroupNames</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>SelectedGroup</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>TaskName</variable>
+                <variable>SelectedContractor</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -34,12 +35,17 @@
             tibex:xpdlId="_Ni4kEPEKEee5fIpJptHEZA" type="xsd:string"/>
         <bpws:variable name="SelectedGroup" tibex:parameter="inout"
             tibex:xpdlId="_8EQNMPENEeeJiLkPq4yokA" type="xsd:string"/>
+        <bpws:variable name="SelectedContractor" tibex:parameter="inout"
+            tibex:xpdlId="_5uqrgPExEeeMCZGsP3rsrw" type="xsd:string"/>
+        <bpws:variable name="ContractorNames" tibex:array="yes"
+            tibex:parameter="inout"
+            tibex:xpdlId="_oC8T0PE1EeeMCZGsP3rsrw" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_SOPJ0PETEeeJiLkPq4yokA">
+    <bpws:flow name="_BX_flow_FdcC8PE2EeeMCZGsP3rsrw">
         <bpws:links>
             <bpws:link name="ConfirmDetails to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
             <bpws:link name="StartEvent to ConfirmDetails" tibex:xpdlId="_5nGy8N_CEeec4K-r6PSjHg"/>
@@ -52,12 +58,14 @@
                     <bpws:source linkName="StartEvent to ConfirmDetails"/>
                 </bpws:sources>
                 <tibex:parameters>
+                    <parameterDescription mode="InOut" name="GroupNames"/>
+                    <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
                     <parameterDescription mode="InOut" name="SelectedGroup"/>
                     <parameterDescription mode="InOut" name="TechnicalInfo"/>
-                    <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
-                    <parameterDescription mode="InOut" name="Mail"/>
                     <parameterDescription mode="InOut" name="TaskName"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="SelectedContractor"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -93,6 +101,10 @@
                             mode="INOUT" name="GroupNames"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="SelectedGroup"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="SelectedContractor"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="ContractorNames"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>

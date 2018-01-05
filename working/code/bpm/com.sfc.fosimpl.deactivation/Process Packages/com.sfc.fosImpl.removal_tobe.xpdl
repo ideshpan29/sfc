@@ -107,7 +107,7 @@
         </xpdl2:Lane>
         <xpdl2:Lane Id="_Gl0XAN_BEee7mPhVBav8gw" xpdExt:DisplayName="Contractor" Name="Contractor">
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="240.0" IsVisible="true"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="407.0" IsVisible="true"/>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Lane>
         <xpdl2:Lane Id="_HE7U4N_BEee7mPhVBav8gw" xpdExt:DisplayName="TES OSG" Name="TESOSG">
@@ -256,11 +256,27 @@
               <xpdl2:Length>50</xpdl2:Length>
             </xpdl2:BasicType>
           </xpdl2:DataType>
-          <xpdl2:InitialValue></xpdl2:InitialValue>
+          <xpdl2:InitialValue/>
         </xpdl2:DataField>
         <xpdl2:DataField Id="_SZDIIPESEeeJiLkPq4yokA" xpdExt:DisplayName="MasterContractor" Name="MasterContractor" ReadOnly="false">
           <xpdl2:DataType>
             <xpdl2:BasicType Type="PERFORMER"/>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_oyjvsPExEeeMCZGsP3rsrw" xpdExt:DisplayName="SelectedContractor" Name="SelectedContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_T9rOsPE1EeeMCZGsP3rsrw" xpdExt:DisplayName="ContractorNames" Name="ContractorNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
           </xpdl2:DataType>
           <xpdl2:InitialValue></xpdl2:InitialValue>
         </xpdl2:DataField>
@@ -320,7 +336,7 @@
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="82.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="45.0">
-              <xpdl2:Coordinates XCoordinate="999.0" YCoordinate="46.0"/>
+              <xpdl2:Coordinates XCoordinate="1318.0" YCoordinate="46.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -383,6 +399,12 @@ var a;</xpdExt:SubmitScript>
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
               <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
@@ -400,16 +422,16 @@ var a;</xpdExt:SubmitScript>
             <xpdl2:TransitionRestriction>
               <xpdl2:Split Type="Inclusive">
                 <xpdl2:TransitionRefs>
-                  <xpdl2:TransitionRef Id="_q3_g4N_HEeec4K-r6PSjHg"/>
                   <xpdl2:TransitionRef Id="_LxC-gOCtEeeeKsD8kq9l7g"/>
-                  <xpdl2:TransitionRef Id="_hIyxIOR8EeeoTJ_gSITXzA"/>
+                  <xpdl2:TransitionRef Id="_4kEVEPE7EeeMCZGsP3rsrw"/>
+                  <xpdl2:TransitionRef Id="_Z5yjoPE8EeeMCZGsP3rsrw"/>
                 </xpdl2:TransitionRefs>
               </xpdl2:Split>
             </xpdl2:TransitionRestriction>
           </xpdl2:TransitionRestrictions>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="45.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="43.0">
-              <xpdl2:Coordinates XCoordinate="672.0" YCoordinate="71.0"/>
+              <xpdl2:Coordinates XCoordinate="613.0" YCoordinate="71.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -434,7 +456,7 @@ var a;</xpdExt:SubmitScript>
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="70.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="153.0">
-              <xpdl2:Coordinates XCoordinate="347.0" YCoordinate="86.0"/>
+              <xpdl2:Coordinates XCoordinate="851.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -474,14 +496,14 @@ var a;</xpdExt:SubmitScript>
             </xpdl2:Task>
           </xpdl2:Implementation>
           <xpdl2:Performers>
-            <xpdl2:Performer>_fa2W4N_BEee7mPhVBav8gw</xpdl2:Performer>
+            <xpdl2:Performer>_SZDIIPESEeeJiLkPq4yokA</xpdl2:Performer>
           </xpdl2:Performers>
           <xpdl2:ExtendedAttributes>
             <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="181.0">
-              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="78.0"/>
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="277.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -561,7 +583,7 @@ var a;</xpdExt:SubmitScript>
           </xpdl2:TransitionRestrictions>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="45.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="43.0">
-              <xpdl2:Coordinates XCoordinate="744.0" YCoordinate="46.0"/>
+              <xpdl2:Coordinates XCoordinate="1135.0" YCoordinate="46.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -572,8 +594,8 @@ var a;</xpdExt:SubmitScript>
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="77.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="58.0">
-              <xpdl2:Coordinates XCoordinate="483.0" YCoordinate="86.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="132.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="60.0">
+              <xpdl2:Coordinates XCoordinate="1015.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -584,8 +606,8 @@ var a;</xpdExt:SubmitScript>
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="62.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="58.0">
-              <xpdl2:Coordinates XCoordinate="674.0" YCoordinate="184.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="107.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="46.0">
+              <xpdl2:Coordinates XCoordinate="1135.0" YCoordinate="212.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -610,7 +632,7 @@ var a;</xpdExt:SubmitScript>
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="75.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="162.0">
-              <xpdl2:Coordinates XCoordinate="347.0" YCoordinate="65.0"/>
+              <xpdl2:Coordinates XCoordinate="366.0" YCoordinate="71.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -700,7 +722,7 @@ Safaricom Team  </email:Body>
           </xpdl2:DataFields>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="159.0">
-              <xpdl2:Coordinates XCoordinate="338.0" YCoordinate="71.0"/>
+              <xpdl2:Coordinates XCoordinate="433.0" YCoordinate="71.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -779,7 +801,7 @@ Safaricom Team</email:Body>
           </xpdl2:DataFields>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="880.0" YCoordinate="46.0"/>
+              <xpdl2:Coordinates XCoordinate="1222.0" YCoordinate="46.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -872,10 +894,10 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
                   <xpdExt:DataMapping xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="SLA">
                     <xpdExt:ScriptInformation Id="_IydCAOY1Eeep9dkvO_z3LA" Name="SLAFlag">
                       <xpdExt:Expression ScriptGrammar="JavaScript">if(fetchSLAFlag==1){&#xD;
-var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');&#xD;
+var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,TaskName,'Decomissioning');&#xD;
 }&#xD;
 else{&#xD;
-var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(2,'Process Manager Review','Decomissioning');&#xD;
+var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(2,TaskName,'Decomissioning');&#xD;
 }&#xD;
 return ftchSla;</xpdExt:Expression>
                     </xpdExt:ScriptInformation>
@@ -946,11 +968,11 @@ Log.write('Out of Condition');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="82.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="60.0">
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="31.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="31.0">
               <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </xpdl2:NodeGraphicsInfo>
             <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
-              <xpdl2:Coordinates XCoordinate="92.85714285714286" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="20.0" YCoordinate="0.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -967,8 +989,8 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="31.0">
-              <xpdl2:Coordinates XCoordinate="799.0" YCoordinate="209.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="570.0" YCoordinate="368.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -976,7 +998,8 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findAll();&#xD;
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;masterUser='Y'&quot;;&#xD;
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
 for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
 	GroupNames.add(Fetch_Groups.get(index).readContractorGroups().contractorGroupName);&#xD;
 }</xpdl2:Script>
@@ -998,7 +1021,7 @@ for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;'&quot;;&#xD;
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;' and masterUser='Y'&quot;;&#xD;
 Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
 MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorGroups().loginName+&quot;')&quot;;</xpdl2:Script>
               </xpdl2:TaskScript>
@@ -1006,7 +1029,7 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
           </xpdl2:Implementation>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="202.0" YCoordinate="71.0"/>
+              <xpdl2:Coordinates XCoordinate="280.0" YCoordinate="71.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -1023,15 +1046,19 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
                 </xpdl2:Performers>
                 <xpdl2:MessageIn Id="_Tyh5AfEREeeJiLkPq4yokA"/>
                 <xpdl2:MessageOut Id="_Tyh5AvEREeeJiLkPq4yokA"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
               </xpdl2:TaskUser>
             </xpdl2:Task>
           </xpdl2:Implementation>
           <xpdl2:Performers>
             <xpdl2:Performer>_SZDIIPESEeeJiLkPq4yokA</xpdl2:Performer>
           </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="86.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="166.0">
-              <xpdl2:Coordinates XCoordinate="518.0" YCoordinate="60.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="86.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="166.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -1041,32 +1068,65 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
           </xpdExt:ActivityResourcePatterns>
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
               <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Initiated">
-              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Process Manager Review&quot;;</xpdExt:Information>
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Select Contractor Agency&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">MasterContractor=&quot;resource(name='&quot;+SelectedContractor+&quot;')&quot;;</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
+        <xpdl2:Activity Id="_47XtsPEuEeeJiLkPq4yokA" Name="ScriptTask3" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task 3">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskScript>
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;' and masterUser='N'&quot;;&#xD;
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
+for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
+	ContractorNames.add(Fetch_Groups.get(index).readContractorGroups().loginName);&#xD;
+}</xpdl2:Script>
+              </xpdl2:TaskScript>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="62.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+        </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
-        <xpdl2:Transition Id="_YS1joN_HEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_Tyh5APEREeeJiLkPq4yokA" To="_XqGvsN_HEeec4K-r6PSjHg">
+        <xpdl2:Transition Id="_YS1joN_HEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_Tyh5APEREeeJiLkPq4yokA" To="_p3E2cN_HEeec4K-r6PSjHg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_q3_g4N_HEeec4K-r6PSjHg" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_p3E2cN_HEeec4K-r6PSjHg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-105.0" YCoordinate="40.0"/>
-              <xpdl2:Coordinates XCoordinate="53.0" YCoordinate="-270.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="81.42857142857143" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_2xISEN_HEeec4K-r6PSjHg" Name="" From="_p3E2cN_HEeec4K-r6PSjHg" To="_yG1GIN_HEeec4K-r6PSjHg">
@@ -1090,12 +1150,15 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
         </xpdl2:Transition>
         <xpdl2:Transition Id="_R0OE8N_IEeec4K-r6PSjHg" Name="" From="_RAp6AN_IEeec4K-r6PSjHg" To="_7k_psN_HEeec4K-r6PSjHg">
           <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="1.0" YCoordinate="24.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="-110.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="0.7951125628088187" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="27.62842283556267" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
@@ -1117,48 +1180,32 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
         <xpdl2:Transition Id="_LxC-gOCtEeeeKsD8kq9l7g" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="__ziDoOCsEeeeKsD8kq9l7g">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-3.0" YCoordinate="446.0"/>
-              <xpdl2:Coordinates XCoordinate="105.0" YCoordinate="-403.0"/>
-              <xpdl2:Coordinates XCoordinate="-185.0" YCoordinate="651.0"/>
-              <xpdl2:Coordinates XCoordinate="65.0" YCoordinate="-244.0"/>
-              <xpdl2:Coordinates XCoordinate="-283.0" YCoordinate="785.0"/>
-              <xpdl2:Coordinates XCoordinate="-33.0" YCoordinate="-110.0"/>
+              <xpdl2:Coordinates XCoordinate="-103.0" YCoordinate="39.0"/>
+              <xpdl2:Coordinates XCoordinate="232.0" YCoordinate="-1033.0"/>
+              <xpdl2:Coordinates XCoordinate="-214.0" YCoordinate="532.0"/>
+              <xpdl2:Coordinates XCoordinate="121.0" YCoordinate="-540.0"/>
+              <xpdl2:Coordinates XCoordinate="-214.0" YCoordinate="792.0"/>
+              <xpdl2:Coordinates XCoordinate="121.0" YCoordinate="-280.0"/>
+              <xpdl2:Coordinates XCoordinate="-193.0" YCoordinate="900.0"/>
+              <xpdl2:Coordinates XCoordinate="26.0" YCoordinate="-134.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="57.80590717299579" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="92.82700421940928" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="47.562504014314484" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="65.25155690771908" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_gxpDcOCtEeeeKsD8kq9l7g" Name="" From="__ziDoOCsEeeeKsD8kq9l7g" To="_7k_psN_HEeec4K-r6PSjHg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="396.0" YCoordinate="-1.0"/>
-              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="582.0"/>
+              <xpdl2:Coordinates XCoordinate="787.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="749.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
               <xpdl2:Coordinates XCoordinate="52.43829924547085" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_hIyxIOR8EeeoTJ_gSITXzA" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_aMel0N_HEeec4K-r6PSjHg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-61.0" YCoordinate="106.0"/>
-              <xpdl2:Coordinates XCoordinate="82.0" YCoordinate="-590.0"/>
-              <xpdl2:Coordinates XCoordinate="-138.0" YCoordinate="170.0"/>
-              <xpdl2:Coordinates XCoordinate="5.0" YCoordinate="-526.0"/>
-              <xpdl2:Coordinates XCoordinate="-138.0" YCoordinate="247.0"/>
-              <xpdl2:Coordinates XCoordinate="5.0" YCoordinate="-449.0"/>
-              <xpdl2:Coordinates XCoordinate="-138.0" YCoordinate="276.0"/>
-              <xpdl2:Coordinates XCoordinate="5.0" YCoordinate="-420.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="88.11659192825113" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_l67DYOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="" Name="" From="_L2COcPEPEeeJiLkPq4yokA" To="_l66cUOR8EeeoTJ_gSITXzA">
@@ -1196,8 +1243,8 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
         <xpdl2:Transition Id="_LDZI4OZAEeeJAIDoV1ZLpQ" Name="" From="_GFDmoOZAEeeJAIDoV1ZLpQ" To="_Kf72gOZAEeeJAIDoV1ZLpQ">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="120.0" YCoordinate="-171.0"/>
-              <xpdl2:Coordinates XCoordinate="-109.0" YCoordinate="1.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="16.0"/>
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="-43.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
@@ -1211,9 +1258,35 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_Tyh5A_EREeeJiLkPq4yokA" xpdExt:DisplayName="" Name="" From="_l66cUOR8EeeoTJ_gSITXzA" To="_Tyh5APEREeeJiLkPq4yokA">
+        <xpdl2:Transition Id="_Tyh5A_EREeeJiLkPq4yokA" xpdExt:DisplayName="" Name="" From="_l66cUOR8EeeoTJ_gSITXzA" To="_XqGvsN_HEeec4K-r6PSjHg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_5-qWsPEuEeeJiLkPq4yokA" Name="" From="_47XtsPEuEeeJiLkPq4yokA" To="_Tyh5APEREeeJiLkPq4yokA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_4kEVEPE7EeeMCZGsP3rsrw" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_47XtsPEuEeeJiLkPq4yokA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="9.0625" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_Z5yjoPE8EeeMCZGsP3rsrw" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_aMel0N_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="86.09865470852019" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
       </xpdl2:Transitions>
@@ -1829,7 +1902,7 @@ SiebelCircuitID=Provision.siebelCircuitID;</xpdExt:Information>
           </xpdExt:ActivityResourcePatterns>
           <xpdExt:AssociatedParameters>
             <xpdExt:AssociatedParameter FormalParam="emailID" Mode="INOUT" Mandatory="true">
-              <xpdl2:Description/>
+              <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>

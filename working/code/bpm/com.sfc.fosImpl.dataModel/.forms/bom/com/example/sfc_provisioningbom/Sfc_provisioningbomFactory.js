@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.example.sfc_provisioningbom.Sfc_provisioningbomFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.example.sfc_provisioningbom.ProvisioningDataModel", "com.example.sfc_provisioningbom.SystemParameters", "com.example.sfc_provisioningbom.SLA_Configuration", "com.example.sfc_provisioningbom.TehnicalInformation", "com.example.sfc_provisioningbom.EquipmentDetails", "com.example.sfc_provisioningbom.ContractorGroups"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.example.sfc_provisioningbom.ProvisioningDataModel", "com.example.sfc_provisioningbom.SystemParameters", "com.example.sfc_provisioningbom.SLA_Configuration", "com.example.sfc_provisioningbom.TehnicalInformation", "com.example.sfc_provisioningbom.EquipmentDetails", "com.example.sfc_provisioningbom.ContractorGroups", "com.example.sfc_provisioningbom.CommentData"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -116,6 +116,20 @@ theClass.prototype.createContractorGroups = function(jsonData) {
 
 theClass.prototype.listCreateContractorGroups = function(jsonData) {
     var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.ContractorGroups", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createCommentData = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.CommentData", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateCommentData = function(jsonData) {
+    var classObject = this.loader.newInstance("com.example.sfc_provisioningbom.CommentData", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

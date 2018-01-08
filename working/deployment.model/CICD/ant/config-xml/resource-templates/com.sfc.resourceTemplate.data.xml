@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<amxdata_base:Enterprise
+    xmlns:amxdata="http://tibco.com/amxadministrator/command/line/types"
+    xmlns:amxdata_base="http://tibco.com/amxadministrator/command/line/types_base"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://tibco.com/amxadministrator/command/line/types_base ../schemas/amxdata_base.xsd
+    http://tibco.com/amxadministrator/command/line/types ../schemas/amxdata.xsd
+    http://tibco.com/amxadministrator/command/line/types_detailed ../schemas/amxdata_detailed.xsd">
+
+	
+    <ResourceTemplate
+        xsi:type="amxdata:HttpClientResourceTemplate"
+        name="${com.sfc.fosImpl.adminOps.HTTPClientName}"
+        connectionTimeout="10000"
+        host="${bwHost}"
+        port="${adminOpsPort}"
+        description="This RT is to be used for admin Operations">
+        <AdvancedConfiguration xsi:type="amxdata:HttpClientResourceTemplate_Advanced">
+            <EnableConnectionPooling
+                xsi:type="amxdata:EnableConnectionPooling"
+                maximumTotalConnections="5"
+                maximumTotalConnectionsPerHost="10"/>
+        </AdvancedConfiguration>
+    </ResourceTemplate>
+	
+	<ResourceTemplate
+        xsi:type="amxdata:SmtpResourceTemplate"
+        name="${com.sfc.fosImpl.SMTPName}"
+        host="${SMTPHostName}"
+        port="${SMTPPort}">
+        <InlineCredentials username="${SMTPUserName}" password="${SMTPPassword}"/>
+    </ResourceTemplate>
+</amxdata_base:Enterprise>

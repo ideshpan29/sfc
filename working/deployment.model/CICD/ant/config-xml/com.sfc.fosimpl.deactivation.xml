@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<amxdata_base:Enterprise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amxdata="http://tibco.com/amxadministrator/command/line/types" xmlns:amxdata_base="http://tibco.com/amxadministrator/command/line/types_base" xmlns:amxdata_reference="http://tibco.com/amxadministrator/command/line/types_reference" xsi:schemaLocation="http://tibco.com/amxadministrator/command/line/types platform:/plugin/com.tibco.amf.tools.admincligen/model/cli_data.ecore#//types http://tibco.com/amxadministrator/command/line/types_base platform:/plugin/com.tibco.amf.tools.admincligen/model/cli_data.ecore http://tibco.com/amxadministrator/command/line/types_reference platform:/plugin/com.tibco.amf.tools.admincligen/model/cli_data.ecore#//types/types_reference">
+  <Environment xsi:type="amxdata:Environment" name="BPMEnvironment">
+    <Application xsi:type="amxdata:Application" name="com.sfc.fosimpl.deactivation" distributionPolicy="PRODUCT_APP" folderPath="/${bpmAppFolderName}/" resourceTemplatesScope="application">
+      <Component xsi:type="amxdata_base:Component_base" name="comsfcfosImplremoval_tobeProcessFlow"/>
+      <Component xsi:type="amxdata_base:Component_base" name="BRM"/>
+      <Component xsi:type="amxdata_base:Component_base" name="comsfcfosImplremoval_tobe_pageflowPageFlow"/>
+      <Component xsi:type="amxdata_base:Component_base" name="comsfcfosImplremoval_tobePageFlow"/>
+      <Component xsi:type="amxdata_base:Component_base" name="WorkPresentation"/>
+      <Property xsi:type="amxdata:Property" name="DefaultEMailSender" value="com.sfc.fosImpl.SMTP"/>
+      <PromotedService xsi:type="amxdata_base:Service_base" name="comsfcfosImplremoval_tobeRemoval">
+        <Binding xsi:type="amxdata_base:Binding_base" name="comsfcfosImplremoval_tobeRemoval_EP">
+          <Property xsi:type="amxdata:Property" name="HttpInboundConnectionConfig" value="httpConnector"/>
+        </Binding>
+      </PromotedService>
+      <ApplicationTemplate xsi:type="amxdata_reference:ApplicationTemplate_reference" name="${bpm.project.name}" version=""/>
+      <TargetApplication xsi:type="amxdata_reference:Application_reference" name="amx.bpm.app"/>
+    </Application>
+  </Environment>
+  <DAA xsi:type="amxdata:DAA" location="${daaLocation}${bpm.project.name}/${bpm.project.name}.daa"/>
+  <AppTemplate xsi:type="amxdata_base:AppTemplateID" name="${bpm.project.name}" version=""/>
+</amxdata_base:Enterprise>
+ 

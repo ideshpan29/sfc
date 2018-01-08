@@ -1,0 +1,323 @@
+<project default="all">
+	<!-- TIBCO ActiveMatrix installation location -->
+	<property file="${basedir}/build.properties"/>
+	<property name="ADMIN-HOME" value="${adminHome}"/>
+	<property name="RemoteProps" value="${basedir}/env/DEV.properties"/>
+	
+	<import file="${ADMIN-HOME}/scripts/basic_cli.xml" />
+	
+	
+	<target name="preSetup" depends="add-appfolder"/>
+	<target name="removeFolder" depends="remove-appfolder"/>
+	
+	
+	<target name="setupRTRI" depends="RTCreationParent,RICreationParent"></target>
+	<target name="deleteRTRI" depends="uninstallRI,deleteRI,RTDelete"></target>
+	
+	<!--Target accessible to the main build file -->
+	<target name="createDAA" depends="cleanup">
+	   <exec dir="${eclipsePath}" executable="${eclipsePath}/amx_eclipse_ant.exe">
+       <arg line="-f ${basedir}/build.xml ${target.to.call} -data ${antWorkspace} -Dbpm.project.name=${bpm.project.name}"/>
+	</exec>
+	</target>
+	
+	<!--Target to be passed to the ANT from the studio home. This is CANNOT be invoked directly 
+	<tbs.importProjects dir="${bpmWorkspace}${bpm.project.name}/"/> 
+	-->
+	<target name="buildDAA">
+	<echo>${bpmWorkspace}${bpm.project.name}/</echo>
+	<tbs.importProjects dir="${bpmWorkspace}${bpm.project.name}/"/> 
+	<bpm.generateDAA  buildbeforegenerating="true" daalocation="${daaLocation}${bpm.project.name}/" failonerror="true" projectname="${bpm.project.name}/" validatedaa="true"/>
+	</target>
+	
+	<target name="importDependency">
+		<tbs.importProjects dir="${bpmWorkspace}com.sfc.fosImpl.dataModel/"/> 
+		<tbs.importProjects dir="${bpmWorkspace}com.sfc.fosImpl.orgModel/"/> 
+		<tbs.importProjects dir="${bpmWorkspace}com.sfc.fosImpl.facade/"/> 
+	</target>
+	
+	<target name="buildDAA_wDependency" depends="importDependency">
+	<tbs.importProjects dir="${bpmWorkspace}${bpm.project.name}/"/> 
+	<bpm.generateDAA  buildbeforegenerating="true" daalocation="${daaLocation}${bpm.project.name}/" failonerror="true" projectname="${bpm.project.name}/" validatedaa="true"/>
+	</target>
+	
+	<target name="buildAndDeploy" depends="createDAA,upgradeDAA"></target>
+	<target name="upgradeDAA" depends="upload.daa, create.app, edit.properties, wire.application, distribute.app, upgrade.bpm.app,deploy.app, start.app"/>
+	
+	<target name="undeployDAA" depends="undeploy.app, delete.app"/>
+	
+	
+	<!-- 
+		Targets used for cleaning up the directories. 
+		If the code checkout location needs to be cleaned up as well, then include the delBPMWorkspace in the cleanup target
+	-->
+	<target name="cleanup" depends="delAntWorkspace,delDAA"/> 
+	<target name='delBPMWorkspace'>		 <delete includeemptydirs="true"> <fileset dir="${bpmWorkspace}/${bpm.project.name}" includes="**/*"/> </delete> </target>
+	<target name='delAntWorkspace'>      <delete includeemptydirs="true"> <fileset dir="${antWorkspace}" includes="**/*"/> </delete> </target>
+	<target name='delDAA'>          	 <delete includeemptydirs="true"> <fileset dir="${daaLocation}/	" includes="**/*"/>  </delete>  </target>
+	
+	
+	
+	
+	
+	<!-- Upload DAA specified in the data file -->
+	<target name="upload.daa" description="Uploading Application">
+  		<AMXAdminTask 
+			action="add" 
+			objectSelector="DAA" 
+			remote="true" 
+			propsFile="${RemoteProps}" 
+			dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			overwrite="false" merge="true" createIfNotExists="true" 
+			force="false" failOnError="false" /> 
+	</target>  		
+
+	<!-- create the application -->
+	<target name="create.app" description="Creating Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="add" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="true" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true" />
+	</target>
+	
+	<!-- configure properties of the application, and create resource instances if needed -->
+	<target name="edit.properties" description="Editing Properties" depends="createResourceInstances">		
+	  <!-- override values for properties -->
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="edit" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="//Property" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true" />			
+	</target>
+	
+	<!-- createResourceInstances target will not get executed if property 'doNotInstallInstances' is set to any value -->
+	<target name="createResourceInstances" description="creates resource templates and instances" unless="ignoreResourceInstances">
+	</target>
+
+	<!-- create wires to other applications -->
+	<target name="wire.application" description="Wiring Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="set" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="//PromotedReference/Wire" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true" />
+	</target>
+ 
+	<target name="distribute.app" description="Distributing Application">
+	<AMXAdminTask
+			action="set"
+			objectSelector="Environment//Application//Component/Node | Environment//Application//PromotedService//Binding/Node | Environment//Application//PromotedReference//Binding/Node"
+			remote="true"
+			propsFile="${RemoteProps}"
+			dataFile="${basedir}/config-xml/${bpm.project.name}.xml"
+			overwrite="false"
+			merge="true"
+			createIfNotExists="true"
+			force="false"
+			failOnError="false"/>
+	</target>
+
+    <!-- upgrade existing application -->
+    <target name="upgrade.bpm.app" description="Upgrade Existing Application">
+	<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="upgrade" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="true" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true" 
+			options="handleDependencies"/>
+    </target>
+	
+	<!-- deploy the application -->
+	<target name="deploy.app" description="Deploying Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="deploy" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true"
+			options="handleDependencies"/>
+	</target>
+
+	<target name="start.app" description="Starting Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="start" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="false" failOnError="true" />
+	</target>
+	
+	<target name="undeploy.app" description="Undeploying Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="undeploy" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="true" failOnError="true" />
+	</target>
+	
+	<target name="delete.app" description="Undeploying Application">
+		<AMXAdminTask remote="true" propsFile="${RemoteProps}" 
+			action="delete" dataFile="${basedir}/config-xml/${bpm.project.name}.xml" 
+			objectSelector="Environment//Application" 
+			overwrite="false" merge="true" 
+			createIfNotExists="true" force="true" failOnError="true" />
+	</target>
+	
+	<target name="remove.feature">
+        <AMXAdminTask 
+            remote="true" 
+            propsFile="${RemoteProps}" 
+            action="delete" 
+            dataFile="${basedir}/config-xml/${bpm.project.name}.xml"
+            objectSelector="Feature" overwrite="true" merge="true"
+            createIfNotExists="true" force="true" failOnError="true" />
+    </target>
+
+    <target name="remove.apptemplate">
+        <AMXAdminTask 
+            remote="true" 
+            propsFile="${RemoteProps}"
+            action="delete"
+            dataFile="${basedir}/config-xml/${bpm.project.name}.xml"
+            objectSelector="AppTemplate" overwrite="true" merge="true"
+            createIfNotExists="true" force="true" failOnError="true" />
+    </target>
+
+	<target name="add-appfolder">
+        <AMXAdminTask 
+            action="add" 
+            objectSelector="Environment/ApplicationFolder" 
+            remote="true" 
+            propsFile="${RemoteProps}" 
+            dataFile="${basedir}/config-xml/${appFolderDataFile}.xml" 
+            overwrite="true" merge="true" createIfNotExists="true" force="false" failOnError="false" /> 
+    </target>
+	
+	<target name="remove-appfolder">
+        <AMXAdminTask 
+            action="delete" 
+            objectSelector="Environment/ApplicationFolder" 
+            remote="true" 
+            propsFile="${RemoteProps}" 
+            dataFile="${basedir}/config-xml/${appFolderDataFile}.xml" 
+            overwrite="true" merge="true" createIfNotExists="true" force="false" failOnError="false" /> 
+    </target>
+	
+	<target name="RICreationParent" depends="createRI,installRI"/>
+	<target name="RTCreationParent" depends="RTCreation"/>
+	
+	<target name="RTCreation">
+		<AMXAdminTask
+			remote="true"
+			propsFile="${RemoteProps}"
+			action="add"
+			dataFile="${resourceTemplateDataFile}"
+			objectSelector="ResourceTemplate"
+			overwrite="true"
+			merge="true"
+			createIfNotExists="true"
+			force="true"
+			failOnError="false"/>
+	</target>
+
+	<target name="RTUpdate">
+		<AMXAdminTask
+			remote="true"
+			propsFile="${RemoteProps}"
+			action="edit"
+			dataFile="${resourceTemplateDataFile}"
+			objectSelector="ResourceTemplate"
+			overwrite="true"
+			merge="true"
+			createIfNotExists="true"
+			force="true"
+			failOnError="false"/>
+	</target>
+
+	<target name="incrementedit">
+		<AMXAdminTask
+			remote="true"
+			propsFile="${RemoteProps}"
+			action="edit"
+			dataFile="${resourceTemplateDataFile}"
+			objectSelector="ResourceTemplate"
+			overwrite="true"
+			incrementalEdit="true"
+			merge="true"
+			createIfNotExists="true"
+			force="true"
+			failOnError="false"/>
+	</target>
+
+	<target name="RTDelete">
+		<AMXAdminTask
+			remote="true"
+			propsFile="${RemoteProps}"
+			action="delete"
+			dataFile="${resourceTemplateDataFile}"
+			objectSelector="ResourceTemplate"
+			overwrite="true"
+			merge="true"
+			createIfNotExists="true"
+			force="false"
+			failOnError="false"/>
+	</target>
+	
+	<target name="createRI">
+		<AMXAdminTask
+			action="add"
+			objectSelector="Host/ResourceInstance | Environment/Node/ResourceInstance"
+			remote="true"
+			propsFile="${RemoteProps}"
+			dataFile="${resourceInstanceDataFile}"
+			overwrite="true"
+			merge="true"
+			createIfNotExists="true"
+			force="true"
+			failOnError="false"/>
+	</target>
+
+	<target name="installRI">
+		<AMXAdminTask
+			action="install"
+			objectSelector="Host/ResourceInstance | Environment/Node/ResourceInstance"
+			remote="true"
+			propsFile="${RemoteProps}"
+			dataFile="${resourceInstanceDataFile}"
+			force="false"
+			failOnError="false"/>
+	</target>
+	
+	<target name="force_installRI">
+		<AMXAdminTask
+			action="install"
+			objectSelector="Host/ResourceInstance | Environment/Node/ResourceInstance"
+			remote="true"
+			options="handle-dependencies"
+			propsFile="${RemoteProps}"
+			dataFile="${resourceInstanceDataFile}"
+			force="false"
+			failOnError="false"/>
+	</target>
+	
+	<target name="uninstallRI">
+		<AMXAdminTask
+			action="uninstall"
+			objectSelector="Host/ResourceInstance | Environment/Node/ResourceInstance"
+			remote="true"
+			propsFile="${RemoteProps}"
+			dataFile="${resourceInstanceDataFile}"
+			force="false"
+			failOnError="false"/>
+	</target>
+
+	<target name="deleteRI">
+		<AMXAdminTask
+			action="delete"
+			objectSelector="Host/ResourceInstance | Environment/Node/ResourceInstance"
+			remote="true"
+			propsFile="${RemoteProps}"
+			dataFile="${resourceInstanceDataFile}"
+			force="false"
+			failOnError="false"/>
+	</target>
+</project>

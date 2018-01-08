@@ -78,6 +78,36 @@
           </xpdl2:DataType>
           <xpdl2:InitialValue/>
         </xpdl2:DataField>
+        <xpdl2:DataField Id="_ZEsZgPH-Eee-3Kv3Q1H-xQ" xpdExt:DisplayName="IsGateKeeper" Name="IsGateKeeper" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_eg9N4fH-Eee-3Kv3Q1H-xQ" xpdExt:DisplayName="loginName" Name="loginName" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_gQgf8PH-Eee-3Kv3Q1H-xQ" xpdExt:DisplayName="ResourceGroups" Name="ResourceGroups" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_jhyDcPH-Eee-3Kv3Q1H-xQ" xpdExt:DisplayName="TaskList" Name="TaskList" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="GenericReporting.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_hTFMsPH9EeeIX9PjIyxHhQ"/>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
       </xpdl2:DataFields>
       <xpdl2:Activities>
         <xpdl2:Activity Id="_MGrGoN70Eee3V8FdpYhKwg" Name="Start" xpdExt:Visibility="Private" xpdExt:DisplayName="Start">
@@ -142,6 +172,15 @@
             <xpdExt:AssociatedParameter FormalParam="CompletedInstances" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="IsGateKeeper" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="loginName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskList" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_vhcvgOCcEeem74WRABbcLw" Name="FetchAjaxCallURL" xpdExt:Visibility="Private" xpdExt:DisplayName="Fetch Ajax Call URL">
@@ -149,6 +188,18 @@
             <xpdl2:Task>
               <xpdl2:TaskScript>
                 <xpdl2:Script ScriptGrammar="JavaScript">var a;&#xD;
+loginName=Process.getOriginator();&#xD;
+loginName=Process.getOrgModel().resourceByGuid(loginName).getName();&#xD;
+&#xD;
+for(var i=0;i&lt;Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().size();i++)&#xD;
+{&#xD;
+ResourceGroups.add(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName());&#xD;
+//Log.write(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName());&#xD;
+if(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName()==&quot;GateKeeper&quot;)&#xD;
+{&#xD;
+	IsGateKeeper=&quot;true&quot;;&#xD;
+}&#xD;
+}&#xD;
 &#xD;
 /*&#xD;
 var tmp = cac_com_example_sfc_provisioningbom_SystemParameters.findByPropertyName(&quot;GenericReportingURL&quot;);&#xD;

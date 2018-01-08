@@ -33,14 +33,14 @@
         </task>
         <task name="PMReview">
             <startingVariables>
-                <variable>ContractorNames</variable>
-                <variable>SelectedGroup</variable>
                 <variable>TaskName</variable>
+                <variable>SelectedGroup</variable>
                 <variable>GroupNames</variable>
                 <variable>CommentHistory</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>TechnicalInfo</variable>
                 <variable>Mail</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
@@ -60,9 +60,9 @@
         </task>
         <task name="ScriptTask3">
             <startingVariables>
-                <variable>ContractorNames</variable>
                 <variable>SelectedGroup</variable>
                 <variable>Fetch_Groups</variable>
+                <variable>ContractorNames</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask2">
@@ -85,15 +85,15 @@
         </task>
         <task name="SelectContractorAgency">
             <startingVariables>
-                <variable>ContractorNames</variable>
-                <variable>SelectedGroup</variable>
                 <variable>TaskName</variable>
+                <variable>SelectedGroup</variable>
                 <variable>GroupNames</variable>
                 <variable>CommentHistory</variable>
+                <variable>Mail</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>ContractorNames</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>MasterContractor</variable>
-                <variable>Mail</variable>
                 <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
@@ -107,16 +107,16 @@
         <task name="RequestInitiateMail">
             <startingVariables>
                 <variable>Email</variable>
-                <variable>ClientName</variable>
-                <variable>CircuitID</variable>
                 <variable>ClientId</variable>
+                <variable>CircuitID</variable>
+                <variable>ClientName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>Email</variable>
-                <variable>ClientName</variable>
-                <variable>CircuitID</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>ClientId</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CircuitID</variable>
+                <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
         <task name="_BX_SPInput_CallSubProcess">
@@ -145,16 +145,16 @@
         </task>
         <task name="ServiceTask">
             <startingVariables>
-                <variable>CircuitID</variable>
                 <variable>ClientID</variable>
+                <variable>CircuitID</variable>
                 <variable>Email</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>CircuitID</variable>
-                <variable>ClientName</variable>
                 <variable>ClientID</variable>
-                <variable>Email</variable>
+                <variable>ClientName</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>CircuitID</variable>
+                <variable>Email</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -208,6 +208,8 @@
             tibex:xpdlId="_T9rOsPE1EeeMCZGsP3rsrw" type="xsd:string"/>
         <bpws:variable name="CommentHistory" tibex:array="yes"
             tibex:class="com.example.sfc_provisioningbom.CommentData" tibex:xpdlId="_y4oKEPRNEeeMCZGsP3rsrw"/>
+        <bpws:variable name="CommentText"
+            tibex:xpdlId="_QrJToPR6Eeez78ayMGlX3w" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -223,7 +225,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow__S2-sPRkEee-cpL8pTlFmQ">
+    <bpws:flow name="_BX_flow_oRRa8PR7Eeez78ayMGlX3w">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="TimerEvent to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -305,7 +307,9 @@
                 <bpws:target linkName="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP"/>
+                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP">
+                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TechnicalInfo.carrierVLAN.toString() != ""]]></bpws:transitionCondition>
+                </bpws:source>
                 <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3"/>
                 <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionIPs"/>
             </bpws:sources>
@@ -340,13 +344,17 @@
                             mode="INOUT" name="TaskName"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="CommentHistory"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentText"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
                     </userTaskExtendedAttributes>
                     <userTaskGroupMemberships/>
                 </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision IP : TES Team"]]></tibex:initiatedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision IP : TES Team";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
@@ -379,13 +387,17 @@
                             mode="INOUT" name="TaskName"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="CommentHistory"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentText"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
                     </userTaskExtendedAttributes>
                     <userTaskGroupMemberships/>
                 </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="TES OSG Verification"]]></tibex:initiatedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="TES OSG Verification";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:empty name="_BX_gateway__7k_psN_HEeec4K-r6PSjHg"
@@ -447,13 +459,17 @@
                             mode="INOUT" name="TaskName"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="CommentHistory"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentText"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
                     </userTaskExtendedAttributes>
                     <userTaskGroupMemberships/>
                 </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision Mngment IP : TES FAE Team"]]></tibex:initiatedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision Mngment IP : TES FAE Team";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:scope name="_BX_scope_RequestInitiateMail" tibex:xpdlId="_l66cUOR8EeeoTJ_gSITXzA">
@@ -734,13 +750,18 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
                             mode="INOUT" name="ContractorNames"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="CommentHistory"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentText"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
                     </userTaskExtendedAttributes>
                     <userTaskGroupMemberships/>
                 </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Select Contractor Agency";]]></tibex:initiatedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Select Contractor Agency";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");
+]]></tibex:initiatedScript>
                 <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MasterContractor="resource(name='"+SelectedContractor+"')";]]></tibex:completedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
@@ -838,6 +859,8 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                                 mode="INOUT" name="ContractorNames"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="CommentHistory"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentText"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
@@ -845,6 +868,8 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                         <userTaskGroupMemberships/>
                     </model:UserTaskDataModelType>
                     <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Process Manager Review";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");
 
 ]]></tibex:initiatedScript>
                 </tibex:extActivity>
@@ -907,13 +932,17 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                                 mode="INOUT" name="TaskName"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="CommentHistory"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentText"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
                         </userTaskExtendedAttributes>
                         <userTaskGroupMemberships/>
                     </model:UserTaskDataModelType>
-                    <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Manual Installation Removal : Contractor"]]></tibex:initiatedScript>
+                    <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Manual Installation Removal : Contractor";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
                 </tibex:extActivity>
             </bpws:extensionActivity>
         </bpws:scope>

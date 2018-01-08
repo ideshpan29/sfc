@@ -9,13 +9,13 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ConfirmDetails">
             <startingVariables>
+                <variable>TaskName</variable>
+                <variable>Provisioning_Data</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>GroupNames</variable>
-                <variable>ContractorNames</variable>
-                <variable>TaskName</variable>
-                <variable>SelectedGroup</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>SelectedContractor</variable>
+                <variable>SelectedGroup</variable>
+                <variable>ContractorNames</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -44,12 +44,14 @@
         <bpws:variable name="CommentHistory" tibex:array="yes"
             tibex:class="com.example.sfc_provisioningbom.CommentData"
             tibex:parameter="inout" tibex:xpdlId="_-MbHoPRPEeeMCZGsP3rsrw"/>
+        <bpws:variable name="CommentText" tibex:parameter="inout"
+            tibex:xpdlId="_cbofIPR6Eeez78ayMGlX3w" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_Q0M24PRXEee-cpL8pTlFmQ">
+    <bpws:flow name="_BX_flow_oQQHQPR7Eeez78ayMGlX3w">
         <bpws:links>
             <bpws:link name="ConfirmDetails to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
             <bpws:link name="StartEvent to ConfirmDetails" tibex:xpdlId="_5nGy8N_CEeec4K-r6PSjHg"/>
@@ -62,15 +64,16 @@
                     <bpws:source linkName="StartEvent to ConfirmDetails"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="Mail"/>
-                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="TaskName"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
                     <parameterDescription mode="InOut" name="TechnicalInfo"/>
                     <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
-                    <parameterDescription mode="InOut" name="TaskName"/>
-                    <parameterDescription mode="InOut" name="SelectedGroup"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
+                    <parameterDescription mode="InOut" name="CommentText"/>
+                    <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="CommentHistory"/>
                     <parameterDescription mode="InOut" name="SelectedContractor"/>
+                    <parameterDescription mode="InOut" name="SelectedGroup"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -110,6 +113,8 @@
                             mode="INOUT" name="SelectedContractor"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="ContractorNames"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="CommentText"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>

@@ -68,7 +68,7 @@ function ldPrcNames(control,logger,url,funcName)
 
 function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 	try {
-		var tmpURL = url+funcName;
+		var tmpURL = url+funcName+"&random="+(Math.random(999)*10000);
 		  var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open('GET',tmpURL,true);
 		xmlhttp.onreadystatechange=function() {
@@ -127,8 +127,15 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("time");
-					if(recordSet[i].childNodes[0]!=null)	{			
-						record.setTime(recordSet[i].childNodes[0].nodeValue);
+					if(recordSet[i].childNodes[0]!=null)	{	
+					
+					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					if(time=="NaN")
+					time="NA";
+					else
+					time=time+" minutes"
+						
+						record.setTime(time);
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("SibelCircuitId");
@@ -252,7 +259,10 @@ var tmpURL = url+funcName;
 						logger.info("New date inside"+new Date(recordSet[i].childNodes[0].nodeValue));
 						record.setFirstOfferTime(new Date(recordSet[i].childNodes[0].nodeValue).toString());
 						
-						//logger.info("old dateeeee"+record.getFirstOfferTime());
+						
+						logger.info("time**********"+Math.floor(Date.now()));
+						
+						logger.info("time**********"+new Date(recordSet[i].childNodes[0].nodeValue).getTime());
 						
 					}
 					else{
@@ -281,23 +291,40 @@ var tmpURL = url+funcName;
 					recordSet = xmlDoc.getElementsByTagName("activity_dur");
 					if(recordSet[i].childNodes[0]!=null)	{	
 							
-							
-						record.setTaskDuration(Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString());
+					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					if(time=="NaN")
+					time="NA";
+					else
+					time=time+" minutes"
+						record.setTaskDuration(time);
 						logger.info("in rewcord add activity duration"+record.getProcessInstance());
 					}
 					
 					
 					
 					recordSet = xmlDoc.getElementsByTagName("wait_dur");
-					if(recordSet[i].childNodes[0]!=null)	{			
-						record.setWaitDuration(Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString());
+					if(recordSet[i].childNodes[0]!=null)	{	
+					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					if(time=="NaN")
+					time="NA";
+					else
+					time=time+" minutes"
+							
+						record.setWaitDuration(time);
 						logger.info("in rewcord add waitduration"+record.getProcessInstance());
 						
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("work_time_dur");
-					if(recordSet[i].childNodes[0]!=null)	{			
-						record.setWorkDuration(Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString());
+					if(recordSet[i].childNodes[0]!=null)	{	
+					
+							
+					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					if(time=="NaN")
+					time="NA";
+					else
+					time=time+" minutes"		
+						record.setWorkDuration(time);
 						logger.info("in workduration"+record.getProcessInstance());
 					}
 					

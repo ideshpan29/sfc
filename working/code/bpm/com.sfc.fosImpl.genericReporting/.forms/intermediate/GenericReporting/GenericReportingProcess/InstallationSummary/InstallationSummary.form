@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_cLA88PQ9EeeMCZGsP3rsrw" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_P-B1UPSCEeevaeucjrygaA" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.genericReporting.GenericReportingPackage</form:package>
     <form:factory>com.sfc.fosImpl.genericReporting.GenericReportingFactory</form:factory>
-    <form:class>com.sfc.fosImpl.genericReporting.Record</form:class>
     <form:class>com.sfc.fosImpl.genericReporting.Task</form:class>
+    <form:class>com.sfc.fosImpl.genericReporting.Record</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -36,10 +36,10 @@
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
     </form:rule>
     <form:rule name="rule.loadProcessList" label="Load Process List">
-      <form:event source="#_cLA88PQ9EeeMCZGsP3rsrw" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_P-B1UPSCEeevaeucjrygaA" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.loadProcessList" label="Load Process List">
-        <form:script>//data.setFetchDataURL(&quot;http://rajagtap-t470:9801/&quot;);&#xD;
-//data.setIsGateKeeper(&quot;true&quot;);&#xD;
+        <form:script>data.setFetchDataURL(&quot;http://rajagtap-t470:9801/&quot;);&#xD;
+data.setIsGateKeeper(&quot;true&quot;);&#xD;
 &#xD;
 &#xD;
 &#xD;
@@ -445,7 +445,7 @@ logger.info(&quot;clicked&quot;);&#xD;
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
-        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.CompletedInstances" paneType="com.tibco.forms.panes.grid">
+        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" readOnly="true" name="pane.CompletedInstances" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
             <et:editable>true</et:editable>
@@ -467,7 +467,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Instance</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="CompletedInstances_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -574,7 +574,7 @@ logger.info(&quot;clicked&quot;);&#xD;
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
-        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.StartedInstances" paneType="com.tibco.forms.panes.grid">
+        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" readOnly="true" name="pane.StartedInstances" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
             <et:editable>true</et:editable>
@@ -596,7 +596,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Instance</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="StartedInstances_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -703,7 +703,7 @@ logger.info(&quot;clicked&quot;);&#xD;
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
-        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.HaltedInstances" paneType="com.tibco.forms.panes.grid">
+        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" readOnly="true" name="pane.HaltedInstances" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
             <et:editable>true</et:editable>
@@ -725,7 +725,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Instance</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="HaltedInstances_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -831,7 +831,7 @@ logger.info(&quot;clicked&quot;);&#xD;
         <form:defaults>
           <form:labelProperties position="top" visible="true" width="120"/>
         </form:defaults>
-        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" name="pane.CancelledInstances" paneType="com.tibco.forms.panes.grid">
+        <form:pane generated="true" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" readOnly="true" name="pane.CancelledInstances" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
             <et:editable>true</et:editable>
@@ -853,7 +853,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Instance</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="CancelledInstances_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -983,7 +983,7 @@ logger.info(&quot;clicked&quot;);&#xD;
       <form:label>Task Analysis</form:label>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
-      <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_hTFMsPH9EeeIX9PjIyxHhQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Task?" name="pane.TaskList" paneType="com.tibco.forms.panes.grid">
+      <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_hTFMsPH9EeeIX9PjIyxHhQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Task?" readOnly="true" name="pane.TaskList" paneType="com.tibco.forms.panes.grid">
         <form:propertySet xsi:type="et:GridPanePropertySet">
           <et:showNavigator>false</et:showNavigator>
           <et:editable>true</et:editable>
@@ -1005,7 +1005,7 @@ logger.info(&quot;clicked&quot;);&#xD;
           </form:propertySet>
           <form:label>Process Instance</form:label>
           <form:hint></form:hint>
-          <form:visible>true</form:visible>
+          <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
           <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
             <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>

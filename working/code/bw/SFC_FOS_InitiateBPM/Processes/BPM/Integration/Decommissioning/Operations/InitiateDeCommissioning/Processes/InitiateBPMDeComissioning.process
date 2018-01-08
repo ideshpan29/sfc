@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://example.com/sfc_provisioningbom" xmlns:ns="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
+    <xsd:import namespace="http://example.com/sfc_provisioningbom" schemaLocation="/Processes/BPM/Integration/Decommissioning/Operations/InitiateDeCommissioning/SchemaDefinitions/sfc_provisioning.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" location="/Processes/BPM/Integration/Decommissioning/Operations/InitiateDeCommissioning/WSDL/removal_to_be.wsdl"/>
+    <pd:name>Processes/BPM/Integration/Decommissioning/Operations/InitiateDeCommissioning/Processes/InitiateBPMDeComissioning.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Start-Decommssioning">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:ProvisioningDataModelElement" minOccurs="0"/>
+                    <xsd:element ref="pfx2:TehnicalInformationElement" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>78</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>631</pd:endX>
+    <pd:endY>65</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1513938429988</pd:targetNamespace>
+    <pd:activity name="Call BPM Installation Removal Process">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>336</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:comsfcfosImplremoval_tobeRemoval</service>
+            <servicePort>comsfcfosImplremoval_tobeRemoval_EP</servicePort>
+            <operation>CatchMessageEvent</operation>
+            <soapAction>CatchMessageEvent</soapAction>
+            <endpointURL>http://%%BPM/InitiateDeComissioning/hostname%%:%%BPM/InitiateDeComissioning/port%%/comsfcfosImplremoval_tobe/comsfcfosImplremoval_tobeRemovalv02</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <CatchMessageEvent>
+                <Provisioning_Data>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/ancestor-or-self::*/namespace::node()"/>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/@*"/>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/node()"/>
+                </Provisioning_Data>
+                <TechnicalInfo>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:TehnicalInformationElement/ancestor-or-self::*/namespace::node()"/>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:TehnicalInformationElement/@*"/>
+                    <xsl:copy-of select="$Start/Start-Decommssioning/pfx2:TehnicalInformationElement/node()"/>
+                </TechnicalInfo>
+                <TaskName>
+                    <xsl:value-of select="'Start Decommssioning'"/>
+                </TaskName>
+            </CatchMessageEvent>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>200</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;SFC_FOS_InitiateBPM&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns2:LogType>
+                    <ns2:LogMessage>
+                        <xsl:value-of select="tib:render-xml($Start/Start-Decommssioning)"/>
+                    </ns2:LogMessage>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>485</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;SFC_FOS_InitiateBPM&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 2&quot;"/>
+                    </ns2:LogType>
+                    <ns2:LogMessage>
+                        <xsl:value-of select="tib:render-xml($Start/Start-Decommssioning)"/>
+                    </ns2:LogMessage>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Exceptions">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>329</pd:x>
+        <pd:y>225</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="send Exception Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>497</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns3:ExceptionRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/siebelCircuitID"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/projectManager">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/Start-Decommssioning/pfx2:ProvisioningDataModelElement/projectManager"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;SFC_FOS_InitiateBPM&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;ERROR&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                </ExceptionCode>
+                <StackTrace>
+                    <xsl:value-of select="tib:render-xml($_error/ns1:ErrorReport)"/>
+                </StackTrace>
+            </ns3:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>send Log Request AUDIT 1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call BPM Installation Removal Process</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Call BPM Installation Removal Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Exceptions</pd:from>
+        <pd:to>send Exception Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Exception Request</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

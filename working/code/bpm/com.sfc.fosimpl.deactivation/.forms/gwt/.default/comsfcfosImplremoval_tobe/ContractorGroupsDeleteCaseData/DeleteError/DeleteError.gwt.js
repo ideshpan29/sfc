@@ -2,9 +2,9 @@
 
 if (typeof(tibcoforms) == 'undefined') tibcoforms = new Object();
 if (typeof(tibcoforms.formCode) == 'undefined') tibcoforms.formCode = new Object();
-tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw'] = new Object();
-tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw']['defineActions'] = function() {
-var fc = tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw'];
+tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ'] = new Object();
+tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ']['defineActions'] = function() {
+var fc = tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ'];
     fc['rule_cancel'] = function(formId, context, thisObj) {
 	   try {
 			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "cancel", "cancel", fc['action_cancel']);
@@ -51,10 +51,17 @@ var fc = tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw'];
         return "TIBCO Forms 4.1.0 V17 compliant";
     }
 };
-tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw']['defineActions']();
+tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ']['defineActions']();
 
-tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw']['defineValidations'] = function() {
-var fc = tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw'];
+tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ']['defineValidations'] = function() {
+var fc = tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ'];
+	
+fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode: ErrorCode__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode__length", true, true);
+}
+	
 	
 	
 	
@@ -66,17 +73,10 @@ fc['validation_ErrorDetail_ErrorDetail__length'] = function(formId, controlName,
 }
 	
 	
-	
 fc['validation_DeleteCaseFailed_DeleteCaseFailed__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "DeleteCaseFailed: DeleteCaseFailed__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "DeleteCaseFailed__length", true, true);
-}
-	
-fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode: ErrorCode__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode__length", true, true);
 }
 	fc['validate_required'] = function(formId, controlName, cloneUID, listIndex) {
 	var context = new Object();
@@ -133,4 +133,4 @@ fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, clo
 	   
 	   
 };
-tibcoforms.formCode['_G3To0PFKEeeMCZGsP3rsrw']['defineValidations']();
+tibcoforms.formCode['_-6rIMPRkEee-cpL8pTlFmQ']['defineValidations']();

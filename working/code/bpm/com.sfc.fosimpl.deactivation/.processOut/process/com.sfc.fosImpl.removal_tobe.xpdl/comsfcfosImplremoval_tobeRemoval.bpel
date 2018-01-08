@@ -22,9 +22,10 @@
         </task>
         <task name="ManualInstallationRemoval">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -32,12 +33,14 @@
         </task>
         <task name="PMReview">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Mail</variable>
-                <variable>GroupNames</variable>
-                <variable>Provisioning_Data</variable>
+                <variable>ContractorNames</variable>
                 <variable>SelectedGroup</variable>
                 <variable>TaskName</variable>
+                <variable>GroupNames</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>Mail</variable>
                 <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
@@ -46,9 +49,10 @@
         </task>
         <task name="DeprovisionMngementIP">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -56,23 +60,24 @@
         </task>
         <task name="ScriptTask3">
             <startingVariables>
-                <variable>GroupNames</variable>
-                <variable>Fetch_Groups</variable>
+                <variable>ContractorNames</variable>
                 <variable>SelectedGroup</variable>
+                <variable>Fetch_Groups</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask2">
             <startingVariables>
-                <variable>MasterContractor</variable>
-                <variable>Fetch_Groups</variable>
                 <variable>SelectedGroup</variable>
+                <variable>Fetch_Groups</variable>
+                <variable>MasterContractor</variable>
             </startingVariables>
         </task>
         <task name="TESOSGVerification">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -80,13 +85,15 @@
         </task>
         <task name="SelectContractorAgency">
             <startingVariables>
-                <variable>MasterContractor</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>Mail</variable>
-                <variable>GroupNames</variable>
-                <variable>Provisioning_Data</variable>
+                <variable>ContractorNames</variable>
                 <variable>SelectedGroup</variable>
                 <variable>TaskName</variable>
+                <variable>GroupNames</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>MasterContractor</variable>
+                <variable>Mail</variable>
                 <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
@@ -99,24 +106,24 @@
         </task>
         <task name="RequestInitiateMail">
             <startingVariables>
-                <variable>ClientId</variable>
                 <variable>Email</variable>
-                <variable>CircuitID</variable>
                 <variable>ClientName</variable>
+                <variable>CircuitID</variable>
+                <variable>ClientId</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientId</variable>
                 <variable>Email</variable>
-                <variable>CircuitID</variable>
                 <variable>ClientName</variable>
+                <variable>CircuitID</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>ClientId</variable>
             </ProcessManagerScript>
         </task>
         <task name="_BX_SPInput_CallSubProcess">
             <startingVariables>
-                <variable>fetchSLAFlag</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>fetchSLAFlag</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask">
@@ -127,9 +134,10 @@
         </task>
         <task name="DeprovisionIPs">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
+                <variable>CommentHistory</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -137,19 +145,24 @@
         </task>
         <task name="ServiceTask">
             <startingVariables>
-                <variable>Email</variable>
-                <variable>ClientID</variable>
                 <variable>CircuitID</variable>
+                <variable>ClientID</variable>
+                <variable>Email</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>Email</variable>
-                <variable>ClientID</variable>
-                <variable>ClientName</variable>
                 <variable>CircuitID</variable>
+                <variable>ClientName</variable>
+                <variable>ClientID</variable>
+                <variable>Email</variable>
                 <variable>Provisioning_Data</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
+    <tibex:AuditDescriptor>
+        <auditAttribute name="attribute2" type="Complex" value="Provisioning_Data.siebelCircuitID"/>
+        <auditAttribute name="attribute3" type="Complex" value="Provisioning_Data.clientName"/>
+        <auditAttribute name="attribute9" type="Complex" value="Provisioning_Data.projectManager"/>
+    </tibex:AuditDescriptor>
     <bpws:documentation>*** Generated by TIBCO Business Studio.</bpws:documentation>
     <bpws:import importType="http://schemas.xmlsoap.org/wsdl/"
         location="com.sfc.fosImpl.removal_tobe.wsdl" namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw"/>
@@ -193,6 +206,8 @@
             tibex:xpdlId="_oyjvsPExEeeMCZGsP3rsrw" type="xsd:string"/>
         <bpws:variable name="ContractorNames" tibex:array="yes"
             tibex:xpdlId="_T9rOsPE1EeeMCZGsP3rsrw" type="xsd:string"/>
+        <bpws:variable name="CommentHistory" tibex:array="yes"
+            tibex:class="com.example.sfc_provisioningbom.CommentData" tibex:xpdlId="_y4oKEPRNEeeMCZGsP3rsrw"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -208,7 +223,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_HImNIPFKEeeMCZGsP3rsrw">
+    <bpws:flow name="_BX_flow__S2-sPRkEee-cpL8pTlFmQ">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="TimerEvent to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -323,6 +338,8 @@
                             mode="INOUT" name="TechnicalInfo"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="TaskName"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentHistory"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
@@ -360,6 +377,8 @@
                             mode="INOUT" name="TechnicalInfo"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="TaskName"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentHistory"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
@@ -426,6 +445,8 @@
                             mode="INOUT" name="TechnicalInfo"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="TaskName"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentHistory"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
@@ -711,6 +732,8 @@ MasterContractor="resource(name='"+Fetch_Groups.get(0).readContractorGroups().lo
                             mode="INOUT" name="SelectedContractor"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="ContractorNames"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="CommentHistory"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
@@ -813,6 +836,8 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                                 mode="INOUT" name="SelectedContractor"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="ContractorNames"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentHistory"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
@@ -880,6 +905,8 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                                 mode="INOUT" name="TechnicalInfo"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="TaskName"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentHistory"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>

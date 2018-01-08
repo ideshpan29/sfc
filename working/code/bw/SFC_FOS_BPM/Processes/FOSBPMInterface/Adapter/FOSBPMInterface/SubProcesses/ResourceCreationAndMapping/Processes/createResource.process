@@ -49,7 +49,14 @@
             <xsd:element name="PositionId" type="xsd:string"/>
         </PositionId>
         <LDAPContainerID>
-            <xsd:element name="ContainerID" type="xsd:string"/>
+            <xsd:element name="Container">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Id" type="xsd:string"/>
+                        <xsd:element name="alias" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
         </LDAPContainerID>
         <groupGuid>
             <xsd:element name="guid" type="xsd:string"/>
@@ -116,9 +123,14 @@
                 <variableName>LDAPContainerID</variableName>
             </config>
             <pd:inputBindings>
-                <ContainerID>
-                    <xsl:value-of select="$ContainerIDIndex/ldap-container/@id"/>
-                </ContainerID>
+                <Container>
+                    <Id>
+                        <xsl:value-of select="$ContainerIDIndex/ldap-container/@id"/>
+                    </Id>
+                    <alias>
+                        <xsl:value-of select="$ContainerIDIndex/ldap-container/primary-ldap/@ldap-alias"/>
+                    </alias>
+                </Container>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Null">
@@ -228,15 +240,15 @@
             <pd:to>Interation To get the Guid from Group name</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$ParseIndex1/pfx17:users/pfx17:flag='G'</pd:xpath>
+            <pd:conditionType>otherwise</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Resource Creation Logs</pd:from>
             <pd:to>Interation To get the Position ID from position name</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$ParseIndex1/pfx17:users/pfx17:flag='P'</pd:xpath>
         </pd:transition>
         <pd:transition>
             <pd:from>Interation To get the Position ID from position name</pd:from>
@@ -336,8 +348,8 @@
         <pd:activity name="createResource">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1337</pd:x>
-            <pd:y>486</pd:y>
+            <pd:x>1336</pd:x>
+            <pd:y>485</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -360,10 +372,10 @@
                                 <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                             </xsl:attribute>
                             <xsl:attribute name="name">
-                                <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:name"/>
+                                <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:orgname"/>
                             </xsl:attribute>
                             <xsl:attribute name="container-id">
-                                <xsl:value-of select="$LDAPContainerID/ContainerID"/>
+                                <xsl:value-of select="$LDAPContainerID/Container/Id"/>
                             </xsl:attribute>
                         </candidate>
                     </ns2:createResource>
@@ -963,7 +975,7 @@
         <pd:activity name="GetSpecificCandidate">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1151</pd:x>
+            <pd:x>1152</pd:x>
             <pd:y>484</pd:y>
             <config>
                 <timeout>0</timeout>
@@ -984,11 +996,11 @@
                                 <xsl:attribute name="base-dn">
                                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
                                 </xsl:attribute>
-                                <xsl:attribute name="ldap-alias">
-                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPContainerName"/>
-                                </xsl:attribute>
                                 <xsl:attribute name="ldap-query">
-                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
+                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,&quot;)&quot;)"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="ldap-alias">
+                                    <xsl:value-of select="$LDAPContainerID/Container/alias"/>
                                 </xsl:attribute>
                             </ns:executeLdapQuery>
                         </inputMessage>
@@ -997,7 +1009,7 @@
                         <inputMessage>
                             <ns:executeLdapQuery>
                                 <xsl:attribute name="ldap-alias">
-                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPContainerName"/>
+                                    <xsl:value-of select="$LDAPContainerID/Container/alias"/>
                                 </xsl:attribute>
                                 <xsl:attribute name="ldap-query">
                                     <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
@@ -1125,8 +1137,8 @@
     <pd:activity name="Set Batch Mode Input File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>583</pd:x>
-        <pd:y>496</pd:y>
+        <pd:x>605</pd:x>
+        <pd:y>492</pd:y>
         <config>
             <variableName>inputFile</variableName>
         </config>
@@ -1153,8 +1165,8 @@
     <pd:activity name="Write Data">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>588</pd:x>
-        <pd:y>585</pd:y>
+        <pd:x>607</pd:x>
+        <pd:y>586</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -1167,7 +1179,7 @@
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/SingleInputEntryFile"/>
                 </fileName>
                 <textContent>
-                    <xsl:value-of select="concat($Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:name,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:orgname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:email,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:password)"/>
+                    <xsl:value-of select="concat($Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:flag,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:email,',',$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:password)"/>
                 </textContent>
             </ns0:WriteActivityInputTextClass>
         </pd:inputBindings>
@@ -1254,9 +1266,14 @@
                 <variableName>LDAPContainerID</variableName>
             </config>
             <pd:inputBindings>
-                <ContainerID>
-                    <xsl:value-of select="$InternelContainerIDIndex/ldap-container/@id"/>
-                </ContainerID>
+                <Container>
+                    <Id>
+                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/@id"/>
+                    </Id>
+                    <alias>
+                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/primary-ldap/@ldap-alias"/>
+                    </alias>
+                </Container>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Null-1">

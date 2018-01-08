@@ -8,16 +8,23 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="InstallationSummary">
             <startingVariables>
+                <variable>IsGateKeeper</variable>
+                <variable>fetchDataURL</variable>
+                <variable>loginName</variable>
+                <variable>CancelledInstances</variable>
+                <variable>CompletedInstances</variable>
                 <variable>HaltedInstances</variable>
                 <variable>StartedInstances</variable>
-                <variable>CompletedInstances</variable>
-                <variable>fetchDataURL</variable>
-                <variable>CancelledInstances</variable>
+                <variable>TaskList</variable>
             </startingVariables>
         </task>
         <task name="FetchAjaxCallURL">
             <startingVariables>
+                <variable>IsGateKeeper</variable>
+                <variable>loginName</variable>
                 <variable>fetchDataURL</variable>
+                <variable>ResourceGroups</variable>
+                <variable>tmp</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -33,14 +40,22 @@
             tibex:class="com.sfc.fosImpl.genericReporting.Record" tibex:xpdlId="_IyxOYN_PEeeQHIXdSwQiWA"/>
         <bpws:variable name="CompletedInstances" tibex:array="yes"
             tibex:class="com.sfc.fosImpl.genericReporting.Record" tibex:xpdlId="_JMvNkN_PEeeQHIXdSwQiWA"/>
-        <bpws:variable name="SysParamRef"
-            tibex:classRef="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_ThtRsOCdEeem74WRABbcLw"/>
+        <bpws:variable name="IsGateKeeper"
+            tibex:xpdlId="_ZEsZgPH-Eee-3Kv3Q1H-xQ" type="xsd:string"/>
+        <bpws:variable name="loginName"
+            tibex:xpdlId="_eg9N4fH-Eee-3Kv3Q1H-xQ" type="xsd:string"/>
+        <bpws:variable name="ResourceGroups" tibex:array="yes"
+            tibex:xpdlId="_gQgf8PH-Eee-3Kv3Q1H-xQ" type="xsd:string"/>
+        <bpws:variable name="TaskList" tibex:array="yes"
+            tibex:class="com.sfc.fosImpl.genericReporting.Task" tibex:xpdlId="_jhyDcPH-Eee-3Kv3Q1H-xQ"/>
+        <bpws:variable name="tmp"
+            tibex:classRef="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_6BG4YPQ8EeeMCZGsP3rsrw"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_SqVIUOCeEeem74WRABbcLw">
+    <bpws:flow name="_BX_flow_dWl_QPQ9EeeMCZGsP3rsrw">
         <bpws:links>
             <bpws:link name="Start to FetchAjaxCallURL" tibex:xpdlId="_vhdWkOCcEeem74WRABbcLw"/>
             <bpws:link name="InstallationSummary to End" tibex:xpdlId="_R07cQOCcEeem74WRABbcLw"/>
@@ -87,6 +102,12 @@
                             mode="INOUT" name="HaltedInstances"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="CompletedInstances"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="IsGateKeeper"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="loginName"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="TaskList"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>
@@ -102,15 +123,28 @@
                     <bpws:source linkName="FetchAjaxCallURL to InstallationSummary"/>
                 </bpws:sources>
                 <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var a;
+loginName=Process.getOriginator();
+loginName=Process.getOrgModel().resourceByGuid(loginName).getName();
 
-var tmp = cac_com_example_sfc_provisioningbom_SystemParameters.findByPropertyName("GenericReportingURL");
+for(var i=0;i<Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().size();i++)
+{
+ResourceGroups.add(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName());
+//Log.write(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName());
+if(Process.getOrgModel().resourceByGuid(Process.getOriginator()).getGroups().get(i).getName()=="GateKeeper")
+{
+	IsGateKeeper="true";
+}
+}
 
+tmp=cac_com_example_sfc_provisioningbom_SystemParameters.findByPropertyName("GenericReportingURL");
 if(tmp !=null)  {
 	fetchDataURL = tmp.readSystemParameters().propertyValue;
 }
 else {
 	fetchDataURL = "NA";
-}]]></tibex:script>
+}
+
+]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
     </bpws:flow>

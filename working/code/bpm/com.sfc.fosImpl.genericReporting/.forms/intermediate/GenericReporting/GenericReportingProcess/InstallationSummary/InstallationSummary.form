@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_UH9z4OCyEeem74WRABbcLw" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_cLA88PQ9EeeMCZGsP3rsrw" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.genericReporting.GenericReportingPackage</form:package>
     <form:factory>com.sfc.fosImpl.genericReporting.GenericReportingFactory</form:factory>
     <form:class>com.sfc.fosImpl.genericReporting.Record</form:class>
+    <form:class>com.sfc.fosImpl.genericReporting.Task</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -18,6 +19,9 @@
     <form:parameter generated="true" name="data.StartedInstances" label="StartedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
     <form:parameter generated="true" name="data.HaltedInstances" label="HaltedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
     <form:parameter generated="true" name="data.CompletedInstances" label="CompletedInstances" dataType="uml:Class GenericReporting.bom#_LjqXwN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Record?" type="com.sfc.fosImpl.genericReporting::Record" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.IsGateKeeper" label="IsGateKeeper" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
+    <form:parameter generated="true" name="data.loginName" label="loginName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
+    <form:parameter generated="true" name="data.TaskList" label="TaskList" dataType="uml:Class GenericReporting.bom#_hTFMsPH9EeeIX9PjIyxHhQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Task?" type="com.sfc.fosImpl.genericReporting::Task" isArray="true" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -32,9 +36,13 @@
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
     </form:rule>
     <form:rule name="rule.loadProcessList" label="Load Process List">
-      <form:event source="#_UH9z4OCyEeem74WRABbcLw" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_cLA88PQ9EeeMCZGsP3rsrw" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.loadProcessList" label="Load Process List">
-        <form:script>//data.setFetchDataURL(&quot;http://stalewar-t470:9801/&quot;);&#xD;
+        <form:script>//data.setFetchDataURL(&quot;http://rajagtap-t470:9801/&quot;);&#xD;
+//data.setIsGateKeeper(&quot;true&quot;);&#xD;
+&#xD;
+&#xD;
+&#xD;
 &#xD;
 ldPrcNames(control,logger,data.getFetchDataURL(),&quot;getProcessnames&quot;);&#xD;
 pane.pneSearchCriteria.setVisible(false);&#xD;
@@ -58,7 +66,7 @@ if (control.rdioSearchOption.getValue()==&quot;SEARCH&quot;)&#xD;
 }&#xD;
 else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
 {&#xD;
-	ldPrcData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstances?processname=&quot;+control.optnSelectProcess.getValue());&#xD;
+	ldPrcData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstances?processname=&quot;+control.optnSelectProcess.getValue(),data.getIsGateKeeper(),data.getLoginName());&#xD;
 	pane.pneSearchCriteria.setVisible(false);&#xD;
 	control.optnSearchCriteria.setValue(null);&#xD;
 	control.txtSearchValue.setValue(&quot;&quot;);&#xD;
@@ -70,9 +78,73 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
     <form:rule name="rule.searchRule" label="SearchRule">
       <form:event source="#control.btnSearch" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.btnSearch.select"/>
       <form:action xsi:type="form:ScriptAction" name="action.searchInstances" label="SearchInstances">
-        <form:script>ldPrcSearchData(factory,pane,control,logger,data.getFetchDataURL(),&quot;searchBy?searchby=&quot;+control.optnSearchCriteria.getValue()+&quot;&amp;searchvalue=&quot;+control.txtSearchValue.getValue()+&quot;&amp;processname=&quot;+control.optnSelectProcess.getValue());&#xD;
+        <form:script>ldPrcSearchData(factory,pane,control,logger,data.getFetchDataURL(),&quot;searchBy?searchby=&quot;+control.optnSearchCriteria.getValue()+&quot;&amp;searchvalue=&quot;+control.txtSearchValue.getValue()+&quot;&amp;processname=&quot;+control.optnSelectProcess.getValue(),data.getIsGateKeeper(),data.getLoginName());&#xD;
 &#xD;
 &#xD;
+  &#xD;
+ var record = factory.com_sfc_fosImpl_genericReporting.createTask();&#xD;
+ /*&#xD;
+ record.setFirstOfferTime(&quot;firstOfferTime&quot;);&#xD;
+ record.setProcessInstance(processInstance);&#xD;
+ record.setTaskDuration(taskDuration);&#xD;
+ record.setTaskName(taskName);&#xD;
+ record.setWaitDuration(waitDuration);&#xD;
+ record.setWorkDuration(workDuration);&#xD;
+ record.set&#xD;
+ &#xD;
+ */</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.getCancelledProcessesTasks" label="Get Cancelled Processes Tasks">
+      <form:event source="#pane.CancelledInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.CancelledInstances.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.getCancelledProcessesTasks" label="get Cancelled Processes Tasks">
+        <form:script>&#xD;
+pane.taskAnalysis.open();&#xD;
+var proc_instance=context.pane.getSelection().getProcessInstance();&#xD;
+&#xD;
+ldTskData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstanceDetails?instanceid=&quot;+proc_instance);&#xD;
+&#xD;
+&#xD;
+logger.info(&quot;clicked&quot;);</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.getErrorProcessesTasks" label="Get Error Processes Tasks">
+      <form:event source="#pane.HaltedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.HaltedInstances.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.getErrorProcessesTasks" label="Get Error Processes Tasks">
+        <form:script>&#xD;
+pane.taskAnalysis.open();&#xD;
+var proc_instance=context.pane.getSelection().getProcessInstance();&#xD;
+&#xD;
+ldTskData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstanceDetails?instanceid=&quot;+proc_instance);&#xD;
+&#xD;
+&#xD;
+logger.info(&quot;clicked&quot;);</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.getInprogressProcessesTasks" label="Get Inprogress Processes Tasks">
+      <form:event source="#pane.StartedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.StartedInstances.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.getInprogressProcessesTasks" label="Get Inprogress Processes Tasks">
+        <form:script>&#xD;
+pane.taskAnalysis.open();&#xD;
+var proc_instance=context.pane.getSelection().getProcessInstance();&#xD;
+&#xD;
+ldTskData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstanceDetails?instanceid=&quot;+proc_instance);&#xD;
+&#xD;
+&#xD;
+logger.info(&quot;clicked&quot;);</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.getCompletedProcessTasks" label="Get Completed Process Tasks">
+      <form:event source="#pane.CompletedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.CompletedInstances.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.getCompletedProcessTasks" label="Get Completed Process Tasks">
+        <form:script>&#xD;
+pane.taskAnalysis.open();&#xD;
+var proc_instance=context.pane.getSelection().getProcessInstance();&#xD;
+&#xD;
+ldTskData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessInstanceDetails?instanceid=&quot;+proc_instance);&#xD;
+&#xD;
+&#xD;
+logger.info(&quot;clicked&quot;);&#xD;
 &#xD;
 </form:script>
       </form:action>
@@ -94,6 +166,18 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
     <form:binding generated="true" direction="bothways" name="_au9HIN_PEeeQHIXdSwQiWA">
       <form:source target="data.CompletedInstances" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.CompletedInstances.value"></form:source>
       <form:destination target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.CompletedInstances.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Dq4t4PH_Eee-3Kv3Q1H-xQ">
+      <form:source target="data.IsGateKeeper" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.IsGateKeeper.value"></form:source>
+      <form:destination target="control.IsGateKeeper" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.IsGateKeeper.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Dq-NcPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="data.loginName" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.loginName.value"></form:source>
+      <form:destination target="control.loginName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.loginName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrDtAPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="data.TaskList" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.TaskList.value"></form:source>
+      <form:destination target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.TaskList.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_avAxgN_PEeeQHIXdSwQiWA">
       <form:source target="pane.CompletedInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_RFUCcN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=processInstance?" data="form.pane.CompletedInstances.value.processInstance"></form:source>
@@ -206,6 +290,34 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
     <form:binding generated="true" direction="bothways" name="_fV2v4N_GEee4yOWJZ8GYTA">
       <form:source target="pane.CancelledInstances" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_WhewMN_GEee4yOWJZ8GYTA?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aRecord%26n=projectName?" data="form.pane.CancelledInstances.value.projectName"></form:source>
       <form:destination target="control.CancelledInstances_projectName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CancelledInstances_projectName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrJMkPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_GDn8UPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=processInstance?" data="form.pane.TaskList.value.processInstance"></form:source>
+      <form:destination target="control.TaskList_processInstance" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_processInstance.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrNeAPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_GTqjcPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=firstOfferTime?" data="form.pane.TaskList.value.firstOfferTime"></form:source>
+      <form:destination target="control.TaskList_firstOfferTime" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_firstOfferTime.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrS9kPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_Gd-WAPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=taskName?" data="form.pane.TaskList.value.taskName"></form:source>
+      <form:destination target="control.TaskList_taskName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_taskName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrXPAPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_GnCycPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=taskDuration?" data="form.pane.TaskList.value.taskDuration"></form:source>
+      <form:destination target="control.TaskList_taskDuration" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_taskDuration.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DrbgcPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_GwJEEPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=waitDuration?" data="form.pane.TaskList.value.waitDuration"></form:source>
+      <form:destination target="control.TaskList_waitDuration" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_waitDuration.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_DriOIPH_Eee-3Kv3Q1H-xQ">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_G6D1EPH-Eee-3Kv3Q1H-xQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=workDuration?" data="form.pane.TaskList.value.workDuration"></form:source>
+      <form:destination target="control.TaskList_workDuration" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_workDuration.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_zqgLwPIEEeesrbUEFks5_w">
+      <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_gKS7gPIEEee4P5gHOvsDrg?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=status?" data="form.pane.TaskList.value.status"></form:source>
+      <form:destination target="control.TaskList_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_status.value"></form:destination>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -437,7 +549,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
               <et:displayLength>40</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
-            <form:label>Project Name</form:label>
+            <form:label>Project Manager</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -566,7 +678,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
               <et:displayLength>40</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
-            <form:label>Project Name</form:label>
+            <form:label>Project Manager</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -695,7 +807,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
               <et:displayLength>40</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
-            <form:label>Project Name</form:label>
+            <form:label>Project Manager</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -823,7 +935,7 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
               <et:displayLength>40</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
-            <form:label>Project Name</form:label>
+            <form:label>Project Manager</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -833,6 +945,163 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
             <form:required>false</form:required>
           </form:control>
         </form:pane>
+      </form:pane>
+    </form:pane>
+    <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.IsGateKeeper">
+      <form:propertySet xsi:type="et:TextPropertySet">
+        <et:displayLength>40</et:displayLength>
+        <et:maxLength>50</et:maxLength>
+      </form:propertySet>
+      <form:label>IsGateKeeper</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:validation generated="true" messageRef="resource.common.validation_text_length" name="IsGateKeeper__length" type="javascript" when="oncontrolchange" simple="true">
+        <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+      </form:validation>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.loginName">
+      <form:propertySet xsi:type="et:TextPropertySet">
+        <et:displayLength>40</et:displayLength>
+        <et:maxLength>50</et:maxLength>
+      </form:propertySet>
+      <form:label>loginName</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:validation generated="true" messageRef="resource.common.validation_text_length" name="loginName__length" type="javascript" when="oncontrolchange" simple="true">
+        <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+      </form:validation>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.modaldialog" name="pane.taskAnalysis" paneType="com.tibco.forms.panes.modaldialog">
+      <form:propertySet xsi:type="et:DialogPanePropertySet">
+        <et:cancelButtonLabelRef>resource.common.pane_cancel_label</et:cancelButtonLabelRef>
+        <et:closeButtonLabelRef>resource.common.pane_close_label</et:closeButtonLabelRef>
+      </form:propertySet>
+      <form:label>Task Analysis</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_hTFMsPH9EeeIX9PjIyxHhQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Task?" name="pane.TaskList" paneType="com.tibco.forms.panes.grid">
+        <form:propertySet xsi:type="et:GridPanePropertySet">
+          <et:showNavigator>false</et:showNavigator>
+          <et:editable>true</et:editable>
+          <et:sortable>true</et:sortable>
+          <et:rowLabel>{0}</et:rowLabel>
+        </form:propertySet>
+        <form:label>TaskList</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:defaults>
+          <form:labelProperties position="top"/>
+        </form:defaults>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_processInstance">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>100</et:maxLength>
+          </form:propertySet>
+          <form:label>Process Instance</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_processInstance__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_firstOfferTime">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>First Offer Time</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_firstOfferTime__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_taskName">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>Task Name</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_taskName__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_taskDuration">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>Task Duration</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_taskDuration__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_waitDuration">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>Wait Duration</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_waitDuration__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_workDuration">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>Work Duration</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_workDuration__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskList_status">
+          <form:propertySet xsi:type="et:TextAreaPropertySet">
+            <et:rows>10</et:rows>
+            <et:cols>25</et:cols>
+            <et:maxLength>150</et:maxLength>
+          </form:propertySet>
+          <form:label>Status</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="TaskList_status__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), '150'] : context.value.length &lt;= 150;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
       </form:pane>
     </form:pane>
   </form:pane>

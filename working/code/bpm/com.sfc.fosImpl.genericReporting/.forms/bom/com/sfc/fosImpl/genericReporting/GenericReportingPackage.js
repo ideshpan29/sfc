@@ -16,6 +16,7 @@ com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.gen
 
 // Load the classes defined by this package.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.genericReporting.Record");
+com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.genericReporting.Task");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.genericReporting.GenericReportingFactory");

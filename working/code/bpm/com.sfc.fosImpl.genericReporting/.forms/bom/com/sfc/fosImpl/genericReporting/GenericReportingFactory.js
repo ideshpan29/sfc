@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.genericReporting.GenericReportingFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.genericReporting.Record"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.genericReporting.Record", "com.sfc.fosImpl.genericReporting.Task"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -46,6 +46,20 @@ theClass.prototype.createRecord = function(jsonData) {
 
 theClass.prototype.listCreateRecord = function(jsonData) {
     var classObject = this.loader.newInstance("com.sfc.fosImpl.genericReporting.Record", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createTask = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.genericReporting.Task", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateTask = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.genericReporting.Task", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

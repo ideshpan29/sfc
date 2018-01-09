@@ -13,7 +13,7 @@
     <form:parameter generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_19-t0OOsEeeI1KWnGZEQgA?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=TechnicalInfo?" name="data.TechnicalInfo" label="TechnicalInfo" dataType="uml:Class SFC_ProvisioningBOM.bom#_jnE9UOCeEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=TehnicalInformation?" type="com.example.sfc_provisioningbom::TehnicalInformation" inout="IN"/>
     <form:parameter generated="true" name="data.GroupNames" label="GroupNames" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.SelectedGroup" label="SelectedGroup" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
-    <form:parameter generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_q-eYsOO_EeeYfI0_sV0YAA?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=TaskName?" name="data.TaskName" label="TaskName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="IN"/>
+    <form:parameter generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_q-eYsOO_EeeYfI0_sV0YAA?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=TaskName?" syncFlags="32" name="data.TaskName" label="TaskName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.SelectedContractor" label="SelectedContractor" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.ContractorNames" label="ContractorNames" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.CommentHistory" label="CommentHistory" dataType="uml:Class SFC_ProvisioningBOM.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=CommentData?" type="com.example.sfc_provisioningbom::CommentData" isArray="true" inout="INOUT"/>
@@ -46,13 +46,14 @@
     <form:rule name="rule.setHeaderName" label="setHeaderName">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
-        <form:script>//data.setTaskName(&quot;Process Manager Review&quot;);&#xD;
+        <form:script>data.setTaskName(&quot;Deactivation Process Initiate&quot;);&#xD;
 pane.content.setLabel(data.getTaskName());&#xD;
 &#xD;
 pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
 pane.selectContractorAgency.setVisible(false);&#xD;
 control.lblContractorAgency.setVisible(false);&#xD;
 control.lblSelectContractor.setVisible(false);&#xD;
+control.addEquipment.setVisible(false);&#xD;
 &#xD;
 pane.pneMarginPaneSelectContractor.setVisible(false);&#xD;
 pane.selectContractor.setVisible(false);&#xD;
@@ -62,6 +63,9 @@ control.lblEscalatePM.setVisible(false);&#xD;
 pane.MarginPaneTechnicalInfo.setVisible(true);&#xD;
 //pane.pane13.setVisible(false);&#xD;
 &#xD;
+if(data.getTaskName()==&quot;Deactivation Process Initiate&quot;){&#xD;
+control.addEquipment.setVisible(true);&#xD;
+}&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Select Contractor Agency&quot;){&#xD;
 pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
@@ -115,6 +119,15 @@ setupFontColor('[id$=commentHistory]');&#xD;
       <form:event source="#control.availableContractors" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.availableContractors.update"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule13" label="rule1 3">
         <form:script>data.setSelectedContractor(context.control.getValue());&#xD;
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.addEquipment" label="addEquipment">
+      <form:event source="#control.addEquipment" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.addEquipment.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.equipments" label="equipments">
+        <form:script>var Record=factory.com_example_sfc_provisioningbom.createEquipmentDetails();&#xD;
+pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
+pane.TechnicalInfo_equipment.setSelection(Record);&#xD;
 </form:script>
       </form:action>
     </form:rule>
@@ -1113,7 +1126,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
                 <form:required>false</form:required>
               </form:control>
             </form:pane>
-            <form:pane generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ldgeAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aTehnicalInformation%26n=equipment?" syncFlags="786432" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_XJJnkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=EquipmentDetails?" readOnly="true" name="pane.TechnicalInfo_equipment" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ldgeAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aTehnicalInformation%26n=equipment?" syncFlags="802816" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_XJJnkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=EquipmentDetails?" name="pane.TechnicalInfo_equipment" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
                 <et:editable>true</et:editable>
@@ -1127,7 +1140,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
               <form:defaults>
                 <form:labelProperties position="top"/>
               </form:defaults>
-              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ceetgOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=type?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_type">
+              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ceetgOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=type?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_type">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
@@ -1138,7 +1151,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
                 <form:enabled>true</form:enabled>
                 <form:required>false</form:required>
               </form:control>
-              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_eLgQAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=address?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_address">
+              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_eLgQAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=address?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_address">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
@@ -1149,7 +1162,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
                 <form:enabled>true</form:enabled>
                 <form:required>false</form:required>
               </form:control>
-              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ifplwOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=VLAN?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_VLAN">
+              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_ifplwOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aEquipmentDetails%26n=VLAN?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_VLAN">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
@@ -1161,6 +1174,12 @@ setupFontColor('[id$=commentHistory]');&#xD;
                 <form:required>false</form:required>
               </form:control>
             </form:pane>
+            <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.addEquipment">
+              <form:propertySet xsi:type="et:ButtonPropertySet"/>
+              <form:label>Add Equipment</form:label>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+            </form:control>
             <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneTechInfo06" paneType="com.tibco.forms.panes.horizontal">
               <form:visible>true</form:visible>
               <form:enabled>true</form:enabled>
@@ -1304,7 +1323,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
             <form:defaults>
               <form:labelProperties position="top"/>
             </form:defaults>
-            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_y4oKEPRNEeeMCZGsP3rsrw?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=CommentHistory?" syncFlags="16384" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=CommentData?" readOnly="true" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" syncFlags="16384" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=CommentData?" readOnly="true" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
                 <et:editable>true</et:editable>

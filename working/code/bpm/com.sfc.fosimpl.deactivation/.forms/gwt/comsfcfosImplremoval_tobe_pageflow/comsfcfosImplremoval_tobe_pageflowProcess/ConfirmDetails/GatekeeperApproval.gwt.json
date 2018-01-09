@@ -1,15 +1,15 @@
 {"bindings":[],"rules":[{"name":"initrule1","trigger":"open","cancelOnError":
       false},{"name":"setHeaderName","trigger":"open","cancelOnError":
       false}],"name":"GatekeeperApproval","type":"form","reverseBindings":[],
-  "formModelId":"_BdTLQPSMEeepS8rZh90JIA","formPathSegmentCount":4,
+  "formModelId":"_QoRoMPSuEeeywP4RjejZPQ","formPathSegmentCount":4,
   "formatVersion":"2.7.0.002","bomJSNames":[
     "com.example.sfc_provisioningbom.Sfc_provisioningbomPackage",
     "com.example.sfc_provisioningbom.Sfc_provisioningbomFactory",
-    "com.example.sfc_provisioningbom.EquipmentDetails",
-    "com.example.sfc_provisioningbom.ProvisioningDataModel",
     "com.example.sfc_provisioningbom.CommentData",
-    "com.example.sfc_provisioningbom.TehnicalInformation"],"styleName":
-  null,"genCssClass":"f32df241e-1ea0-4863-95fa-6017a417523c","labelPosition":
+    "com.example.sfc_provisioningbom.EquipmentDetails",
+    "com.example.sfc_provisioningbom.TehnicalInformation",
+    "com.example.sfc_provisioningbom.ProvisioningDataModel"],"styleName":
+  null,"genCssClass":"f606686dc-0211-4cb5-8ce2-046a47a5bab7","labelPosition":
   "top","externalResources":[{"name":"","uri":"GatekeeperApproval.gwt.js",
       "localized":false},{"name":null,"uri":"GatekeeperApproval.gwt.css",
       "localized":false},{"name":"resource.common","uri":
@@ -71,7 +71,7 @@
           "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
       [],"name":"data.TaskName","type":"data","reverseBindings":[],
       "datumType":"BomPrimitiveTypes::Text","label":"TaskName","inout":
-      "IN","array":false,"decimalPlaces":0,"length":50,"primitive":true},{
+      "INOUT","array":false,"decimalPlaces":0,"length":50,"primitive":true},{
       "bindings":[{"name":"control.SelectedContractor","type":"control",
           "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
       [],"name":"data.SelectedContractor","type":"data","reverseBindings":[],
@@ -152,6 +152,7 @@
       "control.TechnicalInfo_equipment_VLAN","type":"control"},{"name":
       "control.TechnicalInfo_modifiedBy","type":"control"},{"name":
       "control.TechnicalInfo_modifiedDate","type":"control"},{"name":
+      "control.addEquipment","type":"control"},{"name":
       "control.contractorAgency","type":"control"},{"name":
       "control.availableContractors","type":"control"},{"name":
       "control.CommentHistory_addedby","type":"control"},{"name":
@@ -755,7 +756,7 @@
           "message":"","messageRef":
           "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
@@ -770,7 +771,7 @@
           "message":"","messageRef":
           "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
@@ -785,7 +786,7 @@
           "message":"","messageRef":
           "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
@@ -817,12 +818,20 @@
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetMinRelative":true,
       "propSetMaxRelative":true,"propSetYearMin":-20,"propSetYearMax":20},{
-      "bindings":[],"rules":[{"name":"selectGroup","trigger":"update",
-          "cancelOnError":false}],"name":"control.contractorAgency","type":
-      "control","reverseBindings":[{"name":"data.GroupNames","type":"data",
-          "sourceFeature":["value"],"destinationFeature":["choiceLabels"]},{
+      "bindings":[],"rules":[{"name":"addEquipment","trigger":"select",
+          "cancelOnError":false}],"name":"control.addEquipment","type":
+      "control","reverseBindings":[],"componentType":
+      "com.tibco.forms.controls.button","shortLabelRef":"","labelRef":"",
+      "hintRef":"","enabled":true,"visible":true,"styleName":"",
+      "validations":[],"inheritsDeferInitialization":false,"readOnly":
+      false,"required":false,"value":[],"tabIndex":0,"alwaysRenderControl":
+      false,"propSetButtonType":"peripheral"},{"bindings":[],"rules":[{
+          "name":"selectGroup","trigger":"update","cancelOnError":false}],
+      "name":"control.contractorAgency","type":"control","reverseBindings":[{
           "name":"data.GroupNames","type":"data","sourceFeature":["value"],
-          "destinationFeature":["choiceValues"]}],"componentType":
+          "destinationFeature":["choiceLabels"]},{"name":"data.GroupNames",
+          "type":"data","sourceFeature":["value"],"destinationFeature":[
+            "choiceValues"]}],"componentType":
       "com.tibco.forms.controls.optionlist","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[],"inheritsDeferInitialization":false,"readOnly":
@@ -1387,7 +1396,7 @@
       "componentType":"com.tibco.forms.panes.grid","shortLabelRef":"",
       "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
       "","validations":[],"inheritsDeferInitialization":false,"readOnly":
-      true,"labelPosition":"top","dataType":
+      false,"labelPosition":"top","dataType":
       "com.example.sfc_provisioningbom.EquipmentDetails",
       "concreteClassifierNames":[
         "com.example.sfc_provisioningbom.EquipmentDetails"],
@@ -1452,6 +1461,7 @@
           "pane.pneTechInfo02","type":"pane"},{"name":"pane.pneTechInfo03",
           "type":"pane"},{"name":"pane.pneTechInfo04","type":"pane"},{"name":
           "pane.TechnicalInfo_equipment","type":"pane"},{"name":
+          "control.addEquipment","type":"control"},{"name":
           "pane.pneTechInfo06","type":"pane"}],"staticRendering":false,
       "textOnly":false,"deferRendering":false,"deferInitialization":false,
       "staticCustomContent":{}},{"bindings":[],"rules":[],"name":

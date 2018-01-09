@@ -129,13 +129,71 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					recordSet = xmlDoc.getElementsByTagName("time");
 					if(recordSet[i].childNodes[0]!=null)	{	
 					
-					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
-					if(time=="NaN")
-					time="NA";
+					var time=(recordSet[i].childNodes[0].nodeValue);
+					logger.info(time.indexOf("P"));
+					if(time.indexOf("P")==0)
+					{
+					
+					var Pindex=time.indexOf("P");
+					var Dindex=time.indexOf("D");
+					var Hindex=time.indexOf("H");
+					var Mindex=time.indexOf("M");
+					var Sindex=time.indexOf("S");
+					var Tindex=time.indexOf("T");
+					
+					var DAYS=0;
+					var HOURS=0;
+					var MINUTES=0;
+					var SECONDS=0;
+					
+					if(Dindex!=-1)
+					{
+					DAYS=parseFloat(time.substring(Pindex+1,Dindex));
+					}
+					
+					
+					
+					if(Hindex!=-1)
+					{
+					HOURS=parseFloat(time.substring(Tindex+1,Hindex));
+					}
+					
+					
+					if(Mindex!=-1)
+					{
+					MINUTES=parseFloat(time.substring(Hindex+1,Mindex));
+					}
+					
+					
+					if(Sindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Mindex+1,Sindex));
+					}
+					
+									
+					
+					
+					logger.info(".............");
+					logger.info((DAYS*1440));
+					logger.info(HOURS*60);
+					logger.info(MINUTES*1);
+					logger.info(SECONDS/60);
+				
+					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
+					logger.info("//////////////"+1.456765.toFixed(2));
+					
+					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
+					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
+					
+					record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					
+					}
 					else
-					time=time+" minutes"
-						
-						record.setTime(time);
+					{
+					
+						//record.setTime(time);
+						record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+					}
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("SibelCircuitId");
@@ -254,15 +312,12 @@ var tmpURL = url+funcName;
 					if(recordSet[i].childNodes[0]!=null)	{	
 					
 					
- 					//var mydate = new Date(recordSet[i].childNodes[0].nodeValue).toString();		
-						//record.setFirstOfferTime(recordSet[i].childNodes[0].nodeValue);
-						logger.info("New date inside"+new Date(recordSet[i].childNodes[0].nodeValue));
-						record.setFirstOfferTime(new Date(recordSet[i].childNodes[0].nodeValue).toString());
+					var abc=new Date(recordSet[i].childNodes[0].nodeValue).toString();
+					abc=abc.substring(0,abc.indexOf("G"));
+					
+						record.setFirstOfferTime(abc);
 						
 						
-						logger.info("time**********"+Math.floor(Date.now()));
-						
-						logger.info("time**********"+new Date(recordSet[i].childNodes[0].nodeValue).getTime());
 						
 					}
 					else{
@@ -291,12 +346,70 @@ var tmpURL = url+funcName;
 					recordSet = xmlDoc.getElementsByTagName("activity_dur");
 					if(recordSet[i].childNodes[0]!=null)	{	
 							
-					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
-					if(time=="NaN")
-					time="NA";
+					var time=(recordSet[i].childNodes[0].nodeValue);
+					logger.info(time.indexOf("P"));
+					if(time.indexOf("P")==0)
+					{
+					
+					var Pindex=time.indexOf("P");
+					var Dindex=time.indexOf("D");
+					var Hindex=time.indexOf("H");
+					var Mindex=time.indexOf("M");
+					var Sindex=time.indexOf("S");
+					var Tindex=time.indexOf("T");
+					
+					var DAYS=0;
+					var HOURS=0;
+					var MINUTES=0;
+					var SECONDS=0;
+					
+					if(Dindex!=-1)
+					{
+					DAYS=parseFloat(time.substring(Pindex+1,Dindex));
+					}
+					
+					
+					
+					if(Hindex!=-1)
+					{
+					HOURS=parseFloat(time.substring(Tindex+1,Hindex));
+					}
+					
+					if(Mindex!=-1)
+					{
+					MINUTES=parseFloat(time.substring(Hindex+1,Mindex));
+					}
+					
+					
+					if(Sindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Mindex+1,Sindex));
+					}
+					
+									
+					
+					
+					logger.info(".............");
+					logger.info((DAYS*1440));
+					logger.info(HOURS*60);
+					logger.info(MINUTES*1);
+					logger.info(SECONDS/60);
+				
+					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
+					logger.info("//////////////"+1.456765.toFixed(2));
+					logger.info(9692.089866666667.toFixed(2));
+					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
+					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
+					
+					record.setTaskDuration(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					
+					}
 					else
-					time=time+" minutes"
-						record.setTaskDuration(time);
+					{
+						
+						record.setTaskDuration(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+					}
+						
 						logger.info("in rewcord add activity duration"+record.getProcessInstance());
 					}
 					
@@ -304,7 +417,7 @@ var tmpURL = url+funcName;
 					
 					recordSet = xmlDoc.getElementsByTagName("wait_dur");
 					if(recordSet[i].childNodes[0]!=null)	{	
-					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					var time=parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2);
 					if(time=="NaN")
 					time="NA";
 					else
@@ -319,7 +432,7 @@ var tmpURL = url+funcName;
 					if(recordSet[i].childNodes[0]!=null)	{	
 					
 							
-					var time=Math.ceil((recordSet[i].childNodes[0].nodeValue)/60000).toString();
+					var time=parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2);
 					if(time=="NaN")
 					time="NA";
 					else

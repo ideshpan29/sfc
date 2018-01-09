@@ -17,6 +17,7 @@ com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.adm
 // Load the classes defined by this package.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.adminOps.dataModel.Resource");
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.adminOps.dataModel.ContractorGroups");
+com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.adminOps.dataModel.BPMUsers");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.adminOps.dataModel.DataModelFactory");

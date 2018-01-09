@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_aPeNsPU3Eee0RaO_sAlqew" formatVersion="4.0.0">
+  <form:runtimeDependencies>
+    <form:package>com.example.sfc_provisioningbom.Sfc_provisioningbomPackage</form:package>
+    <form:factory>com.example.sfc_provisioningbom.Sfc_provisioningbomFactory</form:factory>
+    <form:class>com.example.sfc_provisioningbom.SLA_Configuration</form:class>
+  </form:runtimeDependencies>
+  <form:externalResources>
+    <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.form" uri="DisplayDataToBeDeleted.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.safaricom" uri="../../../CSS/safaricom.css"/>
+  </form:externalResources>
+  <form:dataModel>
+    <form:parameter generated="true" name="data.SLA_Configuration" label="SLA_Configuration" dataType="uml:Class SFC_ProvisioningBOM.bom#_-rMtkNZvEeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=SLA_Configuration?" type="com.example.sfc_provisioningbom::SLA_Configuration" isArray="true" inout="IN"/>
+    <form:parameter generated="true" name="data.SLA_Configuration_To_Be_Deleted" label="SLA_Configuration_To_Be_Deleted" dataType="uml:Class SFC_ProvisioningBOM.bom#_-rMtkNZvEeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=SLA_Configuration?" type="com.example.sfc_provisioningbom::SLA_Configuration" isArray="true" inout="INOUT"/>
+  </form:dataModel>
+  <form:services/>
+  <form:actions/>
+  <form:conditions/>
+  <form:rules>
+    <form:rule generated="true" name="rule.cancel" label="Cancel">
+      <form:event source="#control.cancel" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.cancel.select"/>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.cancel"/>
+    </form:rule>
+    <form:rule generated="true" name="rule.submit" label="Submit">
+      <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.CopyRecordsForDeletion" label="Copy Records For Deletion">
+        <form:script>var a;	&#xD;
+for(var i=0;i&lt;pane.SLA_Configuration.getSelection();i++) {&#xD;
+	pane.SLA_Configuration_To_Be_Deleted.getValue().add(pane.SLA_Configuration.getSelection().get(i));&#xD;
+}&#xD;
+</form:script>
+      </form:action>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+    </form:rule>
+    <form:rule generated="true" name="rule.SLA_Configuration_To_Be_Deleted__add" label="Add SLA_Configuration_To_Be_Deleted">
+      <form:event source="#control.SLA_Configuration_To_Be_Deleted__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.SLA_Configuration_To_Be_Deleted__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.SLA_Configuration_To_Be_Deleted__add" label="Add SLA_Configuration_To_Be_Deleted">
+        <form:script>var collectionPane = pane.SLA_Configuration_To_Be_Deleted;
+var newRecord = factory.com_example_sfc_provisioningbom.createSLA_Configuration();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.SLA_Configuration_To_Be_Deleted__delete" label="Delete SLA_Configuration_To_Be_Deleted">
+      <form:event source="#control.SLA_Configuration_To_Be_Deleted__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.SLA_Configuration_To_Be_Deleted__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.SLA_Configuration_To_Be_Deleted__delete" label="Delete SLA_Configuration_To_Be_Deleted">
+        <form:script>var collectionPane = pane.SLA_Configuration_To_Be_Deleted;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
+      </form:action>
+    </form:rule>
+  </form:rules>
+  <form:bindings>
+    <form:binding generated="true" direction="bothways" name="_nPzmkPUuEeeqxaA99Iy2Jg">
+      <form:source target="data.SLA_Configuration" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.SLA_Configuration.value"></form:source>
+      <form:destination target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.SLA_Configuration.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP2p4vUuEeeqxaA99Iy2Jg">
+      <form:source target="data.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.SLA_Configuration_To_Be_Deleted.value"></form:source>
+      <form:destination target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.SLA_Configuration_To_Be_Deleted.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP0NoPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_dgwPANZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=SLALevel?" data="form.pane.SLA_Configuration.value.SLALevel"></form:source>
+      <form:destination target="control.SLA_Configuration_SLALevel" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_SLALevel.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP00sfUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_6KMtIOVNEeeRkLvTRwuu3w?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=processName?" data="form.pane.SLA_Configuration.value.processName"></form:source>
+      <form:destination target="control.SLA_Configuration_processName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_processName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP00sPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_fioAINZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskName?" data="form.pane.SLA_Configuration.value.taskName"></form:source>
+      <form:destination target="control.SLA_Configuration_taskName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_taskName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP1bwPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_s5sH4NZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=SLA_Deadline?" data="form.pane.SLA_Configuration.value.SLA_Deadline"></form:source>
+      <form:destination target="control.SLA_Configuration_SLA_Deadline" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_SLA_Deadline.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP1bwfUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_heL4cNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=emailTo?" data="form.pane.SLA_Configuration.value.emailTo"></form:source>
+      <form:destination target="control.SLA_Configuration_emailTo" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_emailTo.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP2C0PUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_kdhXYNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskTo?" data="form.pane.SLA_Configuration.value.taskTo"></form:source>
+      <form:destination target="control.SLA_Configuration_taskTo" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_taskTo.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP2C0fUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_nhAWgNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=emailConfig?" data="form.pane.SLA_Configuration.value.emailConfig"></form:source>
+      <form:destination target="control.SLA_Configuration_emailConfig" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_emailConfig.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP2p4PUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_poyiYNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskConfig?" data="form.pane.SLA_Configuration.value.taskConfig"></form:source>
+      <form:destination target="control.SLA_Configuration_taskConfig" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_taskConfig.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_nP2p4fUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_HWIL0OViEee0aKkJX_OoAg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=enableDisableFlag?" data="form.pane.SLA_Configuration.value.enableDisableFlag"></form:source>
+      <form:destination target="control.SLA_Configuration_enableDisableFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_enableDisableFlag.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP3Q8PUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_dgwPANZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=SLALevel?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.SLALevel"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_SLALevel" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_SLALevel.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP3Q8fUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_fioAINZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskName?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.taskName"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_taskName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_taskName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP34APUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_6KMtIOVNEeeRkLvTRwuu3w?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=processName?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.processName"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_processName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_processName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP4fEPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_s5sH4NZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=SLA_Deadline?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.SLA_Deadline"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_SLA_Deadline" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_SLA_Deadline.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP4fEfUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_heL4cNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=emailTo?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.emailTo"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_emailTo" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_emailTo.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP5GIPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_kdhXYNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskTo?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.taskTo"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_taskTo" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_taskTo.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP5GIfUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_nhAWgNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=emailConfig?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.emailConfig"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_emailConfig" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_emailConfig.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP5tMPUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_poyiYNZ9EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=taskConfig?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.taskConfig"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_taskConfig" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_taskConfig.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_nP5tMfUuEeeqxaA99Iy2Jg">
+      <form:source target="pane.SLA_Configuration_To_Be_Deleted" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_HWIL0OViEee0aKkJX_OoAg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aSLA_Configuration%26n=enableDisableFlag?" data="form.pane.SLA_Configuration_To_Be_Deleted.value.enableDisableFlag"></form:source>
+      <form:destination target="control.SLA_Configuration_To_Be_Deleted_enableDisableFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_To_Be_Deleted_enableDisableFlag.value"></form:destination>
+    </form:binding>
+  </form:bindings>
+  <form:targets>
+    <form:target ref="iProcessWorkspace_10.7"/>
+  </form:targets>
+  <form:defaults>
+    <form:labelProperties position="top"/>
+  </form:defaults>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.content" paneType="com.tibco.forms.panes.vertical">
+    <form:label>Display Data To Be Deleted</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:visual width="1027"/>
+    <form:labelProperties visible="false"/>
+    <form:defaults>
+      <form:labelProperties position="top"/>
+    </form:defaults>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.imgSFC">
+      <form:propertySet xsi:type="et:ImagePropertySet">
+        <et:url>../../../Images/SFC.png</et:url>
+      </form:propertySet>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneMarginPane01" paneType="com.tibco.forms.panes.horizontal">
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:visual height="10"/>
+      <form:defaults>
+        <form:labelProperties position="top"/>
+      </form:defaults>
+    </form:pane>
+    <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.selecttheConfigurationstobedeleted">
+      <form:label>Select the Configurations to be deleted</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane1" paneType="com.tibco.forms.panes.vertical">
+      <form:label>Pane 1</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:labelProperties visible="false"/>
+      <form:defaults>
+        <form:labelProperties position="top" visible="true" width="120"/>
+      </form:defaults>
+      <form:pane generated="true" styleClass="marginPane" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_-rMtkNZvEeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=SLA_Configuration?" readOnly="true" name="pane.SLA_Configuration" paneType="com.tibco.forms.panes.grid">
+        <form:propertySet xsi:type="et:GridPanePropertySet">
+          <et:showNavigator>false</et:showNavigator>
+          <et:editable>true</et:editable>
+          <et:sortable>true</et:sortable>
+          <et:selectionModel>multiple</et:selectionModel>
+          <et:rowLabel>{0}</et:rowLabel>
+        </form:propertySet>
+        <form:label>SLA_Configuration</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:defaults>
+          <form:labelProperties position="top"/>
+        </form:defaults>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_SLALevel">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>20</et:displayLength>
+            <et:maxLength>19</et:maxLength>
+            <et:numeric>true</et:numeric>
+            <et:formatRef>resource.common.format_integer</et:formatRef>
+          </form:propertySet>
+          <form:label>SLALevel</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_integer_length" name="SLA_Configuration_SLALevel__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkNumberConstraint(context.stringValue, 19, 0) ? true : [context.control.getLabel(), '19'] : !isNaN(context.value) &amp;&amp; this.getForm().numberFormat(context.value,19, 0);</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_processName">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>ProcessName</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_processName__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_taskName">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>Task Name</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_taskName__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_SLA_Deadline">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>SLA Deadline In Mins</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_SLA_Deadline__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" readOnly="true" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_emailTo">
+          <form:propertySet xsi:type="et:MultiChoicePropertySet">
+            <et:choiceValues>NONE</et:choiceValues>
+            <et:choiceValues>SPECIFIC</et:choiceValues>
+            <et:choiceValues>PM</et:choiceValues>
+            <et:choiceLabels>None</et:choiceLabels>
+            <et:choiceLabels>Specific</et:choiceLabels>
+            <et:choiceLabels>PM</et:choiceLabels>
+          </form:propertySet>
+          <form:label>EmailTo</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" readOnly="true" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_taskTo">
+          <form:propertySet xsi:type="et:MultiChoicePropertySet">
+            <et:choiceValues>NONE</et:choiceValues>
+            <et:choiceValues>SPECIFIC</et:choiceValues>
+            <et:choiceValues>PM</et:choiceValues>
+            <et:choiceLabels>None</et:choiceLabels>
+            <et:choiceLabels>Specific</et:choiceLabels>
+            <et:choiceLabels>PM</et:choiceLabels>
+          </form:propertySet>
+          <form:label>TaskTo</form:label>
+          <form:hint></form:hint>
+          <form:visible>false</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_emailConfig">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>Email Configuration</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_emailConfig__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_taskConfig">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>TaskConfig</form:label>
+          <form:hint></form:hint>
+          <form:visible>false</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_taskConfig__length" type="javascript" when="oncontrolchange" simple="true">
+            <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+          </form:validation>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" readOnly="true" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_enableDisableFlag">
+          <form:propertySet xsi:type="et:MultiChoicePropertySet">
+            <et:choiceValues>ENABLE</et:choiceValues>
+            <et:choiceValues>DISABLE</et:choiceValues>
+            <et:choiceLabels>Enable</et:choiceLabels>
+            <et:choiceLabels>Disable</et:choiceLabels>
+          </form:propertySet>
+          <form:label>Enable Config ?</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+      </form:pane>
+    </form:pane>
+    <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_-rMtkNZvEeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=SLA_Configuration?" name="pane.SLA_Configuration_To_Be_Deleted" paneType="com.tibco.forms.panes.grid">
+      <form:propertySet xsi:type="et:GridPanePropertySet">
+        <et:showNavigator>false</et:showNavigator>
+        <et:supportAddOperation>true</et:supportAddOperation>
+        <et:supportDeleteOperation>true</et:supportDeleteOperation>
+        <et:addOperationLabelRef>resource.common.pane_new_label</et:addOperationLabelRef>
+        <et:deleteOperationLabelRef>resource.common.pane_delete_label</et:deleteOperationLabelRef>
+        <et:editable>true</et:editable>
+        <et:sortable>true</et:sortable>
+        <et:rowLabel>{0}</et:rowLabel>
+      </form:propertySet>
+      <form:label>SLA_Configuration_To_Be_Deleted</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:defaults>
+        <form:labelProperties position="top"/>
+      </form:defaults>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_SLALevel">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>20</et:displayLength>
+          <et:maxLength>19</et:maxLength>
+          <et:numeric>true</et:numeric>
+          <et:formatRef>resource.common.format_integer</et:formatRef>
+        </form:propertySet>
+        <form:label>SLALevel</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_integer_length" name="SLA_Configuration_To_Be_Deleted_SLALevel__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkNumberConstraint(context.stringValue, 19, 0) ? true : [context.control.getLabel(), '19'] : !isNaN(context.value) &amp;&amp; this.getForm().numberFormat(context.value,19, 0);</form:script>
+        </form:validation>
+        <form:required>true</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_taskName">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>40</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>Task Name</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_To_Be_Deleted_taskName__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+        </form:validation>
+        <form:required>true</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_processName">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>40</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>ProcessName</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_To_Be_Deleted_processName__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+        </form:validation>
+        <form:required>true</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_SLA_Deadline">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>40</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>SLA_Deadline</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_To_Be_Deleted_SLA_Deadline__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_To_Be_Deleted_emailTo">
+        <form:propertySet xsi:type="et:MultiChoicePropertySet">
+          <et:choiceValues>NONE</et:choiceValues>
+          <et:choiceValues>SPECIFIC</et:choiceValues>
+          <et:choiceValues>PM</et:choiceValues>
+          <et:choiceLabels>None</et:choiceLabels>
+          <et:choiceLabels>Specific</et:choiceLabels>
+          <et:choiceLabels>PM</et:choiceLabels>
+        </form:propertySet>
+        <form:label>EmailTo</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_To_Be_Deleted_taskTo">
+        <form:propertySet xsi:type="et:MultiChoicePropertySet">
+          <et:choiceValues>NONE</et:choiceValues>
+          <et:choiceValues>SPECIFIC</et:choiceValues>
+          <et:choiceValues>PM</et:choiceValues>
+          <et:choiceLabels>None</et:choiceLabels>
+          <et:choiceLabels>Specific</et:choiceLabels>
+          <et:choiceLabels>PM</et:choiceLabels>
+        </form:propertySet>
+        <form:label>TaskTo</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_emailConfig">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>40</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>EmailConfig</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_To_Be_Deleted_emailConfig__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_To_Be_Deleted_taskConfig">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>40</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>TaskConfig</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="SLA_Configuration_To_Be_Deleted_taskConfig__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_To_Be_Deleted_enableDisableFlag">
+        <form:propertySet xsi:type="et:MultiChoicePropertySet">
+          <et:choiceValues>ENABLE</et:choiceValues>
+          <et:choiceValues>DISABLE</et:choiceValues>
+          <et:choiceLabels>Enable</et:choiceLabels>
+          <et:choiceLabels>Disable</et:choiceLabels>
+        </form:propertySet>
+        <form:label>EnableDisableFlag</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+    </form:pane>
+    <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.SLA_Configuration_To_Be_Deleted__add_delete" paneType="com.tibco.forms.panes.horizontal">
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:labelProperties visible="false"/>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.SLA_Configuration_To_Be_Deleted__add">
+        <form:propertySet xsi:type="et:ButtonPropertySet"/>
+        <form:label valueRef="resource.common.pane_new_label"/>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.SLA_Configuration_To_Be_Deleted__delete">
+        <form:propertySet xsi:type="et:ButtonPropertySet"/>
+        <form:label valueRef="resource.common.pane_delete_label"/>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+    </form:pane>
+  </form:pane>
+  <form:pane gwt:toolbar="true" styleClass="toolbar" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.toolbar" paneType="com.tibco.forms.panes.horizontal">
+    <form:label>Toolbar</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="false"/>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.cancel">
+      <form:propertySet xsi:type="et:ButtonPropertySet"/>
+      <form:label>Cancel</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.submit">
+      <form:propertySet xsi:type="et:ButtonPropertySet">
+        <et:type>primary</et:type>
+      </form:propertySet>
+      <form:label>Submit</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+  </form:pane>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.messages" name="pane.messages" paneType="com.tibco.forms.panes.messages">
+    <form:propertySet xsi:type="et:MessagesPanePropertySet"/>
+    <form:label>Invalid Entries</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="false"/>
+  </form:pane>
+</form:form>

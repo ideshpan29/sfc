@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.adminOps.dataModel.DataModelFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.adminOps.dataModel.Resource", "com.sfc.fosImpl.adminOps.dataModel.ContractorGroups"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.adminOps.dataModel.Resource", "com.sfc.fosImpl.adminOps.dataModel.ContractorGroups", "com.sfc.fosImpl.adminOps.dataModel.BPMUsers"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -60,6 +60,20 @@ theClass.prototype.createContractorGroups = function(jsonData) {
 
 theClass.prototype.listCreateContractorGroups = function(jsonData) {
     var classObject = this.loader.newInstance("com.sfc.fosImpl.adminOps.dataModel.ContractorGroups", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createBPMUsers = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.adminOps.dataModel.BPMUsers", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateBPMUsers = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.adminOps.dataModel.BPMUsers", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

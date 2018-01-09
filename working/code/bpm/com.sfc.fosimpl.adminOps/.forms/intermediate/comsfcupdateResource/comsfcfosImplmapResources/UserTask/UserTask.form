@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_idDrkPFEEeeWw8R4pwNr1Q" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_-yyQEPUrEeeqxaA99Iy2Jg" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaPackage</form:package>
-    <form:package>com.sfc.fosImpl.adminOps.dataModel.DataModelPackage</form:package>
     <form:package>com.example.sfc_provisioningbom.Sfc_provisioningbomPackage</form:package>
+    <form:package>com.sfc.fosImpl.adminOps.dataModel.DataModelPackage</form:package>
     <form:factory>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaFactory</form:factory>
-    <form:factory>com.sfc.fosImpl.adminOps.dataModel.DataModelFactory</form:factory>
     <form:factory>com.example.sfc_provisioningbom.Sfc_provisioningbomFactory</form:factory>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType</form:class>
+    <form:factory>com.sfc.fosImpl.adminOps.dataModel.DataModelFactory</form:factory>
     <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType</form:class>
-    <form:class>com.sfc.fosImpl.adminOps.dataModel.Resource</form:class>
     <form:class>com.example.sfc_provisioningbom.ContractorGroups</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType</form:class>
+    <form:class>com.sfc.fosImpl.adminOps.dataModel.Resource</form:class>
+    <form:class>com.sfc.fosImpl.adminOps.dataModel.BPMUsers</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.form" uri="UserTask.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.safaricom" uri="../../../CSS/safaricom.css"/>
     <form:externalResource name="resource.msg" uri="../../../MessageProperties/msg.properties" localized="true"/>
+    <form:externalResource name="resource.request" uri="../../../JavaScript/request.js" localized="true"/>
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" name="data.resourceList" label="resource List" dataType="uml:Class BusinessObjectModel.bom#_ipNxwPBTEeeuzZ1H_57zBQ?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.adminOps.dataModel%26n=Resource?" type="com.sfc.fosImpl.adminOps.dataModel::Resource" isArray="true" inout="INOUT"/>
@@ -26,6 +28,8 @@
     <form:parameter generated="true" name="data.BusinessUser" label="BusinessUser" dataType="uml:Class com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemacreateresourceinputType?p=com.sfc.fosimpl.adminOps%26s=Generated%20Business%20Objects%26t=uml%3aClass%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%26n=createresourceinputType?" type="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema::createresourceinputType" inout="INOUT"/>
     <form:parameter generated="true" name="data.ContractorMasterUserFlag" label="Contractor Master User Flag" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_pSJ7cHvAEdy0U8_1u7Q20g" type="BomPrimitiveTypes::Boolean" inout="INOUT"/>
     <form:parameter generated="true" name="data.ContractorNormalUsers" label="ContractorNormalUsers" dataType="uml:Class SFC_ProvisioningBOM.bom#_X_aPwPB6EeeuzZ1H_57zBQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=ContractorGroups?" type="com.example.sfc_provisioningbom::ContractorGroups" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.BPMUsers" label="BPMUsers" dataType="uml:Class BusinessObjectModel.bom#_KHBXwPRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.adminOps.dataModel%26n=BPMUsers?" type="com.sfc.fosImpl.adminOps.dataModel::BPMUsers" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.LoginName" label="LoginName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -44,14 +48,30 @@
       <form:action xsi:type="form:ScriptAction" name="action.updateDecision" label="update Decision">
         <form:script>data.setDecision(context.control.getValue());&#xD;
 if(context.control.getValue()==&quot;BUSINESS&quot;) {&#xD;
+	pane.BPMUsers.setVisible(false);&#xD;
 	pane.pneAddBusinessUsers.setVisible(true);&#xD;
 	pane.BusinessUser_createresourcerequest.getValue().clear();&#xD;
 	pane.pneContractorMaster.setVisible(false);&#xD;
 }&#xD;
 else if(context.control.getValue()==&quot;CONTRACTOR_MASTER&quot;) {&#xD;
+	pane.BPMUsers.setVisible(false);&#xD;
 	pane.pneAddBusinessUsers.setVisible(false);&#xD;
 	pane.pneContractorMaster.setVisible(true);&#xD;
 	data.getContractorGroup().setMasterUser(&quot;Y&quot;);&#xD;
+}&#xD;
+else if(context.control.getValue()==&quot;USERS_LIST&quot;) {&#xD;
+	pane.pneAddBusinessUsers.setVisible(false);&#xD;
+	pane.pneContractorMaster.setVisible(false);&#xD;
+	&#xD;
+	&#xD;
+	//control.LoginName.setValue(&quot;ABC&quot;);&#xD;
+	listUsers(factory,pane,control,logger,&quot;http://rbapat-t470:9801/getusers&quot;,&quot;?emailid=&quot;+control.LoginName.getValue());&#xD;
+	&#xD;
+	&#xD;
+	pane.BPMUsers.getValue().clear();&#xD;
+	pane.BPMUsers.setVisible(true);&#xD;
+	&#xD;
+	&#xD;
 }&#xD;
 else {&#xD;
 	pane.pneAddBusinessUsers.setVisible(false);&#xD;
@@ -61,21 +81,29 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.setPanesVisibility" label="Set Panes Visibility">
-      <form:event source="#_idDrkPFEEeeWw8R4pwNr1Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_-yyQEPUrEeeqxaA99Iy2Jg" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.setPanesVisibility" label="Set Panes Visibility">
-        <form:script>control.ContractorMasterUserFlag.setValue(false);&#xD;
+        <form:script>//control.ContractorMasterUserFlag.setValue(false);&#xD;
 &#xD;
 if(control.ContractorMasterUserFlag.getValue()==true) {&#xD;
 	pane.pneContractorUserDetails.setVisible(true);&#xD;
 	control.onboardUsers.setVisible(false);&#xD;
 	pane.pneAddBusinessUsers.setVisible(false);&#xD;
 	pane.pneContractorMaster.setVisible(false);&#xD;
+	pane.BusinessUser_createresourcerequest.setVisible(false);&#xD;
+	pane.pneAddBusinessUsers.setVisible(false);&#xD;
+	pane.ContractorNormalUsers.setVisible(true);&#xD;
+	pane.pane3.setVisible(false);&#xD;
 }&#xD;
 else if(control.ContractorMasterUserFlag.getValue()==false) {&#xD;
 	control.onboardUsers.setVisible(true);&#xD;
 	pane.pneAddBusinessUsers.setVisible(false);&#xD;
 	pane.pneContractorMaster.setVisible(false);&#xD;
 	pane.pneContractorUserDetails.setVisible(false);&#xD;
+	pane.BusinessUser_createresourcerequest.setVisible(true);&#xD;
+	pane.pneAddBusinessUsers.setVisible(false);&#xD;
+	pane.ContractorNormalUsers.setVisible(false);&#xD;
+	pane.pneButton01.setVisible(false);&#xD;
 }&#xD;
 </form:script>
       </form:action>
@@ -105,6 +133,8 @@ else {&#xD;
       <form:action xsi:type="form:ScriptAction" name="action.addNewRowContractors" label="Add New RowContractors">
         <form:script>var a;&#xD;
 &#xD;
+var entry = factory.com_sfc_fosImpl_adminOps_dataModel.createContractorGroups();&#xD;
+pane.ContractorNormalUsers.getValue();&#xD;
 </form:script>
       </form:action>
     </form:rule>
@@ -113,6 +143,74 @@ else {&#xD;
       <form:action xsi:type="form:ScriptAction" name="action.deleteSelectedRowContractors" label="Delete Selected Row Contractors">
         <form:script>pane.ContractorNormalUsers.getValue().remove(pane.ContractorNormalUsers.getSelection());&#xD;
 </form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.BusinessUser_createresourcerequest__add" label="Add BusinessUser_createresourcerequest">
+      <form:event source="#control.BusinessUser_createresourcerequest__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.BusinessUser_createresourcerequest__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.BusinessUser_createresourcerequest__add" label="Add BusinessUser_createresourcerequest">
+        <form:script>var collectionPane = pane.BusinessUser_createresourcerequest;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createCreateresourcerequestType();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.BusinessUser_createresourcerequest__delete" label="Delete BusinessUser_createresourcerequest">
+      <form:event source="#control.BusinessUser_createresourcerequest__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.BusinessUser_createresourcerequest__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.BusinessUser_createresourcerequest__delete" label="Delete BusinessUser_createresourcerequest">
+        <form:script>var collectionPane = pane.BusinessUser_createresourcerequest;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ContractorNormalUsers__add" label="Add ContractorNormalUsers">
+      <form:event source="#control.ContractorNormalUsers__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ContractorNormalUsers__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ContractorNormalUsers__add" label="Add ContractorNormalUsers">
+        <form:script>var collectionPane = pane.ContractorNormalUsers;
+var newRecord = factory.com_example_sfc_provisioningbom.createContractorGroups();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ContractorNormalUsers__delete" label="Delete ContractorNormalUsers">
+      <form:event source="#control.ContractorNormalUsers__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ContractorNormalUsers__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ContractorNormalUsers__delete" label="Delete ContractorNormalUsers">
+        <form:script>var collectionPane = pane.ContractorNormalUsers;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
       </form:action>
     </form:rule>
   </form:rules>
@@ -132,6 +230,14 @@ else {&#xD;
     <form:binding generated="true" direction="bothways" name="_PYfH4PEXEeeW2tm46yiN8A">
       <form:source target="data.ContractorNormalUsers" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ContractorNormalUsers.value"></form:source>
       <form:destination target="pane.ContractorNormalUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.ContractorNormalUsers.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_loqc8PRaEeeRs7eYTPjalw">
+      <form:source target="data.BPMUsers" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.BPMUsers.value"></form:source>
+      <form:destination target="pane.BPMUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.BPMUsers.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_Q3a6QPRoEeeRs7eYTPjalw">
+      <form:source target="data.LoginName" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.LoginName.value"></form:source>
+      <form:destination target="control.LoginName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LoginName.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_QPH9wPCPEeesJ4bn2tlLXg">
       <form:source target="pane.BusinessUser" feature="http://www.tibco.com/forms/model/elemtypes#//SingletonPanePropertySet/value com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#createresourceinputTypecreateresourcerequestType?p=com.sfc.fosimpl.adminOps%26s=Generated%20Business%20Objects%26t=uml%3aProperty%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%3a%3acreateresourceinputType%26n=createresourcerequest?" data="form.pane.BusinessUser.value.createresourcerequest"></form:source>
@@ -209,6 +315,22 @@ else {&#xD;
       <form:source target="pane.ContractorNormalUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value SFC_ProvisioningBOM.bom#_xLxKgPB6EeeuzZ1H_57zBQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aContractorGroups%26n=emailID?" data="form.pane.ContractorNormalUsers.value.emailID"></form:source>
       <form:destination target="control.ContractorNormalUsers_emailID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ContractorNormalUsers_emailID.value"></form:destination>
     </form:binding>
+    <form:binding generated="true" direction="bothways" name="_xZi78PRYEeeRs7eYTPjalw">
+      <form:source target="pane.BPMUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value BusinessObjectModel.bom#_MiwaYPRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.adminOps.dataModel%3a%3aBPMUsers%26n=name?" data="form.pane.BPMUsers.value.name"></form:source>
+      <form:destination target="control.BPMUsers_name" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.BPMUsers_name.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_xZobgPRYEeeRs7eYTPjalw">
+      <form:source target="pane.BPMUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value BusinessObjectModel.bom#_MuSU8PRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.adminOps.dataModel%3a%3aBPMUsers%26n=groupName?" data="form.pane.BPMUsers.value.groupName"></form:source>
+      <form:destination target="control.BPMUsers_groupName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.BPMUsers_groupName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_xZss8PRYEeeRs7eYTPjalw">
+      <form:source target="pane.BPMUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value BusinessObjectModel.bom#_M1iMcPRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.adminOps.dataModel%3a%3aBPMUsers%26n=addedBy?" data="form.pane.BPMUsers.value.addedBy"></form:source>
+      <form:destination target="control.BPMUsers_addedBy" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.BPMUsers_addedBy.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_xZxlcPRYEeeRs7eYTPjalw">
+      <form:source target="pane.BPMUsers" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value BusinessObjectModel.bom#_M9KecPRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.adminOps.dataModel%3a%3aBPMUsers%26n=addedOn?" data="form.pane.BPMUsers.value.addedOn"></form:source>
+      <form:destination target="control.BPMUsers_addedOn" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.BPMUsers_addedOn.value"></form:destination>
+    </form:binding>
   </form:bindings>
   <form:targets>
     <form:target ref="iProcessWorkspace_10.7"/>
@@ -254,8 +376,10 @@ else {&#xD;
         <form:propertySet xsi:type="et:RadioGroupPropertySet">
           <et:choiceValues>BUSINESS</et:choiceValues>
           <et:choiceValues>CONTRACTOR_MASTER</et:choiceValues>
+          <et:choiceValues>USERS_LIST</et:choiceValues>
           <et:choiceLabels>Add Business Users</et:choiceLabels>
           <et:choiceLabels>Add Contractor Group &amp; Master Users</et:choiceLabels>
+          <et:choiceLabels>View Users List</et:choiceLabels>
           <et:nColumns>1</et:nColumns>
         </form:propertySet>
         <form:label>On board Users</form:label>
@@ -319,6 +443,10 @@ else {&#xD;
         <form:pane generated="true" styleClass="marginPane" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom#com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemacreateresourcerequestType?p=com.sfc.fosimpl.adminOps%26s=Generated%20Business%20Objects%26t=uml%3aClass%26q=com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema%26n=createresourcerequestType?" name="pane.BusinessUser_createresourcerequest" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
+            <et:supportAddOperation>true</et:supportAddOperation>
+            <et:supportDeleteOperation>true</et:supportDeleteOperation>
+            <et:addOperationLabelRef>resource.common.pane_new_label</et:addOperationLabelRef>
+            <et:deleteOperationLabelRef>resource.common.pane_delete_label</et:deleteOperationLabelRef>
             <et:editable>true</et:editable>
             <et:sortable>true</et:sortable>
             <et:rowLabel>{0}</et:rowLabel>
@@ -410,6 +538,25 @@ else {&#xD;
             <form:label>password</form:label>
             <form:hint></form:hint>
             <form:visible>false</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+        </form:pane>
+        <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.BusinessUser_createresourcerequest__add_delete" paneType="com.tibco.forms.panes.horizontal">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
+          <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.BusinessUser_createresourcerequest__add">
+            <form:propertySet xsi:type="et:ButtonPropertySet"/>
+            <form:label valueRef="resource.common.pane_new_label"/>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.BusinessUser_createresourcerequest__delete">
+            <form:propertySet xsi:type="et:ButtonPropertySet"/>
+            <form:label valueRef="resource.common.pane_delete_label"/>
+            <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>
@@ -598,6 +745,10 @@ else {&#xD;
         <form:pane generated="true" styleClass="marginPane" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class SFC_ProvisioningBOM.bom#_X_aPwPB6EeeuzZ1H_57zBQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.example.sfc_provisioningbom%26n=ContractorGroups?" name="pane.ContractorNormalUsers" paneType="com.tibco.forms.panes.grid">
           <form:propertySet xsi:type="et:GridPanePropertySet">
             <et:showNavigator>false</et:showNavigator>
+            <et:supportAddOperation>true</et:supportAddOperation>
+            <et:supportDeleteOperation>true</et:supportDeleteOperation>
+            <et:addOperationLabelRef>resource.common.pane_new_label</et:addOperationLabelRef>
+            <et:deleteOperationLabelRef>resource.common.pane_delete_label</et:deleteOperationLabelRef>
             <et:editable>true</et:editable>
             <et:sortable>true</et:sortable>
             <et:rowLabel>{0}</et:rowLabel>
@@ -701,6 +852,25 @@ else {&#xD;
             <form:required>true</form:required>
           </form:control>
         </form:pane>
+        <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.ContractorNormalUsers__add_delete" paneType="com.tibco.forms.panes.horizontal">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
+          <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.ContractorNormalUsers__add">
+            <form:propertySet xsi:type="et:ButtonPropertySet"/>
+            <form:label valueRef="resource.common.pane_new_label"/>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.ContractorNormalUsers__delete">
+            <form:propertySet xsi:type="et:ButtonPropertySet"/>
+            <form:label valueRef="resource.common.pane_delete_label"/>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+        </form:pane>
       </form:pane>
     </form:pane>
     <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.ContractorMasterUserFlag">
@@ -708,6 +878,96 @@ else {&#xD;
       <form:hint></form:hint>
       <form:visible>false</form:visible>
       <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane generated="true" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class BusinessObjectModel.bom#_KHBXwPRYEeeRs7eYTPjalw?p=com.sfc.fosimpl.adminOps%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.adminOps.dataModel%26n=BPMUsers?" name="pane.BPMUsers" paneType="com.tibco.forms.panes.grid">
+      <form:propertySet xsi:type="et:GridPanePropertySet">
+        <et:showNavigator>false</et:showNavigator>
+        <et:editable>true</et:editable>
+        <et:sortable>true</et:sortable>
+        <et:rowLabel>{0}</et:rowLabel>
+      </form:propertySet>
+      <form:label>BPMUsers</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:defaults>
+        <form:labelProperties position="top"/>
+      </form:defaults>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.BPMUsers_name">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>Name</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="BPMUsers_name__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.BPMUsers_groupName">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>Group Name</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="BPMUsers_groupName__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.BPMUsers_addedBy">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>Added By</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="BPMUsers_addedBy__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.BPMUsers_addedOn">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>Added On</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:validation generated="true" messageRef="resource.common.validation_text_length" name="BPMUsers_addedOn__length" type="javascript" when="oncontrolchange" simple="true">
+          <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+        </form:validation>
+        <form:required>false</form:required>
+      </form:control>
+    </form:pane>
+    <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.LoginName">
+      <form:propertySet xsi:type="et:TextAreaPropertySet">
+        <et:rows>10</et:rows>
+        <et:cols>25</et:cols>
+        <et:maxLength>100</et:maxLength>
+      </form:propertySet>
+      <form:label>LoginName</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:validation generated="true" messageRef="resource.common.validation_text_length" name="LoginName__length" type="javascript" when="oncontrolchange" simple="true">
+        <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
+      </form:validation>
       <form:required>false</form:required>
     </form:control>
   </form:pane>

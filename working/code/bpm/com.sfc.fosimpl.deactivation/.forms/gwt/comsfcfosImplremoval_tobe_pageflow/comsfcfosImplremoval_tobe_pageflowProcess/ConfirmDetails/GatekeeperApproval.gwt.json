@@ -1,7 +1,7 @@
 {"bindings":[],"rules":[{"name":"initrule1","trigger":"open","cancelOnError":
       false},{"name":"setHeaderName","trigger":"open","cancelOnError":
       false}],"name":"GatekeeperApproval","type":"form","reverseBindings":[],
-  "formModelId":"_yp0lEPUpEeeywP4RjejZPQ","formPathSegmentCount":4,
+  "formModelId":"_tl8BYPVeEeeywP4RjejZPQ","formPathSegmentCount":4,
   "formatVersion":"2.7.0.002","bomJSNames":[
     "com.example.sfc_provisioningbom.Sfc_provisioningbomPackage",
     "com.example.sfc_provisioningbom.Sfc_provisioningbomFactory",
@@ -32,26 +32,13 @@
           "destinationFeature":["value"]}],"rules":[],"name":
       "data.Provisioning_Data","type":"data","reverseBindings":[],
       "datumType":"com.example.sfc_provisioningbom.ProvisioningDataModel",
-      "label":"Provisioning_Data","inout":"IN","array":false,"decimalPlaces":
-      0,"length":0,"primitive":false},{"bindings":[{"name":
+      "label":"Provisioning_Data","inout":"INOUT","array":false,
+      "decimalPlaces":0,"length":0,"primitive":false},{"bindings":[{"name":
           "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
-          "destinationFeature":["value"]},{"name":
-          "control.TechnicalInfo_clientVLAN","type":"control",
-          "sourceFeature":["value","clientVLAN"],"destinationFeature":[
-            "value"]},{"name":"control.TechnicalInfo_carrierIP","type":
-          "control","sourceFeature":["value","carrierIP"],
-          "destinationFeature":["value"]},{"name":
-          "control.TechnicalInfo_clientIP","type":"control","sourceFeature":[
-            "value","clientIP"],"destinationFeature":["value"]},{"name":
-          "control.TechnicalInfo_aggPoint","type":"control","sourceFeature":[
-            "value","aggPoint"],"destinationFeature":["value"]},{"name":
-          "control.TechnicalInfo_SFCPOPPE","type":"control","sourceFeature":[
-            "value","SFCPOPPE"],"destinationFeature":["value"]},{"name":
-          "control.TechnicalInfo_port","type":"control","sourceFeature":[
-            "value","port"],"destinationFeature":["value"]}],"rules":[],
-      "name":"data.TechnicalInfo","type":"data","reverseBindings":[],
-      "datumType":"com.example.sfc_provisioningbom.TehnicalInformation",
-      "label":"TechnicalInfo","inout":"IN","array":false,"decimalPlaces":0,
+          "destinationFeature":["value"]}],"rules":[],"name":
+      "data.TechnicalInfo","type":"data","reverseBindings":[],"datumType":
+      "com.example.sfc_provisioningbom.TehnicalInformation","label":
+      "TechnicalInfo","inout":"INOUT","array":false,"decimalPlaces":0,
       "length":0,"primitive":false},{"bindings":[{"name":
           "control.GroupNames","type":"control","sourceFeature":["value"],
           "destinationFeature":["value"]},{"name":
@@ -107,14 +94,18 @@
             "value"],"destinationFeature":["value"]}],"rules":[],"name":
       "data.CommentText","type":"data","reverseBindings":[],"datumType":
       "BomPrimitiveTypes::Text","label":"CommentText","inout":"INOUT",
-      "array":false,"decimalPlaces":0,"length":500,"primitive":true}],
-  "controlRefs":[{"name":"control.Provisioning_Data_siebelCircuitID","type":
-      "control"},{"name":"control.Provisioning_Data_projectManager","type":
-      "control"},{"name":"control.Provisioning_Data_account","type":
-      "control"},{"name":"control.Provisioning_Data_clientID","type":
-      "control"},{"name":"control.Provisioning_Data_accountManager","type":
-      "control"},{"name":"control.Provisioning_Data_clientName","type":
-      "control"},{"name":"control.label3","type":"control"},{"name":
+      "array":false,"decimalPlaces":0,"length":500,"primitive":true},{
+      "bindings":[],"rules":[],"name":"data.EscalationEmail","type":"data",
+      "reverseBindings":[],"datumType":"BomPrimitiveTypes::Text","label":
+      "EscalationEmail","inout":"INOUT","array":false,"decimalPlaces":0,
+      "length":100,"primitive":true}],"controlRefs":[{"name":
+      "control.Provisioning_Data_siebelCircuitID","type":"control"},{"name":
+      "control.Provisioning_Data_projectManager","type":"control"},{"name":
+      "control.Provisioning_Data_account","type":"control"},{"name":
+      "control.Provisioning_Data_clientID","type":"control"},{"name":
+      "control.Provisioning_Data_accountManager","type":"control"},{"name":
+      "control.Provisioning_Data_clientName","type":"control"},{"name":
+      "control.label3","type":"control"},{"name":
       "control.Provisioning_Data_contractor","type":"control"},{"name":
       "control.Provisioning_Data_regionView","type":"control"},{"name":
       "control.Provisioning_Data_floor","type":"control"},{"name":
@@ -633,120 +624,136 @@
       false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":500,
-      "propSetTextAreaRows":8,"propSetTextAreaCols":70},{"bindings":[],
-      "rules":[],"name":"control.TechnicalInfo_carrierVLAN","type":
-      "control","reverseBindings":[{"name":"pane.TechnicalInfo","type":
-          "pane","sourceFeature":["value","carrierVLAN"],
-          "destinationFeature":["value"]}],"componentType":
+      "propSetTextAreaRows":8,"propSetTextAreaCols":70},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","carrierVLAN"]}],"rules":[],"name":
+      "control.TechnicalInfo_carrierVLAN","type":"control","reverseBindings":
+      [{"name":"pane.TechnicalInfo","type":"pane","sourceFeature":["value",
+            "carrierVLAN"],"destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[{"name":"TechnicalInfo_carrierVLAN__length","message":
           "","messageRef":"resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_clientVLAN","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","clientVLAN"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_clientVLAN__length","message":
-          "","messageRef":"resource.common.validation_text_length","when":
-          "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false,"propSetList":false,
-      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
-      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_carrierIP","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","carrierIP"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_carrierIP__length","message":
-          "","messageRef":"resource.common.validation_text_length","when":
-          "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false,"propSetList":false,
-      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
-      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_clientIP","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","clientIP"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_clientIP__length","message":"",
-          "messageRef":"resource.common.validation_text_length","when":
-          "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false,"propSetList":false,
-      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
-      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_aggPoint","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","aggPoint"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_aggPoint__length","message":"",
-          "messageRef":"resource.common.validation_text_length","when":
-          "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false,"propSetList":false,
-      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
-      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_SFCPOPPE","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","SFCPOPPE"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_SFCPOPPE__length","message":"",
-          "messageRef":"resource.common.validation_text_length","when":
-          "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false,"propSetList":false,
-      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
-      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_port","type":"control",
-      "reverseBindings":[{"name":"data.TechnicalInfo","type":"data",
-          "sourceFeature":["value","port"],"destinationFeature":["value"]}],
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","clientVLAN"]}],"rules":[],"name":
+      "control.TechnicalInfo_clientVLAN","type":"control","reverseBindings":[
+        {"name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","clientVLAN"],"destinationFeature":["value"]}],
       "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
       "","labelRef":"","hintRef":"","enabled":true,"visible":true,
-      "styleName":"","validations":[{"name":"TechnicalInfo_port__length",
-          "message":"","messageRef":
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_clientVLAN__length","message":"","messageRef":
           "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_portType","type":"control",
-      "reverseBindings":[{"name":"pane.TechnicalInfo","type":"pane",
-          "sourceFeature":["value","portType"],"destinationFeature":[
-            "value"]}],"componentType":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","carrierIP"]}],"rules":[],"name":
+      "control.TechnicalInfo_carrierIP","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","carrierIP"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_carrierIP__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","clientIP"]}],"rules":[],"name":
+      "control.TechnicalInfo_clientIP","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","clientIP"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_clientIP__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","aggPoint"]}],"rules":[],"name":
+      "control.TechnicalInfo_aggPoint","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","aggPoint"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_aggPoint__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","SFCPOPPE"]}],"rules":[],"name":
+      "control.TechnicalInfo_SFCPOPPE","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","SFCPOPPE"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_SFCPOPPE__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","port"]}],"rules":[],"name":
+      "control.TechnicalInfo_port","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","port"],"destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_portType__length","message":"",
+      "validations":[{"name":"TechnicalInfo_port__length","message":"",
           "messageRef":"resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_equipment_type","type":"control",
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","portType"]}],"rules":[],"name":
+      "control.TechnicalInfo_portType","type":"control","reverseBindings":[{
+          "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","portType"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_portType__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
+          "oncontrolchange","list":false}],"inheritsDeferInitialization":
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetList":false,
+      "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
+      "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo_equipment","type":"pane","sourceFeature":[
+            "value"],"destinationFeature":["value","type"]}],"rules":[],
+      "name":"control.TechnicalInfo_equipment_type","type":"control",
       "reverseBindings":[{"name":"pane.TechnicalInfo_equipment","type":
           "pane","sourceFeature":["value","type"],"destinationFeature":[
             "value"]}],"componentType":
@@ -760,8 +767,10 @@
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_equipment_address","type":"control",
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo_equipment","type":"pane","sourceFeature":[
+            "value"],"destinationFeature":["value","address"]}],"rules":[],
+      "name":"control.TechnicalInfo_equipment_address","type":"control",
       "reverseBindings":[{"name":"pane.TechnicalInfo_equipment","type":
           "pane","sourceFeature":["value","address"],"destinationFeature":[
             "value"]}],"componentType":
@@ -775,8 +784,10 @@
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_equipment_VLAN","type":"control",
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo_equipment","type":"pane","sourceFeature":[
+            "value"],"destinationFeature":["value","VLAN"]}],"rules":[],
+      "name":"control.TechnicalInfo_equipment_VLAN","type":"control",
       "reverseBindings":[{"name":"pane.TechnicalInfo_equipment","type":
           "pane","sourceFeature":["value","VLAN"],"destinationFeature":[
             "value"]}],"componentType":
@@ -790,22 +801,26 @@
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_modifiedBy","type":"control",
-      "reverseBindings":[{"name":"pane.TechnicalInfo","type":"pane",
-          "sourceFeature":["value","modifiedBy"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[{"name":"TechnicalInfo_modifiedBy__length","message":
-          "","messageRef":"resource.common.validation_text_length","when":
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","modifiedBy"]}],"rules":[],"name":
+      "control.TechnicalInfo_modifiedBy","type":"control","reverseBindings":[
+        {"name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
+            "value","modifiedBy"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[{"name":
+          "TechnicalInfo_modifiedBy__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TechnicalInfo_modifiedDate","type":"control",
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "pane.TechnicalInfo","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","modifiedDate"]}],"rules":[],"name":
+      "control.TechnicalInfo_modifiedDate","type":"control",
       "reverseBindings":[{"name":"pane.TechnicalInfo","type":"pane",
           "sourceFeature":["value","modifiedDate"],"destinationFeature":[
             "value"]}],"componentType":"com.tibco.forms.controls.date",
@@ -814,7 +829,7 @@
           "TechnicalInfo_modifiedDate__datetime","message":"","messageRef":
           "resource.common.validation_date_format","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetMinRelative":true,
       "propSetMaxRelative":true,"propSetYearMin":-20,"propSetYearMax":20},{
@@ -909,7 +924,7 @@
       "validations":[{"name":"CommentHistory_time__length","message":"",
           "messageRef":"resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
@@ -1013,16 +1028,18 @@
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
-      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[],"rules":
-      [],"name":"control.TaskName","type":"control","reverseBindings":[{
-          "name":"data.TaskName","type":"data","sourceFeature":["value"],
+      false,"propSetFormat":"","propSetFormatRef":""},{"bindings":[{"name":
+          "data.TaskName","type":"data","sourceFeature":["value"],
+          "destinationFeature":["value"]}],"rules":[],"name":
+      "control.TaskName","type":"control","reverseBindings":[{"name":
+          "data.TaskName","type":"data","sourceFeature":["value"],
           "destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":false,"styleName":"",
       "validations":[{"name":"TaskName__length","message":"","messageRef":
           "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
-      false,"readOnly":true,"required":false,"value":[],"tabIndex":0,
+      false,"readOnly":false,"required":true,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
       "propSetMaxVisibleRows":0,"propSetTextBoxBaseMaxLen":50,
       "propSetTextDisLen":40,"propSetTextSecret":false,"propSetTextNumeric":
@@ -1391,12 +1408,22 @@
           "sourceFeature":["value"],"destinationFeature":["value",
             "equipment"]}],"rules":[],"name":
       "pane.TechnicalInfo_equipment","type":"pane","reverseBindings":[{
+          "name":"control.TechnicalInfo_equipment_type","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value","type"]},{
+          "name":"control.TechnicalInfo_equipment_address","type":
+          "control","sourceFeature":["value"],"destinationFeature":[
+            "value","address"]},{"name":
+          "control.TechnicalInfo_equipment_VLAN","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value","VLAN"]},{
           "name":"pane.TechnicalInfo","type":"pane","sourceFeature":[
             "value","equipment"],"destinationFeature":["value"]}],
       "componentType":"com.tibco.forms.panes.grid","shortLabelRef":"",
       "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
-      "","validations":[],"inheritsDeferInitialization":false,"readOnly":
-      false,"labelPosition":"top","dataType":
+      "","validations":[{"name":"TechnicalInfo_equipment__multiplicity",
+          "message":"","messageRef":
+          "resource.common.validation_multiplicity_minimum","when":
+          "onformsubmit","list":true}],"inheritsDeferInitialization":false,
+      "readOnly":false,"labelPosition":"top","dataType":
       "com.example.sfc_provisioningbom.EquipmentDetails",
       "concreteClassifierNames":[
         "com.example.sfc_provisioningbom.EquipmentDetails"],
@@ -1436,6 +1463,19 @@
             "value"]},{"name":"control.TechnicalInfo_carrierVLAN","type":
           "control","sourceFeature":["value","carrierVLAN"],
           "destinationFeature":["value"]},{"name":
+          "control.TechnicalInfo_clientVLAN","type":"control",
+          "sourceFeature":["value","clientVLAN"],"destinationFeature":[
+            "value"]},{"name":"control.TechnicalInfo_carrierIP","type":
+          "control","sourceFeature":["value","carrierIP"],
+          "destinationFeature":["value"]},{"name":
+          "control.TechnicalInfo_clientIP","type":"control","sourceFeature":[
+            "value","clientIP"],"destinationFeature":["value"]},{"name":
+          "control.TechnicalInfo_aggPoint","type":"control","sourceFeature":[
+            "value","aggPoint"],"destinationFeature":["value"]},{"name":
+          "control.TechnicalInfo_SFCPOPPE","type":"control","sourceFeature":[
+            "value","SFCPOPPE"],"destinationFeature":["value"]},{"name":
+          "control.TechnicalInfo_port","type":"control","sourceFeature":[
+            "value","port"],"destinationFeature":["value"]},{"name":
           "control.TechnicalInfo_portType","type":"control","sourceFeature":[
             "value","portType"],"destinationFeature":["value"]},{"name":
           "control.TechnicalInfo_modifiedBy","type":"control",
@@ -1447,7 +1487,29 @@
             "value"]}],"rules":[],"name":"pane.TechnicalInfo","type":
       "pane","reverseBindings":[{"name":"pane.TechnicalInfo_equipment",
           "type":"pane","sourceFeature":["value"],"destinationFeature":[
-            "value","equipment"]},{"name":"data.TechnicalInfo","type":
+            "value","equipment"]},{"name":
+          "control.TechnicalInfo_carrierVLAN","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "carrierVLAN"]},{"name":"control.TechnicalInfo_clientVLAN",
+          "type":"control","sourceFeature":["value"],"destinationFeature":[
+            "value","clientVLAN"]},{"name":
+          "control.TechnicalInfo_carrierIP","type":"control","sourceFeature":
+          ["value"],"destinationFeature":["value","carrierIP"]},{"name":
+          "control.TechnicalInfo_clientIP","type":"control","sourceFeature":[
+            "value"],"destinationFeature":["value","clientIP"]},{"name":
+          "control.TechnicalInfo_aggPoint","type":"control","sourceFeature":[
+            "value"],"destinationFeature":["value","aggPoint"]},{"name":
+          "control.TechnicalInfo_SFCPOPPE","type":"control","sourceFeature":[
+            "value"],"destinationFeature":["value","SFCPOPPE"]},{"name":
+          "control.TechnicalInfo_port","type":"control","sourceFeature":[
+            "value"],"destinationFeature":["value","port"]},{"name":
+          "control.TechnicalInfo_portType","type":"control","sourceFeature":[
+            "value"],"destinationFeature":["value","portType"]},{"name":
+          "control.TechnicalInfo_modifiedBy","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["value",
+            "modifiedBy"]},{"name":"control.TechnicalInfo_modifiedDate",
+          "type":"control","sourceFeature":["value"],"destinationFeature":[
+            "value","modifiedDate"]},{"name":"data.TechnicalInfo","type":
           "data","sourceFeature":["value"],"destinationFeature":["value"]}],
       "componentType":"com.tibco.forms.panes.vertical","shortLabelRef":"",
       "labelRef":"","hintRef":"","enabled":true,"visible":true,"styleName":
@@ -1561,8 +1623,8 @@
           "destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.panes.grid","shortLabelRef":"","labelRef":"",
       "hintRef":"","enabled":true,"visible":true,"styleName":"vPaneMargin",
-      "validations":[],"inheritsDeferInitialization":false,"readOnly":true,
-      "labelPosition":"top","dataType":
+      "validations":[],"inheritsDeferInitialization":false,"readOnly":
+      false,"labelPosition":"top","dataType":
       "com.example.sfc_provisioningbom.CommentData",
       "concreteClassifierNames":[
         "com.example.sfc_provisioningbom.CommentData"],

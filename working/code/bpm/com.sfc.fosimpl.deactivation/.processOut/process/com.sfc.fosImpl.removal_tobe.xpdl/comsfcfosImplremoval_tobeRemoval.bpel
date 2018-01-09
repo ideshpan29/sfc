@@ -266,7 +266,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_y7xQsPUpEeeywP4RjejZPQ">
+    <bpws:flow name="_BX_flow_tt0LAPVeEeeywP4RjejZPQ">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="TimerEvent2 to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -295,8 +295,7 @@
             <bpws:link name="DeprovisionIPs to LinkToCatchLinkEvent" tibex:xpdlId="_LUQX4N_IEeec4K-r6PSjHg"/>
             <bpws:link name="LinkToCatchLinkEvent2 to CatchLinkEvent2"/>
             <bpws:link name="_BX_scope_ServiceTask to EndEvent" tibex:xpdlId="_qYVT8N_IEeec4K-r6PSjHg"/>
-            <bpws:link
-                name="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22" tibex:xpdlId="_sqccYPUEEeeywP4RjejZPQ"/>
+            <bpws:link name="TimerEvent1 to LinkToCatchLinkEvent22" tibex:xpdlId="_sqccYPUEEeeywP4RjejZPQ"/>
             <bpws:link
                 name="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg" tibex:xpdlId="_Tyh5A_EREeeJiLkPq4yokA"/>
             <bpws:link name="CallSubProcess to EndEvent2" tibex:xpdlId="_B3LuYOSHEee4r8nNLd6bUg"/>
@@ -393,6 +392,20 @@
                             mode="INOUT" name="CommentHistory"/>
                         <userTaskParameter mandatory="false"
                             mode="INOUT" name="CommentText"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="SelectedContractor"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="ContractorNames"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="SelectedGroup"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="GroupNames"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="Mail"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="MasterContractor"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="EscalationEmail"/>
                     </userTaskParameters>
                     <userTaskExtendedAttributes>
                         <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
@@ -650,10 +663,12 @@ function _f1_() {
     	}
     */
     	if(FetchSLA1.readSLA_Configuration().emailTo!="SPECIFIC"){
-    		toSendEmail=EscalationEmail;	
+    		toSendEmail=EscalationEmail;
+    		
     	}
+    return toSendEmail;		
     	
-    return toSendEmail;
+    
     
 }
 _BX_EscalationToEmail = _f1_();
@@ -822,7 +837,7 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
         <bpws:empty name="LinkToCatchLinkEvent22"
             tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_r05UcPUEEeeywP4RjejZPQ">
             <bpws:targets>
-                <bpws:target linkName="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22"/>
+                <bpws:target linkName="TimerEvent1 to LinkToCatchLinkEvent22"/>
             </bpws:targets>
             <bpws:sources>
                 <bpws:source linkName="LinkToCatchLinkEvent22 to CatchLinkEvent2"/>
@@ -1012,11 +1027,6 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
             <bpws:targets>
                 <bpws:target linkName="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_DeprovisionMngemen"/>
             </bpws:targets>
-            <bpws:sources>
-                <bpws:source linkName="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22">
-                    <bpws:transitionCondition><![CDATA[$_BX_fanVariable_3=1]]></bpws:transitionCondition>
-                </bpws:source>
-            </bpws:sources>
             <bpws:eventHandlers>
                 <bpws:onAlarm>
                     <tibex:userTaskParticipant entity="GROUP"
@@ -1035,28 +1045,27 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                         </bpws:empty>
                     </bpws:scope>
                 </bpws:onAlarm>
-                <bpws:onAlarm tibex:cancel="yes" tibex:deadline="yes">
+                <bpws:onAlarm tibex:deadline="yes">
                     <tibex:userTaskParticipant entity="GROUP"
                         modelVersion="1"
                         uniqueId="_QqfvkM27EeeozIUd784NFw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                     <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__kjSvEPUEEeeywP4RjejZPQ">
-                        <bpws:assign name="TimerEvent1"
-                            tibex:type="boundaryTimerEvent"
-                            tibex:xpdlId="_kjSvEPUEEeeywP4RjejZPQ" validate="no">
+                        <bpws:empty name="TimerEvent1"
+                            tibex:type="boundaryTimerEvent" tibex:xpdlId="_kjSvEPUEEeeywP4RjejZPQ">
                             <tibex:completedScript
                                 expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SLAFLAGGlobal="2";
 ]]></tibex:completedScript>
-                            <bpws:copy>
-                                <bpws:from><![CDATA[1]]></bpws:from>
-                                <bpws:to variable="_BX_fanVariable_3"/>
-                            </bpws:copy>
-                        </bpws:assign>
+                            <bpws:sources>
+                                <bpws:source linkName="TimerEvent1 to LinkToCatchLinkEvent22"/>
+                            </bpws:sources>
+                        </bpws:empty>
                     </bpws:scope>
                 </bpws:onAlarm>
             </bpws:eventHandlers>
             <bpws:extensionActivity>
                 <tibex:extActivity name="DeprovisionMngementIP"
+                    tibex:extendedAttributes="bpmJspTask=form\://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form&#xd;&#xa;"
                     tibex:type="userTask"
                     tibex:xpdlId="__ziDoOCsEeeeKsD8kq9l7g" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                     <bpws:targets/>
@@ -1087,7 +1096,24 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                                 mode="INOUT" name="CommentHistory"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="CommentText"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="SelectedContractor"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="SelectedGroup"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="GroupNames"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="Mail"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="MasterContractor"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="EscalationEmail"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="ContractorNames"/>
                         </userTaskParameters>
+                        <userTaskExtendedAttributes>
+                            <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                        </userTaskExtendedAttributes>
                         <userTaskGroupMemberships/>
                     </model:UserTaskDataModelType>
                     <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision Mngment IP : TES FAE Team";

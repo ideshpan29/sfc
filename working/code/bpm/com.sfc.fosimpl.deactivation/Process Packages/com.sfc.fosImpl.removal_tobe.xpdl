@@ -361,18 +361,62 @@
                 <xpdl2:MessageOut Id="_VaiIgt_BEee7mPhVBav8gw"/>
                 <xpdExt:FormImplementation FormType="Pageflow" FormURI="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
                 <xpdExt:UserTaskScripts>
-                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">/*&#xD;
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">/*Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview Attribute:WorkItemAttribute : &quot;+WorkManagerFactory.getWorkItem().getId());&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview Attribute:WorkItemResources : &quot;+WorkManagerFactory.getWorkItem().getWorkItemResource().getResources());&#xD;
+*/&#xD;
+var c  = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources();&#xD;
+var userName = c.get(0).getName();&#xD;
+EscalationEmail=userName+&quot;@SafaricomCorp.com&quot;;&#xD;
+/*if(c!=null) {&#xD;
+	var userGUID = c.get(0).getGuid();&#xD;
+	var userName = c.get(0).getName();&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userGUID : &quot;+userGUID);&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userName : &quot;+userName);&#xD;
+}&#xD;
+else {&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userGUID : is null&quot;);&#xD;
+}&#xD;
+&#xD;
+if(userName!=null) {&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userName is NOT NULL&quot;);&#xD;
+	if(WorkManagerFactory.getOrgModel().resourceByName(userName) !=null) {&#xD;
+		Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName) is NOT NULL&quot;);&#xD;
+		if(WorkManagerFactory.getOrgModel().resourceByName(userName).get(0) !=null) {&#xD;
+			Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0) is NOT NULL&quot;);&#xD;
+			if(WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email') !=null) {&#xD;
+				Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0).getAttributValue() is NOT NULL&quot;);&#xD;
+								Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0).getAttributValue()&quot;+WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue(&quot;Email&quot;));					&#xD;
+					&#xD;
+					//EscalationEmail= WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email').get(0);&#xD;
+			}&#xD;
+		}&#xD;
+	&#xD;
+	}&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:Escalation Email for PM : &quot;+EscalationEmail);&#xD;
+	&#xD;
+}&#xD;
+/*&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:OrgModel.ResourceByGUID &quot;+WorkManagerFactory.getOrgModel().resourceByGuid(userGUID));&#xD;
+&#xD;
+if(WorkManagerFactory.getOrgModel().resourceByGuid(userGUID)!=null){&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:OrgModel.ResourceByGUID is NOT NULL&quot;);&#xD;
+	EscalationEmail = WorkManagerFactory.getOrgModel().resourceByGuid(userGUID).getResources().get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:Escalation Email for PM : &quot;+EscalationEmail);&#xD;
+}&#xD;
+&#xD;
+/*&#xD;
 var userGUID = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources().get(0).getGuid();&#xD;
 &#xD;
 Log.write(&quot;[POC] UserName: &quot;+userName);&#xD;
 Log.write(&quot;[POC] UserGUID: &quot;+userGUID);&#xD;
 &#xD;
 */&#xD;
+/*&#xD;
 var userName = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources().get(0).getName();&#xD;
 EscalationEmail= WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email').get(0);&#xD;
 Log.write(&quot;[POC] Email from Org Model: &quot;+EscalationEmail);&#xD;
 &#xD;
-&#xD;
+*/&#xD;
 var a;&#xD;
 var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
 comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
@@ -532,6 +576,27 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
@@ -726,12 +791,29 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
                 </xpdl2:Performers>
                 <xpdl2:MessageIn Id="_m3N5gPUEEeeywP4RjejZPQ"/>
                 <xpdl2:MessageOut Id="_m3N5gfUEEeeywP4RjejZPQ"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
               </xpdl2:TaskUser>
             </xpdl2:Task>
           </xpdl2:Implementation>
           <xpdl2:Performers>
             <xpdl2:Performer>_bId0cOCtEeeeKsD8kq9l7g</xpdl2:Performer>
           </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="75.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="162.0">
               <xpdl2:Coordinates XCoordinate="366.0" YCoordinate="71.0"/>
@@ -753,6 +835,27 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
@@ -1023,10 +1126,12 @@ Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 01: &q
 	}&#xD;
 */&#xD;
 	if(FetchSLA1.readSLA_Configuration().emailTo!=&quot;SPECIFIC&quot;){&#xD;
-		toSendEmail=EscalationEmail;	&#xD;
+		toSendEmail=EscalationEmail;&#xD;
+		&#xD;
 	}&#xD;
+return toSendEmail;		&#xD;
 	&#xD;
-return toSendEmail;&#xD;
+&#xD;
 </xpdExt:Expression>
                     </xpdExt:ScriptInformation>
                     <xpdl2:Actual ScriptGrammar="JavaScript">__SCRIPT__</xpdl2:Actual>
@@ -1331,7 +1436,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
         <xpdl2:Activity Id="_kjSvEPUEEeeywP4RjejZPQ" Name="TimerEvent1" xpdExt:Visibility="Private" xpdExt:DisplayName="Timer Event1">
           <xpdl2:Event>
             <xpdl2:IntermediateEvent Target="__ziDoOCsEeeeKsD8kq9l7g" Trigger="Timer">
-              <xpdl2:TriggerTimer>
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
                 <xpdl2:TimeDate></xpdl2:TimeDate>
               </xpdl2:TriggerTimer>
             </xpdl2:IntermediateEvent>
@@ -1575,7 +1680,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
         </xpdExt:DataWorkItemAttributeMapping>
       </xpdExt:ProcessDataWorkItemAttributeMappings>
     </xpdl2:WorkflowProcess>
-    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="com.sfc.fosimpl.deactivation/comsfcfosImplremoval_tobe" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
+    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
       <xpdl2:ProcessHeader/>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_cIE1EOPTEeeoTJ_gSITXzA" xpdExt:DisplayName="TaskName" Name="TaskName" IsArray="false" ReadOnly="false">
@@ -1604,8 +1709,54 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
         <xpdl2:DataField Id="_q4MZcPT1EeeywP4RjejZPQ" xpdExt:DisplayName="CommentText" Name="CommentText" ReadOnly="false">
           <xpdl2:DataType>
             <xpdl2:BasicType Type="STRING">
-              <xpdl2:Length>100</xpdl2:Length>
+              <xpdl2:Length>500</xpdl2:Length>
             </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_Dhq74PU-EeeywP4RjejZPQ" xpdExt:DisplayName="GroupNames" Name="GroupNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_KePscPU-EeeywP4RjejZPQ" xpdExt:DisplayName="SelectedGroup" Name="SelectedGroup" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_N0ugEPU-EeeywP4RjejZPQ" xpdExt:DisplayName="SelectedContractor" Name="SelectedContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_R2gTcPU-EeeywP4RjejZPQ" xpdExt:DisplayName="ContractorNames" Name="ContractorNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_nCqIIPU-EeeywP4RjejZPQ" xpdExt:DisplayName="Mail" Name="Mail" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue></xpdl2:InitialValue>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_qXeH0PU-EeeywP4RjejZPQ" xpdExt:DisplayName="MasterContractor" Name="MasterContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="PERFORMER"/>
           </xpdl2:DataType>
           <xpdl2:InitialValue></xpdl2:InitialValue>
         </xpdl2:DataField>
@@ -1651,7 +1802,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="true">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
-            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="true">
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="true">
@@ -1663,10 +1814,35 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
               <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deactivation Process Initiate&quot;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : &quot;+TechnicalInfo.carrierVLAN);&#xD;
+Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : &quot;+TechnicalInfo.clientVLAN);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -1713,6 +1889,35 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : &quot;+TechnicalInfo.carrierVLAN);&#xD;
+Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : &quot;+TechnicalInfo.clientVLAN);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SLAFLAGGlobal" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
@@ -1877,7 +2082,7 @@ if(SLA.readSLA_Configuration().emailTo==&quot;SPECIFIC&quot;) {&#xD;
 	EmailTo = SLA.readSLA_Configuration().emailConfig;&#xD;
 }&#xD;
 else {&#xD;
-	EmailTo=EscalationEmail;&#xD;
+	EmailTo=EscalationToEmail;&#xD;
 }&#xD;
 PendingAt=Task;&#xD;
 SLALevel=SLA.readSLA_Configuration().SLALevel;&#xD;

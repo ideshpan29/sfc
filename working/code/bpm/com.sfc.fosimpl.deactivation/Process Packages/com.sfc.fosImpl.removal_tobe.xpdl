@@ -366,6 +366,7 @@ Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview Attribute:WorkItemR
 */&#xD;
 var c  = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources();&#xD;
 var userName = c.get(0).getName();&#xD;
+Provisioning_Data.projectManager=userName;&#xD;
 EscalationEmail=userName+&quot;@SafaricomCorp.com&quot;;&#xD;
 /*if(c!=null) {&#xD;
 	var userGUID = c.get(0).getGuid();&#xD;
@@ -1678,6 +1679,50 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
           <xpdExt:WorkItemAttribute>attribute9</xpdExt:WorkItemAttribute>
           <xpdExt:ProcessData>Provisioning_Data.projectManager</xpdExt:ProcessData>
         </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute4</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.contractor</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute10</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.accountManager</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute11</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.buildingID</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute13</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.clientID</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute21</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.email</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute6</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.installDate</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute7</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.requestDate</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute20</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceEnd</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute19</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceStart</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute22</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceStatus</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute8</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceType</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
       </xpdExt:ProcessDataWorkItemAttributeMappings>
     </xpdl2:WorkflowProcess>
     <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
@@ -1938,6 +1983,10 @@ Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientV
       <xpdl2:ExtendedAttributes>
         <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
       </xpdl2:ExtendedAttributes>
+      <xpdl2:Extensions/>
+      <xpdExt:RequiredAccessPrivileges>
+        <xpdExt:PrivilegeReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_QQomAPU3Eee0RaO_sAlqew"/>
+      </xpdExt:RequiredAccessPrivileges>
     </xpdl2:WorkflowProcess>
     <xpdl2:WorkflowProcess Id="_q8JgkOSHEee4r8nNLd6bUg" xpdExt:DisplayName="comsfcfosImplremoval_tobe-sendMail" Name="comsfcfosImplremoval_tobesendMail">
       <xpdl2:ProcessHeader/>

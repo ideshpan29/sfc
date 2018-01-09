@@ -33,12 +33,22 @@
             tibex:parameter="inout" tibex:xpdlId="_pzrAIeSIEee4r8nNLd6bUg"/>
         <bpws:variable name="Task" tibex:parameter="inout"
             tibex:xpdlId="_qmF7keSIEee4r8nNLd6bUg" type="xsd:string"/>
+        <bpws:variable name="EscalationToEmail" tibex:parameter="inout"
+            tibex:xpdlId="_PSJTYPUJEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="SLAFlagCheck" tibex:parameter="inout"
+            tibex:xpdlId="_TScgEPUJEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="SubjectLineEmail"
+            tibex:xpdlId="_EVdLEPUDEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="EscalationEmail"
+            tibex:xpdlId="_h3uyoPUCEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="SLAFLAGGlobal"
+            tibex:xpdlId="_lO9NIPUCEeeywP4RjejZPQ" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow__CehcPT1EeeywP4RjejZPQ">
+    <bpws:flow name="_BX_flow_y-8ggPUpEeeywP4RjejZPQ">
         <bpws:links>
             <bpws:link name="StartEvent to _BX_scope_SendMailTask" tibex:xpdlId="_wGCyk-SHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_scope_SendMailTask to EndEvent" tibex:xpdlId="_q8L81OSHEee4r8nNLd6bUg"/>
@@ -52,8 +62,10 @@
                 </bpws:sources>
                 <tibex:parameters>
                     <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mandatory="yes" mode="InOut" name="EscalationToEmail"/>
                     <parameterDescription mode="InOut" name="Provision"/>
                     <parameterDescription mode="InOut" name="Task"/>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -68,10 +80,25 @@
         </bpws:empty>
         <bpws:scope name="_BX_scope_SendMailTask"
             tibex:migrationAllowed="yes" tibex:xpdlId="_wGCykOSHEee4r8nNLd6bUg">
-            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[EmailTo=Provision.email;
+            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: "+SLAFLAGGlobal);
+
+if(SLA.readSLA_Configuration().emailTo=="SPECIFIC") {
+	EmailTo = SLA.readSLA_Configuration().emailConfig;
+}
+else {
+	EmailTo=EscalationEmail;
+}
 PendingAt=Task;
 SLALevel=SLA.readSLA_Configuration().SLALevel;
-SiebelCircuitID=Provision.siebelCircuitID;]]></tibex:initiatedScript>
+SiebelCircuitID=Provision.siebelCircuitID;
+
+if(SLAFlagCheck=="1") {
+	SubjectLineEmail="SLA About to expire for ";
+}
+else {
+	SubjectLineEmail="SLA EXPIRED: Required Action Siebel ID";
+}
+]]></tibex:initiatedScript>
             <bpws:targets>
                 <bpws:target linkName="StartEvent to _BX_scope_SendMailTask"/>
             </bpws:targets>
@@ -96,7 +123,7 @@ SiebelCircuitID=Provision.siebelCircuitID;]]></tibex:initiatedScript>
                         xmi:version="2.0"
                         xmlns:bxst="http://www.tibco.com/bpel/2007/extensions/email" xmlns:xmi="http://www.omg.org/XMI">
                         <correspondents>
-                            <from value="rohit@abc.com"/>
+                            <from value="donot-reply@SafaricomCorp.com"/>
                             <to value="%EmailTo%">
                                 <variables name="%EmailTo%"/>
                             </to>
@@ -106,9 +133,10 @@ SiebelCircuitID=Provision.siebelCircuitID;]]></tibex:initiatedScript>
                         </correspondents>
                         <headers/>
                         <priority/>
-                        <subject value="Required Action Siebel ID : %SiebelCircuitID% SLA Level: %SLALevel%">
-                            <variables index="28" name="%SiebelCircuitID%"/>
-                            <variables index="57" name="%SLALevel%"/>
+                        <subject value="%SubjectLineEmail% %SiebelCircuitID% SLA Level: %SLALevel%">
+                            <variables name="%SubjectLineEmail%"/>
+                            <variables index="19" name="%SiebelCircuitID%"/>
+                            <variables index="48" name="%SLALevel%"/>
                         </subject>
                         <body>
                             <body value="Required Action at Task : %PendingAt%&#xd;&#xa;SLA Level : %SLALevel%&#xd;&#xa;Siebel ID : %SiebelCircuitID%">

@@ -33,6 +33,11 @@
                 <variable>CommentText</variable>
             </ProcessManagerScript>
         </task>
+        <task name="TimerEvent">
+            <ProcessManagerScript type="Complete">
+                <variable>SLAFLAGGlobal</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="PMReview">
             <startingVariables>
                 <variable>SelectedContractor</variable>
@@ -70,6 +75,11 @@
                 <variable>SelectedGroup</variable>
                 <variable>Fetch_Groups</variable>
             </startingVariables>
+        </task>
+        <task name="CatchLinkEvent2">
+            <ProcessManagerScript type="Complete">
+                <variable>SLAFLAGGlobal</variable>
+            </ProcessManagerScript>
         </task>
         <task name="ScriptTask2">
             <startingVariables>
@@ -112,6 +122,16 @@
             <ProcessManagerScript type="Complete">
                 <variable>SelectedContractor</variable>
                 <variable>MasterContractor</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="TimerEvent2">
+            <ProcessManagerScript type="Complete">
+                <variable>SLAFLAGGlobal</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="TimerEvent1">
+            <ProcessManagerScript type="Complete">
+                <variable>SLAFLAGGlobal</variable>
             </ProcessManagerScript>
         </task>
         <task name="RequestInitiateMail">
@@ -232,15 +252,24 @@
                 <bpws:literal><![CDATA[0]]></bpws:literal>
             </bpws:from>
         </bpws:variable>
+        <bpws:variable name="_BX_fanVariable_3" type="xsd:int">
+            <bpws:from>
+                <bpws:literal><![CDATA[0]]></bpws:literal>
+            </bpws:from>
+        </bpws:variable>
+        <bpws:variable name="EscalationEmail"
+            tibex:xpdlId="_h3uyoPUCEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="SLAFLAGGlobal"
+            tibex:xpdlId="_lO9NIPUCEeeywP4RjejZPQ" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_-8AtEPT1EeeywP4RjejZPQ">
+    <bpws:flow name="_BX_flow_y7xQsPUpEeeywP4RjejZPQ">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
-            <bpws:link name="TimerEvent to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
+            <bpws:link name="TimerEvent2 to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
             <bpws:link name="TL2 to CatchLinkEvent2"/>
             <bpws:link name="ScriptTask3 to SelectContractorAgency" tibex:xpdlId="_5-qWsPEuEeeJiLkPq4yokA"/>
             <bpws:link
@@ -251,28 +280,34 @@
             <bpws:link name="LinkToCatchLinkEvent to CatchLinkEvent"/>
             <bpws:link name="TL3 to CatchLinkEvent2"/>
             <bpws:link name="ScriptTask2 to _l66cUOR8EeeoTJ_gSITXzA" tibex:xpdlId="_l67DYOR8EeeoTJ_gSITXzA"/>
+            <bpws:link name="TimerEvent to LinkToCatchLinkEvent2" tibex:xpdlId="_dbmToPUEEeeywP4RjejZPQ"/>
             <bpws:link name="CatchLinkEvent to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_R0OE8N_IEeec4K-r6PSjHg"/>
             <bpws:link
                 name="SelectContractorAgency to _BX_scope_ManualInstallation" tibex:xpdlId="_YS1joN_HEeec4K-r6PSjHg"/>
             <bpws:link name="_BX_normalFlow to ScriptTask2" tibex:xpdlId="_L2C1gPEPEeeJiLkPq4yokA"/>
             <bpws:link
-                name="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP" tibex:xpdlId="_LxC-gOCtEeeeKsD8kq9l7g"/>
+                name="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_DeprovisionMngemen" tibex:xpdlId="_LxC-gOCtEeeeKsD8kq9l7g"/>
             <bpws:link name="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3" tibex:xpdlId="_4kEVEPE7EeeMCZGsP3rsrw"/>
             <bpws:link name="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionIPs" tibex:xpdlId="_Z5yjoPE8EeeMCZGsP3rsrw"/>
             <bpws:link name="_BX_continue to TL1" tibex:xpdlId="_steJsOSGEee4r8nNLd6bUg"/>
             <bpws:link
-                name="DeprovisionMngementIP to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_gxpDcOCtEeeeKsD8kq9l7g"/>
+                name="_BX_normalFlow_3 to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_gxpDcOCtEeeeKsD8kq9l7g"/>
             <bpws:link name="DeprovisionIPs to LinkToCatchLinkEvent" tibex:xpdlId="_LUQX4N_IEeec4K-r6PSjHg"/>
+            <bpws:link name="LinkToCatchLinkEvent2 to CatchLinkEvent2"/>
             <bpws:link name="_BX_scope_ServiceTask to EndEvent" tibex:xpdlId="_qYVT8N_IEeec4K-r6PSjHg"/>
+            <bpws:link
+                name="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22" tibex:xpdlId="_sqccYPUEEeeywP4RjejZPQ"/>
             <bpws:link
                 name="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg" tibex:xpdlId="_Tyh5A_EREeeJiLkPq4yokA"/>
             <bpws:link name="CallSubProcess to EndEvent2" tibex:xpdlId="_B3LuYOSHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_normalFlow_2 to TESOSGVerification" tibex:xpdlId="_2xISEN_HEeec4K-r6PSjHg"/>
+            <bpws:link name="LinkToCatchLinkEvent22 to CatchLinkEvent2"/>
             <bpws:link name="TL1 to CatchLinkEvent2"/>
             <bpws:link
                 name="TESOSGVerification to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_9bZKoN_HEeec4K-r6PSjHg"/>
             <bpws:link name="PMReview to _BX_normalFlow"/>
             <bpws:link name="ManualInstallationRemoval to _BX_normalFlow_2"/>
+            <bpws:link name="DeprovisionMngementIP to _BX_normalFlow_3"/>
         </bpws:links>
         <bpws:scope name="CatchMessageEvent"
             tibex:type="messageStartEvent" tibex:xpdlId="_8ExaIt_AEee7mPhVBav8gw">
@@ -319,7 +354,7 @@
                 <bpws:target linkName="_l66cUOR8EeeoTJ_gSITXzA to _XqGvsN_HEeec4K-r6PSjHg"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP">
+                <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_DeprovisionMngemen">
                     <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TechnicalInfo.carrierVLAN.toString() != ""]]></bpws:transitionCondition>
                 </bpws:source>
                 <bpws:source linkName="_XqGvsN_HEeec4K-r6PSjHg to ScriptTask3"/>
@@ -416,7 +451,7 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
             tibex:type="inclusiveGateway" tibex:xpdlId="_7k_psN_HEeec4K-r6PSjHg">
             <bpws:targets>
                 <bpws:target linkName="CatchLinkEvent to _7k_psN_HEeec4K-r6PSjHg"/>
-                <bpws:target linkName="DeprovisionMngementIP to _7k_psN_HEeec4K-r6PSjHg"/>
+                <bpws:target linkName="_BX_normalFlow_3 to _7k_psN_HEeec4K-r6PSjHg"/>
                 <bpws:target linkName="TESOSGVerification to _7k_psN_HEeec4K-r6PSjHg"/>
             </bpws:targets>
             <bpws:sources>
@@ -441,49 +476,6 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                 <bpws:source linkName="CatchLinkEvent to _7k_psN_HEeec4K-r6PSjHg"/>
             </bpws:sources>
         </bpws:empty>
-        <bpws:extensionActivity>
-            <tibex:extActivity name="DeprovisionMngementIP"
-                tibex:extendedAttributes="bpmJspTask=form\://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form&#xd;&#xa;"
-                tibex:type="userTask"
-                tibex:xpdlId="__ziDoOCsEeeeKsD8kq9l7g" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
-                <bpws:targets>
-                    <bpws:target linkName="_XqGvsN_HEeec4K-r6PSjHg to DeprovisionMngementIP"/>
-                </bpws:targets>
-                <bpws:sources>
-                    <bpws:source linkName="DeprovisionMngementIP to _7k_psN_HEeec4K-r6PSjHg"/>
-                </bpws:sources>
-                <model:UserTaskDataModelType
-                    distributionStrategy="OFFER" userTaskPriority="50"
-                    workModelID="WM___ziDoOCsEeeeKsD8kq9l7g"
-                    workModelVersionRange="[2.0.0.qualifier,2.0.0.qualifier]"
-                    xmi:version="2.0"
-                    xmlns:model="http://model.ut.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
-                    <userTaskParticipants>
-                        <userTaskParticipant entity="ROLE"
-                            modelVersion="1" uniqueId="_QqfvkM27EeeozIUd784NFw"/>
-                    </userTaskParticipants>
-                    <userTaskParameters>
-                        <userTaskParameter mandatory="false"
-                            mode="INOUT" name="Provisioning_Data"/>
-                        <userTaskParameter mandatory="false"
-                            mode="INOUT" name="TechnicalInfo"/>
-                        <userTaskParameter mandatory="false"
-                            mode="INOUT" name="TaskName"/>
-                        <userTaskParameter mandatory="false"
-                            mode="INOUT" name="CommentHistory"/>
-                        <userTaskParameter mandatory="false"
-                            mode="INOUT" name="CommentText"/>
-                    </userTaskParameters>
-                    <userTaskExtendedAttributes>
-                        <userTaskExtendedAttribute name="bpmJspTask" value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
-                    </userTaskExtendedAttributes>
-                    <userTaskGroupMemberships/>
-                </model:UserTaskDataModelType>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision Mngment IP : TES FAE Team";
-CommentText="";
-Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
-            </tibex:extActivity>
-        </bpws:extensionActivity>
         <bpws:scope name="_BX_scope_RequestInitiateMail" tibex:xpdlId="_l66cUOR8EeeoTJ_gSITXzA">
             <tibex:initiatedScript
                 expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[CircuitID=Provisioning_Data.siebelCircuitID;
@@ -607,9 +599,14 @@ CircuitID=Provisioning_Data.siebelCircuitID;
         <bpws:empty name="CatchLinkEvent2"
             tibex:type="catchLinkIntermediateEvent"
             tibex:uncontrolledMerge="yes" tibex:xpdlId="_-vsZAOSGEee4r8nNLd6bUg">
+            <tibex:completedScript
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At Catch Link Event: "+SLAFLAGGlobal);
+]]></tibex:completedScript>
             <bpws:targets>
                 <bpws:target linkName="TL2 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL3 to CatchLinkEvent2"/>
+                <bpws:target linkName="LinkToCatchLinkEvent2 to CatchLinkEvent2"/>
+                <bpws:target linkName="LinkToCatchLinkEvent22 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL1 to CatchLinkEvent2"/>
             </bpws:targets>
             <bpws:sources>
@@ -623,6 +620,9 @@ CircuitID=Provisioning_Data.siebelCircuitID;
         </bpws:empty>
         <bpws:scope name="CallSubProcess"
             tibex:type="reusableSubProcess" tibex:xpdlId="_mqqdQOSHEee4r8nNLd6bUg">
+            <tibex:initiatedScript
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: "+SLAFLAGGlobal);
+]]></tibex:initiatedScript>
             <bpws:targets>
                 <bpws:target linkName="CatchLinkEvent2 to CallSubProcess"/>
             </bpws:targets>
@@ -630,6 +630,8 @@ CircuitID=Provisioning_Data.siebelCircuitID;
                 <bpws:source linkName="CallSubProcess to EndEvent2"/>
             </bpws:sources>
             <bpws:variables>
+                <bpws:variable name="_BX_EscalationToEmail" type="xsd:string"/>
+                <bpws:variable name="_BX_SLAFlagCheck" type="xsd:string"/>
                 <bpws:variable name="_BX_Task" type="xsd:string"/>
                 <bpws:variable name="_BX_Provision" tibex:class="com.example.sfc_provisioningbom.ProvisioningDataModel"/>
                 <bpws:variable name="_BX_SLA" tibex:classRef="com.example.sfc_provisioningbom.SLA_Configuration"/>
@@ -637,22 +639,33 @@ CircuitID=Provisioning_Data.siebelCircuitID;
             <bpws:sequence name="_BX_sequence_2">
                 <bpws:extensionActivity>
                     <tibex:extActivity name="_BX_SPInput_CallSubProcess" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
-                        <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'Provisioning_Data' to 'Provision'
+                        <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'CheckEscalationEmail' to 'EscalationToEmail'
+
+// Function for user defined mapping script: CheckEscalationEmail
+function _f1_() { 
+    var toSendEmail;
+    /*var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,TaskName,'Decomissioning');
+    	if(ftchSla.readSLA_Configuration().emailTo != "SPECIFIC") {
+    		toSendEmail = EscalationEmail;
+    	}
+    */
+    	if(FetchSLA1.readSLA_Configuration().emailTo!="SPECIFIC"){
+    		toSendEmail=EscalationEmail;	
+    	}
+    	
+    return toSendEmail;
+    
+}
+_BX_EscalationToEmail = _f1_();
+
+// Map from 'Provisioning_Data' to 'Provision'
 _BX_Provision = ScriptUtil.copy(Provisioning_Data);
 
-// Map from 'SLAFlag' to 'SLA'
+// Map from 'FetchSLA1' to 'SLA'
+_BX_SLA = FetchSLA1;
 
-// Function for user defined mapping script: SLAFlag
-function _f1_() { 
-    if(fetchSLAFlag==1){
-    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,TaskName,'Decomissioning');
-    }
-    else{
-    var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(2,TaskName,'Decomissioning');
-    }
-    return ftchSla;
-}
-_BX_SLA = _f1_();
+// Map from 'SLAFLAGGlobal' to 'SLAFlagCheck'
+_BX_SLAFlagCheck = SLAFLAGGlobal;
 
 // Map from 'TaskName' to 'Task'
 _BX_Task = TaskName;
@@ -666,6 +679,9 @@ _BX_Task = TaskName;
                         <tibex:callProcess followParentLifecycle="yes"
                             priority="inline" subProcessId="_q8JgkOSHEee4r8nNLd6bUg">
                             <tibex:subProcessInput>
+                                <tibex:mapping
+                                    field="_BX_EscalationToEmail" formalParameter="EscalationToEmail"/>
+                                <tibex:mapping field="_BX_SLAFlagCheck" formalParameter="SLAFlagCheck"/>
                                 <tibex:mapping field="_BX_Task" formalParameter="Task"/>
                                 <tibex:mapping field="_BX_Provision" formalParameter="Provision"/>
                                 <tibex:mapping field="_BX_SLA" formalParameter="SLA"/>
@@ -677,7 +693,7 @@ _BX_Task = TaskName;
         </bpws:scope>
         <bpws:empty name="TL2" tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_1lTQoOY0Eeep9dkvO_z3LA">
             <bpws:targets>
-                <bpws:target linkName="TimerEvent to TL2"/>
+                <bpws:target linkName="TimerEvent2 to TL2"/>
             </bpws:targets>
             <bpws:sources>
                 <bpws:source linkName="TL2 to CatchLinkEvent2"/>
@@ -794,6 +810,24 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
 }]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
+        <bpws:empty name="LinkToCatchLinkEvent2"
+            tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_cS0tsPUEEeeywP4RjejZPQ">
+            <bpws:targets>
+                <bpws:target linkName="TimerEvent to LinkToCatchLinkEvent2"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="LinkToCatchLinkEvent2 to CatchLinkEvent2"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:empty name="LinkToCatchLinkEvent22"
+            tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_r05UcPUEEeeywP4RjejZPQ">
+            <bpws:targets>
+                <bpws:target linkName="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="LinkToCatchLinkEvent22 to CatchLinkEvent2"/>
+            </bpws:sources>
+        </bpws:empty>
         <bpws:scope name="_BX_scope_PMReview" tibex:migrationAllowed="yes">
             <bpws:targets>
                 <bpws:target linkName="ScriptTask to _BX_scope_PMReview"/>
@@ -808,7 +842,10 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                         <bpws:empty name="_BX_continue"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_Zgjo4OSGEee4r8nNLd6bUg">
                             <tibex:completedScript
-                                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[fetchSLAFlag=1;]]></tibex:completedScript>
+                                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[fetchSLAFlag=1;
+SLAFLAGGlobal="1";
+
+Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 01: "+SLAFLAGGlobal);]]></tibex:completedScript>
                             <bpws:sources>
                                 <bpws:source linkName="_BX_continue to TL1"/>
                             </bpws:sources>
@@ -821,10 +858,13 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                         uniqueId="_lCh2ALk-EeenBJWclYhCxA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
                     <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__0ZY3IOY0Eeep9dkvO_z3LA">
-                        <bpws:empty name="TimerEvent"
+                        <bpws:empty name="TimerEvent2"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_0ZY3IOY0Eeep9dkvO_z3LA">
+                            <tibex:completedScript
+                                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SLAFLAGGlobal="2";
+Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 02: "+SLAFLAGGlobal);]]></tibex:completedScript>
                             <bpws:sources>
-                                <bpws:source linkName="TimerEvent to TL2"/>
+                                <bpws:source linkName="TimerEvent2 to TL2"/>
                             </bpws:sources>
                         </bpws:empty>
                     </bpws:scope>
@@ -873,6 +913,8 @@ for(var index=0; index<Fetch_Groups.size(); index++) {
                                 mode="INOUT" name="CommentHistory"/>
                             <userTaskParameter mandatory="false"
                                 mode="INOUT" name="CommentText"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="EscalationEmail"/>
                         </userTaskParameters>
                         <userTaskExtendedAttributes>
                             <userTaskExtendedAttribute name="bpmJspTask" value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
@@ -964,6 +1006,102 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
             </bpws:targets>
             <bpws:sources>
                 <bpws:source linkName="_BX_normalFlow_2 to TESOSGVerification"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:scope name="_BX_scope_DeprovisionMngementIP">
+            <bpws:targets>
+                <bpws:target linkName="_XqGvsN_HEeec4K-r6PSjHg to _BX_scope_DeprovisionMngemen"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="_BX_scope_DeprovisionMngemen to LinkToCatchLinkEvent22">
+                    <bpws:transitionCondition><![CDATA[$_BX_fanVariable_3=1]]></bpws:transitionCondition>
+                </bpws:source>
+            </bpws:sources>
+            <bpws:eventHandlers>
+                <bpws:onAlarm>
+                    <tibex:userTaskParticipant entity="GROUP"
+                        modelVersion="1"
+                        uniqueId="_QqfvkM27EeeozIUd784NFw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:scope name="_BX_scope__N-az8PUEEeeywP4RjejZPQ">
+                        <bpws:empty name="TimerEvent"
+                            tibex:type="boundaryTimerEvent" tibex:xpdlId="_N-az8PUEEeeywP4RjejZPQ">
+                            <tibex:completedScript
+                                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SLAFLAGGlobal="1";
+]]></tibex:completedScript>
+                            <bpws:sources>
+                                <bpws:source linkName="TimerEvent to LinkToCatchLinkEvent2"/>
+                            </bpws:sources>
+                        </bpws:empty>
+                    </bpws:scope>
+                </bpws:onAlarm>
+                <bpws:onAlarm tibex:cancel="yes" tibex:deadline="yes">
+                    <tibex:userTaskParticipant entity="GROUP"
+                        modelVersion="1"
+                        uniqueId="_QqfvkM27EeeozIUd784NFw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:scope name="_BX_scope__kjSvEPUEEeeywP4RjejZPQ">
+                        <bpws:assign name="TimerEvent1"
+                            tibex:type="boundaryTimerEvent"
+                            tibex:xpdlId="_kjSvEPUEEeeywP4RjejZPQ" validate="no">
+                            <tibex:completedScript
+                                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SLAFLAGGlobal="2";
+]]></tibex:completedScript>
+                            <bpws:copy>
+                                <bpws:from><![CDATA[1]]></bpws:from>
+                                <bpws:to variable="_BX_fanVariable_3"/>
+                            </bpws:copy>
+                        </bpws:assign>
+                    </bpws:scope>
+                </bpws:onAlarm>
+            </bpws:eventHandlers>
+            <bpws:extensionActivity>
+                <tibex:extActivity name="DeprovisionMngementIP"
+                    tibex:type="userTask"
+                    tibex:xpdlId="__ziDoOCsEeeeKsD8kq9l7g" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets/>
+                    <bpws:sources>
+                        <bpws:source linkName="DeprovisionMngementIP to _BX_normalFlow_3">
+                            <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[_BX_fanVariable_3=0; true]]></bpws:transitionCondition>
+                        </bpws:source>
+                    </bpws:sources>
+                    <model:UserTaskDataModelType
+                        distributionStrategy="OFFER"
+                        userTaskPriority="50"
+                        workModelID="WM___ziDoOCsEeeeKsD8kq9l7g"
+                        workModelVersionRange="[2.0.0.qualifier,2.0.0.qualifier]"
+                        xmi:version="2.0"
+                        xmlns:model="http://model.ut.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
+                        <userTaskParticipants>
+                            <userTaskParticipant entity="ROLE"
+                                modelVersion="1" uniqueId="_QqfvkM27EeeozIUd784NFw"/>
+                        </userTaskParticipants>
+                        <userTaskParameters>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="Provisioning_Data"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="TechnicalInfo"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="TaskName"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentHistory"/>
+                            <userTaskParameter mandatory="false"
+                                mode="INOUT" name="CommentText"/>
+                        </userTaskParameters>
+                        <userTaskGroupMemberships/>
+                    </model:UserTaskDataModelType>
+                    <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Deprovision Mngment IP : TES FAE Team";
+CommentText="";
+Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "+TaskName+" Initiate Script");]]></tibex:initiatedScript>
+                </tibex:extActivity>
+            </bpws:extensionActivity>
+        </bpws:scope>
+        <bpws:empty name="_BX_normalFlow_3">
+            <bpws:targets>
+                <bpws:target linkName="DeprovisionMngementIP to _BX_normalFlow_3"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="_BX_normalFlow_3 to _7k_psN_HEeec4K-r6PSjHg"/>
             </bpws:sources>
         </bpws:empty>
     </bpws:flow>

@@ -52,6 +52,7 @@
                                         <xsd:element name="process_instance" type="xsd:string"/>
                                         <xsd:element name="status" type="xsd:string"/>
                                         <xsd:element name="execution_time" type="xsd:string"/>
+                                        <xsd:element name="start_time" type="xsd:string"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -76,6 +77,9 @@
                         <execution_time>
                             <xsl:value-of select="if (column[name=&quot;EXEC_MILLIS&quot;]/value!='') then column[name=&quot;EXEC_MILLIS&quot;]/value  else 'NOT Completed'"/>
                         </execution_time>
+                        <start_time>
+                            <xsl:value-of select="column[name=&quot;START_TIME&quot;]/value"/>
+                        </start_time>
                     </Record>
                 </xsl:for-each>
             </Resultset>
@@ -89,13 +93,13 @@
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
-            <maxRows>100</maxRows>
+            <maxRows>%%BPM/ProcessAnalysis/JDBCRecordLimit%%</maxRows>
             <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
         </config>
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, status, EXEC_MILLIS from &quot;,$_globalVariables/ns1:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where &quot;,$Start/SearchInput/searchby,&quot;='&quot;,$Start/SearchInput/searchvalue,&quot;' and process_template='&quot;,$Start/SearchInput/processname,&quot;'&quot;)"/>
+                    <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, status, EXEC_MILLIS,start_time from &quot;,$_globalVariables/ns1:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where &quot;,$Start/SearchInput/searchby,&quot;='&quot;,$Start/SearchInput/searchvalue,&quot;' and process_template='&quot;,$Start/SearchInput/processname,&quot;'&quot;)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>

@@ -575,7 +575,7 @@
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;-----User name Not Found\n&quot;)"/>
                     </textContent>
                     <addLineSeparator>
-                        <xsl:value-of select="0"/>
+                        <xsl:value-of select="1"/>
                     </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
@@ -597,8 +597,11 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="concat($ParseIndex1/pfx17:users,&quot;-----&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname,&quot;----Invalid Group Name&#xA;&quot;)"/>
+                        <xsl:value-of select="concat($ParseIndex1/pfx17:users,&quot;-----&quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;----Invalid Group Name&#xA;&quot;)"/>
                     </textContent>
+                    <addLineSeparator>
+                        <xsl:value-of select="1"/>
+                    </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
@@ -621,6 +624,9 @@
                     <textContent>
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;-----Resource Created Sucessfully\n&quot;)"/>
                     </textContent>
+                    <addLineSeparator>
+                        <xsl:value-of select="1"/>
+                    </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
@@ -757,8 +763,11 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to Position&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname)"/>
+                        <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:name,&quot;-----&quot;,&quot;----Successfully mapped to Position&quot;,$ParseIndex1/pfx17:users/pfx17:entityname)"/>
                     </textContent>
+                    <addLineSeparator>
+                        <xsl:value-of select="1"/>
+                    </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
@@ -781,6 +790,9 @@
                     <textContent>
                         <xsl:value-of select="&quot;Position Id Not Found&quot;"/>
                     </textContent>
+                    <addLineSeparator>
+                        <xsl:value-of select="1"/>
+                    </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
@@ -1004,6 +1016,9 @@
                     <textContent>
                         <xsl:value-of select="concat(&quot;Resource Already Created For : &quot;,$ParseIndex1/pfx17:users/pfx17:name)"/>
                     </textContent>
+                    <addLineSeparator>
+                        <xsl:value-of select="1"/>
+                    </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
@@ -1091,7 +1106,7 @@
             <config>
                 <timeout>10</timeout>
                 <commit>false</commit>
-                <maxRows>100</maxRows>
+                <maxRows>%%BPM/ProcessAnalysis/JDBCRecordLimit%%</maxRows>
                 <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
             </config>
             <pd:inputBindings>
@@ -1110,6 +1125,7 @@
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
+                <append>true</append>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
@@ -1133,6 +1149,7 @@
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
+                <append>true</append>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
@@ -1156,6 +1173,7 @@
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
+                <append>true</append>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>

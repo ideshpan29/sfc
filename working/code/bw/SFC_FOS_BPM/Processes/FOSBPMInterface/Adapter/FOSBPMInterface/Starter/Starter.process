@@ -61,6 +61,11 @@
                     <attributeType>string</attributeType>
                     <attributeCard>optional</attributeCard>
                 </row>
+                <row>
+                    <attribute>emailid</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
             </customField>
             <Headers>
                 <xsd:element name="root">
@@ -90,7 +95,7 @@
     <pd:activity name="Call Get Process Instance Details">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
+        <pd:x>352</pd:x>
         <pd:y>226</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</processName>
@@ -123,7 +128,7 @@
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
         <pd:x>351</pd:x>
-        <pd:y>42</pd:y>
+        <pd:y>43</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessnames.process</processName>
         </config>
@@ -189,14 +194,6 @@
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
         </config>
-        <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Null">
-        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-        <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>352</pd:x>
-        <pd:y>661</pd:y>
-        <config/>
         <pd:inputBindings/>
     </pd:activity>
     <pd:activity name="Render Process names data">
@@ -308,7 +305,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <asciiContent>
-                            <xsl:value-of select="'Invalid URL'"/>
+                            <xsl:value-of select="$Call-getusers-process/root/output"/>
                         </asciiContent>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -461,6 +458,22 @@
         </config>
         <pd:inputBindings/>
     </pd:activity>
+    <pd:activity name="Call getusers process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>352</pd:x>
+        <pd:y>674</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getusers.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <emailid>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/emailid"/>
+                </emailid>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
@@ -512,13 +525,6 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Call Get Process Names</pd:from>
-        <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Null</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -595,7 +601,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Null</pd:to>
+        <pd:to>Call getusers process</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
@@ -626,6 +632,13 @@
         <pd:from>send Exception Request</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call getusers process</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

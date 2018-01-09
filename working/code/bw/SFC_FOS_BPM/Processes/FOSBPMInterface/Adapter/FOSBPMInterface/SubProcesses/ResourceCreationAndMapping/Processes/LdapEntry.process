@@ -59,6 +59,11 @@
                     <pfx13:password>
                         <xsl:value-of select="generate-id($Start/pfx13:ldapentryinput)"/>
                     </pfx13:password>
+                    <xsl:if test="$Start/pfx13:ldapentryinput/pfx13:addby">
+                        <pfx13:addby>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:addby"/>
+                        </pfx13:addby>
+                    </xsl:if>
                 </pfx13:createresourcerequest>
             </pfx13:createresourceinput>
         </pd:inputBindings>
@@ -71,6 +76,7 @@
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
+            <append>true</append>
         </config>
         <pd:inputBindings>
             <ns5:WriteActivityInputTextClass>
@@ -78,8 +84,11 @@
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                 </fileName>
                 <textContent>
-                    <xsl:value-of select="&quot;******LDAP Entry Not Created*****&quot;"/>
+                    <xsl:value-of select="concat($Start/pfx13:ldapentryinput/pfx13:firstname,&quot;******LDAP Entry Not Created*****&quot;)"/>
                 </textContent>
+                <addLineSeparator>
+                    <xsl:value-of select="1"/>
+                </addLineSeparator>
             </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
     </pd:activity>
@@ -406,8 +415,11 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                 </fileName>
                 <textContent>
-                    <xsl:value-of select="&quot;LDAP Entry Created Succesfully &quot;"/>
+                    <xsl:value-of select="concat($Start/pfx13:ldapentryinput/pfx13:firstname,&quot;LDAP Entry Created Succesfully &quot;)"/>
                 </textContent>
+                <addLineSeparator>
+                    <xsl:value-of select="1"/>
+                </addLineSeparator>
             </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
     </pd:activity>
@@ -428,8 +440,11 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/PasswordLogs"/>
                 </fileName>
                 <textContent>
-                    <xsl:value-of select="concat(&quot;Name : &quot;,concat($Start/pfx13:ldapentryinput/pfx13:firstname,&quot; &quot;,$Start/pfx13:ldapentryinput/pfx13:lastname),&quot;  Password : &quot;,generate-id($Start/pfx13:ldapentryinput),&quot;|||&quot;)"/>
+                    <xsl:value-of select="concat(&quot;Name : &quot;,$Start/pfx13:ldapentryinput/pfx13:orgmodelname,&quot;  Password : &quot;,generate-id($Start/pfx13:ldapentryinput))"/>
                 </textContent>
+                <addLineSeparator>
+                    <xsl:value-of select="1"/>
+                </addLineSeparator>
             </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
     </pd:activity>
@@ -475,7 +490,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),10389);
         <pd:to>Password Logs</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Password Logs</pd:from>

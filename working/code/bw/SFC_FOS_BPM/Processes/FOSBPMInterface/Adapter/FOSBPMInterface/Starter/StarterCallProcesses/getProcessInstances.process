@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstances.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType>
@@ -49,7 +49,7 @@
                                         <xsd:element name="SibelCircuitId" type="xsd:string"/>
                                         <xsd:element name="ClientName" type="xsd:string"/>
                                         <xsd:element name="ProjectManager" type="xsd:string"/>
-                                        <xsd:element name="cur_activity" type="xsd:string"/>
+                                        <xsd:element name="start_time" type="xsd:string"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -72,7 +72,7 @@
                             <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
                         </status>
                         <time>
-                            <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;Not Completed&quot;"/>
+                            <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else tib:current-dateTime-timezone(5,30) - column[name=&quot;START_TIME&quot;]/value"/>
                         </time>
                         <SibelCircuitId>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
@@ -83,9 +83,9 @@
                         <ProjectManager>
                             <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
                         </ProjectManager>
-                        <cur_activity>
-                            <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </cur_activity>
+                        <start_time>
+                            <xsl:value-of select="if(column[name=&quot;START_TIME&quot;]/value!=&quot;&quot;) then column[name=&quot;START_TIME&quot;]/value else &quot;NA&quot;"/>
+                        </start_time>
                     </Record>
                 </xsl:for-each>
             </root>
@@ -99,13 +99,13 @@
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
-            <maxRows>100</maxRows>
+            <maxRows>1000</maxRows>
             <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
         </config>
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS from  &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$Start/root/processname,&quot;'&quot;)"/>
+                    <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from  &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$Start/root/processname,&quot;'&quot;)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>

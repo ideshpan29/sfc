@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd">
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns13="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeOnboarding.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="wsdlPfx:Onbordinginput"/>
-    <pd:startX>39</pd:startX>
-    <pd:startY>100</pd:startY>
+    <pd:startX>40</pd:startX>
+    <pd:startY>92</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:Onbordingoutput>
             <ldapentryoutput>
                 <pfx:ldapentryoutput>
-                    <xsl:value-of select="&quot;Success&quot;"/>
+                    <xsl:value-of select="$Render-XML/xmlString"/>
                 </pfx:ldapentryoutput>
             </ldapentryoutput>
         </wsdlPfx:Onbordingoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:Onbordingoutput"/>
-    <pd:endX>660</pd:endX>
-    <pd:endY>85</pd:endY>
+    <pd:endX>791</pd:endX>
+    <pd:endY>218</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
     </pd:errorSchemas>
@@ -64,44 +64,24 @@
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
             <pd:x>332</pd:x>
-            <pd:y>84</pd:y>
+            <pd:y>91</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
             </config>
             <pd:inputBindings>
-                <xsl:for-each select="$iter/pfx:input">
-                    <pfx:ldapentryinput>
-                        <pfx:firstname>
-                            <xsl:value-of select="pfx:firstname"/>
-                        </pfx:firstname>
-                        <pfx:lastname>
-                            <xsl:value-of select="pfx:lastname"/>
-                        </pfx:lastname>
-                        <pfx:email>
-                            <xsl:value-of select="pfx:email"/>
-                        </pfx:email>
-                        <pfx:password>
-                            <xsl:value-of select="pfx:password"/>
-                        </pfx:password>
-                        <pfx:orgmodelname>
-                            <xsl:value-of select="pfx:orgmodelname"/>
-                        </pfx:orgmodelname>
-                        <pfx:flag>
-                            <xsl:value-of select="pfx:flag"/>
-                        </pfx:flag>
-                        <pfx:entity>
-                            <xsl:value-of select="pfx:entity"/>
-                        </pfx:entity>
-                    </pfx:ldapentryinput>
-                </xsl:for-each>
+                <pfx:ldapentryinput>
+                    <xsl:copy-of select="$iter/pfx:input/ancestor-or-self::*/namespace::node()"/>
+                    <xsl:copy-of select="$iter/pfx:input/@*"/>
+                    <xsl:copy-of select="$iter/pfx:input/node()"/>
+                </pfx:ldapentryinput>
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
     <pd:activity name="send Log Request AUDIT 1">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>138</pd:x>
-        <pd:y>107</pd:y>
+        <pd:x>137</pd:x>
+        <pd:y>99</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -140,8 +120,8 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>532</pd:x>
-        <pd:y>91</pd:y>
+        <pd:x>793</pd:x>
+        <pd:y>94</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -227,6 +207,76 @@
             </ns12:ExceptionRequest>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>498</pd:x>
+        <pd:y>90</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns13:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="&quot;D:/resourcestatus.txt&quot;"/>
+                </fileName>
+            </ns13:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>587</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <InputType>String</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Data Formats/Parse Resource Status File.sharedparse</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <text>
+                    <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileContent/textContent"/>
+                </text>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>683</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="root">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="name" type="xsd:string"/>
+                                        <xs:element name="action" type="xsd:string"/>
+                                        <xs:element name="grpname" type="xsd:string"/>
+                                        <xs:element name="status" type="xsd:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Parse-Data/Output/Rows/root/param"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
@@ -243,7 +293,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group</pd:from>
-        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:to>Read File</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -265,6 +315,27 @@
     <pd:transition>
         <pd:from>Call Send Exception Request</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

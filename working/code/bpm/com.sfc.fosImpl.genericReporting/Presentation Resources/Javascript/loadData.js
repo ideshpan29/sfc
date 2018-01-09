@@ -159,15 +159,34 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					}
 					
 					
-					if(Mindex!=-1)
+					
+					if(Mindex!=-1 && Hindex!=-1)
 					{
 					MINUTES=parseFloat(time.substring(Hindex+1,Mindex));
+					}
+					if(Mindex!=-1 && Hindex==-1)
+					{
+					MINUTES=parseFloat(time.substring(Tindex+1,Mindex));
 					}
 					
 					
 					if(Sindex!=-1)
 					{
+					if(Mindex!=-1)
+					{
 					SECONDS=parseFloat(time.substring(Mindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Hindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex==-1)
+					{
+					SECONDS=parseFloat(time.substring(Tindex+1,Sindex));
+					}
+					
 					}
 					
 									
@@ -375,15 +394,35 @@ var tmpURL = url+funcName;
 					HOURS=parseFloat(time.substring(Tindex+1,Hindex));
 					}
 					
-					if(Mindex!=-1)
+					
+					
+					if(Mindex!=-1 && Hindex!=-1)
 					{
 					MINUTES=parseFloat(time.substring(Hindex+1,Mindex));
+					}
+					if(Mindex!=-1 && Hindex==-1)
+					{
+					MINUTES=parseFloat(time.substring(Tindex+1,Mindex));
 					}
 					
 					
 					if(Sindex!=-1)
 					{
+					if(Mindex!=-1)
+					{
 					SECONDS=parseFloat(time.substring(Mindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Hindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex==-1)
+					{
+					SECONDS=parseFloat(time.substring(Tindex+1,Sindex));
+					}
+					
 					}
 					
 									
@@ -528,8 +567,98 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("ns0:exec_mills");
-					if(recordSet[i].childNodes[0]!=null)	{			
-						record.setTime(recordSet[i].childNodes[0].nodeValue);
+					if(recordSet[i].childNodes[0]!=null)	{	
+						
+						
+						
+						
+						var time=(recordSet[i].childNodes[0].nodeValue);
+					logger.info(time.indexOf("P"));
+					if(time.indexOf("P")==0)
+					{
+					
+					var Pindex=time.indexOf("P");
+					var Dindex=time.indexOf("D");
+					var Hindex=time.indexOf("H");
+					var Mindex=time.indexOf("M");
+					var Sindex=time.indexOf("S");
+					var Tindex=time.indexOf("T");
+					
+					var DAYS=0;
+					var HOURS=0;
+					var MINUTES=0;
+					var SECONDS=0;
+					
+					if(Dindex!=-1)
+					{
+					DAYS=parseFloat(time.substring(Pindex+1,Dindex));
+					}
+					
+					
+					
+					if(Hindex!=-1)
+					{
+					HOURS=parseFloat(time.substring(Tindex+1,Hindex));
+					}
+					
+					
+					if(Mindex!=-1 && Hindex!=-1)
+					{
+					MINUTES=parseFloat(time.substring(Hindex+1,Mindex));
+					}
+					if(Mindex!=-1 && Hindex==-1)
+					{
+					MINUTES=parseFloat(time.substring(Tindex+1,Mindex));
+					}
+					
+					
+					if(Sindex!=-1)
+					{
+					if(Mindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Mindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex!=-1)
+					{
+					SECONDS=parseFloat(time.substring(Hindex+1,Sindex));
+					}
+					
+					if(Mindex==-1 && Hindex==-1)
+					{
+					SECONDS=parseFloat(time.substring(Tindex+1,Sindex));
+					}
+					
+					}
+					
+					
+									
+					
+					
+					logger.info(".............");
+					logger.info((DAYS*1440));
+					logger.info(HOURS*60);
+					logger.info(MINUTES*1);
+					logger.info(SECONDS/60);
+				
+					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
+					logger.info("//////////////"+1.456765.toFixed(2));
+					
+					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
+					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
+					
+					record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					
+					}
+					else
+					{
+					
+						//record.setTime(time);
+						record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+					}
+						
+							
+						//record.setTime(recordSet[i].childNodes[0].nodeValue);
 					}
 					
 					recordSet = xmlDoc.getElementsByTagName("ns0:sibelcircuit_id");

@@ -37,6 +37,7 @@ theClass.ATTR_FLAG = "flag";
 theClass.ATTR_ENTITYNAME = "entityname";
 theClass.ATTR_EMAIL = "email";
 theClass.ATTR_PASSWORD = "password";
+theClass.ATTR_ADDBY = "addby";
 
 theClass.TYPE_ARRAY = new Object();
 theClass.TYPE_ARRAY[theClass.ATTR_NAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
@@ -45,12 +46,13 @@ theClass.TYPE_ARRAY[theClass.ATTR_FLAG] = {type:"BomPrimitiveTypes.Text", baseTy
 theClass.TYPE_ARRAY[theClass.ATTR_ENTITYNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_EMAIL] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_PASSWORD] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_ADDBY] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 
-theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD];
+theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ADDBY];
 
 theClass.COMPOSITE_ATTRIBUTE_NAMES = [];
 
-theClass.ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD];
+theClass.ATTRIBUTE_NAMES = [theClass.ATTR_NAME, theClass.ATTR_ORGNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITYNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ADDBY];
 
 theClass.getName = function() {
     return "com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType";
@@ -143,6 +145,15 @@ theClass.prototype.getPassword = function(useInternal) {
 
 theClass.prototype.setPassword = function(password) {
     this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_PASSWORD, password);
+};
+
+
+theClass.prototype.getAddby = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ADDBY, useInternal);
+};
+
+theClass.prototype.setAddby = function(addby) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.usersType").ATTR_ADDBY, addby);
 };
 
 theClass.getAttributeNames = function() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707" tibex:src="file:/D:/Project/Safaricom/Codebase/BPM/ConcreteWSDL/SFC_FOS_BPM.wsdl">
+<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707">
     <partnerLinkType name="PortType_PLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
     <role name="PortTypeProvider" portType="tns:PortType"/>
   </partnerLinkType>
@@ -25,6 +25,9 @@
                                     <xs:element minOccurs="0" name="entityname" type="xs:string"/>
                                     <xs:element minOccurs="0" name="email" type="xs:string"/>
                                     <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="addby" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="action" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="result" type="xs:string"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -167,6 +170,7 @@
                         <xs:element name="orgmodelname" type="xs:string"/>
                         <xs:element name="flag" type="xs:string"/>
                         <xs:element name="entity" type="xs:string"/>
+                        <xs:element minOccurs="0" name="addby" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -183,6 +187,7 @@
                                     <xs:element name="orgmodelname" type="xs:string"/>
                                     <xs:element name="flag" type="xs:string"/>
                                     <xs:element name="entity" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="addby" type="xs:string"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -202,6 +207,7 @@
                                     <xs:element minOccurs="0" name="entityname" type="xs:string"/>
                                     <xs:element minOccurs="0" name="email" type="xs:string"/>
                                     <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element minOccurs="0" name="addby" type="xs:string"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -429,7 +435,7 @@
         <wsdl:part element="ns0:createresourceinput" name="createresourceinput"/>
     </wsdl:message>
     <wsdl:message name="ResourceCreationoutput">
-        <wsdl:part element="ns0:createresourceoutput" name="createresourceoutput"/>
+        <wsdl:part element="ns0:createresourceinput" name="createresourceoutput"/>
     </wsdl:message>
     <wsdl:message name="ResourceCreationfault">
         <wsdl:part element="ns0:fault" name="fault"/>

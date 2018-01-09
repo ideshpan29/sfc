@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707" tibex:src="file:/D:/Project/Safaricom/Codebase/BPM/ConcreteWSDL/SFC_FOS_BPM.wsdl">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707">
     <wsdl:types>
-        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+        <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
             <xs:element name="createresource">
                 <xs:complexType>
                     <xs:sequence>
@@ -13,15 +14,18 @@
             <xs:element name="createresourceinput">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="createresourcerequest">
+                        <xs:element name="createresourcerequest" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element minOccurs="0" name="name" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="orgname" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="flag" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="entityname" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="email" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element name="name" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="orgname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="flag" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="entityname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="email" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="password" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="addby" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="action" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="result" type="xs:string" minOccurs="0"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -60,7 +64,7 @@
             <xs:element name="fetchresourceoutput">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="resource">
+                        <xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="guid" type="xs:string"/>
@@ -90,7 +94,7 @@
             <xs:element name="getprocessinstancesoutput">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_complete">
+                        <xs:element name="pi_complete" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="process_instance" type="xs:string"/>
@@ -103,7 +107,7 @@
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_started">
+                        <xs:element name="pi_started" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="process_instance" type="xs:string"/>
@@ -116,7 +120,7 @@
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_halted">
+                        <xs:element name="pi_halted" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="process_instance" type="xs:string"/>
@@ -129,7 +133,7 @@
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="pi_cancelled">
+                        <xs:element name="pi_cancelled" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="process_instance" type="xs:string"/>
@@ -148,7 +152,7 @@
             <xs:element name="ldapentry">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns0:ldapentryinput"/>
+                        <xs:element ref="ns0:ldapentryinput" minOccurs="0" maxOccurs="unbounded"/>
                         <xs:element ref="ns0:ldapentryoutput"/>
                         <xs:element ref="ns0:ldapentryinputrepeat"/>
                     </xs:sequence>
@@ -160,26 +164,28 @@
                         <xs:element name="firstname" type="xs:string"/>
                         <xs:element name="lastname" type="xs:string"/>
                         <xs:element name="email" type="xs:string"/>
-                        <xs:element minOccurs="0" name="password" type="xs:string"/>
+                        <xs:element name="password" type="xs:string" minOccurs="0"/>
                         <xs:element name="orgmodelname" type="xs:string"/>
                         <xs:element name="flag" type="xs:string"/>
                         <xs:element name="entity" type="xs:string"/>
+                        <xs:element name="addby" type="xs:string" minOccurs="0"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
             <xs:element name="ldapentryinputrepeat">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="input">
+                        <xs:element name="input" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="firstname" type="xs:string"/>
                                     <xs:element name="lastname" type="xs:string"/>
                                     <xs:element name="email" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element name="password" type="xs:string" minOccurs="0"/>
                                     <xs:element name="orgmodelname" type="xs:string"/>
                                     <xs:element name="flag" type="xs:string"/>
                                     <xs:element name="entity" type="xs:string"/>
+                                    <xs:element name="addby" type="xs:string" minOccurs="0"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -190,15 +196,16 @@
             <xs:element name="parsecsv">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="users">
+                        <xs:element name="users" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element minOccurs="0" name="name" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="orgname" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="flag" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="entityname" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="email" type="xs:string"/>
-                                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                                    <xs:element name="name" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="orgname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="flag" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="entityname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="email" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="password" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="addby" type="xs:string" minOccurs="0"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -252,7 +259,7 @@
             <xs:element name="searchprocessinstancesoutput">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="searchrecord">
+                        <xs:element name="searchrecord" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="process_instance" type="xs:string"/>
@@ -293,7 +300,7 @@
         </xs:schema>
     </wsdl:types>
     <wsdl:service name="FOSBPMInterface-service0">
-        <wsdl:port binding="tns:PortTypeEndpoint0Binding" name="PortTypeEndpoint0">
+        <wsdl:port name="PortTypeEndpoint0" binding="tns:PortTypeEndpoint0Binding">
             <soap:address location="http://localhost:7020/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0"/>
         </wsdl:port>
     </wsdl:service>
@@ -301,161 +308,161 @@
         <wsdl:operation name="getResources">
             <wsdl:input message="tns:FetchResourceinput"/>
             <wsdl:output message="tns:FetchResourceoutput"/>
-            <wsdl:fault message="tns:FetchResourcefault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:FetchResourcefault"/>
         </wsdl:operation>
         <wsdl:operation name="getProcessInstances">
             <wsdl:input message="tns:getProcessInstancesInput"/>
             <wsdl:output message="tns:getProcessInstancesOutput"/>
-            <wsdl:fault message="tns:getProcessInstancesFault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:getProcessInstancesFault"/>
         </wsdl:operation>
         <wsdl:operation name="ResourceCreation">
             <wsdl:input message="tns:ResourceCreationiput"/>
             <wsdl:output message="tns:ResourceCreationoutput"/>
-            <wsdl:fault message="tns:ResourceCreationfault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:ResourceCreationfault"/>
         </wsdl:operation>
         <wsdl:operation name="seachProcessInstances">
             <wsdl:input message="tns:seachProcessInstancesInput"/>
             <wsdl:output message="tns:seachProcessInstancesOutput"/>
-            <wsdl:fault message="tns:seachProcessInstancesFault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:seachProcessInstancesFault"/>
         </wsdl:operation>
         <wsdl:operation name="WorkCompletion">
             <wsdl:input message="tns:WorkCompletioninput"/>
             <wsdl:output message="tns:WorkCompletionoutput"/>
-            <wsdl:fault message="tns:WorkCompletionfault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:WorkCompletionfault"/>
         </wsdl:operation>
         <wsdl:operation name="Onboarding">
             <wsdl:input message="tns:Onbordinginput"/>
             <wsdl:output message="tns:Onbordingoutput"/>
-            <wsdl:fault message="tns:Onbordingfault" name="fault1"/>
+            <wsdl:fault name="fault1" message="tns:Onbordingfault"/>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="PortTypeEndpoint0Binding" type="tns:PortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="getResources">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getResources" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getResources"/>
             <wsdl:input>
-                <soap:body parts="fetchresourceinput" use="literal"/>
+                <soap:body use="literal" parts="fetchresourceinput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="fetchresourceoutput" use="literal"/>
+                <soap:body use="literal" parts="fetchresourceoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getProcessInstances">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getProcessInstances" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getProcessInstances"/>
             <wsdl:input>
-                <soap:body parts="getprocessinstancesinput" use="literal"/>
+                <soap:body use="literal" parts="getprocessinstancesinput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="getprocessinstancesoutput" use="literal"/>
+                <soap:body use="literal" parts="getprocessinstancesoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="ResourceCreation">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/ResourceCreation" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/ResourceCreation"/>
             <wsdl:input>
-                <soap:body parts="createresourceinput" use="literal"/>
+                <soap:body use="literal" parts="createresourceinput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="createresourceoutput" use="literal"/>
+                <soap:body use="literal" parts="createresourceoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="seachProcessInstances">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/seachProcessInstances" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/seachProcessInstances"/>
             <wsdl:input>
-                <soap:body parts="searchprocessinstancesinput" use="literal"/>
+                <soap:body use="literal" parts="searchprocessinstancesinput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="searchprocessinstancesoutput" use="literal"/>
+                <soap:body use="literal" parts="searchprocessinstancesoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="WorkCompletion">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/WorkCompletion" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/WorkCompletion"/>
             <wsdl:input>
-                <soap:body parts="workitemcompletioninput" use="literal"/>
+                <soap:body use="literal" parts="workitemcompletioninput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="workitemcompletionoutput" use="literal"/>
+                <soap:body use="literal" parts="workitemcompletionoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="Onboarding">
-            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/Onboarding" style="document"/>
+            <soap:operation style="document" soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/Onboarding"/>
             <wsdl:input>
-                <soap:body parts="ldapentryinput" use="literal"/>
+                <soap:body use="literal" parts="ldapentryinput"/>
             </wsdl:input>
             <wsdl:output>
-                <soap:body parts="ldapentryoutput" use="literal"/>
+                <soap:body use="literal" parts="ldapentryoutput"/>
             </wsdl:output>
             <wsdl:fault name="fault1">
-                <soap:fault name="fault1" use="literal"/>
+                <soap:fault use="literal" name="fault1"/>
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
     <wsdl:message name="FetchResourceinput">
-        <wsdl:part element="ns0:fetchresourceinput" name="fetchresourceinput"/>
+        <wsdl:part name="fetchresourceinput" element="ns0:fetchresourceinput"/>
     </wsdl:message>
     <wsdl:message name="FetchResourceoutput">
-        <wsdl:part element="ns0:fetchresourceoutput" name="fetchresourceoutput"/>
+        <wsdl:part name="fetchresourceoutput" element="ns0:fetchresourceoutput"/>
     </wsdl:message>
     <wsdl:message name="FetchResourcefault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
     <wsdl:message name="getProcessInstancesInput">
-        <wsdl:part element="ns0:getprocessinstancesinput" name="getprocessinstancesinput"/>
+        <wsdl:part name="getprocessinstancesinput" element="ns0:getprocessinstancesinput"/>
     </wsdl:message>
     <wsdl:message name="getProcessInstancesOutput">
-        <wsdl:part element="ns0:getprocessinstancesoutput" name="getprocessinstancesoutput"/>
+        <wsdl:part name="getprocessinstancesoutput" element="ns0:getprocessinstancesoutput"/>
     </wsdl:message>
     <wsdl:message name="getProcessInstancesFault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
     <wsdl:message name="ResourceCreationiput">
-        <wsdl:part element="ns0:createresourceinput" name="createresourceinput"/>
+        <wsdl:part name="createresourceinput" element="ns0:createresourceinput"/>
     </wsdl:message>
     <wsdl:message name="ResourceCreationoutput">
-        <wsdl:part element="ns0:createresourceoutput" name="createresourceoutput"/>
+        <wsdl:part name="createresourceoutput" element="ns0:createresourceinput"/>
     </wsdl:message>
     <wsdl:message name="ResourceCreationfault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
     <wsdl:message name="seachProcessInstancesInput">
-        <wsdl:part element="ns0:searchprocessinstancesinput" name="searchprocessinstancesinput"/>
+        <wsdl:part name="searchprocessinstancesinput" element="ns0:searchprocessinstancesinput"/>
     </wsdl:message>
     <wsdl:message name="seachProcessInstancesOutput">
-        <wsdl:part element="ns0:searchprocessinstancesoutput" name="searchprocessinstancesoutput"/>
+        <wsdl:part name="searchprocessinstancesoutput" element="ns0:searchprocessinstancesoutput"/>
     </wsdl:message>
     <wsdl:message name="seachProcessInstancesFault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
     <wsdl:message name="WorkCompletioninput">
-        <wsdl:part element="ns0:workitemcompletioninput" name="workitemcompletioninput"/>
+        <wsdl:part name="workitemcompletioninput" element="ns0:workitemcompletioninput"/>
     </wsdl:message>
     <wsdl:message name="WorkCompletionoutput">
-        <wsdl:part element="ns0:workitemcompletionoutput" name="workitemcompletionoutput"/>
+        <wsdl:part name="workitemcompletionoutput" element="ns0:workitemcompletionoutput"/>
     </wsdl:message>
     <wsdl:message name="WorkCompletionfault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
     <wsdl:message name="Onbordinginput">
-        <wsdl:part element="ns0:ldapentryinputrepeat" name="ldapentryinput"/>
+        <wsdl:part name="ldapentryinput" element="ns0:ldapentryinputrepeat"/>
     </wsdl:message>
     <wsdl:message name="Onbordingoutput">
-        <wsdl:part element="ns0:ldapentryoutput" name="ldapentryoutput"/>
+        <wsdl:part name="ldapentryoutput" element="ns0:ldapentryoutput"/>
     </wsdl:message>
     <wsdl:message name="Onbordingfault">
-        <wsdl:part element="ns0:fault" name="fault"/>
+        <wsdl:part name="fault" element="ns0:fault"/>
     </wsdl:message>
 </wsdl:definitions>

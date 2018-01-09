@@ -38,6 +38,7 @@ theClass.ATTR_PASSWORD = "password";
 theClass.ATTR_ORGMODELNAME = "orgmodelname";
 theClass.ATTR_FLAG = "flag";
 theClass.ATTR_ENTITY = "entity";
+theClass.ATTR_ADDBY = "addby";
 
 theClass.TYPE_ARRAY = new Object();
 theClass.TYPE_ARRAY[theClass.ATTR_FIRSTNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
@@ -47,12 +48,13 @@ theClass.TYPE_ARRAY[theClass.ATTR_PASSWORD] = {type:"BomPrimitiveTypes.Text", ba
 theClass.TYPE_ARRAY[theClass.ATTR_ORGMODELNAME] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_FLAG] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_ENTITY] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:true, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_ADDBY] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 
-theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_FIRSTNAME, theClass.ATTR_LASTNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ORGMODELNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITY];
+theClass.PRIMITIVE_ATTRIBUTE_NAMES = [theClass.ATTR_FIRSTNAME, theClass.ATTR_LASTNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ORGMODELNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITY, theClass.ATTR_ADDBY];
 
 theClass.COMPOSITE_ATTRIBUTE_NAMES = [];
 
-theClass.ATTRIBUTE_NAMES = [theClass.ATTR_FIRSTNAME, theClass.ATTR_LASTNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ORGMODELNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITY];
+theClass.ATTRIBUTE_NAMES = [theClass.ATTR_FIRSTNAME, theClass.ATTR_LASTNAME, theClass.ATTR_EMAIL, theClass.ATTR_PASSWORD, theClass.ATTR_ORGMODELNAME, theClass.ATTR_FLAG, theClass.ATTR_ENTITY, theClass.ATTR_ADDBY];
 
 theClass.getName = function() {
     return "com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.inputType";
@@ -154,6 +156,15 @@ theClass.prototype.getEntity = function(useInternal) {
 
 theClass.prototype.setEntity = function(entity) {
     this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.inputType").ATTR_ENTITY, entity);
+};
+
+
+theClass.prototype.getAddby = function(useInternal) {
+    return this._getPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.inputType").ATTR_ADDBY, useInternal);
+};
+
+theClass.prototype.setAddby = function(addby) {
+    this._setPrimitiveAttribute(this.loader.getClass("com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.inputType").ATTR_ADDBY, addby);
 };
 
 theClass.getAttributeNames = function() {

@@ -12,6 +12,14 @@
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:VariableDescriptor type="PersistentBatching">
+        <task name="BusinessUsers">
+            <ProcessManagerScript type="Complete">
+                <variable>BusinessUser</variable>
+            </ProcessManagerScript>
+            <ProcessManagerScript type="Initiate">
+                <variable>BusinessUser</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="CreateEntryforContractorNormalUsers">
             <startingVariables>
                 <variable>ContractorNormalUsers</variable>
@@ -24,15 +32,16 @@
         </task>
         <task name="UpdateResource">
             <startingVariables>
-                <variable>decision</variable>
-                <variable>BPMUsers</variable>
-                <variable>ContractorNormalUsers</variable>
-                <variable>ContractorMasterUserFlag</variable>
-                <variable>BusinessUser</variable>
-                <variable>resourceList</variable>
-                <variable>GroupName</variable>
-                <variable>ContractorGroup</variable>
                 <variable>LoginName</variable>
+                <variable>ContractorNormalUsers</variable>
+                <variable>ContractorSingleUser</variable>
+                <variable>ContractorGroup</variable>
+                <variable>BPMUsers</variable>
+                <variable>decision</variable>
+                <variable>BusinessUser</variable>
+                <variable>GroupName</variable>
+                <variable>resourceList</variable>
+                <variable>ContractorMasterUserFlag</variable>
             </startingVariables>
         </task>
         <task name="_BX_sequence_2">
@@ -42,8 +51,8 @@
         </task>
         <task name="CreateEntryforContractorGroup">
             <startingVariables>
-                <variable>ContractorGroupRef</variable>
                 <variable>ContractorGroup</variable>
+                <variable>ContractorGroupRef</variable>
             </startingVariables>
         </task>
         <task name="LDAPEntryContractorMasterUser">
@@ -54,11 +63,21 @@
         </task>
         <task name="ContractorMasterUserCheck">
             <startingVariables>
-                <variable>decision</variable>
+                <variable>LoginName</variable>
                 <variable>tmpGroupName</variable>
                 <variable>ContractorGroupArrRef</variable>
+                <variable>decision</variable>
                 <variable>ContractorMasterUserFlag</variable>
-                <variable>LoginName</variable>
+            </startingVariables>
+        </task>
+        <task name="FetchGroupList">
+            <ProcessManagerScript type="Complete">
+                <variable>GroupName</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="UpdateResourceResult">
+            <startingVariables>
+                <variable>BusinessUser</variable>
             </startingVariables>
         </task>
         <task name="LDAPEntryContractorNormalUsers">
@@ -67,12 +86,12 @@
                 <variable>LDAPEntry</variable>
             </ProcessManagerScript>
         </task>
-        <task name="_BX_sequence_4">
+        <task name="_BX_sequence_5">
             <startingVariables>
                 <variable>LDAPEntry</variable>
             </startingVariables>
         </task>
-        <task name="_BX_sequence_6">
+        <task name="_BX_sequence_7">
             <startingVariables>
                 <variable>LDAPEntry</variable>
             </startingVariables>
@@ -114,14 +133,16 @@
             tibex:class="com.sfc.fosImpl.adminOps.dataModel.BPMUsers" tibex:xpdlId="_cXp2gPRYEeeRs7eYTPjalw"/>
         <bpws:variable name="LoginName"
             tibex:xpdlId="_HHS5cPRnEeeRs7eYTPjalw" type="xsd:string"/>
+        <bpws:variable name="ContractorSingleUser"
+            tibex:class="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_XYYsAPVcEee_HfiEwKRl-A"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_DDwWAPUsEeeqxaA99Iy2Jg">
+    <bpws:flow name="_BX_flow_zaY-MPVcEee_HfiEwKRl-A">
         <bpws:links>
-            <bpws:link name="BusinessUsers to End" tibex:xpdlId="_6hboYPE1EeeWw8R4pwNr1Q"/>
+            <bpws:link name="BusinessUsers to UpdateResourceResult" tibex:xpdlId="_wbEA8PVJEee786-X2LpNbg"/>
             <bpws:link
                 name="FetchGroupList to ContractorMasterUserCheck" tibex:xpdlId="_qfHo4fEVEeeW2tm46yiN8A"/>
             <bpws:link name="_7YTsMPEYEeeW2tm46yiN8A to End" tibex:xpdlId="_9sZ1wPEYEeeW2tm46yiN8A"/>
@@ -133,6 +154,7 @@
             <bpws:link name="_pGDy8PEPEeeW2tm46yiN8A to End" tibex:xpdlId="_ACOBMPBWEeeuzZ1H_57zBQ"/>
             <bpws:link
                 name="ContractorMasterUserCheck to UpdateResource" tibex:xpdlId="_y6r1IvBTEeeuzZ1H_57zBQ"/>
+            <bpws:link name="UpdateResourceResult to End" tibex:xpdlId="_6hboYPE1EeeWw8R4pwNr1Q"/>
             <bpws:link name="UpdateResource to _7kmKEPB7EeeuzZ1H_57zBQ" tibex:xpdlId="_7kmKE_B7EeeuzZ1H_57zBQ"/>
             <bpws:link name="UpdateResource to BusinessUsers" tibex:xpdlId="_v14SMPEVEeeW2tm46yiN8A"/>
             <bpws:link name="UpdateResource to _WDcHgPEYEeeW2tm46yiN8A" tibex:xpdlId="_giEpkPEYEeeW2tm46yiN8A"/>
@@ -152,9 +174,9 @@
         <bpws:empty name="End" tibex:type="endEvent"
             tibex:uncontrolledMerge="yes" tibex:xpdlId="_fXKyNPBTEeeuzZ1H_57zBQ">
             <bpws:targets>
-                <bpws:target linkName="BusinessUsers to End"/>
                 <bpws:target linkName="_7YTsMPEYEeeW2tm46yiN8A to End"/>
                 <bpws:target linkName="_pGDy8PEPEeeW2tm46yiN8A to End"/>
+                <bpws:target linkName="UpdateResourceResult to End"/>
             </bpws:targets>
         </bpws:empty>
         <bpws:extensionActivity>
@@ -197,11 +219,21 @@
                             mode="INOUT" name="BPMUsers"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="LoginName"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="ContractorSingleUser"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:empty name="FetchGroupList" tibex:type="task" tibex:xpdlId="_2cGbgPBVEeeuzZ1H_57zBQ">
+            <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[GroupName.add("admin");
+GroupName.add("BillingDepartment");
+GroupName.add("GateKeeper");
+GroupName.add("InfraEngineer");
+GroupName.add("PM");
+GroupName.add("ProvisionEngineer");
+GroupName.add("TESFAE");
+GroupName.add("TESOSG");]]></tibex:completedScript>
             <bpws:targets>
                 <bpws:target linkName="Start to FetchGroupList"/>
             </bpws:targets>
@@ -223,11 +255,35 @@
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:scope name="BusinessUsers" tibex:type="serviceTask" tibex:xpdlId="_1RQtUPCHEeesJ4bn2tlLXg">
+            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[for(var i=0;i<BusinessUser.createresourcerequest.size();i++) {
+	BusinessUser.createresourcerequest.get(i).addby = Process.getOriginatorName();
+}]]></tibex:initiatedScript>
+            <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[for(var i=0;i<BusinessUser.createresourcerequest.size();i++) {
+	if(BusinessUser.createresourcerequest.get(i).action=="ADD") {
+		BusinessUser.createresourcerequest.get(i).action = "Map to Group";
+	}	
+	else if(BusinessUser.createresourcerequest.get(i).action=="REMOVE") {
+		BusinessUser.createresourcerequest.get(i).action = "Remove User from Group";
+		
+	}
+	else if(BusinessUser.createresourcerequest.get(i).action=="DELETE") { 
+		BusinessUser.createresourcerequest.get(i).action = "Delete User From System";		
+	}
+}
+
+for(var i=0;i<BusinessUser.createresourcerequest.size();i++) {
+	if(BusinessUser.createresourcerequest.get(i).result=="SUCCESS") {
+		BusinessUser.createresourcerequest.get(i).result = "Intended Action has been performed successfully";
+	}	
+	else if(BusinessUser.createresourcerequest.get(i).action=="FAILED") {
+		BusinessUser.createresourcerequest.get(i).action = "Error: Please contact System Administrator";
+	}
+}]]></tibex:completedScript>
             <bpws:targets>
                 <bpws:target linkName="UpdateResource to BusinessUsers"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="BusinessUsers to End"/>
+                <bpws:source linkName="BusinessUsers to UpdateResourceResult"/>
             </bpws:sources>
             <bpws:variables>
                 <bpws:variable messageType="ns:ResourceCreationiput" name="v_9372fcb3"/>
@@ -263,12 +319,52 @@ MESSAGE_createresourceinput = ScriptUtil.copy(BusinessUser);
                     name="_BX_invoke" operation="ResourceCreation"
                     outputVariable="v_8d29b06e"
                     partnerLink="PortTypeEndpoint0_Consumer2" portType="ns:PortType"/>
+                <bpws:scope name="_BX_FromSvcDataMapping">
+                    <bpws:variables>
+                        <bpws:variable
+                            name="MESSAGE_createresourceoutput" tibex:class="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType"/>
+                    </bpws:variables>
+                    <bpws:sequence name="_BX_sequence_3">
+                        <bpws:assign name="_BX_assign_4" validate="no">
+                            <bpws:copy
+                                tibex:objectNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" tibex:transform="XmlToObject">
+                                <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$v_8d29b06e.createresourceoutput]]></bpws:from>
+                                <bpws:to variable="MESSAGE_createresourceoutput"/>
+                            </bpws:copy>
+                        </bpws:assign>
+                        <bpws:extensionActivity>
+                            <tibex:extActivity
+                                name="_BX_DataMapperScript_2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Create target 'BusinessUser' if it doesn't exist.
+if (BusinessUser == null) {
+    BusinessUser = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createcreateresourceinputType();
+}
+
+// Map from 'createresourceoutput.createresourcerequest' to 'BusinessUser.createresourcerequest'
+
+// Overwrite list: BusinessUser.createresourcerequest
+BusinessUser.createresourcerequest.clear();
+
+if (MESSAGE_createresourceoutput != null && MESSAGE_createresourceoutput.createresourcerequest != null) {
+
+    for (var i1 = 0; i1 < MESSAGE_createresourceoutput.createresourcerequest.size(); i1++) { 
+        var $sVi1 = ScriptUtil.copy(MESSAGE_createresourceoutput.createresourcerequest.get(i1));
+        
+        BusinessUser.createresourcerequest.add($sVi1);
+    }
+}
+
+
+]]></tibex:script>
+                            </tibex:extActivity>
+                        </bpws:extensionActivity>
+                    </bpws:sequence>
+                </bpws:scope>
             </bpws:sequence>
         </bpws:scope>
         <bpws:scope name="LDAPEntryContractorMasterUser"
             tibex:type="serviceTask" tibex:xpdlId="_pGDy8PEPEeeW2tm46yiN8A">
-            <tibex:initiatedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[LDAPEntry = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
+            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[LDAPEntry = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
 
 var entry=com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createinputType();
 entry.email=ContractorGroup.emailID;
@@ -292,15 +388,15 @@ LDAPEntry.input.add(entry);
                 <bpws:variable messageType="ns:Onbordinginput" name="v_705fece6"/>
                 <bpws:variable messageType="ns:Onbordingoutput" name="v_a63f2765"/>
             </bpws:variables>
-            <bpws:sequence name="_BX_sequence_3">
+            <bpws:sequence name="_BX_sequence_4">
                 <bpws:scope name="_BX_ToSvcDataMapping_2">
                     <bpws:variables>
                         <bpws:variable name="MESSAGE_ldapentryinput" tibex:class="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.ldapentryinputrepeatType"/>
                     </bpws:variables>
-                    <bpws:sequence name="_BX_sequence_4">
+                    <bpws:sequence name="_BX_sequence_5">
                         <bpws:extensionActivity>
                             <tibex:extActivity
-                                name="_BX_DataMapperScript_2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                name="_BX_DataMapperScript_3" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                 <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Create target 'ldapentryinput' if it doesn't exist.
 if (MESSAGE_ldapentryinput == null) {
     MESSAGE_ldapentryinput = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
@@ -324,7 +420,7 @@ if (LDAPEntry != null && LDAPEntry.input != null) {
 ]]></tibex:script>
                             </tibex:extActivity>
                         </bpws:extensionActivity>
-                        <bpws:assign name="_BX_assign_4" validate="no">
+                        <bpws:assign name="_BX_assign_5" validate="no">
                             <bpws:copy
                                 tibex:elementName="{http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd}ldapentryinputrepeat" tibex:transform="ObjectToXml">
                                 <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MESSAGE_ldapentryinput]]></bpws:from>
@@ -387,8 +483,7 @@ ContractorNormalUsers.get(i).masterUser = "N";
         </bpws:extensionActivity>
         <bpws:scope name="LDAPEntryContractorNormalUsers"
             tibex:type="serviceTask" tibex:xpdlId="_7YTsMPEYEeeW2tm46yiN8A">
-            <tibex:initiatedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[LDAPEntry = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
+            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[LDAPEntry = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
 
 
 for(var i=0;i<ContractorNormalUsers.size();i++){
@@ -416,15 +511,15 @@ LDAPEntry.input.add(entry);
                 <bpws:variable messageType="ns:Onbordinginput" name="v_705fece6"/>
                 <bpws:variable messageType="ns:Onbordingoutput" name="v_a63f2765"/>
             </bpws:variables>
-            <bpws:sequence name="_BX_sequence_5">
+            <bpws:sequence name="_BX_sequence_6">
                 <bpws:scope name="_BX_ToSvcDataMapping_3">
                     <bpws:variables>
                         <bpws:variable name="MESSAGE_ldapentryinput" tibex:class="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.ldapentryinputrepeatType"/>
                     </bpws:variables>
-                    <bpws:sequence name="_BX_sequence_6">
+                    <bpws:sequence name="_BX_sequence_7">
                         <bpws:extensionActivity>
                             <tibex:extActivity
-                                name="_BX_DataMapperScript_3" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                name="_BX_DataMapperScript_4" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                                 <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Create target 'ldapentryinput' if it doesn't exist.
 if (MESSAGE_ldapentryinput == null) {
     MESSAGE_ldapentryinput = com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createldapentryinputrepeatType();
@@ -448,7 +543,7 @@ if (LDAPEntry != null && LDAPEntry.input != null) {
 ]]></tibex:script>
                             </tibex:extActivity>
                         </bpws:extensionActivity>
-                        <bpws:assign name="_BX_assign_7" validate="no">
+                        <bpws:assign name="_BX_assign_8" validate="no">
                             <bpws:copy
                                 tibex:elementName="{http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd}ldapentryinputrepeat" tibex:transform="ObjectToXml">
                                 <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MESSAGE_ldapentryinput]]></bpws:from>
@@ -463,5 +558,25 @@ if (LDAPEntry != null && LDAPEntry.input != null) {
                     partnerLink="PortTypeEndpoint0_Consumer2" portType="ns:PortType"/>
             </bpws:sequence>
         </bpws:scope>
+        <bpws:extensionActivity>
+            <tibex:extActivity name="UpdateResourceResult"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateResource/comsfcfosImplmapResources/UpdateResourceResult/UpdateResourceResult.form&#xd;&#xa;"
+                tibex:type="userTask"
+                tibex:xpdlId="_wbDZ4PVJEee786-X2LpNbg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                <bpws:targets>
+                    <bpws:target linkName="BusinessUsers to UpdateResourceResult"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="UpdateResourceResult to End"/>
+                </bpws:sources>
+                <model:PageActivityDataModelType xmi:version="2.0"
+                    xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
+                    <pageActivityParameters>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="BusinessUser"/>
+                    </pageActivityParameters>
+                </model:PageActivityDataModelType>
+            </tibex:extActivity>
+        </bpws:extensionActivity>
     </bpws:flow>
 </bpws:process>

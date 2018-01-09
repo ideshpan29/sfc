@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pd:ProcessDefinition xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns13="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeResourceCreation.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="wsdlPfx:ResourceCreationiput"/>
-    <pd:startX>220</pd:startX>
+    <pd:startX>218</pd:startX>
     <pd:startY>108</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:ResourceCreationoutput>
             <createresourceoutput>
-                <ns:createresourceoutput>
-                    <ns:outputmessage>
-                        <xsl:value-of select="$Render-XML/xmlString"/>
-                    </ns:outputmessage>
-                </ns:createresourceoutput>
+                <ns:createresourceinput>
+                    <xsl:for-each select="$accumulateddata/AccumulatedOutput/root">
+                        <ns:createresourcerequest>
+                            <xsl:if test="param/name">
+                                <ns:name>
+                                    <xsl:value-of select="param/name"/>
+                                </ns:name>
+                            </xsl:if>
+                            <xsl:if test="param/orgname">
+                                <ns:orgname>
+                                    <xsl:value-of select="param/orgname"/>
+                                </ns:orgname>
+                            </xsl:if>
+                            <xsl:if test="param/flag">
+                                <ns:flag>
+                                    <xsl:value-of select="param/flag"/>
+                                </ns:flag>
+                            </xsl:if>
+                            <xsl:if test="param/entityname">
+                                <ns:entityname>
+                                    <xsl:value-of select="param/entityname"/>
+                                </ns:entityname>
+                            </xsl:if>
+                            <xsl:if test="param/email">
+                                <ns:email>
+                                    <xsl:value-of select="param/email"/>
+                                </ns:email>
+                            </xsl:if>
+                            <xsl:if test="param/password">
+                                <ns:password>
+                                    <xsl:value-of select="param/password"/>
+                                </ns:password>
+                            </xsl:if>
+                            <xsl:if test="param/addby">
+                                <ns:addby>
+                                    <xsl:value-of select="param/addby"/>
+                                </ns:addby>
+                            </xsl:if>
+                            <xsl:if test="param/action">
+                                <ns:action>
+                                    <xsl:value-of select="param/action"/>
+                                </ns:action>
+                            </xsl:if>
+                            <xsl:if test="param/result">
+                                <ns:result>
+                                    <xsl:value-of select="param/result"/>
+                                </ns:result>
+                            </xsl:if>
+                        </ns:createresourcerequest>
+                    </xsl:for-each>
+                </ns:createresourceinput>
             </createresourceoutput>
         </wsdlPfx:ResourceCreationoutput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:ResourceCreationoutput"/>
-    <pd:endX>1047</pd:endX>
-    <pd:endY>357</pd:endY>
+    <pd:endX>1409</pd:endX>
+    <pd:endY>239</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:ResourceCreationfault"/>
     </pd:errorSchemas>
@@ -69,8 +116,8 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>1040</pd:x>
-        <pd:y>235</pd:y>
+        <pd:x>1274</pd:x>
+        <pd:y>251</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -109,8 +156,8 @@
     <pd:activity name="send Exception Request">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>870</pd:x>
-        <pd:y>370</pd:y>
+        <pd:x>1399</pd:x>
+        <pd:y>445</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
         </config>
@@ -154,8 +201,8 @@
     <pd:activity name="Catch All Exception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>662</pd:x>
-        <pd:y>372</pd:y>
+        <pd:x>1009</pd:x>
+        <pd:y>438</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -165,10 +212,10 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>496</pd:x>
-        <pd:y>18</pd:y>
-        <pd:width>165</pd:width>
-        <pd:height>155</pd:height>
+        <pd:x>466</pd:x>
+        <pd:y>61</pd:y>
+        <pd:width>381</pd:width>
+        <pd:height>373</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -179,8 +226,9 @@
             <pd:over>$Start/wsdlPfx:ResourceCreationiput/createresourceinput/ns:createresourceinput/ns:createresourcerequest</pd:over>
             <pd:iterationElementSlot>entry</pd:iterationElementSlot>
             <pd:indexSlot>entries</pd:indexSlot>
-            <pd:activityOutputName/>
-            <pd:accumulateOutput>false</pd:accumulateOutput>
+            <pd:outSlot>accumulateddata</pd:outSlot>
+            <pd:activityOutputName>Map Data</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
         </config>
         <pd:inputBindings/>
         <pd:expanded>true</pd:expanded>
@@ -189,11 +237,49 @@
             <pd:to>Call Process createResource</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$entry/ns:createresourcerequest/ns:action='ADD'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>CallProcessDeleteResource</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$entry/ns:createresourcerequest/ns:action='DELETE'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Call-ProcessGroupRemoval</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$entry/ns:createresourcerequest/ns:action='REMOVE'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Map Data</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Call Process createResource</pd:from>
-            <pd:to>end</pd:to>
+            <pd:to>Map Data</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>CallProcessDeleteResource</pd:from>
+            <pd:to>Map Data</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Call-ProcessGroupRemoval</pd:from>
+            <pd:to>Map Data</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -201,21 +287,19 @@
         <pd:activity name="Call Process createResource">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>577</pd:x>
-            <pd:y>110</pd:y>
+            <pd:x>646</pd:x>
+            <pd:y>140</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
             </config>
             <pd:inputBindings>
                 <ns:createresourceinput>
                     <ns:createresourcerequest>
-                        <xsl:if test="$entry/ns:createresourcerequest/ns:name">
-                            <ns:name>
-                                <xsl:value-of select="$entry/ns:createresourcerequest/ns:name"/>
-                            </ns:name>
-                        </xsl:if>
-                        <ns:orgname>
+                        <ns:name>
                             <xsl:value-of select="$entry/ns:createresourcerequest/ns:name"/>
+                        </ns:name>
+                        <ns:orgname>
+                            <xsl:value-of select="$entry/ns:createresourcerequest/ns:orgname"/>
                         </ns:orgname>
                         <xsl:if test="$entry/ns:createresourcerequest/ns:flag">
                             <ns:flag>
@@ -237,28 +321,303 @@
                                 <xsl:value-of select="$entry/ns:createresourcerequest/ns:password"/>
                             </ns:password>
                         </xsl:if>
+                        <xsl:if test="$entry/ns:createresourcerequest/ns:addby">
+                            <ns:addby>
+                                <xsl:value-of select="$entry/ns:createresourcerequest/ns:addby"/>
+                            </ns:addby>
+                        </xsl:if>
+                        <xsl:if test="$entry/ns:createresourcerequest/ns:action">
+                            <ns:action>
+                                <xsl:value-of select="$entry/ns:createresourcerequest/ns:action"/>
+                            </ns:action>
+                        </xsl:if>
+                        <xsl:if test="$entry/ns:createresourcerequest/ns:result">
+                            <ns:result>
+                                <xsl:value-of select="$entry/ns:createresourcerequest/ns:result"/>
+                            </ns:result>
+                        </xsl:if>
                     </ns:createresourcerequest>
                 </ns:createresourceinput>
             </pd:inputBindings>
         </pd:activity>
+        <pd:activity name="CallProcessDeleteResource">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>647</pd:x>
+            <pd:y>246</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceDeletion.process</processName>
+            </config>
+            <pd:inputBindings>
+                <ns:createresourceinput>
+                    <xsl:for-each select="$entry/ns:createresourcerequest">
+                        <ns:createresourcerequest>
+                            <xsl:if test="ns:name">
+                                <ns:name>
+                                    <xsl:value-of select="ns:name"/>
+                                </ns:name>
+                            </xsl:if>
+                            <xsl:if test="ns:orgname">
+                                <ns:orgname>
+                                    <xsl:value-of select="ns:orgname"/>
+                                </ns:orgname>
+                            </xsl:if>
+                            <xsl:if test="ns:flag">
+                                <ns:flag>
+                                    <xsl:value-of select="ns:flag"/>
+                                </ns:flag>
+                            </xsl:if>
+                            <xsl:if test="ns:entityname">
+                                <ns:entityname>
+                                    <xsl:value-of select="ns:entityname"/>
+                                </ns:entityname>
+                            </xsl:if>
+                            <xsl:if test="ns:email">
+                                <ns:email>
+                                    <xsl:value-of select="ns:email"/>
+                                </ns:email>
+                            </xsl:if>
+                            <xsl:if test="ns:password">
+                                <ns:password>
+                                    <xsl:value-of select="ns:password"/>
+                                </ns:password>
+                            </xsl:if>
+                            <xsl:if test="ns:addby">
+                                <ns:addby>
+                                    <xsl:value-of select="ns:addby"/>
+                                </ns:addby>
+                            </xsl:if>
+                            <xsl:if test="ns:action">
+                                <ns:action>
+                                    <xsl:value-of select="ns:action"/>
+                                </ns:action>
+                            </xsl:if>
+                            <xsl:if test="ns:result">
+                                <ns:result>
+                                    <xsl:value-of select="ns:result"/>
+                                </ns:result>
+                            </xsl:if>
+                        </ns:createresourcerequest>
+                    </xsl:for-each>
+                </ns:createresourceinput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Call-ProcessGroupRemoval">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>646</pd:x>
+            <pd:y>333</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceRemoval.process</processName>
+            </config>
+            <pd:inputBindings>
+                <ns:createresourceinput>
+                    <xsl:for-each select="$entry/ns:createresourcerequest">
+                        <ns:createresourcerequest>
+                            <xsl:if test="ns:name">
+                                <ns:name>
+                                    <xsl:value-of select="ns:name"/>
+                                </ns:name>
+                            </xsl:if>
+                            <xsl:if test="ns:orgname">
+                                <ns:orgname>
+                                    <xsl:value-of select="ns:orgname"/>
+                                </ns:orgname>
+                            </xsl:if>
+                            <xsl:if test="ns:flag">
+                                <ns:flag>
+                                    <xsl:value-of select="ns:flag"/>
+                                </ns:flag>
+                            </xsl:if>
+                            <xsl:if test="ns:entityname">
+                                <ns:entityname>
+                                    <xsl:value-of select="ns:entityname"/>
+                                </ns:entityname>
+                            </xsl:if>
+                            <xsl:if test="ns:email">
+                                <ns:email>
+                                    <xsl:value-of select="ns:email"/>
+                                </ns:email>
+                            </xsl:if>
+                            <xsl:if test="ns:password">
+                                <ns:password>
+                                    <xsl:value-of select="ns:password"/>
+                                </ns:password>
+                            </xsl:if>
+                            <xsl:if test="ns:addby">
+                                <ns:addby>
+                                    <xsl:value-of select="ns:addby"/>
+                                </ns:addby>
+                            </xsl:if>
+                            <xsl:if test="ns:action">
+                                <ns:action>
+                                    <xsl:value-of select="ns:action"/>
+                                </ns:action>
+                            </xsl:if>
+                            <xsl:if test="ns:result">
+                                <ns:result>
+                                    <xsl:value-of select="ns:result"/>
+                                </ns:result>
+                            </xsl:if>
+                        </ns:createresourcerequest>
+                    </xsl:for-each>
+                </ns:createresourceinput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Map Data">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>782</pd:x>
+            <pd:y>249</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="param" minOccurs="0">
+                                    <xsd:complexType>
+                                        <xsd:sequence>
+                                            <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="orgname" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="flag" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="entityname" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="password" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="addby" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="action" type="xsd:string" minOccurs="0"/>
+                                            <xsd:element name="result" type="xsd:string" minOccurs="0"/>
+                                        </xsd:sequence>
+                                    </xsd:complexType>
+                                </xsd:element>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:choose>
+                        <xsl:when test="$entry/ns:createresourcerequest/ns:action='ADD'">
+                            <param>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:name">
+                                    <name>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:name"/>
+                                    </name>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:orgname">
+                                    <orgname>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:orgname"/>
+                                    </orgname>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:flag">
+                                    <flag>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:flag"/>
+                                    </flag>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:entityname">
+                                    <entityname>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:entityname"/>
+                                    </entityname>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:email">
+                                    <email>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:email"/>
+                                    </email>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:password">
+                                    <password>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:password"/>
+                                    </password>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:addby">
+                                    <addby>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:addby"/>
+                                    </addby>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:action">
+                                    <action>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:action"/>
+                                    </action>
+                                </xsl:if>
+                                <xsl:if test="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:result">
+                                    <result>
+                                        <xsl:value-of select="$Call-Process-createResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:result"/>
+                                    </result>
+                                </xsl:if>
+                            </param>
+                        </xsl:when>
+                        <xsl:when test="$entry/ns:createresourcerequest/ns:action='DELETE'">
+                            <param>
+                                <name>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:name"/>
+                                </name>
+                                <orgname>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:orgname"/>
+                                </orgname>
+                                <flag>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:flag"/>
+                                </flag>
+                                <entityname>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:entityname"/>
+                                </entityname>
+                                <email>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:email"/>
+                                </email>
+                                <password>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:password"/>
+                                </password>
+                                <addby>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:addby"/>
+                                </addby>
+                                <action>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:action"/>
+                                </action>
+                                <result>
+                                    <xsl:value-of select="$CallProcessDeleteResource/ns:createresourceinput/ns:createresourcerequest[1]/ns:result"/>
+                                </result>
+                            </param>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <param>
+                                <name>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:name"/>
+                                </name>
+                                <orgname>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:orgname"/>
+                                </orgname>
+                                <flag>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:flag"/>
+                                </flag>
+                                <entityname>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:entityname"/>
+                                </entityname>
+                                <email>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:email"/>
+                                </email>
+                                <password>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:password"/>
+                                </password>
+                                <addby>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:addby"/>
+                                </addby>
+                                <action>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:action"/>
+                                </action>
+                                <result>
+                                    <xsl:value-of select="$Call-ProcessGroupRemoval/ns:createresourceinput/ns:createresourcerequest[1]/ns:result"/>
+                                </result>
+                            </param>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
     </pd:group>
-    <pd:activity name="Call Process">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>612</pd:x>
-        <pd:y>235</pd:y>
-        <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
-        </config>
-        <pd:inputBindings>
-            <ns:createresourceinput/>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>1039</pd:x>
-        <pd:y>103</pd:y>
+        <pd:x>1273</pd:x>
+        <pd:y>119</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -290,8 +649,8 @@
     <pd:activity name="Parse Data">
         <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
         <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-        <pd:x>869</pd:x>
-        <pd:y>105</pd:y>
+        <pd:x>1103</pd:x>
+        <pd:y>121</pd:y>
         <config>
             <InputType>String</InputType>
             <Encoding>ASCII</Encoding>
@@ -311,8 +670,8 @@
     <pd:activity name="Read File">
         <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
         <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
-        <pd:x>749</pd:x>
-        <pd:y>104</pd:y>
+        <pd:x>973</pd:x>
+        <pd:y>120</pd:y>
         <config>
             <encoding>text</encoding>
         </config>
@@ -353,35 +712,6 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Group</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>count($Start/wsdlPfx:ResourceCreationiput/createresourceinput/ns:createresourceinput/ns:createresourcerequest)!=0</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Call Process</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Call Process</pd:from>
-        <pd:to>send Log Request AUDIT 2</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Group</pd:from>
-        <pd:to>Read File</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Read File</pd:from>
         <pd:to>Parse Data</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -397,6 +727,28 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Render XML</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>1=2</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

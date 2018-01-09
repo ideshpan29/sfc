@@ -14,16 +14,60 @@
     <pd:startX>43</pd:startX>
     <pd:startY>493</pd:startY>
     <pd:returnBindings>
-        <pfx17:createresourceoutput>
-            <pfx17:outputmessage>
-                <xsl:value-of select="if ($processStatus/status='success') then $processStatus/status else concat($Catch-Errors/exceptiondata/*,&quot;Check Errorlog.txt for more information&quot;)"/>
-            </pfx17:outputmessage>
-        </pfx17:createresourceoutput>
+        <pfx17:createresourceinput>
+            <xsl:for-each select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest">
+                <pfx17:createresourcerequest>
+                    <xsl:if test="pfx17:name">
+                        <pfx17:name>
+                            <xsl:value-of select="pfx17:name"/>
+                        </pfx17:name>
+                    </xsl:if>
+                    <xsl:if test="pfx17:orgname">
+                        <pfx17:orgname>
+                            <xsl:value-of select="pfx17:orgname"/>
+                        </pfx17:orgname>
+                    </xsl:if>
+                    <xsl:if test="pfx17:flag">
+                        <pfx17:flag>
+                            <xsl:value-of select="pfx17:flag"/>
+                        </pfx17:flag>
+                    </xsl:if>
+                    <xsl:if test="pfx17:entityname">
+                        <pfx17:entityname>
+                            <xsl:value-of select="pfx17:entityname"/>
+                        </pfx17:entityname>
+                    </xsl:if>
+                    <xsl:if test="pfx17:email">
+                        <pfx17:email>
+                            <xsl:value-of select="pfx17:email"/>
+                        </pfx17:email>
+                    </xsl:if>
+                    <xsl:if test="pfx17:password">
+                        <pfx17:password>
+                            <xsl:value-of select="pfx17:password"/>
+                        </pfx17:password>
+                    </xsl:if>
+                    <xsl:if test="pfx17:addby">
+                        <pfx17:addby>
+                            <xsl:value-of select="pfx17:addby"/>
+                        </pfx17:addby>
+                    </xsl:if>
+                    <xsl:if test="pfx17:action">
+                        <pfx17:action>
+                            <xsl:value-of select="pfx17:action"/>
+                        </pfx17:action>
+                    </xsl:if>
+                    <pfx17:result>
+                        <xsl:value-of select="$ADDStatus/status"/>
+                    </pfx17:result>
+                </pfx17:createresourcerequest>
+            </xsl:for-each>
+        </pfx17:createresourceinput>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
-    <pd:endType ref="pfx17:createresourceoutput"/>
-    <pd:endX>2690</pd:endX>
-    <pd:endY>487</pd:endY>
+    <pd:endType ref="pfx17:createresourceinput"/>
+    <pd:endX>2652</pd:endX>
+    <pd:endY>364</pd:endY>
     <pd:errorSchemas>
         <ParseDataError>
             <xsd:element name="root">
@@ -39,15 +83,15 @@
         <inputFile>
             <xsd:element name="fileName" type="xsd:string"/>
         </inputFile>
-        <processStatus>
-            <xsd:element name="status" type="xsd:string"/>
-        </processStatus>
         <Attribute>
             <xsd:element name="Email" type="xsd:string"/>
         </Attribute>
         <PositionId>
             <xsd:element name="PositionId" type="xsd:string"/>
         </PositionId>
+        <ADDStatus>
+            <xsd:element name="status" type="xsd:string"/>
+        </ADDStatus>
         <LDAPContainerID>
             <xsd:element name="Container">
                 <xsd:complexType>
@@ -166,7 +210,7 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>GetSpecificCandidate</pd:to>
+            <pd:to>Assign-2</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -354,7 +398,7 @@
         </pd:transition>
         <pd:transition>
             <pd:from>SQL Direct</pd:from>
-            <pd:to>log sucess</pd:to>
+            <pd:to>Process Status</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -376,6 +420,20 @@
         <pd:transition>
             <pd:from>Write to Status File 2</pd:from>
             <pd:to>log group not found</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Process Status</pd:from>
+            <pd:to>log sucess</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign-2</pd:from>
+            <pd:to>GetSpecificCandidate</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -407,7 +465,7 @@
                                 <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                             </xsl:attribute>
                             <xsl:attribute name="name">
-                                <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:orgname"/>
+                                <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:name"/>
                             </xsl:attribute>
                             <xsl:attribute name="container-id">
                                 <xsl:value-of select="$LDAPContainerID/Container/Id"/>
@@ -1025,8 +1083,8 @@
         <pd:activity name="GetSpecificCandidate">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1050</pd:x>
-            <pd:y>444</pd:y>
+            <pd:x>1094</pd:x>
+            <pd:y>437</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1047,7 +1105,7 @@
                                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
                                 </xsl:attribute>
                                 <xsl:attribute name="ldap-query">
-                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:orgname,&quot;)&quot;)"/>
+                                    <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                                 </xsl:attribute>
                                 <xsl:attribute name="ldap-alias">
                                     <xsl:value-of select="$LDAPContainerID/Container/alias"/>
@@ -1189,12 +1247,40 @@
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
+        <pd:activity name="Process Status">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>2290</pd:x>
+            <pd:y>225</pd:y>
+            <config>
+                <variableName>ADDStatus</variableName>
+            </config>
+            <pd:inputBindings>
+                <status>
+                    <xsl:value-of select="'SUCCESS'"/>
+                </status>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Assign-2">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>1005</pd:x>
+            <pd:y>413</pd:y>
+            <config>
+                <variableName>ADDStatus</variableName>
+            </config>
+            <pd:inputBindings>
+                <status>
+                    <xsl:value-of select="'FAILED'"/>
+                </status>
+            </pd:inputBindings>
+        </pd:activity>
     </pd:group>
     <pd:activity name="Catch Errors">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>2686</pd:x>
-        <pd:y>712</pd:y>
+        <pd:x>2691</pd:x>
+        <pd:y>755</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -1204,8 +1290,8 @@
     <pd:activity name="GetOrgModel">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>909</pd:x>
-        <pd:y>489</pd:y>
+        <pd:x>850</pd:x>
+        <pd:y>496</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1286,20 +1372,6 @@
             </Input>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Process Status">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>2598</pd:x>
-        <pd:y>483</pd:y>
-        <config>
-            <variableName>processStatus</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'success'"/>
-            </status>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="Set Batch Mode Input File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
@@ -1353,8 +1425,8 @@
     <pd:activity name="Write to Errorlogs">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>2684</pd:x>
-        <pd:y>602</pd:y>
+        <pd:x>2697</pd:x>
+        <pd:y>626</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -1451,6 +1523,20 @@
             <pd:inputBindings/>
         </pd:activity>
     </pd:group>
+    <pd:activity name="Assign-1">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>2654</pd:x>
+        <pd:y>484</pd:y>
+        <config>
+            <variableName>ADDStatus</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>listContainer</pd:to>
@@ -1461,13 +1547,6 @@
     <pd:transition>
         <pd:from>Parse Input Data</pd:from>
         <pd:to>GetOrgModel</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Iterate For each record present in CSV File</pd:from>
-        <pd:to>Process Status</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -1510,20 +1589,6 @@
     <pd:transition>
         <pd:from>Catch Errors</pd:from>
         <pd:to>Write to Errorlogs</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Process Status</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Write to Errorlogs</pd:from>
-        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -1572,5 +1637,26 @@
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate For each record present in CSV File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write to Errorlogs</pd:from>
+        <pd:to>Assign-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>

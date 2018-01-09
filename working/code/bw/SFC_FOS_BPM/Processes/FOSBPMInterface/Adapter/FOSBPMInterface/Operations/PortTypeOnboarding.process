@@ -207,76 +207,6 @@
             </ns12:ExceptionRequest>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Read File">
-        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
-        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
-        <pd:x>498</pd:x>
-        <pd:y>90</pd:y>
-        <config>
-            <encoding>text</encoding>
-        </config>
-        <pd:inputBindings>
-            <ns13:ReadActivityInputClass>
-                <fileName>
-                    <xsl:value-of select="&quot;D:/resourcestatus.txt&quot;"/>
-                </fileName>
-            </ns13:ReadActivityInputClass>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Parse Data">
-        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
-        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-        <pd:x>587</pd:x>
-        <pd:y>91</pd:y>
-        <config>
-            <InputType>String</InputType>
-            <Encoding>ASCII</Encoding>
-            <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Data Formats/Parse Resource Status File.sharedparse</ParseSharedConfig>
-        </config>
-        <pd:inputBindings>
-            <Input>
-                <text>
-                    <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileContent/textContent"/>
-                </text>
-                <noOfRecords>
-                    <xsl:value-of select="-1"/>
-                </noOfRecords>
-            </Input>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Render XML">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>683</pd:x>
-        <pd:y>87</pd:y>
-        <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term>
-                <xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="root">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="name" type="xsd:string"/>
-                                        <xs:element name="action" type="xsd:string"/>
-                                        <xs:element name="grpname" type="xsd:string"/>
-                                        <xs:element name="status" type="xsd:string"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </term>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <xsl:copy-of select="$Parse-Data/Output/Rows/root/param"/>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
@@ -287,13 +217,6 @@
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>Group</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Group</pd:from>
-        <pd:to>Read File</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -320,21 +243,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Read File</pd:from>
-        <pd:to>Parse Data</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Parse Data</pd:from>
-        <pd:to>Render XML</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Render XML</pd:from>
+        <pd:from>Group</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

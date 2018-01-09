@@ -2,9 +2,9 @@
 
 if (typeof(tibcoforms) == 'undefined') tibcoforms = new Object();
 if (typeof(tibcoforms.formCode) == 'undefined') tibcoforms.formCode = new Object();
-tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg'] = new Object();
-tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg']['defineActions'] = function() {
-var fc = tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg'];
+tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A'] = new Object();
+tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A']['defineActions'] = function() {
+var fc = tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A'];
     fc['rule_cancel'] = function(formId, context, thisObj) {
 	   try {
 			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "cancel", "cancel", fc['action_cancel']);
@@ -37,8 +37,8 @@ var fc = tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg'];
 					return;
 				 var resource = context.form.resource;
 			     var logger = tibcoforms.bridge.log_logger();
-				data.setFetchDataURL("http://rajagtap-t470:9801/");
-data.setIsGateKeeper("true");
+				//data.setFetchDataURL("http://rajagtap-t470:9801/");
+//data.setIsGateKeeper("true");
 
 
 
@@ -207,16 +207,32 @@ logger.info("clicked");
 
 
 			}
-    fc['rule_unSelectOthers'] = function(formId, context, thisObj) {
+    fc['rule_setLabelBackground'] = function(formId, context, thisObj) {
 	   try {
+			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "setLabelBackground", "setLabelBackground", fc['action_setLabelBackground']);
 	   } catch(e) {
-	       tibcoforms.bridge.log_error("Rule(unSelectOthers) Error: " + e);
+	       tibcoforms.bridge.log_error("Rule(setLabelBackground) Error: " + e);
 	       throw e;
 	   }
 	}
 
-			fc['action_unselectOthers'] = function(context, data, pane, control, factory, pkg, f , p) {
-				return;
+			fc['action_setLabelBackground'] = function(context, data, pane, control, factory, pkg, f , p) {
+				 if (context.form && context.form._marked4Cancel)
+					return;
+				 var resource = context.form.resource;
+			     var logger = tibcoforms.bridge.log_logger();
+				var a;
+setupFontColor('[id$=lblSearch]');
+setupFontColor('[id$=lblComplete]');
+setupFontColor('[id$=lblInProgress]');
+setupFontColor('[id$=lblErroredOut]');
+setupFontColor('[id$=lblCancelled]');
+
+
+
+
+
+
 			}
 	fc['action_cancel'] = function(context, data, pane, control, factory, pkg, f , p) {
 		context.form.invokeAction('cancel');
@@ -246,25 +262,40 @@ logger.info("clicked");
         return "TIBCO Forms 4.1.0 V17 compliant";
     }
 };
-tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg']['defineActions']();
+tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A']['defineActions']();
 
-tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg']['defineValidations'] = function() {
-var fc = tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg'];
+tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A']['defineValidations'] = function() {
+var fc = tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A'];
 	
-	
-	
-fc['validation_TaskList_status_TaskList_status__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_status: TaskList_status__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_status__length", true, true);
-}
-	
-fc['validation_HaltedInstances_siebelCircuitID_HaltedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+fc['validation_StartedInstances_projectName_StartedInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_siebelCircuitID: HaltedInstances_siebelCircuitID__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_siebelCircuitID__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_projectName: StartedInstances_projectName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_projectName__length", true, true);
 }
 	
+	
+	
+	
+	
+	
+fc['validation_HaltedInstances_time_HaltedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_time: HaltedInstances_time__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_time__length", true, true);
+}
+	
+fc['validation_TaskList_firstOfferTime_TaskList_firstOfferTime__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_firstOfferTime: TaskList_firstOfferTime__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_firstOfferTime__length", true, true);
+}
+	
+	
+fc['validation_StartedInstances_status_StartedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_status: StartedInstances_status__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_status__length", true, true);
+}
 	
 fc['validation_HaltedInstances_clientName_HaltedInstances_clientName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
@@ -274,73 +305,11 @@ fc['validation_HaltedInstances_clientName_HaltedInstances_clientName__length'] =
 	
 	
 	
-fc['validation_CompletedInstances_processInstance_CompletedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processInstance: CompletedInstances_processInstance__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processInstance__length", true, true);
-}
-	
-	
-fc['validation_StartedInstances_processTemplate_StartedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processTemplate: StartedInstances_processTemplate__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processTemplate__length", true, true);
-}
-	
-	
-	
-fc['validation_CompletedInstances_status_CompletedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_status: CompletedInstances_status__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_status__length", true, true);
-}
-	
-fc['validation_IsGateKeeper_IsGateKeeper__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "IsGateKeeper: IsGateKeeper__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "IsGateKeeper__length", true, true);
-}
-	
-fc['validation_StartedInstances_processInstance_StartedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processInstance: StartedInstances_processInstance__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processInstance__length", true, true);
-}
-	
-fc['validation_TaskList_processInstance_TaskList_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_processInstance: TaskList_processInstance__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_processInstance__length", true, true);
-}
-	
-	
-fc['validation_CompletedInstances_clientName_CompletedInstances_clientName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_clientName: CompletedInstances_clientName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_clientName__length", true, true);
-}
-	
-	
-fc['validation_StartedInstances_projectName_StartedInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_projectName: StartedInstances_projectName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_projectName__length", true, true);
-}
-	
-fc['validation_HaltedInstances_time_HaltedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_time: HaltedInstances_time__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_time__length", true, true);
-}
-	
-	
-	
-fc['validation_TaskList_workDuration_TaskList_workDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
+fc['validation_TaskList_status_TaskList_status__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_workDuration: TaskList_workDuration__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_workDuration__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_status: TaskList_status__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_status__length", true, true);
 }
-	
 	
 fc['validation_CancelledInstances_status_CancelledInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
@@ -348,102 +317,20 @@ fc['validation_CancelledInstances_status_CancelledInstances_status__length'] = f
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_status__length", true, true);
 }
 	
-	
-fc['validation_TaskList_firstOfferTime_TaskList_firstOfferTime__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_firstOfferTime: TaskList_firstOfferTime__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_firstOfferTime__length", true, true);
-}
-	
-	
-	
-fc['validation_CancelledInstances_time_CancelledInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
+fc['validation_CompletedInstances_status_CompletedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_time: CancelledInstances_time__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_time__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_status: CompletedInstances_status__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_status__length", true, true);
 }
 	
 	
 	
 	
-	
-	
-fc['validation_TaskList_waitDuration_TaskList_waitDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_waitDuration: TaskList_waitDuration__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_waitDuration__length", true, true);
-}
-	
-	
-	
-fc['validation_CompletedInstances_time_CompletedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_time: CompletedInstances_time__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_time__length", true, true);
-}
 	
 fc['validation_CancelledInstances_processInstance_CancelledInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processInstance: CancelledInstances_processInstance__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processInstance__length", true, true);
-}
-	
-	
-	
-fc['validation_CompletedInstances_siebelCircuitID_CompletedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_siebelCircuitID: CompletedInstances_siebelCircuitID__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_siebelCircuitID__length", true, true);
-}
-	
-fc['validation_HaltedInstances_processTemplate_HaltedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processTemplate: HaltedInstances_processTemplate__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processTemplate__length", true, true);
-}
-	
-fc['validation_HaltedInstances_status_HaltedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_status: HaltedInstances_status__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_status__length", true, true);
-}
-	
-	
-fc['validation_CancelledInstances_processTemplate_CancelledInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processTemplate: CancelledInstances_processTemplate__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processTemplate__length", true, true);
-}
-	
-fc['validation_StartedInstances_siebelCircuitID_StartedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_siebelCircuitID: StartedInstances_siebelCircuitID__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_siebelCircuitID__length", true, true);
-}
-	
-fc['validation_StartedInstances_time_StartedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_time: StartedInstances_time__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_time__length", true, true);
-}
-	
-	
-fc['validation_CompletedInstances_processTemplate_CompletedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processTemplate: CompletedInstances_processTemplate__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processTemplate__length", true, true);
-}
-	
-fc['validation_TaskList_taskDuration_TaskList_taskDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskDuration: TaskList_taskDuration__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskDuration__length", true, true);
-}
-	
-fc['validation_StartedInstances_clientName_StartedInstances_clientName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_clientName: StartedInstances_clientName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_clientName__length", true, true);
 }
 	
 fc['validation_CancelledInstances_projectName_CancelledInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
@@ -459,35 +346,55 @@ fc['validation_CancelledInstances_clientName_CancelledInstances_clientName__leng
 }
 	
 	
-fc['validation_StartedInstances_status_StartedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
+	
+fc['validation_HaltedInstances_status_HaltedInstances_status__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_status: StartedInstances_status__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_status__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_status: HaltedInstances_status__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_status__length", true, true);
 }
 	
-fc['validation_CancelledInstances_siebelCircuitID_CancelledInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+	
+fc['validation_CompletedInstances_time_CompletedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_siebelCircuitID: CancelledInstances_siebelCircuitID__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_siebelCircuitID__length", true, true);
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_time: CompletedInstances_time__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_time__length", true, true);
 }
+	
+fc['validation_StartedInstances_clientName_StartedInstances_clientName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_clientName: StartedInstances_clientName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_clientName__length", true, true);
+}
+	
+fc['validation_StartedInstances_time_StartedInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_time: StartedInstances_time__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_time__length", true, true);
+}
+	
+fc['validation_HaltedInstances_processTemplate_HaltedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processTemplate: HaltedInstances_processTemplate__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processTemplate__length", true, true);
+}
+	
+fc['validation_TaskList_taskDuration_TaskList_taskDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskDuration: TaskList_taskDuration__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskDuration__length", true, true);
+}
+	
+fc['validation_CompletedInstances_processInstance_CompletedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processInstance: CompletedInstances_processInstance__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processInstance__length", true, true);
+}
+	
 	
 fc['validation_TaskList_taskName_TaskList_taskName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskName: TaskList_taskName__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_taskName__length", true, true);
-}
-	
-	
-fc['validation_HaltedInstances_projectName_HaltedInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_projectName: HaltedInstances_projectName__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_projectName__length", true, true);
-}
-	
-fc['validation_HaltedInstances_processInstance_HaltedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processInstance: HaltedInstances_processInstance__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processInstance__length", true, true);
 }
 	
 fc['validation_loginName_loginName__length'] = function(formId, controlName, cloneUID, listIndex) {
@@ -496,10 +403,119 @@ fc['validation_loginName_loginName__length'] = function(formId, controlName, clo
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "loginName__length", true, true);
 }
 	
+fc['validation_StartedInstances_siebelCircuitID_StartedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_siebelCircuitID: StartedInstances_siebelCircuitID__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_siebelCircuitID__length", true, true);
+}
+	
+	
+	
+fc['validation_StartedInstances_processTemplate_StartedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processTemplate: StartedInstances_processTemplate__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processTemplate__length", true, true);
+}
+	
+	
+fc['validation_CompletedInstances_clientName_CompletedInstances_clientName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_clientName: CompletedInstances_clientName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_clientName__length", true, true);
+}
+	
+fc['validation_CompletedInstances_siebelCircuitID_CompletedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_siebelCircuitID: CompletedInstances_siebelCircuitID__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_siebelCircuitID__length", true, true);
+}
+	
+fc['validation_StartedInstances_processInstance_StartedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processInstance: StartedInstances_processInstance__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "StartedInstances_processInstance__length", true, true);
+}
+	
+	
+	
+fc['validation_CancelledInstances_siebelCircuitID_CancelledInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_siebelCircuitID: CancelledInstances_siebelCircuitID__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_siebelCircuitID__length", true, true);
+}
+	
+	
+fc['validation_TaskList_waitDuration_TaskList_waitDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_waitDuration: TaskList_waitDuration__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_waitDuration__length", true, true);
+}
+	
+fc['validation_IsGateKeeper_IsGateKeeper__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "IsGateKeeper: IsGateKeeper__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "IsGateKeeper__length", true, true);
+}
+	
 fc['validation_CompletedInstances_projectName_CompletedInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_projectName: CompletedInstances_projectName__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_projectName__length", true, true);
+}
+	
+	
+fc['validation_CancelledInstances_processTemplate_CancelledInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processTemplate: CancelledInstances_processTemplate__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_processTemplate__length", true, true);
+}
+	
+	
+	
+fc['validation_HaltedInstances_siebelCircuitID_HaltedInstances_siebelCircuitID__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_siebelCircuitID: HaltedInstances_siebelCircuitID__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_siebelCircuitID__length", true, true);
+}
+	
+	
+	
+	
+fc['validation_HaltedInstances_projectName_HaltedInstances_projectName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_projectName: HaltedInstances_projectName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_projectName__length", true, true);
+}
+	
+fc['validation_CancelledInstances_time_CancelledInstances_time__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_time: CancelledInstances_time__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CancelledInstances_time__length", true, true);
+}
+	
+fc['validation_TaskList_processInstance_TaskList_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_processInstance: TaskList_processInstance__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_processInstance__length", true, true);
+}
+	
+fc['validation_HaltedInstances_processInstance_HaltedInstances_processInstance__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processInstance: HaltedInstances_processInstance__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "HaltedInstances_processInstance__length", true, true);
+}
+	
+	
+fc['validation_CompletedInstances_processTemplate_CompletedInstances_processTemplate__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processTemplate: CompletedInstances_processTemplate__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CompletedInstances_processTemplate__length", true, true);
+}
+	
+fc['validation_TaskList_workDuration_TaskList_workDuration__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_workDuration: TaskList_workDuration__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskList_workDuration__length", true, true);
 }
 	
 	fc['validate_required'] = function(formId, controlName, cloneUID, listIndex) {
@@ -586,4 +602,4 @@ fc['validation_CompletedInstances_projectName_CompletedInstances_projectName__le
 	   
 	   
 };
-tibcoforms.formCode['_lZJ3IPSjEeec1fMXPv5KDg']['defineValidations']();
+tibcoforms.formCode['_fYpqAPVjEee_HfiEwKRl-A']['defineValidations']();

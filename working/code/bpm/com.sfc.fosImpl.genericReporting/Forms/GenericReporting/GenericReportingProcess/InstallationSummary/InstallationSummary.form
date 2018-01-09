@@ -6,6 +6,7 @@
     <form:externalResource name="resource.safaricom" uri="CSS/safaricom.css" sfRelative="true" localized="true"/>
     <form:externalResource name="resource.loadData" uri="Javascript/loadData.js" sfRelative="true" localized="true"/>
     <form:externalResource name="resource.SFC" uri="Images/SFC.png" sfRelative="true" localized="true"/>
+    <form:externalResource name="resource.helper" uri="Javascript/helper.js" sfRelative="true"/>
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" name="data.fetchDataURL" label="fetchDataURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
@@ -139,6 +140,23 @@ ldTskData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessIns
 &#xD;
 &#xD;
 logger.info(&quot;clicked&quot;);&#xD;
+&#xD;
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.setLabelBackground" label="Set Label Background">
+      <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:action xsi:type="form:ScriptAction" name="action.setLabelBackground" label="Set Label Background">
+        <form:script>var a;&#xD;
+setupFontColor('[id$=lblSearch]');&#xD;
+setupFontColor('[id$=lblComplete]');&#xD;
+setupFontColor('[id$=lblInProgress]');&#xD;
+setupFontColor('[id$=lblErroredOut]');&#xD;
+setupFontColor('[id$=lblCancelled]');&#xD;
+&#xD;
+&#xD;
+&#xD;
+&#xD;
 &#xD;
 </form:script>
       </form:action>
@@ -324,6 +342,7 @@ logger.info(&quot;clicked&quot;);&#xD;
     <form:label>Installation Summary</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
+    <form:visual bgColor="#ffffff" width="1027"/>
     <form:labelProperties visible="true"/>
     <form:defaults>
       <form:labelProperties position="top"/>
@@ -472,7 +491,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>
@@ -580,7 +599,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>
@@ -688,7 +707,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>
@@ -795,7 +814,7 @@ logger.info(&quot;clicked&quot;);&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_c69GIPR_EeevaeucjrygaA" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_VI6VAPViEee_HfiEwKRl-A" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaPackage</form:package>
     <form:factory>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaFactory</form:factory>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_completeType</form:class>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_startedType</form:class>
     <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_haltedType</form:class>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_cancelledType</form:class>
     <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.getprocessinstancesoutputType</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_startedType</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_cancelledType</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.pi_completeType</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -29,88 +29,20 @@
       <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_cancelled__add" label="Add pi_cancelled">
-      <form:event source="#control.ListOfTables_pi_cancelled__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_cancelled__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_cancelled__add" label="Add pi_cancelled">
-        <form:script>var collectionPane = pane.ListOfTables_pi_cancelled;
-var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_cancelledType();
-collectionPane.getValue().add(newRecord);
-collectionPane.setSelection(newRecord);
-</form:script>
-      </form:action>
-    </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_cancelled__delete" label="Delete pi_cancelled">
-      <form:event source="#control.ListOfTables_pi_cancelled__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_cancelled__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_cancelled__delete" label="Delete pi_cancelled">
-        <form:script>var collectionPane = pane.ListOfTables_pi_cancelled;
-var selection = collectionPane.getSelection();
-if (selection != null) {
-    var rc = confirm(&quot;Delete the current record?&quot;);
-    if (rc == true) {
-        var list = collectionPane.getValue();
-        var size = list.size();
-        var selectionIndex = list.remove(selection);
-        var newSelection = null;
-        if(selectionIndex != -1) {
-            if(selectionIndex == size - 1) {
-                selectionIndex--;
-            }
-            newSelection = list.get(selectionIndex)
-            collectionPane.setSelection(newSelection);
-        }
-        collectionPane.setSelection(newSelection);
-    }
-}</form:script>
-      </form:action>
-    </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_halted__add" label="Add pi_halted">
-      <form:event source="#control.ListOfTables_pi_halted__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_halted__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_halted__add" label="Add pi_halted">
-        <form:script>var collectionPane = pane.ListOfTables_pi_halted;
-var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_haltedType();
-collectionPane.getValue().add(newRecord);
-collectionPane.setSelection(newRecord);
-</form:script>
-      </form:action>
-    </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_halted__delete" label="Delete pi_halted">
-      <form:event source="#control.ListOfTables_pi_halted__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_halted__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_halted__delete" label="Delete pi_halted">
-        <form:script>var collectionPane = pane.ListOfTables_pi_halted;
-var selection = collectionPane.getSelection();
-if (selection != null) {
-    var rc = confirm(&quot;Delete the current record?&quot;);
-    if (rc == true) {
-        var list = collectionPane.getValue();
-        var size = list.size();
-        var selectionIndex = list.remove(selection);
-        var newSelection = null;
-        if(selectionIndex != -1) {
-            if(selectionIndex == size - 1) {
-                selectionIndex--;
-            }
-            newSelection = list.get(selectionIndex)
-            collectionPane.setSelection(newSelection);
-        }
-        collectionPane.setSelection(newSelection);
-    }
-}</form:script>
-      </form:action>
-    </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_complete__add" label="Add pi_complete">
-      <form:event source="#control.ListOfTables_pi_complete__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_complete__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_complete__add" label="Add pi_complete">
-        <form:script>var collectionPane = pane.ListOfTables_pi_complete;
+    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_complete__add" label="Add pi_complete">
+      <form:event source="#control.ListOfTablesCopy_pi_complete__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_complete__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_complete__add" label="Add pi_complete">
+        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_complete;
 var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_completeType();
 collectionPane.getValue().add(newRecord);
 collectionPane.setSelection(newRecord);
 </form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_complete__delete" label="Delete pi_complete">
-      <form:event source="#control.ListOfTables_pi_complete__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_complete__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_complete__delete" label="Delete pi_complete">
-        <form:script>var collectionPane = pane.ListOfTables_pi_complete;
+    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_complete__delete" label="Delete pi_complete">
+      <form:event source="#control.ListOfTablesCopy_pi_complete__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_complete__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_complete__delete" label="Delete pi_complete">
+        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_complete;
 var selection = collectionPane.getSelection();
 if (selection != null) {
     var rc = confirm(&quot;Delete the current record?&quot;);
@@ -165,20 +97,20 @@ if (selection != null) {
 }</form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_started__add" label="Add pi_started">
-      <form:event source="#control.ListOfTables_pi_started__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_started__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_started__add" label="Add pi_started">
-        <form:script>var collectionPane = pane.ListOfTables_pi_started;
-var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_startedType();
+    <form:rule generated="true" name="rule.ListOfTables_pi_complete__add" label="Add pi_complete">
+      <form:event source="#control.ListOfTables_pi_complete__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_complete__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_complete__add" label="Add pi_complete">
+        <form:script>var collectionPane = pane.ListOfTables_pi_complete;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_completeType();
 collectionPane.getValue().add(newRecord);
 collectionPane.setSelection(newRecord);
 </form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTables_pi_started__delete" label="Delete pi_started">
-      <form:event source="#control.ListOfTables_pi_started__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_started__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_started__delete" label="Delete pi_started">
-        <form:script>var collectionPane = pane.ListOfTables_pi_started;
+    <form:rule generated="true" name="rule.ListOfTables_pi_complete__delete" label="Delete pi_complete">
+      <form:event source="#control.ListOfTables_pi_complete__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_complete__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_complete__delete" label="Delete pi_complete">
+        <form:script>var collectionPane = pane.ListOfTables_pi_complete;
 var selection = collectionPane.getSelection();
 if (selection != null) {
     var rc = confirm(&quot;Delete the current record?&quot;);
@@ -199,20 +131,54 @@ if (selection != null) {
 }</form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_complete__add" label="Add pi_complete">
-      <form:event source="#control.ListOfTablesCopy_pi_complete__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_complete__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_complete__add" label="Add pi_complete">
-        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_complete;
-var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_completeType();
+    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_started__add" label="Add pi_started">
+      <form:event source="#control.ListOfTablesCopy_pi_started__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_started__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_started__add" label="Add pi_started">
+        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_started;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_startedType();
 collectionPane.getValue().add(newRecord);
 collectionPane.setSelection(newRecord);
 </form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_complete__delete" label="Delete pi_complete">
-      <form:event source="#control.ListOfTablesCopy_pi_complete__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_complete__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_complete__delete" label="Delete pi_complete">
-        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_complete;
+    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_started__delete" label="Delete pi_started">
+      <form:event source="#control.ListOfTablesCopy_pi_started__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_started__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_started__delete" label="Delete pi_started">
+        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_started;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ListOfTables_pi_started__add" label="Add pi_started">
+      <form:event source="#control.ListOfTables_pi_started__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_started__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_started__add" label="Add pi_started">
+        <form:script>var collectionPane = pane.ListOfTables_pi_started;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_startedType();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ListOfTables_pi_started__delete" label="Delete pi_started">
+      <form:event source="#control.ListOfTables_pi_started__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_started__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_started__delete" label="Delete pi_started">
+        <form:script>var collectionPane = pane.ListOfTables_pi_started;
 var selection = collectionPane.getSelection();
 if (selection != null) {
     var rc = confirm(&quot;Delete the current record?&quot;);
@@ -267,20 +233,54 @@ if (selection != null) {
 }</form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_started__add" label="Add pi_started">
-      <form:event source="#control.ListOfTablesCopy_pi_started__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_started__add.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_started__add" label="Add pi_started">
-        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_started;
-var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_startedType();
+    <form:rule generated="true" name="rule.ListOfTables_pi_halted__add" label="Add pi_halted">
+      <form:event source="#control.ListOfTables_pi_halted__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_halted__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_halted__add" label="Add pi_halted">
+        <form:script>var collectionPane = pane.ListOfTables_pi_halted;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_haltedType();
 collectionPane.getValue().add(newRecord);
 collectionPane.setSelection(newRecord);
 </form:script>
       </form:action>
     </form:rule>
-    <form:rule generated="true" name="rule.ListOfTablesCopy_pi_started__delete" label="Delete pi_started">
-      <form:event source="#control.ListOfTablesCopy_pi_started__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTablesCopy_pi_started__delete.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.ListOfTablesCopy_pi_started__delete" label="Delete pi_started">
-        <form:script>var collectionPane = pane.ListOfTablesCopy_pi_started;
+    <form:rule generated="true" name="rule.ListOfTables_pi_halted__delete" label="Delete pi_halted">
+      <form:event source="#control.ListOfTables_pi_halted__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_halted__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_halted__delete" label="Delete pi_halted">
+        <form:script>var collectionPane = pane.ListOfTables_pi_halted;
+var selection = collectionPane.getSelection();
+if (selection != null) {
+    var rc = confirm(&quot;Delete the current record?&quot;);
+    if (rc == true) {
+        var list = collectionPane.getValue();
+        var size = list.size();
+        var selectionIndex = list.remove(selection);
+        var newSelection = null;
+        if(selectionIndex != -1) {
+            if(selectionIndex == size - 1) {
+                selectionIndex--;
+            }
+            newSelection = list.get(selectionIndex)
+            collectionPane.setSelection(newSelection);
+        }
+        collectionPane.setSelection(newSelection);
+    }
+}</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ListOfTables_pi_cancelled__add" label="Add pi_cancelled">
+      <form:event source="#control.ListOfTables_pi_cancelled__add" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_cancelled__add.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_cancelled__add" label="Add pi_cancelled">
+        <form:script>var collectionPane = pane.ListOfTables_pi_cancelled;
+var newRecord = factory.com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema.createPi_cancelledType();
+collectionPane.getValue().add(newRecord);
+collectionPane.setSelection(newRecord);
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule generated="true" name="rule.ListOfTables_pi_cancelled__delete" label="Delete pi_cancelled">
+      <form:event source="#control.ListOfTables_pi_cancelled__delete" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ListOfTables_pi_cancelled__delete.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ListOfTables_pi_cancelled__delete" label="Delete pi_cancelled">
+        <form:script>var collectionPane = pane.ListOfTables_pi_cancelled;
 var selection = collectionPane.getSelection();
 if (selection != null) {
     var rc = confirm(&quot;Delete the current record?&quot;);

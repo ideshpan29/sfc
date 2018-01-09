@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_lZJ3IPSjEeec1fMXPv5KDg" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_fYpqAPVjEee_HfiEwKRl-A" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.genericReporting.GenericReportingPackage</form:package>
     <form:factory>com.sfc.fosImpl.genericReporting.GenericReportingFactory</form:factory>
@@ -12,6 +12,7 @@
     <form:externalResource name="resource.safaricom" uri="../../../CSS/safaricom.css" localized="true"/>
     <form:externalResource name="resource.loadData" uri="../../../Javascript/loadData.js" localized="true"/>
     <form:externalResource name="resource.SFC" uri="../../../Images/SFC.png" localized="true"/>
+    <form:externalResource name="resource.helper" uri="../../../Javascript/helper.js"/>
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" name="data.fetchDataURL" label="fetchDataURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
@@ -36,10 +37,10 @@
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
     </form:rule>
     <form:rule name="rule.loadProcessList" label="Load Process List">
-      <form:event source="#_lZJ3IPSjEeec1fMXPv5KDg" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_fYpqAPVjEee_HfiEwKRl-A" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.loadProcessList" label="Load Process List">
-        <form:script>data.setFetchDataURL(&quot;http://rajagtap-t470:9801/&quot;);&#xD;
-data.setIsGateKeeper(&quot;true&quot;);&#xD;
+        <form:script>//data.setFetchDataURL(&quot;http://rajagtap-t470:9801/&quot;);&#xD;
+//data.setIsGateKeeper(&quot;true&quot;);&#xD;
 &#xD;
 &#xD;
 &#xD;
@@ -149,44 +150,21 @@ logger.info(&quot;clicked&quot;);&#xD;
 </form:script>
       </form:action>
     </form:rule>
-    <form:rule name="rule.unSelectOthers" label="Un Select Others">
-      <form:event source="#pane.CancelledInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.CancelledInstances.select"/>
-      <form:event source="#pane.CompletedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.CompletedInstances.select"/>
-      <form:event source="#pane.HaltedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.HaltedInstances.select"/>
-      <form:event source="#pane.StartedInstances" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.StartedInstances.select"/>
-      <form:action xsi:type="form:ScriptAction" name="action.unselectOthers" label="Unselect Others" enabled="false">
-        <form:script>if(context.pane.getName()==&quot;StartedInstances&quot;) {&#xD;
-	logger.info(&quot;in Started&quot;);&#xD;
- 	if(pane.StartedInstances.getSelection()!=null) {&#xD;
-		pane.CompletedInstances.setSelection(null);&#xD;
- 		pane.HaltedInstances.setSelection(null);&#xD;
- 		pane.CancelledInstances.setSelection(null);&#xD;
- 	}&#xD;
+    <form:rule name="rule.setLabelBackground" label="Set Label Background">
+      <form:event source="#_fYpqAPVjEee_HfiEwKRl-A" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:action xsi:type="form:ScriptAction" name="action.setLabelBackground" label="Set Label Background">
+        <form:script>var a;&#xD;
+setupFontColor('[id$=lblSearch]');&#xD;
+setupFontColor('[id$=lblComplete]');&#xD;
+setupFontColor('[id$=lblInProgress]');&#xD;
+setupFontColor('[id$=lblErroredOut]');&#xD;
+setupFontColor('[id$=lblCancelled]');&#xD;
 &#xD;
-}&#xD;
-else if(context.pane.getName()==&quot;CompletedInstances&quot;) {&#xD;
- 	if(pane.CompletedInstances.getSelection()!=null) {&#xD;
- 		pane.StartedInstances.setSelection(null);&#xD;
- 		pane.HaltedInstances.setSelection(null);&#xD;
- 		pane.CancelledInstances.setSelection(null);&#xD;
- 	}&#xD;
 &#xD;
-}&#xD;
-else if(context.pane.getName()==&quot;HaltedInstances&quot;) {&#xD;
- 	if(pane.HaltedInstances.getSelection()!=null) {&#xD;
- 		pane.StartedInstances.setSelection(null);&#xD;
- 		pane.CompletedInstances.setSelection(null);&#xD;
- 		pane.CancelledInstances.setSelection(null);&#xD;
- 	}&#xD;
 &#xD;
-}&#xD;
-else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
- 	if(pane.CancelledInstances.getSelection()!=null) {&#xD;
- 		pane.StartedInstances.setSelection(null);&#xD;
- 		pane.CompletedInstances.setSelection(null);&#xD;
- 		pane.HaltedInstances.setSelection(null);&#xD;
- 	}&#xD;
-}</form:script>
+&#xD;
+&#xD;
+</form:script>
       </form:action>
     </form:rule>
   </form:rules>
@@ -370,6 +348,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
     <form:label>Installation Summary</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
+    <form:visual bgColor="#ffffff" width="1027"/>
     <form:labelProperties visible="true"/>
     <form:defaults>
       <form:labelProperties position="top"/>
@@ -380,6 +359,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
       </form:propertySet>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
+      <form:visual width="800"/>
       <form:required>false</form:required>
     </form:control>
     <form:pane generated="true" styleClass="pneWindow" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.ListOfTables" paneType="com.tibco.forms.panes.vertical">
@@ -520,7 +500,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="CompletedInstances_processTemplate__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -649,7 +629,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="StartedInstances_processTemplate__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -778,7 +758,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="HaltedInstances_processTemplate__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -906,7 +886,7 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
             </form:propertySet>
             <form:label>Process Template</form:label>
             <form:hint></form:hint>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="CancelledInstances_processTemplate__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
@@ -1016,9 +996,8 @@ else if(context.pane.getName()==&quot;CancelledInstances&quot;) {&#xD;
     </form:control>
     <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.modaldialog" name="pane.taskAnalysis" paneType="com.tibco.forms.panes.modaldialog">
       <form:propertySet xsi:type="et:DialogPanePropertySet">
-        <et:cancelButtonOnPane>false</et:cancelButtonOnPane>
-        <et:closeButtonOnPane>false</et:closeButtonOnPane>
-        <et:dialogPosition>CENTER_FORM</et:dialogPosition>
+        <et:cancelButtonLabelRef>resource.common.pane_cancel_label</et:cancelButtonLabelRef>
+        <et:closeButtonLabelRef>resource.common.pane_close_label</et:closeButtonLabelRef>
       </form:propertySet>
       <form:label>Task Analysis</form:label>
       <form:visible>true</form:visible>

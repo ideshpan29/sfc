@@ -42,15 +42,21 @@ function ldPrcNames(control,logger,url,funcName)
 				var lngth = recordSet.length;
 				
 				var lstPrcNames = new Array();
+				var lstPrcNameValue = new Array();
 				
 				for(var i=0;i<lngth;i++) {
 					recordSet = xmlDoc.getElementsByTagName("name");
 					if(recordSet[i].childNodes[0]!=null)
 					{			
-						lstPrcNames[i] = recordSet[i].childNodes[0].nodeValue;
+						if(recordSet[i].childNodes[0].nodeValue == "comsfcfosImplremoval_tobeRemoval") {
+							lstPrcNames[0] = recordSet[i].childNodes[0].nodeValue;
+							lstPrcNameValue[0] = recordSet[i].childNodes[0].nodeValue;
+							lstPrcNames[0] = "Decomissioning";
+						}
 					}
 				}
-				control.optnSelectProcess.setOptions(lstPrcNames,lstPrcNames);
+				
+				control.optnSelectProcess.setOptions(lstPrcNameValue,lstPrcNames);
 			}
 			else {
 				//alert("Else: Error: Please contact System Administrator");

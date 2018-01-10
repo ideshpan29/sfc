@@ -41,7 +41,28 @@
     <form:rule name="rule.initrule1" label="initrule1">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script></form:script>
+        <form:script>if(data.getTaskName()==&quot;Deactivation Process Initiate&quot;) {&#xD;
+pane.serviceDates.setEnabled(true);&#xD;
+pane.contactDetails.setEnabled(true);&#xD;
+pane.serviceRequest.setEnabled(true);&#xD;
+pane.pane8.setEnabled(true);&#xD;
+pane.Pane03.setEnabled(true);&#xD;
+pane.clientDetails.setEnabled(true);&#xD;
+pane.pne01.setEnabled(true);&#xD;
+	pane.TechnicalInfo.setEnabled(true);&#xD;
+	&#xD;
+}&#xD;
+else {&#xD;
+	pane.serviceDates.setEnabled(false);&#xD;
+	pane.contactDetails.setEnabled(false);&#xD;
+	pane.serviceRequest.setEnabled(false);&#xD;
+	pane.pane8.setEnabled(false);&#xD;
+	pane.Pane03.setEnabled(false);&#xD;
+	pane.clientDetails.setEnabled(false);&#xD;
+	pane.pne01.setEnabled(false);&#xD;
+	pane.TechnicalInfo.setEnabled(false);&#xD;
+}&#xD;
+</form:script>
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
@@ -130,6 +151,51 @@ setupFontColor('[id$=commentHistory]');&#xD;
 pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
 //pane.TechnicalInfo_equipment.setSelection(Record);&#xD;
 </form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.trapdoorLogic" label="Trapdoor Logic">
+      <form:event source="#control.Provisioning_Data_siebelCircuitID" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#exit" subject="form.control.Provisioning_Data_siebelCircuitID.exit"/>
+      <form:action xsi:type="form:ScriptAction" name="action.trapdoorLogic" label="trapdoor Logic">
+        <form:script>var a;&#xD;
+&#xD;
+if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
+    data.getProvisioning_Data().setClientName(&quot;Excel Cinema&quot;);&#xD;
+    //data.getProvisioning_Data().setProjectManager(&quot;NA&quot;);&#xD;
+    data.getProvisioning_Data().setAccount(&quot;NEW&quot;);&#xD;
+    data.getProvisioning_Data().setClientID(&quot;4536&quot;);&#xD;
+    data.getProvisioning_Data().setAccountManager(&quot;Alan Witsel&quot;);&#xD;
+    data.getProvisioning_Data().setClientName(&quot;Excel Cinema&quot;);&#xD;
+    data.getProvisioning_Data().setContactPerson(&quot;Alan Witsel&quot;);&#xD;
+    data.getProvisioning_Data().setRegionView(&quot;Nairobi&quot;);&#xD;
+    data.getProvisioning_Data().setContractor(&quot;NA&quot;);&#xD;
+     data.getProvisioning_Data().setBuildingID(&quot;1215&quot;);&#xD;
+    data.getProvisioning_Data().setBuildingName(&quot;Apex Global&quot;);&#xD;
+    data.getProvisioning_Data().setFloor(&quot;2&quot;);&#xD;
+    data.getProvisioning_Data().setLocation(&quot;Kenya&quot;);&#xD;
+    data.getProvisioning_Data().setSector(&quot;2&quot;);&#xD;
+    data.getProvisioning_Data().setGPSCoordinates(&quot;23&quot;);&#xD;
+    data.getProvisioning_Data().setMobile(&quot;9879786767&quot;);&#xD;
+    data.getProvisioning_Data().setBandwidthupdown(&quot;FFB5&quot;);&#xD;
+    data.getProvisioning_Data().setServiceType(&quot;INTERNET&quot;);&#xD;
+    data.getProvisioning_Data().setTechnology(&quot;FIBER&quot;);&#xD;
+    data.getProvisioning_Data().setEmail(&quot;alan@demogmail.com&quot;);&#xD;
+	&#xD;
+	control.Provisioning_Data_serviceStatus.setValue(&quot;Registered&quot;);&#xD;
+	&#xD;
+	control.TechnicalInfo_SFCPOPPE.setValue(&quot;Gospel&quot;);&#xD;
+	control.TechnicalInfo_aggPoint.setValue(&quot;Gospel&quot;);&#xD;
+	control.TechnicalInfo_carrierIP.setValue(&quot;10.163.184.212&quot;);&#xD;
+	control.TechnicalInfo_carrierVLAN.setValue(&quot;3181&quot;);&#xD;
+	control.TechnicalInfo_clientIP.setValue(&quot;41.90.11.200/30&quot;);&#xD;
+	control.TechnicalInfo_clientVLAN.setValue(&quot;765&quot;);&#xD;
+&#xD;
+	var record = factory.com_example_sfc_provisioningbom.createEquipmentDetails();&#xD;
+		record.setAddress(&quot;10.215.17.163/28&quot;);&#xD;
+		record.setType(&quot;AR169F&quot;);&#xD;
+		record.setVLAN(&quot;3341&quot;);&#xD;
+	pane.TechnicalInfo_equipment.getValue().add(record);&#xD;
+	control.TechnicalInfo_modifiedDate.setValue(new Date());&#xD;
+} </form:script>
       </form:action>
     </form:rule>
   </form:rules>
@@ -381,6 +447,7 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
     <form:label>Pane 15</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
+    <form:visual bgColor="#ffffff"/>
     <form:labelProperties visible="false"/>
     <form:defaults>
       <form:labelProperties position="top" visible="true" width="120"/>
@@ -457,7 +524,7 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
               <form:enabled>true</form:enabled>
               <form:required>false</form:required>
             </form:control>
-            <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_6u98UM3OEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aProvisioningDataModel%26n=projectManager?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_projectManager">
+            <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_6u98UM3OEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aProvisioningDataModel%26n=projectManager?" syncFlags="16384" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_projectManager">
               <form:propertySet xsi:type="et:TextPropertySet">
                 <et:displayLength>40</et:displayLength>
                 <et:maxLength>50</et:maxLength>
@@ -465,7 +532,7 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
               <form:label>ProjectManager</form:label>
               <form:hint></form:hint>
               <form:visible>true</form:visible>
-              <form:enabled>true</form:enabled>
+              <form:enabled>false</form:enabled>
               <form:required>false</form:required>
             </form:control>
             <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_BHmSUM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aProvisioningDataModel%26n=account?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_account">
@@ -942,19 +1009,27 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
           <form:defaults>
             <form:labelProperties position="top" visible="true" width="120"/>
           </form:defaults>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_QrJToPR6Eeez78ayMGlX3w?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=CommentText?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.CommentText">
-            <form:propertySet xsi:type="et:TextAreaPropertySet">
-              <et:rows>8</et:rows>
-              <et:cols>70</et:cols>
-              <et:maxLength>500</et:maxLength>
-            </form:propertySet>
-            <form:label>CommentText</form:label>
-            <form:hint></form:hint>
+          <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneCommentPane" paneType="com.tibco.forms.panes.vertical">
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:labelProperties visible="false"/>
-            <form:required>false</form:required>
-          </form:control>
+            <form:defaults>
+              <form:labelProperties position="top" visible="true" width="120"/>
+            </form:defaults>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe.xpdl#_QrJToPR6Eeez78ayMGlX3w?p=com.sfc.fosimpl.deactivation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3acomsfcfosImplremoval_tobeRemoval%26n=CommentText?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.CommentText">
+              <form:propertySet xsi:type="et:TextAreaPropertySet">
+                <et:rows>8</et:rows>
+                <et:cols>70</et:cols>
+                <et:maxLength>500</et:maxLength>
+              </form:propertySet>
+              <form:label>CommentText</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:labelProperties visible="false"/>
+              <form:required>false</form:required>
+            </form:control>
+          </form:pane>
           <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pane11" paneType="com.tibco.forms.panes.horizontal">
             <form:label>Pane 11</form:label>
             <form:visible>true</form:visible>
@@ -1188,7 +1263,7 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
               <form:defaults>
                 <form:labelProperties position="top"/>
               </form:defaults>
-              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_v19fkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aTehnicalInformation%26n=modifiedBy?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_modifiedBy">
+              <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_v19fkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aTehnicalInformation%26n=modifiedBy?" syncFlags="16384" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_modifiedBy">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
@@ -1196,7 +1271,7 @@ pane.TechnicalInfo_equipment.getValue().add(Record);&#xD;
                 <form:label>ModifiedBy</form:label>
                 <form:hint></form:hint>
                 <form:visible>true</form:visible>
-                <form:enabled>true</form:enabled>
+                <form:enabled>false</form:enabled>
                 <form:required>false</form:required>
               </form:control>
               <form:control generated="true" generatorSource="SFC_ProvisioningBOM.bom#_33fGAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.example.sfc_provisioningbom%3a%3aTehnicalInformation%26n=modifiedDate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.date" controlType="com.tibco.forms.controls.date" name="control.TechnicalInfo_modifiedDate">

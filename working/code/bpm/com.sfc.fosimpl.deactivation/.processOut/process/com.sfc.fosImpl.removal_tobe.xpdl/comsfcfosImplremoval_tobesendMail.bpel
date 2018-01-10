@@ -8,18 +8,23 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendMailTask">
             <startingVariables>
+                <variable>SubjectLineEmail</variable>
                 <variable>SiebelCircuitID</variable>
                 <variable>PendingAt</variable>
                 <variable>SLALevel</variable>
                 <variable>EmailTo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>Task</variable>
-                <variable>Provision</variable>
+                <variable>SLAFlagCheck</variable>
+                <variable>EscalationToEmail</variable>
+                <variable>SubjectLineEmail</variable>
                 <variable>SiebelCircuitID</variable>
                 <variable>PendingAt</variable>
                 <variable>SLALevel</variable>
+                <variable>SLAFLAGGlobal</variable>
                 <variable>EmailTo</variable>
+                <variable>Task</variable>
+                <variable>Provision</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -48,7 +53,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_-p7UkPVjEeeywP4RjejZPQ">
+    <bpws:flow name="_BX_flow_xproYPXGEee0vPc65Z0SUQ">
         <bpws:links>
             <bpws:link name="StartEvent to _BX_scope_SendMailTask" tibex:xpdlId="_wGCyk-SHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_scope_SendMailTask to EndEvent" tibex:xpdlId="_q8L81OSHEee4r8nNLd6bUg"/>
@@ -61,11 +66,11 @@
                     <bpws:source linkName="StartEvent to _BX_scope_SendMailTask"/>
                 </bpws:sources>
                 <tibex:parameters>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="SLA"/>
                     <parameterDescription mandatory="yes" mode="InOut" name="EscalationToEmail"/>
-                    <parameterDescription mode="InOut" name="Provision"/>
                     <parameterDescription mode="InOut" name="Task"/>
-                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
+                    <parameterDescription mode="InOut" name="Provision"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>

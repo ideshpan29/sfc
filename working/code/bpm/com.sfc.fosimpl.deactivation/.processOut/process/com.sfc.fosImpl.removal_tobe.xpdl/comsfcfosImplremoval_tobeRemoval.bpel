@@ -15,6 +15,7 @@
         <task name="">
             <ProcessManagerScript type="Complete">
                 <variable>fetchSLAFlag</variable>
+                <variable>SLAFLAGGlobal</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Complete">
                 <variable>fetchSLAFlag</variable>
@@ -22,11 +23,11 @@
         </task>
         <task name="ManualInstallationRemoval">
             <startingVariables>
-                <variable>CommentHistory</variable>
                 <variable>TaskName</variable>
+                <variable>CommentText</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>CommentText</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -40,16 +41,17 @@
         </task>
         <task name="PMReview">
             <startingVariables>
-                <variable>SelectedContractor</variable>
-                <variable>ContractorNames</variable>
-                <variable>CommentHistory</variable>
-                <variable>SelectedGroup</variable>
-                <variable>TaskName</variable>
-                <variable>GroupNames</variable>
-                <variable>TechnicalInfo</variable>
                 <variable>Mail</variable>
-                <variable>Provisioning_Data</variable>
+                <variable>GroupNames</variable>
+                <variable>TaskName</variable>
                 <variable>CommentText</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>EscalationEmail</variable>
+                <variable>SelectedContractor</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>SelectedGroup</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -58,11 +60,18 @@
         </task>
         <task name="DeprovisionMngementIP">
             <startingVariables>
-                <variable>CommentHistory</variable>
+                <variable>MasterContractor</variable>
+                <variable>GroupNames</variable>
+                <variable>Mail</variable>
                 <variable>TaskName</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>CommentText</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>EscalationEmail</variable>
+                <variable>SelectedContractor</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentHistory</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -76,25 +85,25 @@
                 <variable>Fetch_Groups</variable>
             </startingVariables>
         </task>
+        <task name="ScriptTask2">
+            <startingVariables>
+                <variable>MasterContractor</variable>
+                <variable>SelectedGroup</variable>
+                <variable>Fetch_Groups</variable>
+            </startingVariables>
+        </task>
         <task name="CatchLinkEvent2">
             <ProcessManagerScript type="Complete">
                 <variable>SLAFLAGGlobal</variable>
             </ProcessManagerScript>
         </task>
-        <task name="ScriptTask2">
-            <startingVariables>
-                <variable>SelectedGroup</variable>
-                <variable>Fetch_Groups</variable>
-                <variable>MasterContractor</variable>
-            </startingVariables>
-        </task>
         <task name="TESOSGVerification">
             <startingVariables>
-                <variable>CommentHistory</variable>
                 <variable>TaskName</variable>
+                <variable>CommentText</variable>
                 <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>CommentText</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -103,25 +112,30 @@
         </task>
         <task name="SelectContractorAgency">
             <startingVariables>
-                <variable>SelectedContractor</variable>
-                <variable>ContractorNames</variable>
-                <variable>CommentHistory</variable>
-                <variable>SelectedGroup</variable>
-                <variable>TaskName</variable>
-                <variable>GroupNames</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>Mail</variable>
                 <variable>MasterContractor</variable>
-                <variable>Provisioning_Data</variable>
+                <variable>Mail</variable>
+                <variable>GroupNames</variable>
+                <variable>TaskName</variable>
                 <variable>CommentText</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>SelectedContractor</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>SelectedGroup</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
                 <variable>CommentText</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Complete">
-                <variable>SelectedContractor</variable>
                 <variable>MasterContractor</variable>
+                <variable>SelectedContractor</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="CallSubProcess">
+            <ProcessManagerScript type="Initiate">
+                <variable>SLAFLAGGlobal</variable>
             </ProcessManagerScript>
         </task>
         <task name="TimerEvent2">
@@ -134,41 +148,57 @@
                 <variable>SLAFLAGGlobal</variable>
             </ProcessManagerScript>
         </task>
+        <task name="CatchMessageEvent">
+            <ProcessManagerScript type="Complete">
+                <variable>CommentText</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>CommentHistory</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="RequestInitiateMail">
             <startingVariables>
+                <variable>ClientName</variable>
                 <variable>Email</variable>
                 <variable>CircuitID</variable>
-                <variable>ClientName</variable>
                 <variable>ClientId</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
+                <variable>ClientName</variable>
                 <variable>Email</variable>
                 <variable>CircuitID</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>ClientName</variable>
                 <variable>ClientId</variable>
+                <variable>Provisioning_Data</variable>
             </ProcessManagerScript>
         </task>
         <task name="_BX_SPInput_CallSubProcess">
             <startingVariables>
                 <variable>TaskName</variable>
-                <variable>fetchSLAFlag</variable>
+                <variable>SLAFLAGGlobal</variable>
+                <variable>EscalationEmail</variable>
+                <variable>FetchSLA1</variable>
                 <variable>Provisioning_Data</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask">
             <startingVariables>
-                <variable>Fetch_Groups</variable>
                 <variable>GroupNames</variable>
+                <variable>Fetch_Groups</variable>
             </startingVariables>
         </task>
         <task name="DeprovisionIPs">
             <startingVariables>
-                <variable>CommentHistory</variable>
+                <variable>MasterContractor</variable>
+                <variable>GroupNames</variable>
+                <variable>Mail</variable>
                 <variable>TaskName</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>CommentText</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>EscalationEmail</variable>
+                <variable>SelectedContractor</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentHistory</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
@@ -178,15 +208,15 @@
         <task name="ServiceTask">
             <startingVariables>
                 <variable>CircuitID</variable>
-                <variable>Email</variable>
                 <variable>ClientID</variable>
+                <variable>Email</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>CircuitID</variable>
-                <variable>ClientName</variable>
-                <variable>Email</variable>
                 <variable>ClientID</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>Email</variable>
+                <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -277,7 +307,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_-mUm8PVjEeeywP4RjejZPQ">
+    <bpws:flow name="_BX_flow_xl-0IPXGEee0vPc65Z0SUQ">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="TimerEvent2 to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -321,6 +351,13 @@
         </bpws:links>
         <bpws:scope name="CatchMessageEvent"
             tibex:type="messageStartEvent" tibex:xpdlId="_8ExaIt_AEee7mPhVBav8gw">
+            <tibex:completedScript
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[var comments=com_example_sfc_provisioningbom_Factory.createCommentData();
+comments.addedby=TechnicalInfo.modifiedBy;
+comments.comments=CommentText;
+comments.stepName="Manual Case Start";
+comments.time=DateTimeUtil.createDatetime();
+CommentHistory.add(comments);]]></tibex:completedScript>
             <bpws:sources>
                 <bpws:source linkName="CatchMessageEvent to ScriptTask"/>
             </bpws:sources>

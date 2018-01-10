@@ -339,7 +339,7 @@
         </pd:transition>
         <pd:transition>
             <pd:from>Send Mail To Others</pd:from>
-            <pd:to>SQL Direct</pd:to>
+            <pd:to>log sucess</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -384,21 +384,14 @@
         </pd:transition>
         <pd:transition>
             <pd:from>MapResourceToGroup</pd:from>
-            <pd:to>Write to Status File</pd:to>
+            <pd:to>Process Status</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Send Mail To Contractor</pd:from>
-            <pd:to>SQL Direct</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>SQL Direct</pd:from>
-            <pd:to>Process Status</pd:to>
+            <pd:to>log sucess</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -425,15 +418,15 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Process Status</pd:from>
-            <pd:to>log sucess</pd:to>
+            <pd:from>Assign-2</pd:from>
+            <pd:to>GetSpecificCandidate</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign-2</pd:from>
-            <pd:to>GetSpecificCandidate</pd:to>
+            <pd:from>Process Status</pd:from>
+            <pd:to>Write to Status File</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -950,10 +943,10 @@
             <config>
                 <newMimeSupport>true</newMimeSupport>
                 <inputOutputVersion>5.2.0</inputOutputVersion>
-                <host>rbapat-t470:25</host>
+                <host>%%BPM/CreateResource/Emails/ResourceCreationMails/EmailServerHost%%</host>
                 <authenticate>true</authenticate>
-                <username>"rohit@abc.com"</username>
-                <password>rohit</password>
+                <username>%%BPM/CreateResource/Emails/ResourceCreationMails/FromTag%%</username>
+                <password>%%BPM/CreateResource/Emails/ResourceCreationMails/Password%%</password>
                 <InputHeaders>
                     <xsd:element name="root">
                         <xsd:complexType>
@@ -967,19 +960,19 @@
             <pd:inputBindings>
                 <ns3:mailActivityInput>
                     <username>
-                        <xsl:value-of select="&quot;rohit@abc.com&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/UserName"/>
                     </username>
                     <password>
-                        <xsl:value-of select="&quot;rohit&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/Password"/>
                     </password>
                     <from>
-                        <xsl:value-of select="&quot;rohit@abc.com&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/FromTag"/>
                     </from>
                     <to>
                         <xsl:value-of select="$Attribute/Email"/>
                     </to>
                     <subject>
-                        <xsl:value-of select="&quot;Credentials For Safaricom Login&quot;"/>
+                        <xsl:value-of select="&quot;Credentials For Safaricom - Fixed Internet Solution Login&quot;"/>
                     </subject>
                     <ns4:bodyElement>
                         <bodyText>
@@ -994,7 +987,7 @@
                                 </content-type>
                             </mimeHeaders>
                             <textContent>
-                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for abc.com.&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br> Password : &quot;,$ParseIndex1/pfx17:users/pfx17:password,&quot;&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
+                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for Safaricom Fixed Internet Solution &lt;br> url: &quot;,$_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL/URL ,&quot;&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br> Password : &quot;,$ParseIndex1/pfx17:users/pfx17:password,&quot;&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
                             </textContent>
                         </mimePart>
                     </ns42:mimeEnvelopeElement>
@@ -1011,8 +1004,8 @@
                 <inputOutputVersion>5.2.0</inputOutputVersion>
                 <host>rbapat-t470:25</host>
                 <authenticate>true</authenticate>
-                <username>"rohit@abc.com"</username>
-                <password>rohit</password>
+                <username>%%BPM/CreateResource/Emails/ResourceCreationMails/UserName%%</username>
+                <password>%%BPM/CreateResource/Emails/ResourceCreationMails/Password%%</password>
                 <InputHeaders>
                     <xsd:element name="root">
                         <xsd:complexType>
@@ -1026,13 +1019,13 @@
             <pd:inputBindings>
                 <ns3:mailActivityInput>
                     <username>
-                        <xsl:value-of select="&quot;rohit@abc.com&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/UserName"/>
                     </username>
                     <password>
-                        <xsl:value-of select="&quot;rohit&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/Password"/>
                     </password>
                     <from>
-                        <xsl:value-of select="&quot;rohit@abc.com&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/FromTag"/>
                     </from>
                     <to>
                         <xsl:value-of select="$Attribute/Email"/>
@@ -1134,8 +1127,8 @@
         <pd:activity name="Write to Status File">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1993</pd:x>
-            <pd:y>269</pd:y>
+            <pd:x>2002</pd:x>
+            <pd:y>243</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -1154,25 +1147,6 @@
                         <xsl:value-of select="1"/>
                     </addLineSeparator>
                 </ns0:WriteActivityInputTextClass>
-            </pd:inputBindings>
-        </pd:activity>
-        <pd:activity name="SQL Direct">
-            <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
-            <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-            <pd:x>2199</pd:x>
-            <pd:y>318</pd:y>
-            <config>
-                <timeout>10</timeout>
-                <commit>false</commit>
-                <maxRows>%%BPM/ProcessAnalysis/JDBCRecordLimit%%</maxRows>
-                <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
-            </config>
-            <pd:inputBindings>
-                <jdbcGeneralActivityInput>
-                    <statement>
-                        <xsl:value-of select="concat(&quot;insert into user1.bpmusers values(&quot;,&quot;'&quot;,$ParseIndex1/pfx17:users/pfx17:orgname,&quot;','&quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;','&quot;,$ParseIndex1/pfx17:users/pfx17:addby,&quot;','&quot;,current-dateTime(),&quot;')&quot;)"/>
-                    </statement>
-                </jdbcGeneralActivityInput>
             </pd:inputBindings>
         </pd:activity>
         <pd:activity name="Failure Status">
@@ -1250,8 +1224,8 @@
         <pd:activity name="Process Status">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>2290</pd:x>
-            <pd:y>225</pd:y>
+            <pd:x>1931</pd:x>
+            <pd:y>344</pd:y>
             <config>
                 <variableName>ADDStatus</variableName>
             </config>

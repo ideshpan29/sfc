@@ -22,8 +22,8 @@
         </task>
         <task name="CreateEntryforContractorNormalUsers">
             <startingVariables>
-                <variable>ContractorNormalUsers</variable>
                 <variable>ContractorGroupArrRef</variable>
+                <variable>ContractorNormalUsers</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>ContractorNormalUsers</variable>
@@ -32,16 +32,16 @@
         </task>
         <task name="UpdateResource">
             <startingVariables>
+                <variable>BusinessUser</variable>
+                <variable>GroupName</variable>
                 <variable>LoginName</variable>
                 <variable>ContractorNormalUsers</variable>
                 <variable>ContractorSingleUser</variable>
+                <variable>ContractorMasterUserFlag</variable>
+                <variable>resourceList</variable>
+                <variable>decision</variable>
                 <variable>ContractorGroup</variable>
                 <variable>BPMUsers</variable>
-                <variable>decision</variable>
-                <variable>BusinessUser</variable>
-                <variable>GroupName</variable>
-                <variable>resourceList</variable>
-                <variable>ContractorMasterUserFlag</variable>
             </startingVariables>
         </task>
         <task name="_BX_sequence_2">
@@ -51,23 +51,23 @@
         </task>
         <task name="CreateEntryforContractorGroup">
             <startingVariables>
-                <variable>ContractorGroup</variable>
                 <variable>ContractorGroupRef</variable>
+                <variable>ContractorGroup</variable>
             </startingVariables>
         </task>
         <task name="LDAPEntryContractorMasterUser">
             <ProcessManagerScript type="Initiate">
-                <variable>ContractorGroup</variable>
                 <variable>LDAPEntry</variable>
+                <variable>ContractorGroup</variable>
             </ProcessManagerScript>
         </task>
         <task name="ContractorMasterUserCheck">
             <startingVariables>
+                <variable>ContractorGroupArrRef</variable>
                 <variable>LoginName</variable>
                 <variable>tmpGroupName</variable>
-                <variable>ContractorGroupArrRef</variable>
-                <variable>decision</variable>
                 <variable>ContractorMasterUserFlag</variable>
+                <variable>decision</variable>
             </startingVariables>
         </task>
         <task name="FetchGroupList">
@@ -140,7 +140,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_zaY-MPVcEee_HfiEwKRl-A">
+    <bpws:flow name="_BX_flow_NjrLEPXoEeece_lcXQdS9Q">
         <bpws:links>
             <bpws:link name="BusinessUsers to UpdateResourceResult" tibex:xpdlId="_wbEA8PVJEee786-X2LpNbg"/>
             <bpws:link

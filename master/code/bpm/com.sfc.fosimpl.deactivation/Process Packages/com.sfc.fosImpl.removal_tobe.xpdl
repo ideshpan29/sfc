@@ -1,0 +1,2196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xpdl2:Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:database="http://www.tibco.com/XPD/database1.0.0" xmlns:eaijava="http://www.tibco.com/XPD/EAIJava1.0.0" xmlns:email="http://www.tibco.com/XPD/email1.0.0" xmlns:iProcessExt="http://www.tibco.com/XPD/iProcessExt1.0.0" xmlns:orchestrator="http://www.tibco.com/XPD/orchestrator1.0.0" xmlns:order="http://www.tibco.com/XPD/order1.0.0" xmlns:simulation="http://www.tibco.com/xpd/Simulation1.0.1" xmlns:xpdExt="http://www.tibco.com/XPD/xpdExtension1.0.0" xmlns:xpdl2="http://www.wfmc.org/2008/XPDL2.1" xsi:schemaLocation="http://www.wfmc.org/2008/XPDL2.1 http://www.wfmc.org/standards/bpmnxpdl_31.xsd" Id="_n2-EEN_AEee7mPhVBav8gw" xpdExt:DisplayName="com.sfc.fosImpl.removal_tobe" Name="comsfcfosImplremoval_tobe">
+  <xpdl2:PackageHeader xpdExt:Language="en_US">
+    <xpdl2:XPDLVersion>2.1</xpdl2:XPDLVersion>
+    <xpdl2:Vendor>TIBCO</xpdl2:Vendor>
+    <xpdl2:Created>2017-12-13</xpdl2:Created>
+    <xpdl2:Description></xpdl2:Description>
+    <xpdl2:Documentation></xpdl2:Documentation>
+    <xpdl2:CostUnit>USD</xpdl2:CostUnit>
+  </xpdl2:PackageHeader>
+  <xpdl2:RedefinableHeader PublicationStatus="UNDER_REVISION">
+    <xpdl2:Author>rbapat</xpdl2:Author>
+    <xpdl2:Version>2.0.0.qualifier</xpdl2:Version>
+  </xpdl2:RedefinableHeader>
+  <xpdl2:Participants>
+    <xpdl2:Participant Id="_d53sUN_BEee7mPhVBav8gw" xpdExt:DisplayName="PM" Name="PM">
+      <xpdl2:ParticipantType Type="RESOURCE"/>
+      <xpdl2:ExternalReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_lCh2ALk-EeenBJWclYhCxA"/>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_fa2W4N_BEee7mPhVBav8gw" xpdExt:DisplayName="Contractor" Name="Contractor">
+      <xpdl2:ParticipantType Type="RESOURCE"/>
+      <xpdl2:ExternalReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_laeb8Lk-EeenBJWclYhCxA"/>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_jKcOEN_BEee7mPhVBav8gw" xpdExt:DisplayName="TES OSG" Name="TES OSG">
+      <xpdl2:ParticipantType Type="RESOURCE"/>
+      <xpdl2:ExternalReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_NWWeQM27EeeozIUd784NFw"/>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_l428IN_BEee7mPhVBav8gw" xpdExt:DisplayName="Provision Engineer" Name="Provision Engineer">
+      <xpdl2:ParticipantType Type="RESOURCE"/>
+      <xpdl2:ExternalReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_mEwvELk-EeenBJWclYhCxA"/>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_bId0cOCtEeeeKsD8kq9l7g" xpdExt:DisplayName="TES FAE" Name="TES FAE">
+      <xpdl2:ParticipantType Type="RESOURCE"/>
+      <xpdl2:ExternalReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_QqfvkM27EeeozIUd784NFw"/>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_WRLGYOPDEeeYfI0_sV0YAA" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal (API Activity EndPoint)" Name="comsfcfosImplremoval_tobeRemoval">
+      <xpdl2:ParticipantType Type="SYSTEM"/>
+      <xpdExt:ParticipantSharedResource>
+        <xpdExt:WebService>
+          <xpdExt:Inbound>
+            <xpdExt:VirtualBinding Name="Virtualization"/>
+            <xpdExt:SoapHttpBinding Name="SoapOverHttp" BindingStyle="RpcLiteral" SoapVersion="1.1" EndpointUrlPath="/comsfcfosImplremoval_tobe/comsfcfosImplremoval_tobeRemovalv04" HttpConnectorInstanceName="httpConnector"/>
+          </xpdExt:Inbound>
+        </xpdExt:WebService>
+      </xpdExt:ParticipantSharedResource>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_a9iH0OPDEeeYfI0_sV0YAA" xpdExt:DisplayName="comsfcfosImplremoval_tobeRemoval_Consumer" Name="comsfcfosImplremoval_tobeRemoval_Consumer">
+      <xpdl2:ParticipantType Type="SYSTEM"/>
+      <xpdExt:ParticipantSharedResource>
+        <xpdExt:WebService>
+          <xpdExt:Outbound>
+            <xpdExt:VirtualBinding Name="Virtualization"/>
+          </xpdExt:Outbound>
+        </xpdExt:WebService>
+      </xpdExt:ParticipantSharedResource>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_cIfr0OPTEeeoTJ_gSITXzA" xpdExt:DisplayName="comsfcfosImplremoval_tobeRemoval_Consumer2" Name="comsfcfosImplremoval_tobeRemoval_Consumer2">
+      <xpdl2:ParticipantType Type="SYSTEM"/>
+      <xpdExt:ParticipantSharedResource>
+        <xpdExt:WebService>
+          <xpdExt:Outbound>
+            <xpdExt:VirtualBinding Name="Virtualization"/>
+          </xpdExt:Outbound>
+        </xpdExt:WebService>
+      </xpdExt:ParticipantSharedResource>
+    </xpdl2:Participant>
+    <xpdl2:Participant Id="_nVBC0OR8EeeoTJ_gSITXzA" xpdExt:DisplayName="Default EMail Sender" Name="DefaultEMailSender">
+      <xpdl2:ParticipantType Type="SYSTEM"/>
+      <xpdExt:ParticipantSharedResource>
+        <xpdExt:Email InstanceName="EmailSender"/>
+      </xpdExt:ParticipantSharedResource>
+    </xpdl2:Participant>
+  </xpdl2:Participants>
+  <xpdl2:DataFields>
+    <xpdl2:DataField Id="_h3uyoPUCEeeywP4RjejZPQ" xpdExt:DisplayName="EscalationEmail" Name="EscalationEmail">
+      <xpdl2:DataType>
+        <xpdl2:BasicType Type="STRING">
+          <xpdl2:Length>100</xpdl2:Length>
+        </xpdl2:BasicType>
+      </xpdl2:DataType>
+    </xpdl2:DataField>
+    <xpdl2:DataField Id="_lO9NIPUCEeeywP4RjejZPQ" xpdExt:DisplayName="SLAFLAGGlobal" Name="SLAFLAGGlobal">
+      <xpdl2:DataType>
+        <xpdl2:BasicType Type="STRING">
+          <xpdl2:Length>50</xpdl2:Length>
+        </xpdl2:BasicType>
+      </xpdl2:DataType>
+    </xpdl2:DataField>
+  </xpdl2:DataFields>
+  <xpdl2:Pools>
+    <xpdl2:Pool Id="_q8L80OSHEee4r8nNLd6bUg" xpdExt:DisplayName="Pool" Name="Pool" BoundaryVisible="true" Process="_q8JgkOSHEee4r8nNLd6bUg">
+      <xpdl2:Lanes>
+        <xpdl2:Lane Id="_q8L80eSHEee4r8nNLd6bUg" xpdExt:DisplayName="Lane" Name="Lane">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo Height="314.0"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+      </xpdl2:Lanes>
+      <xpdl2:NodeGraphicsInfos>
+        <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="223,179,0" IsVisible="true"/>
+      </xpdl2:NodeGraphicsInfos>
+    </xpdl2:Pool>
+    <xpdl2:Pool Id="_8ExaIN_AEee7mPhVBav8gw" xpdExt:DisplayName="Installation Removal" Name="InstallationRemoval" BoundaryVisible="true" Process="_n3OiwN_AEee7mPhVBav8gw">
+      <xpdl2:Lanes>
+        <xpdl2:Lane Id="_8ExaId_AEee7mPhVBav8gw" xpdExt:DisplayName="Process Components" Name="ProcessComponents">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo Height="217.0"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_F8yBEN_BEee7mPhVBav8gw" xpdExt:DisplayName="PM" Name="PM">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="333.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_Gl0XAN_BEee7mPhVBav8gw" xpdExt:DisplayName="Contractor" Name="Contractor">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="407.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_HE7U4N_BEee7mPhVBav8gw" xpdExt:DisplayName="TES OSG" Name="TESOSG">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="137.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_LE6_kN_BEee7mPhVBav8gw" xpdExt:DisplayName="TES Provisioning" Name="TESProvisioning">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="201.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_8omYsOCsEeeeKsD8kq9l7g" xpdExt:DisplayName="TES FAE" Name="TESFAE">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="141.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+        <xpdl2:Lane Id="_7Z2ekOSGEee4r8nNLd6bUg" xpdExt:DisplayName="Send Mail Notification" Name="SendMailNotification">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="173.0" IsVisible="true"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+      </xpdl2:Lanes>
+      <xpdl2:NodeGraphicsInfos>
+        <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="223,179,0" IsVisible="true"/>
+      </xpdl2:NodeGraphicsInfos>
+    </xpdl2:Pool>
+    <xpdl2:Pool Id="_cIC_4OPTEeeoTJ_gSITXzA" xpdExt:DisplayName="Pool" Name="Pool" BoundaryVisible="true" Process="_cHbU0OPTEeeoTJ_gSITXzA">
+      <xpdl2:Lanes>
+        <xpdl2:Lane Id="_cIC_4ePTEeeoTJ_gSITXzA" xpdExt:DisplayName="Lane" Name="Lane">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo Height="300.0"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+      </xpdl2:Lanes>
+    </xpdl2:Pool>
+  </xpdl2:Pools>
+  <xpdl2:WorkflowProcesses>
+    <xpdl2:WorkflowProcess Id="_n3OiwN_AEee7mPhVBav8gw" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal" xpdExt:ApiEndPointParticipant="_WRLGYOPDEeeYfI0_sV0YAA" Name="comsfcfosImplremoval_tobeRemoval">
+      <xpdl2:ProcessHeader>
+        <xpdl2:Description></xpdl2:Description>
+      </xpdl2:ProcessHeader>
+      <xpdl2:FormalParameters>
+        <xpdl2:FormalParameter Id="_X0zEIN_EEeec4K-r6PSjHg" Name="Provisioning_Data" ReadOnly="false" Mode="IN" Required="false" xpdExt:DisplayName="Provisioning_Data">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_K9HKcM3FEeeozIUd784NFw"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_7V2KYOOsEeeI1KWnGZEQgA" Name="Equipments" IsArray="true" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="Equipments">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_XJJnkOCfEeeeKsD8kq9l7g"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_q-eYsOO_EeeYfI0_sV0YAA" Name="TaskName" ReadOnly="false" Mode="IN" Required="false" xpdExt:DisplayName="TaskName">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_19-t0OOsEeeI1KWnGZEQgA" Name="TechnicalInfo" ReadOnly="false" Mode="IN" Required="false" xpdExt:DisplayName="TechnicalInfo">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_jnE9UOCeEeeeKsD8kq9l7g"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+      </xpdl2:FormalParameters>
+      <xpdl2:DataFields>
+        <xpdl2:DataField Id="_pMLpsOSFEeeoTJ_gSITXzA" xpdExt:DisplayName="FetchSLA1" Name="FetchSLA1" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_-rMtkNZvEeevAohC3a_ghw"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_tmbnceSFEeeoTJ_gSITXzA" xpdExt:DisplayName="FetchSLA2" Name="FetchSLA2" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_-rMtkNZvEeevAohC3a_ghw"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_JOmLYOSIEee4r8nNLd6bUg" xpdExt:DisplayName="fetchSLAFlag" Name="fetchSLAFlag" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_yiq20OYYEee0aKkJX_OoAg" xpdExt:DisplayName="Mail" Name="Mail" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_0XpVQOY1Eeep9dkvO_z3LA" xpdExt:DisplayName="TimerLimit" Name="TimerLimit" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="FLOAT">
+              <xpdl2:Precision>10</xpdl2:Precision>
+              <xpdl2:Scale>2</xpdl2:Scale>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+          <xpdExt:InitialValues>
+            <xpdExt:Value>0.75</xpdExt:Value>
+          </xpdExt:InitialValues>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_OWNwYPEIEee5fIpJptHEZA" xpdExt:DisplayName="Fetch_Groups" Name="Fetch_Groups" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_X_aPwPB6EeeuzZ1H_57zBQ"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_GoqZYPEJEee5fIpJptHEZA" xpdExt:DisplayName="GroupNames" Name="GroupNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_u93lwPENEeeJiLkPq4yokA" xpdExt:DisplayName="SelectedGroup" Name="SelectedGroup" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_SZDIIPESEeeJiLkPq4yokA" xpdExt:DisplayName="MasterContractor" Name="MasterContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="PERFORMER"/>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_oyjvsPExEeeMCZGsP3rsrw" xpdExt:DisplayName="SelectedContractor" Name="SelectedContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_T9rOsPE1EeeMCZGsP3rsrw" xpdExt:DisplayName="ContractorNames" Name="ContractorNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_QrJToPR6Eeez78ayMGlX3w" xpdExt:DisplayName="CommentText" Name="CommentText">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>500</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_y4oKEPRNEeeMCZGsP3rsrw" xpdExt:DisplayName="CommentHistory" Name="CommentHistory" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_nDo8QPRREee7y7M2_IZS-A"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+      </xpdl2:DataFields>
+      <xpdl2:Activities>
+        <xpdl2:Activity Id="_8ExaIt_AEee7mPhVBav8gw" Name="CatchMessageEvent" xpdExt:DisplayName="Catch Message Event" xpdExt:Visibility="Private">
+          <xpdl2:Event>
+            <xpdl2:StartEvent xpdExt:ImplementationType="WebService" Implementation="WebService" Trigger="Message">
+              <xpdl2:TriggerResultMessage xpdExt:Generated="true" CatchThrow="CATCH">
+                <xpdl2:Message Id="_WQ4LcOPDEeeYfI0_sV0YAA">
+                  <xpdl2:DataMappings>
+                    <xpdl2:DataMapping xpdExt:TargetPrimitiveProperty="true" Direction="OUT" Formal="TaskName">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">TaskName</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                    <xpdl2:DataMapping xpdExt:TargetPrimitiveProperty="false" Direction="OUT" Formal="TechnicalInfo">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">TechnicalInfo</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                    <xpdl2:DataMapping xpdExt:TargetPrimitiveProperty="false" Direction="OUT" Formal="Provisioning_Data">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">Provisioning_Data</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                  </xpdl2:DataMappings>
+                </xpdl2:Message>
+                <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://www.tibco.com/service_virtualisation" xpdExt:Alias="_WRLGYOPDEeeYfI0_sV0YAA" OperationName="">
+                  <xpdl2:Service xpdExt:IsRemote="true" PortName="" ServiceName="">
+                    <xpdl2:EndPoint EndPointType="WSDL">
+                      <xpdl2:ExternalReference location="com.sfc.fosImpl.removal_tobe.wsdl"/>
+                    </xpdl2:EndPoint>
+                  </xpdl2:Service>
+                </xpdl2:WebServiceOperation>
+                <xpdExt:PortTypeOperation PortTypeName="comsfcfosImplremoval_tobeRemoval" OperationName="CatchMessageEvent">
+                  <xpdExt:ExternalReference location="com.sfc.fosImpl.removal_tobe.wsdl"/>
+                </xpdExt:PortTypeOperation>
+              </xpdl2:TriggerResultMessage>
+            </xpdl2:StartEvent>
+          </xpdl2:Event>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_WRLGYOPDEeeYfI0_sV0YAA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="82.0" LaneId="_8ExaId_AEee7mPhVBav8gw" Width="45.0">
+              <xpdl2:Coordinates XCoordinate="55.0" YCoordinate="43.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="IN" Mandatory="true"/>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="IN" Mandatory="true"/>
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="IN" Mandatory="true"/>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=TechnicalInfo.modifiedBy;&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=&quot;Manual Case Start&quot;;&#xD;
+comments.time=DateTimeUtil.createDatetime();&#xD;
+CommentHistory.add(comments);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_8ExaI9_AEee7mPhVBav8gw" Name="EndEvent" xpdExt:DisplayName="End Event">
+          <xpdl2:Event>
+            <xpdl2:EndEvent Result="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="82.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="45.0">
+              <xpdl2:Coordinates XCoordinate="1318.0" YCoordinate="46.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_VaiIgN_BEee7mPhVBav8gw" Name="PMReview" xpdExt:Visibility="Private" xpdExt:DisplayName="PM Review" xpdExt:ActivityDeadlineEventId="_0ZY3IOY0Eeep9dkvO_z3LA">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_VaiIgd_BEee7mPhVBav8gw"/>
+                <xpdl2:MessageOut Id="_VaiIgt_BEee7mPhVBav8gw"/>
+                <xpdExt:FormImplementation FormType="Pageflow" FormURI="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">/*Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview Attribute:WorkItemAttribute : &quot;+WorkManagerFactory.getWorkItem().getId());&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview Attribute:WorkItemResources : &quot;+WorkManagerFactory.getWorkItem().getWorkItemResource().getResources());&#xD;
+*/&#xD;
+var c  = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources();&#xD;
+var userName = c.get(0).getName();&#xD;
+Provisioning_Data.projectManager=userName;&#xD;
+EscalationEmail=userName+&quot;@SafaricomCorp.com&quot;;&#xD;
+/*if(c!=null) {&#xD;
+	var userGUID = c.get(0).getGuid();&#xD;
+	var userName = c.get(0).getName();&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userGUID : &quot;+userGUID);&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userName : &quot;+userName);&#xD;
+}&#xD;
+else {&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userGUID : is null&quot;);&#xD;
+}&#xD;
+&#xD;
+if(userName!=null) {&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview userName is NOT NULL&quot;);&#xD;
+	if(WorkManagerFactory.getOrgModel().resourceByName(userName) !=null) {&#xD;
+		Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName) is NOT NULL&quot;);&#xD;
+		if(WorkManagerFactory.getOrgModel().resourceByName(userName).get(0) !=null) {&#xD;
+			Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0) is NOT NULL&quot;);&#xD;
+			if(WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email') !=null) {&#xD;
+				Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0).getAttributValue() is NOT NULL&quot;);&#xD;
+								Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview resourceByName(userName).get(0).getAttributValue()&quot;+WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue(&quot;Email&quot;));					&#xD;
+					&#xD;
+					//EscalationEmail= WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email').get(0);&#xD;
+			}&#xD;
+		}&#xD;
+	&#xD;
+	}&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:Escalation Email for PM : &quot;+EscalationEmail);&#xD;
+	&#xD;
+}&#xD;
+/*&#xD;
+Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:OrgModel.ResourceByGUID &quot;+WorkManagerFactory.getOrgModel().resourceByGuid(userGUID));&#xD;
+&#xD;
+if(WorkManagerFactory.getOrgModel().resourceByGuid(userGUID)!=null){&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:OrgModel.ResourceByGUID is NOT NULL&quot;);&#xD;
+	EscalationEmail = WorkManagerFactory.getOrgModel().resourceByGuid(userGUID).getResources().get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
+	Log.write(&quot;[SFC] Process:Deactivation TaskName:PMReview  Attribute:Escalation Email for PM : &quot;+EscalationEmail);&#xD;
+}&#xD;
+&#xD;
+/*&#xD;
+var userGUID = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources().get(0).getGuid();&#xD;
+&#xD;
+Log.write(&quot;[POC] UserName: &quot;+userName);&#xD;
+Log.write(&quot;[POC] UserGUID: &quot;+userGUID);&#xD;
+&#xD;
+*/&#xD;
+/*&#xD;
+var userName = WorkManagerFactory.getWorkItem().getWorkItemResource().getResources().get(0).getName();&#xD;
+EscalationEmail= WorkManagerFactory.getOrgModel().resourceByName(userName).get(0).getAttributeValue('Email').get(0);&#xD;
+Log.write(&quot;[POC] Email from Org Model: &quot;+EscalationEmail);&#xD;
+&#xD;
+*/&#xD;
+var a;&#xD;
+var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Submit Script&quot;);&#xD;
+&#xD;
+</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_d53sUN_BEee7mPhVBav8gw</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="132.0">
+              <xpdl2:Coordinates XCoordinate="73.0" YCoordinate="71.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Process Manager Review&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_XqGvsN_HEeec4K-r6PSjHg">
+          <xpdl2:Route GatewayType="Inclusive"/>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Split Type="Inclusive">
+                <xpdl2:TransitionRefs>
+                  <xpdl2:TransitionRef Id="_LxC-gOCtEeeeKsD8kq9l7g"/>
+                  <xpdl2:TransitionRef Id="_4kEVEPE7EeeMCZGsP3rsrw"/>
+                  <xpdl2:TransitionRef Id="_Z5yjoPE8EeeMCZGsP3rsrw"/>
+                </xpdl2:TransitionRefs>
+              </xpdl2:Split>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="45.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="43.0">
+              <xpdl2:Coordinates XCoordinate="613.0" YCoordinate="71.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_aMel0N_HEeec4K-r6PSjHg" Name="DeprovisionIPs" xpdExt:Visibility="Private" xpdExt:DisplayName="Deprovision IPs">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_aMel0d_HEeec4K-r6PSjHg"/>
+                <xpdl2:MessageOut Id="_aMel0t_HEeec4K-r6PSjHg"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Submit Script&quot;);</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_l428IN_BEee7mPhVBav8gw</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="70.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="153.0">
+              <xpdl2:Coordinates XCoordinate="851.0" YCoordinate="76.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deprovision IP : TES Team&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_p3E2cN_HEeec4K-r6PSjHg" Name="ManualInstallationRemoval" xpdExt:Visibility="Private" xpdExt:DisplayName="Manual Installation Removal" xpdExt:ActivityDeadlineEventId="_GFDmoOZAEeeJAIDoV1ZLpQ">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_p3E2cd_HEeec4K-r6PSjHg"/>
+                <xpdl2:MessageOut Id="_p3E2ct_HEeec4K-r6PSjHg"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Submit Script&quot;);</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_SZDIIPESEeeJiLkPq4yokA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="181.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="277.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Manual Installation Removal : Contractor&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_yG1GIN_HEeec4K-r6PSjHg" Name="TESOSGVerification" xpdExt:Visibility="Private" xpdExt:DisplayName="TES OSG Verification">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_yG1GId_HEeec4K-r6PSjHg"/>
+                <xpdl2:MessageOut Id="_yG1GIt_HEeec4K-r6PSjHg"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Submit Script&quot;);</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_jKcOEN_BEee7mPhVBav8gw</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_HE7U4N_BEee7mPhVBav8gw" Width="173.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="81.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;TES OSG Verification&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_7k_psN_HEeec4K-r6PSjHg">
+          <xpdl2:Route GatewayType="Inclusive"/>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Join Type="Inclusive"/>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="45.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="43.0">
+              <xpdl2:Coordinates XCoordinate="1135.0" YCoordinate="46.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_KKodYN_IEeec4K-r6PSjHg" Name="LinkToCatchLinkEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Link To: Catch Link Event">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_RAp6AN_IEeec4K-r6PSjHg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="132.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="60.0">
+              <xpdl2:Coordinates XCoordinate="1015.0" YCoordinate="76.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_RAp6AN_IEeec4K-r6PSjHg" Name="CatchLinkEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Catch Link Event">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="CATCH" Name="0"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="107.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="46.0">
+              <xpdl2:Coordinates XCoordinate="1135.0" YCoordinate="212.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="__ziDoOCsEeeeKsD8kq9l7g" Name="DeprovisionMngementIP" IsATransaction="false" xpdExt:Visibility="Private" xpdExt:DisplayName="Deprovision Mngement IP" xpdExt:RequireNewTransaction="false" xpdExt:ActivityDeadlineEventId="_kjSvEPUEEeeywP4RjejZPQ">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_m3N5gPUEEeeywP4RjejZPQ"/>
+                <xpdl2:MessageOut Id="_m3N5gfUEEeeywP4RjejZPQ"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_bId0cOCtEeeeKsD8kq9l7g</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="75.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="162.0">
+              <xpdl2:Coordinates XCoordinate="366.0" YCoordinate="71.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deprovision Mngment IP : TES FAE Team&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_l66cUOR8EeeoTJ_gSITXzA" Name="RequestInitiateMail" xpdExt:Visibility="Private" xpdExt:DisplayName="Request Initiate Mail">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskService xpdExt:ImplementationType="E-Mail" Implementation="Other">
+                <xpdl2:MessageIn Id="_nVAbwOR8EeeoTJ_gSITXzA"/>
+                <xpdl2:MessageOut Id="_nVAbweR8EeeoTJ_gSITXzA"/>
+                <email:Email>
+                  <email:Definition>
+                    <email:From email:Configuration="Custom">rohit@abc.com</email:From>
+                    <email:To>%Email%</email:To>
+                    <email:Subject>Decomissioning Service Inititated</email:Subject>
+                  </email:Definition>
+                  <email:Body>Hello,&#xD;
+We have inititated the decomissioning procedure as per your registered request.&#xD;
+Given below are some details-&#xD;
+Client ID: %ClientId%&#xD;
+Customer ID: %CircuitID%&#xD;
+Client Name: %ClientName%&#xD;
+Registered Mail ID: %Email%&#xD;
+Regards,&#xD;
+Safaricom Team  </email:Body>
+                  <email:SMTP email:Configuration="Server"/>
+                </email:Email>
+              </xpdl2:TaskService>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_nVBC0OR8EeeoTJ_gSITXzA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:DataFields>
+            <xpdl2:DataField Id="_rrsvMOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="Email" Name="Email" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_9Cv6kOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="CircuitID" Name="CircuitID" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_-GzYkOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="ClientId" Name="ClientId" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="__DEzkOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="ClientName" Name="ClientName" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+          </xpdl2:DataFields>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="159.0">
+              <xpdl2:Coordinates XCoordinate="433.0" YCoordinate="71.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">CircuitID=Provisioning_Data.siebelCircuitID;&#xD;
+ClientId=Provisioning_Data.clientID;&#xD;
+ClientName=Provisioning_Data.clientName;&#xD;
+Email=Provisioning_Data.email;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_hJ3dQOR-EeeoTJ_gSITXzA" Name="ServiceTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Service Task">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskService xpdExt:ImplementationType="E-Mail" Implementation="Other">
+                <xpdl2:MessageIn Id="_h7u_EOR-EeeoTJ_gSITXzA"/>
+                <xpdl2:MessageOut Id="_h7u_EeR-EeeoTJ_gSITXzA"/>
+                <email:Email>
+                  <email:Definition>
+                    <email:From email:Configuration="Custom">rohit@abc.com</email:From>
+                    <email:To>%Email%</email:To>
+                    <email:Subject>Decomissioning Process Completed</email:Subject>
+                  </email:Definition>
+                  <email:Body>Hello,&#xD;
+We have sucessfully completed your decomissioning procedure. We thank you for using our service. Givene below are some details&#xD;
+Client ID: %ClientID%&#xD;
+Customer ID: %CircuitID%&#xD;
+Registered Mail: %Email%&#xD;
+Regards,&#xD;
+Safaricom Team</email:Body>
+                  <email:SMTP email:Configuration="Server"/>
+                </email:Email>
+              </xpdl2:TaskService>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_nVBC0OR8EeeoTJ_gSITXzA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:DataFields>
+            <xpdl2:DataField Id="_i6JIEOR-EeeoTJ_gSITXzA" xpdExt:DisplayName="Email" Name="Email" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_jriIweR-EeeoTJ_gSITXzA" xpdExt:DisplayName="ClientID" Name="ClientID" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_mAvFkOR-EeeoTJ_gSITXzA" xpdExt:DisplayName="ClientName" Name="ClientName" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_nK-EEOR-EeeoTJ_gSITXzA" xpdExt:DisplayName="CircuitID" Name="CircuitID" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+          </xpdl2:DataFields>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="1222.0" YCoordinate="46.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">Email=Provisioning_Data.email;&#xD;
+ClientID=Provisioning_Data.clientID;&#xD;
+ClientName=Provisioning_Data.clientName;&#xD;
+CircuitID=Provisioning_Data.siebelCircuitID;&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_Zgjo4OSGEee4r8nNLd6bUg" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_VaiIgN_BEee7mPhVBav8gw" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');&#xD;
+DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="93.36734693877551" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">fetchSLAFlag=1;&#xD;
+SLAFLAGGlobal=&quot;1&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 01: &quot;+SLAFLAGGlobal);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_r37BwOSGEee4r8nNLd6bUg" Name="TL1" xpdExt:Visibility="Private" xpdExt:DisplayName="TL1">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_8ExaId_AEee7mPhVBav8gw" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="113.0" YCoordinate="92.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_-vsZAOSGEee4r8nNLd6bUg" Name="CatchLinkEvent2" xpdExt:Visibility="Private" xpdExt:DisplayName="Catch Link Event 2">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="CATCH" Name="0"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="62.0" LaneId="_7Z2ekOSGEee4r8nNLd6bUg" Width="58.0">
+              <xpdl2:Coordinates XCoordinate="83.0" YCoordinate="66.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At Catch Link Event: &quot;+SLAFLAGGlobal);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_BWYucOSHEee4r8nNLd6bUg" Name="EndEvent2" xpdExt:Visibility="Private" xpdExt:DisplayName="End Event 2">
+          <xpdl2:Event>
+            <xpdl2:EndEvent Result="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="47.0" LaneId="_7Z2ekOSGEee4r8nNLd6bUg" Width="63.0">
+              <xpdl2:Coordinates XCoordinate="539.0" YCoordinate="66.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_mqqdQOSHEee4r8nNLd6bUg" Name="CallSubProcess" FinishMode="Automatic" StartMode="Automatic" xpdExt:Visibility="Private" xpdExt:DisplayName="Call Sub-Process">
+          <xpdl2:Implementation>
+            <xpdl2:SubFlow Id="_q8JgkOSHEee4r8nNLd6bUg" xpdExt:StartStrategy="StartImmediately" xpdExt:SuspendResumeWithParent="true">
+              <xpdExt:InputMappings MapperContext="ProcessToSubProcess" MappingDirection="IN">
+                <xpdExt:DataMappings>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="Task">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">TaskName</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="Provision">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">Provisioning_Data</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="SLAFlagCheck">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">SLAFLAGGlobal</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="EscalationToEmail">
+                    <xpdExt:ScriptInformation Id="_kHkqIPUJEeeywP4RjejZPQ" Name="CheckEscalationEmail">
+                      <xpdExt:Expression ScriptGrammar="JavaScript">var toSendEmail;&#xD;
+/*var ftchSla=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,TaskName,'Decomissioning');&#xD;
+	if(ftchSla.readSLA_Configuration().emailTo != &quot;SPECIFIC&quot;) {&#xD;
+		toSendEmail = EscalationEmail;&#xD;
+	}&#xD;
+*/&#xD;
+	if(FetchSLA1.readSLA_Configuration().emailTo!=&quot;SPECIFIC&quot;){&#xD;
+		toSendEmail=EscalationEmail;&#xD;
+		&#xD;
+	}&#xD;
+return toSendEmail;		&#xD;
+	&#xD;
+&#xD;
+</xpdExt:Expression>
+                    </xpdExt:ScriptInformation>
+                    <xpdl2:Actual ScriptGrammar="JavaScript">__SCRIPT__</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="SLA">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">FetchSLA1</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                </xpdExt:DataMappings>
+              </xpdExt:InputMappings>
+            </xpdl2:SubFlow>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="80.0" LaneId="_7Z2ekOSGEee4r8nNLd6bUg" Width="128.0">
+              <xpdl2:Coordinates XCoordinate="313.0" YCoordinate="66.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: &quot;+SLAFLAGGlobal);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_0ZY3IOY0Eeep9dkvO_z3LA" Name="TimerEvent2" xpdExt:Visibility="Private" xpdExt:DisplayName="Timer Event2">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_VaiIgN_BEee7mPhVBav8gw" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="22.70408163265306" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;2&quot;;
+Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 02: &quot;+SLAFLAGGlobal);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_1lTQoOY0Eeep9dkvO_z3LA" Name="TL2" xpdExt:Visibility="Private" xpdExt:DisplayName="TL2">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="107.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="51.0">
+              <xpdl2:Coordinates XCoordinate="114.0" YCoordinate="78.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_GFDmoOZAEeeJAIDoV1ZLpQ" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_p3E2cN_HEeec4K-r6PSjHg" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">Log.write(&quot;At Second Task&quot;);&#xD;
+FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Manual Installation Removal : Contractor','Decomissioning');&#xD;
+if(FetchSLA1.readSLA_Configuration().emailTo=='PM'){&#xD;
+FetchSLA1.readSLA_Configuration().emailConfig=Mail;&#xD;
+Log.write(&quot;Mail Value Set&quot;);&#xD;
+}&#xD;
+Log.write('Out of Condition');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="31.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="20.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">fetchSLAFlag=1;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_Kf72gOZAEeeJAIDoV1ZLpQ" Name="TL3" xpdExt:Visibility="Private" xpdExt:DisplayName="TL3">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="570.0" YCoordinate="368.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_8_8LoPEIEee5fIpJptHEZA" Name="ScriptTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskScript>
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;masterUser='Y'&quot;;&#xD;
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
+for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
+	GroupNames.add(Fetch_Groups.get(index).readContractorGroups().contractorGroupName);&#xD;
+}</xpdl2:Script>
+              </xpdl2:TaskScript>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_8ExaId_AEee7mPhVBav8gw" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="56.0" YCoordinate="175.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit/>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_L2COcPEPEeeJiLkPq4yokA" Name="ScriptTask2" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task 2">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskScript>
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;' and masterUser='Y'&quot;;&#xD;
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
+MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorGroups().loginName+&quot;')&quot;;</xpdl2:Script>
+              </xpdl2:TaskScript>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="280.0" YCoordinate="71.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_Tyh5APEREeeJiLkPq4yokA" Name="SelectContractorAgency" xpdExt:Visibility="Private" xpdExt:DisplayName="Select Contractor-Agency">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_Tyh5AfEREeeJiLkPq4yokA"/>
+                <xpdl2:MessageOut Id="_Tyh5AvEREeeJiLkPq4yokA"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts>
+                  <xpdExt:SubmitScript ScriptGrammar="JavaScript">var comments=com_example_sfc_provisioningbom_Factory.createCommentData();&#xD;
+comments.addedby=WorkManagerFactory.getWorkItem().getWorkItemResource().getName();&#xD;
+comments.comments=CommentText;&#xD;
+comments.stepName=WorkManagerFactory.getWorkItem().description;&#xD;
+comments.time=WorkManagerFactory.getWorkItem().getSchedule().getStartDate();&#xD;
+CommentHistory.add(comments);&#xD;
+&#xD;
+Provisioning_Data.notesComments =&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Submit Script&quot;);&#xD;
+</xpdExt:SubmitScript>
+                  <xpdExt:ScheduleScript ScriptGrammar="JavaScript">WorkManagerFactory.getWorkItem().workItemAttributes.attribute2=Provisioning_Data.siebelCircuitID;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute3=Provisioning_Data.clientName;&#xD;
+WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data.projectManager;&#xD;
+</xpdExt:ScheduleScript>
+                </xpdExt:UserTaskScripts>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_SZDIIPESEeeJiLkPq4yokA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="86.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="166.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="155.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="AllocateOne" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="IN" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Select Contractor Agency&quot;;&#xD;
+CommentText=&quot;&quot;;&#xD;
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">MasterContractor=&quot;resource(name='&quot;+SelectedContractor+&quot;')&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_47XtsPEuEeeJiLkPq4yokA" Name="ScriptTask3" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task 3">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskScript>
+                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;' and masterUser='N'&quot;;&#xD;
+Fetch_Groups=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);&#xD;
+for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
+	ContractorNames.add(Fetch_Groups.get(index).readContractorGroups().loginName);&#xD;
+}</xpdl2:Script>
+              </xpdl2:TaskScript>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="514.0" YCoordinate="62.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_N-az8PUEEeeywP4RjejZPQ" Name="TimerEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Timer Event">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="__ziDoOCsEeeeKsD8kq9l7g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');&#xD;
+DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="13.080168776371309" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;1&quot;;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_cS0tsPUEEeeywP4RjejZPQ" Name="LinkToCatchLinkEvent2" xpdExt:Visibility="Private" xpdExt:DisplayName="Link To: Catch Link Event 2">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="630.0" YCoordinate="96.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_kjSvEPUEEeeywP4RjejZPQ" Name="TimerEvent1" xpdExt:Visibility="Private" xpdExt:DisplayName="Timer Event1">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="__ziDoOCsEeeeKsD8kq9l7g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_example_sfc_provisioningbom_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="54.008438818565395" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;2&quot;;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_r05UcPUEEeeywP4RjejZPQ" Name="LinkToCatchLinkEvent22" xpdExt:Visibility="Private" xpdExt:DisplayName="Link To: Catch Link Event 22">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="104.0" YCoordinate="91.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+      </xpdl2:Activities>
+      <xpdl2:Transitions>
+        <xpdl2:Transition Id="_YS1joN_HEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_Tyh5APEREeeJiLkPq4yokA" To="_p3E2cN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_2xISEN_HEeec4K-r6PSjHg" Name="" From="_p3E2cN_HEeec4K-r6PSjHg" To="_yG1GIN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_9bZKoN_HEeec4K-r6PSjHg" Name="" From="_yG1GIN_HEeec4K-r6PSjHg" To="_7k_psN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="110.0" YCoordinate="-198.0"/>
+              <xpdl2:Coordinates XCoordinate="-120.0" YCoordinate="79.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_LUQX4N_IEeec4K-r6PSjHg" Name="" From="_aMel0N_HEeec4K-r6PSjHg" To="_KKodYN_IEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_R0OE8N_IEeec4K-r6PSjHg" Name="" From="_RAp6AN_IEeec4K-r6PSjHg" To="_7k_psN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="1.0" YCoordinate="24.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="-110.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="27.62842283556267" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_qYVT8N_IEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_hJ3dQOR-EeeoTJ_gSITXzA" To="_8ExaI9_AEee7mPhVBav8gw">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_jwarId_QEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_8_8LoPEIEee5fIpJptHEZA" To="_VaiIgN_BEee7mPhVBav8gw">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="78.8265306122449" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_LxC-gOCtEeeeKsD8kq9l7g" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="__ziDoOCsEeeeKsD8kq9l7g">
+          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">TechnicalInfo.carrierVLAN.toString() != &quot;&quot;</xpdl2:Expression></xpdl2:Condition>
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="-103.0" YCoordinate="39.0"/>
+              <xpdl2:Coordinates XCoordinate="232.0" YCoordinate="-1033.0"/>
+              <xpdl2:Coordinates XCoordinate="-214.0" YCoordinate="532.0"/>
+              <xpdl2:Coordinates XCoordinate="121.0" YCoordinate="-540.0"/>
+              <xpdl2:Coordinates XCoordinate="-214.0" YCoordinate="792.0"/>
+              <xpdl2:Coordinates XCoordinate="121.0" YCoordinate="-280.0"/>
+              <xpdl2:Coordinates XCoordinate="-193.0" YCoordinate="900.0"/>
+              <xpdl2:Coordinates XCoordinate="26.0" YCoordinate="-134.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="92.82700421940928" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="65.25155690771908" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_gxpDcOCtEeeeKsD8kq9l7g" Name="" From="__ziDoOCsEeeeKsD8kq9l7g" To="_7k_psN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="787.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="749.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="52.43829924547085" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_l67DYOR8EeeoTJ_gSITXzA" xpdExt:DisplayName="" Name="" From="_L2COcPEPEeeJiLkPq4yokA" To="_l66cUOR8EeeoTJ_gSITXzA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_hJ4EUOR-EeeoTJ_gSITXzA" xpdExt:DisplayName="" Name="" From="_7k_psN_HEeec4K-r6PSjHg" To="_hJ3dQOR-EeeoTJ_gSITXzA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_steJsOSGEee4r8nNLd6bUg" Name="" From="_Zgjo4OSGEee4r8nNLd6bUg" To="_r37BwOSGEee4r8nNLd6bUg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_B3LuYOSHEee4r8nNLd6bUg" xpdExt:DisplayName="" Name="" From="_mqqdQOSHEee4r8nNLd6bUg" To="_BWYucOSHEee4r8nNLd6bUg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_mqrEUOSHEee4r8nNLd6bUg" xpdExt:DisplayName="" Name="" From="_-vsZAOSGEee4r8nNLd6bUg" To="_mqqdQOSHEee4r8nNLd6bUg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_4d6cgOY0Eeep9dkvO_z3LA" Name="" From="_0ZY3IOY0Eeep9dkvO_z3LA" To="_1lTQoOY0Eeep9dkvO_z3LA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_LDZI4OZAEeeJAIDoV1ZLpQ" Name="" From="_GFDmoOZAEeeJAIDoV1ZLpQ" To="_Kf72gOZAEeeJAIDoV1ZLpQ">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="16.0"/>
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="-43.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_8_8ysPEIEee5fIpJptHEZA" xpdExt:DisplayName="" Name="" From="_8ExaIt_AEee7mPhVBav8gw" To="_8_8LoPEIEee5fIpJptHEZA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_L2C1gPEPEeeJiLkPq4yokA" xpdExt:DisplayName="" Name="" From="_VaiIgN_BEee7mPhVBav8gw" To="_L2COcPEPEeeJiLkPq4yokA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_Tyh5A_EREeeJiLkPq4yokA" xpdExt:DisplayName="" Name="" From="_l66cUOR8EeeoTJ_gSITXzA" To="_XqGvsN_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_5-qWsPEuEeeJiLkPq4yokA" Name="" From="_47XtsPEuEeeJiLkPq4yokA" To="_Tyh5APEREeeJiLkPq4yokA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_4kEVEPE7EeeMCZGsP3rsrw" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_47XtsPEuEeeJiLkPq4yokA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="9.0625" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_Z5yjoPE8EeeMCZGsP3rsrw" Name="" From="_XqGvsN_HEeec4K-r6PSjHg" To="_aMel0N_HEeec4K-r6PSjHg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="86.09865470852019" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_dbmToPUEEeeywP4RjejZPQ" Name="" From="_N-az8PUEEeeywP4RjejZPQ" To="_cS0tsPUEEeeywP4RjejZPQ">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_sqccYPUEEeeywP4RjejZPQ" Name="" From="_kjSvEPUEEeeywP4RjejZPQ" To="_r05UcPUEEeeywP4RjejZPQ">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+      </xpdl2:Transitions>
+      <xpdl2:ExtendedAttributes>
+        <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
+        <xpdl2:ExtendedAttribute Name="WorkflowProcessSimulationData"><simulation:WorkflowProcessSimulationData>
+            <simulation:ParameterDistribution ParameterId="Provisioning_Data"/>
+            <simulation:ParameterDistribution ParameterId="Equipments"/>
+            <simulation:ParameterDistribution ParameterId="TaskName"/>
+            <simulation:ParameterDistribution ParameterId="TechnicalInfo"/>
+          </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
+      </xpdl2:ExtendedAttributes>
+      <xpdl2:Extensions/>
+      <xpdExt:ProcessDataWorkItemAttributeMappings>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute2</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.siebelCircuitID</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute3</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.clientName</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute9</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.projectManager</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute4</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.contractor</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute10</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.accountManager</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute11</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.buildingID</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute13</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.clientID</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute21</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.email</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute6</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.installDate</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute7</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.requestDate</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute20</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceEnd</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute19</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceStart</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute22</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceStatus</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+        <xpdExt:DataWorkItemAttributeMapping>
+          <xpdExt:WorkItemAttribute>attribute8</xpdExt:WorkItemAttribute>
+          <xpdExt:ProcessData>Provisioning_Data.serviceType</xpdExt:ProcessData>
+        </xpdExt:DataWorkItemAttributeMapping>
+      </xpdExt:ProcessDataWorkItemAttributeMappings>
+    </xpdl2:WorkflowProcess>
+    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
+      <xpdl2:ProcessHeader/>
+      <xpdl2:DataFields>
+        <xpdl2:DataField Id="_cIE1EOPTEeeoTJ_gSITXzA" xpdExt:DisplayName="TaskName" Name="TaskName" IsArray="false" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_cIE1EePTEeeoTJ_gSITXzA" xpdExt:DisplayName="TechnicalInfo" Name="TechnicalInfo" IsArray="false" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_jnE9UOCeEeeeKsD8kq9l7g"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_cIE1EuPTEeeoTJ_gSITXzA" xpdExt:DisplayName="Provisioning_Data" Name="Provisioning_Data" IsArray="false" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_K9HKcM3FEeeozIUd784NFw"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_j2mmAPT1EeeywP4RjejZPQ" xpdExt:DisplayName="CommentHistory" Name="CommentHistory" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_nDo8QPRREee7y7M2_IZS-A"/>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_q4MZcPT1EeeywP4RjejZPQ" xpdExt:DisplayName="CommentText" Name="CommentText" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>500</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_Dhq74PU-EeeywP4RjejZPQ" xpdExt:DisplayName="GroupNames" Name="GroupNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_KePscPU-EeeywP4RjejZPQ" xpdExt:DisplayName="SelectedGroup" Name="SelectedGroup" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_N0ugEPU-EeeywP4RjejZPQ" xpdExt:DisplayName="SelectedContractor" Name="SelectedContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_R2gTcPU-EeeywP4RjejZPQ" xpdExt:DisplayName="ContractorNames" Name="ContractorNames" IsArray="true" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_nCqIIPU-EeeywP4RjejZPQ" xpdExt:DisplayName="Mail" Name="Mail" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_qXeH0PU-EeeywP4RjejZPQ" xpdExt:DisplayName="MasterContractor" Name="MasterContractor" ReadOnly="false">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="PERFORMER"/>
+          </xpdl2:DataType>
+          <xpdl2:InitialValue/>
+        </xpdl2:DataField>
+      </xpdl2:DataFields>
+      <xpdl2:Activities>
+        <xpdl2:Activity Id="_cIS3gePTEeeoTJ_gSITXzA" Name="Start" xpdExt:Visibility="Private" xpdExt:DisplayName="Start">
+          <xpdl2:Event>
+            <xpdl2:StartEvent Trigger="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="27.0" LaneId="_cIC_4ePTEeeoTJ_gSITXzA" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="53.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_cIS3guPTEeeoTJ_gSITXzA" Name="UserTask" xpdExt:Visibility="Private" xpdExt:DisplayName="User Task">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_cIS3g-PTEeeoTJ_gSITXzA"/>
+                <xpdl2:MessageOut Id="_cIS3hOPTEeeoTJ_gSITXzA"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+                <xpdExt:UserTaskScripts/>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_cIC_4ePTEeeoTJ_gSITXzA" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="260.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="false" xpdExt:ReOfferOnCancel="true"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="true">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="true">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="MasterContractor" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="Mail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deactivation Process Initiate&quot;;&#xD;
+TechnicalInfo = com_example_sfc_provisioningbom_Factory.createTehnicalInformation();&#xD;
+TechnicalInfo.modifiedBy = Process.getOriginatorName();</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : &quot;+TechnicalInfo.carrierVLAN);&#xD;
+Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : &quot;+TechnicalInfo.clientVLAN);&#xD;
+&#xD;
+Provisioning_Data.notesComments=CommentText;&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_cIS3hePTEeeoTJ_gSITXzA" Name="InvokeCatchMessageEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Invoke Catch Message Event">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskSend xpdExt:ImplementationType="InvokeBusinessProcess" Implementation="WebService">
+                <xpdl2:Message Id="_cIZlMOPTEeeoTJ_gSITXzA">
+                  <xpdl2:DataMappings>
+                    <xpdl2:DataMapping Direction="IN" Formal="TaskName">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">TaskName</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                    <xpdl2:DataMapping Direction="IN" Formal="TechnicalInfo">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">TechnicalInfo</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                    <xpdl2:DataMapping Direction="IN" Formal="Provisioning_Data">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">Provisioning_Data</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                  </xpdl2:DataMappings>
+                </xpdl2:Message>
+                <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://www.tibco.com/service_virtualisation" xpdExt:Alias="_cIfr0OPTEeeoTJ_gSITXzA" OperationName="">
+                  <xpdl2:Service xpdExt:IsRemote="true" PortName="" ServiceName="">
+                    <xpdl2:EndPoint EndPointType="WSDL">
+                      <xpdl2:ExternalReference location="com.sfc.fosImpl.removal_tobe.wsdl"/>
+                    </xpdl2:EndPoint>
+                  </xpdl2:Service>
+                </xpdl2:WebServiceOperation>
+                <xpdExt:PortTypeOperation PortTypeName="comsfcfosImplremoval_tobeRemoval" OperationName="CatchMessageEvent">
+                  <xpdExt:ExternalReference location="com.sfc.fosImpl.removal_tobe.wsdl"/>
+                </xpdExt:PortTypeOperation>
+                <xpdExt:BusinessProcess BusinessProcessId="_n3OiwN_AEee7mPhVBav8gw" ActivityId="_8ExaIt_AEee7mPhVBav8gw"/>
+              </xpdl2:TaskSend>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_cIfr0OPTEeeoTJ_gSITXzA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_cIC_4ePTEeeoTJ_gSITXzA" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="474.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : &quot;+TechnicalInfo.carrierVLAN);&#xD;
+Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : &quot;+TechnicalInfo.clientVLAN);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="SLAFLAGGlobal" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="EscalationEmail" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+        </xpdl2:Activity>
+      </xpdl2:Activities>
+      <xpdl2:Transitions>
+        <xpdl2:Transition Id="_cIS3h-PTEeeoTJ_gSITXzA" xpdExt:DisplayName="" Name="" From="_cIS3gePTEeeoTJ_gSITXzA" To="_cIS3guPTEeeoTJ_gSITXzA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_cIS3iOPTEeeoTJ_gSITXzA" xpdExt:DisplayName="" Name="" From="_cIS3guPTEeeoTJ_gSITXzA" To="_cIS3hePTEeeoTJ_gSITXzA">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="10.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+      </xpdl2:Transitions>
+      <xpdl2:ExtendedAttributes>
+        <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
+      </xpdl2:ExtendedAttributes>
+      <xpdl2:Extensions/>
+      <xpdExt:RequiredAccessPrivileges>
+        <xpdExt:PrivilegeReference location="orgModel.om" namespace="http://www.tibco.com/om/1.0" xref="_QQomAPU3Eee0RaO_sAlqew"/>
+      </xpdExt:RequiredAccessPrivileges>
+    </xpdl2:WorkflowProcess>
+    <xpdl2:WorkflowProcess Id="_q8JgkOSHEee4r8nNLd6bUg" xpdExt:DisplayName="comsfcfosImplremoval_tobe-sendMail" Name="comsfcfosImplremoval_tobesendMail">
+      <xpdl2:ProcessHeader/>
+      <xpdl2:FormalParameters>
+        <xpdl2:FormalParameter Id="_oyDLEeSIEee4r8nNLd6bUg" Name="Provision" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="Provision">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_K9HKcM3FEeeozIUd784NFw"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_pzrAIeSIEee4r8nNLd6bUg" Name="SLA" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="SLA">
+          <xpdl2:DataType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="SFC_ProvisioningBOM.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_-rMtkNZvEeevAohC3a_ghw"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_qmF7keSIEee4r8nNLd6bUg" Name="Task" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="Task">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_PSJTYPUJEeeywP4RjejZPQ" Name="EscalationToEmail" Mode="INOUT" Required="true" xpdExt:DisplayName="EscalationToEmail">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>100</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_TScgEPUJEeeywP4RjejZPQ" Name="SLAFlagCheck" Mode="INOUT" Required="false" xpdExt:DisplayName="SLAFlagCheck">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+      </xpdl2:FormalParameters>
+      <xpdl2:DataFields>
+        <xpdl2:DataField Id="_EVdLEPUDEeeywP4RjejZPQ" xpdExt:DisplayName="SubjectLineEmail" Name="SubjectLineEmail">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+      </xpdl2:DataFields>
+      <xpdl2:Activities>
+        <xpdl2:Activity Id="_q8L80uSHEee4r8nNLd6bUg" Name="StartEvent" xpdExt:DisplayName="Start Event">
+          <xpdl2:Event>
+            <xpdl2:StartEvent Trigger="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_q8L80eSHEee4r8nNLd6bUg" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="55.0" YCoordinate="155.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_q8L80-SHEee4r8nNLd6bUg" Name="EndEvent" xpdExt:DisplayName="End Event">
+          <xpdl2:Event>
+            <xpdl2:EndEvent Result="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="30.0" LaneId="_q8L80eSHEee4r8nNLd6bUg" Width="30.0">
+              <xpdl2:Coordinates XCoordinate="592.0" YCoordinate="155.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_wGCykOSHEee4r8nNLd6bUg" Name="SendMailTask" xpdExt:Visibility="Private" xpdExt:DisplayName="SendMailTask">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskService xpdExt:ImplementationType="E-Mail" Implementation="Other">
+                <xpdl2:MessageIn Id="_M3RFwOSJEee4r8nNLd6bUg"/>
+                <xpdl2:MessageOut Id="_M3RFweSJEee4r8nNLd6bUg"/>
+                <email:Email>
+                  <email:Definition>
+                    <email:From email:Configuration="Custom">donot-reply@SafaricomCorp.com</email:From>
+                    <email:To>%EmailTo%</email:To>
+                    <email:Subject>%SubjectLineEmail% %SiebelCircuitID% SLA Level: %SLALevel%</email:Subject>
+                  </email:Definition>
+                  <email:Body>Required Action at Task : %PendingAt%&#xD;
+SLA Level : %SLALevel%&#xD;
+Siebel ID : %SiebelCircuitID%</email:Body>
+                  <email:SMTP email:Configuration="Server"/>
+                </email:Email>
+              </xpdl2:TaskService>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:Performers>
+            <xpdl2:Performer>_nVBC0OR8EeeoTJ_gSITXzA</xpdl2:Performer>
+          </xpdl2:Performers>
+          <xpdl2:DataFields>
+            <xpdl2:DataField Id="_x_5lQeSJEee4r8nNLd6bUg" xpdExt:DisplayName="EmailTo" Name="EmailTo" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_0gvKUOSJEee4r8nNLd6bUg" xpdExt:DisplayName="PendingAt" Name="PendingAt" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_vtyhAOU_Eee4r8nNLd6bUg" xpdExt:DisplayName="SiebelCircuitID" Name="SiebelCircuitID" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+            <xpdl2:DataField Id="_y7UM8OU_Eee4r8nNLd6bUg" xpdExt:DisplayName="SLA Level" Name="SLALevel" ReadOnly="false">
+              <xpdl2:DataType>
+                <xpdl2:BasicType Type="STRING">
+                  <xpdl2:Length>50</xpdl2:Length>
+                </xpdl2:BasicType>
+              </xpdl2:DataType>
+              <xpdl2:InitialValue/>
+            </xpdl2:DataField>
+          </xpdl2:DataFields>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_q8L80eSHEee4r8nNLd6bUg" Width="127.0">
+              <xpdl2:Coordinates XCoordinate="297.0" YCoordinate="155.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: &quot;+SLAFLAGGlobal);&#xD;
+&#xD;
+if(SLA.readSLA_Configuration().emailTo==&quot;SPECIFIC&quot;) {&#xD;
+	EmailTo = SLA.readSLA_Configuration().emailConfig;&#xD;
+}&#xD;
+else {&#xD;
+	EmailTo=EscalationToEmail;&#xD;
+}&#xD;
+PendingAt=Task;&#xD;
+SLALevel=SLA.readSLA_Configuration().SLALevel;&#xD;
+SiebelCircuitID=Provision.siebelCircuitID;&#xD;
+&#xD;
+if(SLAFlagCheck==&quot;1&quot;) {&#xD;
+	SubjectLineEmail=&quot;SLA About to expire for &quot;;&#xD;
+}&#xD;
+else {&#xD;
+	SubjectLineEmail=&quot;SLA EXPIRED: Required Action Siebel ID&quot;;&#xD;
+}&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+      </xpdl2:Activities>
+      <xpdl2:Transitions>
+        <xpdl2:Transition Id="_q8L81OSHEee4r8nNLd6bUg" xpdExt:DisplayName="" Name="" From="_wGCykOSHEee4r8nNLd6bUg" To="_q8L80-SHEee4r8nNLd6bUg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_wGCyk-SHEee4r8nNLd6bUg" xpdExt:DisplayName="" Name="" From="_q8L80uSHEee4r8nNLd6bUg" To="_wGCykOSHEee4r8nNLd6bUg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+      </xpdl2:Transitions>
+      <xpdl2:ExtendedAttributes>
+        <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
+        <xpdl2:ExtendedAttribute Name="WorkflowProcessSimulationData"><simulation:WorkflowProcessSimulationData>
+            <simulation:ParameterDistribution ParameterId="Provision"/>
+            <simulation:ParameterDistribution ParameterId="SLA"/>
+            <simulation:ParameterDistribution ParameterId="Task"/>
+            <simulation:ParameterDistribution ParameterId="EscalationToEmail"/>
+            <simulation:ParameterDistribution ParameterId="SLAFlagCheck"/>
+          </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
+      </xpdl2:ExtendedAttributes>
+    </xpdl2:WorkflowProcess>
+  </xpdl2:WorkflowProcesses>
+  <xpdl2:ExtendedAttributes>
+    <xpdl2:ExtendedAttribute Name="CreatedBy" Value="TIBCO Business Studio"/>
+    <xpdl2:ExtendedAttribute Name="FormatVersion" Value="20"/>
+    <xpdl2:ExtendedAttribute Name="OriginalFormatVersion" Value="20"/>
+  </xpdl2:ExtendedAttributes>
+</xpdl2:Package>

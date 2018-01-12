@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/DemoProject/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/DemoProject/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <xsd:import namespace="http://www.tibco.com/schemas/DemoProject/Schemas/Schema.xsd2" schemaLocation="/Schemas/task.xsd"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -23,16 +23,16 @@
     <pd:endType>
         <xsd:element name="response" type="xsd:string"/>
     </pd:endType>
-    <pd:endX>575</pd:endX>
-    <pd:endY>119</pd:endY>
+    <pd:endX>898</pd:endX>
+    <pd:endY>137</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1509967891947</pd:targetNamespace>
     <pd:activity name="RenderFetchProcessInstanceDetails">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>363</pd:x>
-        <pd:y>115</pd:y>
+        <pd:x>641</pd:x>
+        <pd:y>127</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -68,7 +68,7 @@
                             </process_instance>
                         </xsl:if>
                         <first_time_offer>
-                            <xsl:value-of select="if(column[name=&quot;FIRST_OFFER_TIME&quot;]/value!=&quot;&quot;) then column[name=&quot;FIRST_OFFER_TIME&quot;]/value else &quot;NA&quot;"/>
+                            <xsl:value-of select="tib:add-to-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),0)"/>
                         </first_time_offer>
                         <xsl:if test="column[name=&quot;ACTIVITY_NAME&quot;]/value">
                             <activity_name>
@@ -113,9 +113,41 @@
             </jdbcGeneralActivityInput>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>411</pd:x>
+        <pd:y>144</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:add-to-dateTime(&quot;2018-01-02T07:02:44.353+05:30&quot;,0,0,0,substring-before(tib:get-timezone-from-dateTime($FetchProcessInstanceDetails/jdbcGeneralActivityOutput/unknownResultset/row/column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime($FetchProcessInstanceDetails/jdbcGeneralActivityOutput/unknownResultset/row/column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                </message>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log-1">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>773</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$RenderFetchProcessInstanceDetails/xmlString"/>
+                </message>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>RenderFetchProcessInstanceDetails</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>Log-1</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -129,7 +161,21 @@
     </pd:transition>
     <pd:transition>
         <pd:from>FetchProcessInstanceDetails</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
         <pd:to>RenderFetchProcessInstanceDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log-1</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

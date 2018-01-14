@@ -553,21 +553,57 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
-  <xsd:complexType ecore:name="TaskTable" id="_8a3T8PjwEeej8uWuBC0YMQ" name="TaskTable">
+  <xsd:complexType ecore:name="LookupTable" id="_8a3T8PjwEeej8uWuBC0YMQ" name="LookupTable">
     <xsd:sequence>
-      <xsd:element ecore:name="taskKey" id="_971-gPjwEeej8uWuBC0YMQ" maxOccurs="1"
-          minOccurs="1" name="taskKey">
+      <xsd:element ecore:name="lookupValue" id="_A3DycPjxEeej8uWuBC0YMQ" maxOccurs="1"
+          minOccurs="0" name="lookupValue">
         <xsd:simpleType>
           <xsd:restriction base="xsd:string">
             <xsd:maxLength value="400"/>
           </xsd:restriction>
         </xsd:simpleType>
       </xsd:element>
-      <xsd:element ecore:name="taskValue" id="_A3DycPjxEeej8uWuBC0YMQ" maxOccurs="1"
-          minOccurs="0" name="taskValue">
+      <xsd:element ecore:name="autoCaseIdentifier1" id="_fhM_MPkrEeeqiZsRWP-qWg" maxOccurs="1"
+          minOccurs="0" name="autoCaseIdentifier1">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:integer">
+            <xsd:totalDigits value="19"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="lookupKey" id="_7aMfUPkrEeeqiZsRWP-qWg" maxOccurs="1"
+          minOccurs="0" name="lookupKey">
         <xsd:simpleType>
           <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="400"/>
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="enableFlag" id="_m_ajkPkzEeeqiZsRWP-qWg" maxOccurs="1"
+          minOccurs="0" name="enableFlag">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType ecore:name="ProcessNameAndSteps" id="_NLH3YPk5EeeqiZsRWP-qWg" name="ProcessNameAndSteps">
+    <xsd:sequence>
+      <xsd:element ecore:name="processName" id="_QmH-oPk5EeeqiZsRWP-qWg" maxOccurs="1"
+          minOccurs="0" name="processName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="stepName" id="_Q7ntgPk5EeeqiZsRWP-qWg" maxOccurs="1"
+          minOccurs="0" name="stepName">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="100"/>
           </xsd:restriction>
         </xsd:simpleType>
       </xsd:element>
@@ -626,5 +662,6 @@
   <xsd:element name="ContractorGroupsElement" type="ContractorGroups"/>
   <xsd:element name="CommentDataElement" type="CommentData"/>
   <xsd:element name="CommentDataCaseElement" type="CommentDataCase"/>
-  <xsd:element name="TaskTableElement" type="TaskTable"/>
+  <xsd:element name="LookupTableElement" type="LookupTable"/>
+  <xsd:element name="ProcessNameAndStepsElement" type="ProcessNameAndSteps"/>
 </xsd:schema>

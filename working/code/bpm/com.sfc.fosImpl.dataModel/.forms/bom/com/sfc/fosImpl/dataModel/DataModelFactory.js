@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.dataModel.DataModelFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.dataModel.ProvisioningDataModel", "com.sfc.fosImpl.dataModel.SystemParameters", "com.sfc.fosImpl.dataModel.SLA_Configuration", "com.sfc.fosImpl.dataModel.TehnicalInformation", "com.sfc.fosImpl.dataModel.EquipmentDetails", "com.sfc.fosImpl.dataModel.ContractorGroups", "com.sfc.fosImpl.dataModel.CommentData", "com.sfc.fosImpl.dataModel.CommentDataCase", "com.sfc.fosImpl.dataModel.TaskTable"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.dataModel.ProvisioningDataModel", "com.sfc.fosImpl.dataModel.SystemParameters", "com.sfc.fosImpl.dataModel.SLA_Configuration", "com.sfc.fosImpl.dataModel.TehnicalInformation", "com.sfc.fosImpl.dataModel.EquipmentDetails", "com.sfc.fosImpl.dataModel.ContractorGroups", "com.sfc.fosImpl.dataModel.CommentData", "com.sfc.fosImpl.dataModel.CommentDataCase", "com.sfc.fosImpl.dataModel.LookupTable", "com.sfc.fosImpl.dataModel.ProcessNameAndSteps"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -149,15 +149,29 @@ theClass.prototype.listCreateCommentDataCase = function(jsonData) {
     return classList;
 };
     
-theClass.prototype.createTaskTable = function(jsonData) {
-    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.TaskTable", this.context);
+theClass.prototype.createLookupTable = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.LookupTable", this.context);
     if(jsonData != undefined)
         classObject = classObject._setValue(classObject, jsonData);
     return classObject;
 };
 
-theClass.prototype.listCreateTaskTable = function(jsonData) {
-    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.TaskTable", this.context);
+theClass.prototype.listCreateLookupTable = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.LookupTable", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createProcessNameAndSteps = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.ProcessNameAndSteps", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateProcessNameAndSteps = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.ProcessNameAndSteps", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

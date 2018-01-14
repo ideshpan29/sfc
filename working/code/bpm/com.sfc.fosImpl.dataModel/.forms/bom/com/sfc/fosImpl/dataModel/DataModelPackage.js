@@ -81,7 +81,8 @@ com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.EquipmentDet
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.ContractorGroups");
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.CommentData");
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.CommentDataCase");
-com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.TaskTable");
+com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.LookupTable");
+com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.ProcessNameAndSteps");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.DataModelFactory");

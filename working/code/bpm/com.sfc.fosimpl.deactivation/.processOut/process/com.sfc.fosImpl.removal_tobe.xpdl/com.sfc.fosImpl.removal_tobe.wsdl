@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:ns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:ttns="http://example.com/sfc_provisioningbom" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="comsfcfosImplremoval_tobe" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" tibex:XPDL="com.sfc.fosImpl.removal_tobe.xpdl">
+<wsdl:definitions xmlns:ns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:ttns="http://fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="comsfcfosImplremoval_tobe" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" tibex:XPDL="com.sfc.fosImpl.removal_tobe.xpdl">
     <partnerLinkType name="comsfcfosImplremoval_tobeRemoval_PLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
     <role name="comsfcfosImplremoval_tobeRemovalProvider" portType="ns:comsfcfosImplremoval_tobeRemoval"/>
   </partnerLinkType>
@@ -11,10 +11,10 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:schema>
-    <xsd:schema xmlns="http://example.com/sfc_provisioningbom" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tns1="http://example.com/sfc_provisioningbom" targetNamespace="http://example.com/sfc_provisioningbom">
+    <xsd:schema xmlns="http://fosImpl.sfc.com/dataModel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tns1="http://fosImpl.sfc.com/dataModel" targetNamespace="http://fosImpl.sfc.com/dataModel">
       <xsd:annotation>
         <xsd:documentation>
-          <DocumentationElement BOMORIGIN="/com.sfc.fosImpl.dataModel/Business Objects/SFC_ProvisioningBOM.bom"/>
+          <DocumentationElement BOMORIGIN="/com.sfc.fosImpl.dataModel/Business Objects/com.sfc.fosImpl.dataModel.bom"/>
         </xsd:documentation>
       </xsd:annotation>
       <xsd:simpleType name="AccountType">
@@ -451,6 +451,70 @@
           </xsd:element>
         </xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="CommentDataCase">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="comment_Id">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="siebelCircuitID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="taskName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="addedby">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="comments">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="350"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="time">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TaskTable">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="taskKey">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="400"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskValue">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="400"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
       <xsd:element name="AccountTypeElement">
         <xsd:simpleType>
           <xsd:restriction base="AccountType"/>
@@ -503,6 +567,8 @@
       <xsd:element name="EquipmentDetailsElement" type="EquipmentDetails"/>
       <xsd:element name="ContractorGroupsElement" type="ContractorGroups"/>
       <xsd:element name="CommentDataElement" type="CommentData"/>
+      <xsd:element name="CommentDataCaseElement" type="CommentDataCase"/>
+      <xsd:element name="TaskTableElement" type="TaskTable"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="comsfcfosImplremoval_tobeRemoval_CatchMessageEvent_INPUT">

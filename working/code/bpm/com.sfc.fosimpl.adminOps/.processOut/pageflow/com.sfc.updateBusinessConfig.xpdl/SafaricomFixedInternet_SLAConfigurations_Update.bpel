@@ -9,34 +9,28 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="UpdateCase">
             <startingVariables>
-                <variable>SLA_Configuration</variable>
                 <variable>SLA_ConfigurationRef</variable>
+                <variable>SLA_Configuration</variable>
             </startingVariables>
-        </task>
-        <task name="Start">
-            <ProcessManagerScript type="Complete">
-                <variable>ProcessNameArray</variable>
-                <variable>TaskNameArray</variable>
-            </ProcessManagerScript>
         </task>
         <task name="UpdateFailed">
             <startingVariables>
-                <variable>ErrorCode</variable>
-                <variable>ErrorDetail</variable>
                 <variable>CaseOutOfSynchError</variable>
+                <variable>ErrorDetail</variable>
+                <variable>ErrorCode</variable>
             </startingVariables>
         </task>
         <task name="FindSLAEntries">
             <startingVariables>
-                <variable>SLA_Configuration</variable>
                 <variable>SLA_ConfigurationRef</variable>
+                <variable>SLA_Configuration</variable>
             </startingVariables>
         </task>
         <task name="SLAConfigurationsUpdateExistingEntries">
             <startingVariables>
-                <variable>SLA_Configuration</variable>
-                <variable>ProcessNameArray</variable>
                 <variable>TaskNameArray</variable>
+                <variable>ProcessNameArray</variable>
+                <variable>SLA_Configuration</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -65,7 +59,9 @@
         <bpws:variable name="ProcessNameArray" tibex:array="yes"
             tibex:xpdlId="_ddYnEPUqEeeqxaA99Iy2Jg" type="xsd:string"/>
         <bpws:variable name="TaskNameArray" tibex:array="yes"
-            tibex:xpdlId="_nLKT8PUqEeeqxaA99Iy2Jg" type="xsd:string"/>
+            tibex:class="com.sfc.fosImpl.dataModel.ProcessNameAndSteps" tibex:xpdlId="_nLKT8PUqEeeqxaA99Iy2Jg"/>
+        <bpws:variable name="tmpTaskNameArray" tibex:array="yes"
+            tibex:xpdlId="_XXH3sPlBEeeqiZsRWP-qWg" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -76,7 +72,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_B5JFEPjyEeej8uWuBC0YMQ">
+    <bpws:flow name="_BX_flow_dX9G0PlDEeeqiZsRWP-qWg">
         <bpws:links>
             <bpws:link name="FindSLAEntries to _mmKgSeViEee0aKkJX_OoAg" tibex:xpdlId="_UPtBcPUoEeeqxaA99Iy2Jg"/>
             <bpws:link name="Start to FindSLAEntries" tibex:xpdlId="_VRengPUoEeeqxaA99Iy2Jg"/>
@@ -93,31 +89,6 @@
                 <bpws:sources>
                     <bpws:source linkName="Start to FindSLAEntries"/>
                 </bpws:sources>
-                <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ProcessNameArray.add("Provisioning");
-ProcessNameArray.add("Decomissioning");
-
-TaskNameArray.add("Process Manager Review");
-TaskNameArray.add("Select Contractor Agency");
-TaskNameArray.add("Manual Installation Removal : Contractor");
-TaskNameArray.add("TES OSG Verification");
-TaskNameArray.add("Deprovision Mngment IP : TES FAE Team");
-TaskNameArray.add("Deprovision IP : TES Team");
-
-
-]]></tibex:completedScript>
-                <tibex:completedScript
-                    expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[ProcessNameArray.add("Provisioning");
-ProcessNameArray.add("Decomissioning");
-
-TaskNameArray.add("Process Manager Review");
-TaskNameArray.add("Select Contractor Agency");
-TaskNameArray.add("Manual Installation Removal : Contractor");
-TaskNameArray.add("TES OSG Verification");
-TaskNameArray.add("Deprovision Mngment IP : TES FAE Team");
-TaskNameArray.add("Deprovision IP : TES Team");
-
-
-]]></tibex:completedScript>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
                 </tibex:eventSource>
@@ -145,10 +116,6 @@ TaskNameArray.add("Deprovision IP : TES Team");
                     <pageActivityParameters>
                         <pageActivityParameter mandatory="true"
                             mode="INOUT" name="SLA_Configuration"/>
-                        <pageActivityParameter mandatory="false"
-                            mode="INOUT" name="TaskNameArray"/>
-                        <pageActivityParameter mandatory="false"
-                            mode="INOUT" name="ProcessNameArray"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>

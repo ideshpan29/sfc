@@ -1,12 +1,13 @@
 {"bindings":[],"rules":[{"name":"setLabelBackground","trigger":"open",
       "cancelOnError":false}],"name":
   "SLA Configurations - Create New Entry","type":"form","reverseBindings":[],
-  "formModelId":"_BBnnMPjyEeej8uWuBC0YMQ","formPathSegmentCount":4,
+  "formModelId":"_EAaaUPlEEeeqiZsRWP-qWg","formPathSegmentCount":4,
   "formatVersion":"2.7.0.002","bomJSNames":[
     "com.sfc.fosImpl.dataModel.DataModelPackage",
     "com.sfc.fosImpl.dataModel.DataModelFactory",
-    "com.sfc.fosImpl.dataModel.SLA_Configuration"],"styleName":null,
-  "genCssClass":"f5fc0c8a9-cd4f-4ad5-bf56-b2e2e4d2495b","labelPosition":
+    "com.sfc.fosImpl.dataModel.SLA_Configuration",
+    "com.sfc.fosImpl.dataModel.ProcessNameAndSteps"],"styleName":null,
+  "genCssClass":"f9ffefab6-a355-4b60-b6cd-6be7e16785d9","labelPosition":
   "top","externalResources":[{"name":"","uri":
       "SLA Configurations - Create New Entry.gwt.js","localized":false},{
       "name":null,"uri":"SLA Configurations - Create New Entry.gwt.css",
@@ -25,7 +26,27 @@
       [],"name":"data.SLA_Configuration","type":"data","reverseBindings":[],
       "datumType":"com.sfc.fosImpl.dataModel.SLA_Configuration","label":
       "SLA_Configuration","inout":"INOUT","array":false,"decimalPlaces":0,
-      "length":0,"primitive":false}],"controlRefs":[{"name":
+      "length":0,"primitive":false},{"bindings":[{"name":
+          "control.SLA_Configuration_processName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["choiceLabels"]},{
+          "name":"control.SLA_Configuration_processName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["choiceValues"]}],
+      "rules":[],"name":"data.ProcessNameArray","type":"data",
+      "reverseBindings":[],"datumType":"BomPrimitiveTypes::Text","label":
+      "Process Name Array","inout":"INOUT","array":true,"decimalPlaces":0,
+      "length":100,"primitive":true},{"bindings":[],"rules":[],"name":
+      "data.TaskNameArray","type":"data","reverseBindings":[],"datumType":
+      "com.sfc.fosImpl.dataModel.ProcessNameAndSteps","label":
+      "TaskNameArray","inout":"INOUT","array":true,"decimalPlaces":0,
+      "length":0,"primitive":false},{"bindings":[{"name":
+          "control.SLA_Configuration_taskName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["choiceLabels"]},{
+          "name":"control.SLA_Configuration_taskName","type":"control",
+          "sourceFeature":["value"],"destinationFeature":["choiceValues"]}],
+      "rules":[],"name":"data.tmpTaskNameArray","type":"data",
+      "reverseBindings":[],"datumType":"BomPrimitiveTypes::Text","label":
+      "tmpTaskNameArray","inout":"INOUT","array":true,"decimalPlaces":0,
+      "length":100,"primitive":true}],"controlRefs":[{"name":
       "control.SLA_Configuration_SLALevel","type":"control"},{"name":
       "control.SLA_Configuration_processName","type":"control"},{"name":
       "control.SLA_Configuration_taskName","type":"control"},{"name":
@@ -59,41 +80,41 @@
       true,"propSetFormat":"","propSetFormatRef":
       "resource.common.format_integer"},{"bindings":[{"name":
           "pane.SLA_Configuration","type":"pane","sourceFeature":["value"],
-          "destinationFeature":["value","processName"]}],"rules":[],"name":
-      "control.SLA_Configuration_processName","type":"control",
-      "reverseBindings":[{"name":"pane.SLA_Configuration","type":"pane",
-          "sourceFeature":["value","processName"],"destinationFeature":[
-            "value"]}],"componentType":
+          "destinationFeature":["value","processName"]}],"rules":[{"name":
+          "setValuesForTaskNameArray","trigger":"update","cancelOnError":
+          false}],"name":"control.SLA_Configuration_processName","type":
+      "control","reverseBindings":[{"name":"data.ProcessNameArray","type":
+          "data","sourceFeature":["value"],"destinationFeature":[
+            "choiceLabels"]},{"name":"data.ProcessNameArray","type":"data",
+          "sourceFeature":["value"],"destinationFeature":["choiceValues"]},{
+          "name":"pane.SLA_Configuration","type":"pane","sourceFeature":[
+            "value","processName"],"destinationFeature":["value"]}],
+      "componentType":"com.tibco.forms.controls.optionlist","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":true,
+      "styleName":"","validations":[],"inheritsDeferInitialization":false,
+      "readOnly":false,"required":true,"value":[],"tabIndex":0,
+      "alwaysRenderControl":false,"propSetChoiceListValues":[],
+      "propSetChoiceListLabels":[],"propSetChoiceListLabelsRef":"",
+      "propSetOptionListMultiSelect":false},{"bindings":[{"name":
+          "pane.SLA_Configuration","type":"pane","sourceFeature":["value"],
+          "destinationFeature":["value","taskName"]}],"rules":[{"name":
+          "updateEnableFlag","trigger":"update","cancelOnError":false}],
+      "name":"control.SLA_Configuration_taskName","type":"control",
+      "reverseBindings":[{"name":"data.tmpTaskNameArray","type":"data",
+          "sourceFeature":["value"],"destinationFeature":["choiceLabels"]},{
+          "name":"data.tmpTaskNameArray","type":"data","sourceFeature":[
+            "value"],"destinationFeature":["choiceValues"]},{"name":
+          "pane.SLA_Configuration","type":"pane","sourceFeature":["value",
+            "taskName"],"destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.controls.optionlist","shortLabelRef":"","labelRef":
       "","hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[],"inheritsDeferInitialization":false,"readOnly":
       false,"required":true,"value":[],"tabIndex":0,"alwaysRenderControl":
-      false,"propSetChoiceListValues":["Provisioning","Decomissioning"],
-      "propSetChoiceListLabels":["Provisioning","Decomissioning"],
+      false,"propSetChoiceListValues":[],"propSetChoiceListLabels":[],
       "propSetChoiceListLabelsRef":"","propSetOptionListMultiSelect":false},{
       "bindings":[{"name":"pane.SLA_Configuration","type":"pane",
           "sourceFeature":["value"],"destinationFeature":["value",
-            "taskName"]}],"rules":[],"name":
-      "control.SLA_Configuration_taskName","type":"control",
-      "reverseBindings":[{"name":"pane.SLA_Configuration","type":"pane",
-          "sourceFeature":["value","taskName"],"destinationFeature":[
-            "value"]}],"componentType":
-      "com.tibco.forms.controls.optionlist","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
-      "validations":[],"inheritsDeferInitialization":false,"readOnly":
-      false,"required":true,"value":[],"tabIndex":0,"alwaysRenderControl":
-      false,"propSetChoiceListValues":["Process Manager Review",
-        "Select Contractor Agency",
-        "Manual Installation Removal : Contractor","TES OSG Verification",
-        "Deprovision Mngment IP : TES FAE Team",
-        "Deprovision IP : TES Team"],"propSetChoiceListLabels":[
-        "Process Manager Review","Select Contractor Agency",
-        "Manual Installation Removal : Contractor","TES OSG Verification",
-        "Deprovision Mngment IP : TES FAE Team",
-        "Deprovision IP : TES Team"],"propSetChoiceListLabelsRef":"",
-      "propSetOptionListMultiSelect":false},{"bindings":[{"name":
-          "pane.SLA_Configuration","type":"pane","sourceFeature":["value"],
-          "destinationFeature":["value","SLA_Deadline"]}],"rules":[],"name":
+            "SLA_Deadline"]}],"rules":[],"name":
       "control.SLA_Configuration_SLA_Deadline","type":"control",
       "reverseBindings":[{"name":"pane.SLA_Configuration","type":"pane",
           "sourceFeature":["value","SLA_Deadline"],"destinationFeature":[
@@ -177,7 +198,7 @@
           "pane","sourceFeature":["value","enableDisableFlag"],
           "destinationFeature":["value"]}],"componentType":
       "com.tibco.forms.controls.optionlist","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":false,"styleName":"",
+      "","hintRef":"","enabled":true,"visible":true,"styleName":"",
       "validations":[],"inheritsDeferInitialization":false,"readOnly":
       false,"required":false,"value":[],"tabIndex":0,"alwaysRenderControl":
       false,"propSetChoiceListValues":["ENABLE","DISABLE"],

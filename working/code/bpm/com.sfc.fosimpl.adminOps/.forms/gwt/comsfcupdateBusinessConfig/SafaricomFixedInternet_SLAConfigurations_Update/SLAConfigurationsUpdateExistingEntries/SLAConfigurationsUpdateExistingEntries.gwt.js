@@ -2,9 +2,9 @@
 
 if (typeof(tibcoforms) == 'undefined') tibcoforms = new Object();
 if (typeof(tibcoforms.formCode) == 'undefined') tibcoforms.formCode = new Object();
-tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ'] = new Object();
-tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ']['defineActions'] = function() {
-var fc = tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ'];
+tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg'] = new Object();
+tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg']['defineActions'] = function() {
+var fc = tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg'];
     fc['rule_cancel'] = function(formId, context, thisObj) {
 	   try {
 			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "cancel", "cancel", fc['action_cancel']);
@@ -67,18 +67,10 @@ var fc = tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ'];
         return "TIBCO Forms 4.1.0 V17 compliant";
     }
 };
-tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ']['defineActions']();
+tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg']['defineActions']();
 
-tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ']['defineValidations'] = function() {
-var fc = tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ'];
-	
-fc['validation_ProcessNameArray_ProcessNameArray__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ProcessNameArray: ProcessNameArray__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ProcessNameArray__length", true, true);
-}
-	
-	
+tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg']['defineValidations'] = function() {
+var fc = tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg'];
 	
 fc['validation_SLA_Configuration_SLALevel_SLA_Configuration_SLALevel__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkNumberConstraint(context.stringValue, 19, 0) ? true : [context.control.getLabel(), \'19\'] : !isNaN(context.value) && this.getForm().numberFormat(context.value,19, 0);';
@@ -91,20 +83,21 @@ fc['validation_SLA_Configuration_SLALevel_SLA_Configuration_SLALevel__length'] =
 	
 	
 	
-	
 fc['validation_SLA_Configuration_emailConfig_SLA_Configuration_emailConfig__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_emailConfig: SLA_Configuration_emailConfig__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_emailConfig__length", true, true);
 }
 	
-fc['validation_SLA_Configuration_SLA_Deadline_SLA_Configuration_SLA_Deadline__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_SLA_Deadline: SLA_Configuration_SLA_Deadline__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_SLA_Deadline__length", true, true);
+	
+	
+	
+	
+fc['validation_ProcessNameArray_ProcessNameArray__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ProcessNameArray: ProcessNameArray__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ProcessNameArray__length", true, true);
 }
-	
-	
 	
 fc['validation_SLA_Configuration_taskConfig_SLA_Configuration_taskConfig__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
@@ -113,12 +106,23 @@ fc['validation_SLA_Configuration_taskConfig_SLA_Configuration_taskConfig__length
 }
 	
 	
+fc['validation_SLA_Configuration_taskName_SLA_Configuration_taskName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_taskName: SLA_Configuration_taskName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_taskName__length", true, true);
+}
+	
+fc['validation_SLA_Configuration_processName_SLA_Configuration_processName__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_processName: SLA_Configuration_processName__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_processName__length", true, true);
+}
 	
 	
-fc['validation_TaskNameArray_TaskNameArray__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), \'100\'] : context.value.length <= 100;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskNameArray: TaskNameArray__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "TaskNameArray__length", true, true);
+fc['validation_SLA_Configuration_SLA_Deadline_SLA_Configuration_SLA_Deadline__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_SLA_Deadline: SLA_Configuration_SLA_Deadline__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "SLA_Configuration_SLA_Deadline__length", true, true);
 }
 	
 	
@@ -157,18 +161,6 @@ fc['validation_TaskNameArray_TaskNameArray__length'] = function(formId, controlN
 		this.getSLA_Configuration = function() {
 			return this.form.dataMap['SLA_Configuration'].getValue();
 		};
-		this.getTaskNameArray = function(useInternal) {
-			return this.form.dataMap['TaskNameArray'].getValue(useInternal);
-		};
-		this.setTaskNameArray = function(value) {
-			return this.form.dataMap['TaskNameArray'].setValue(value);
-		};
-		this.getProcessNameArray = function(useInternal) {
-			return this.form.dataMap['ProcessNameArray'].getValue(useInternal);
-		};
-		this.setProcessNameArray = function(value) {
-			return this.form.dataMap['ProcessNameArray'].setValue(value);
-		};
 	}
 	   
             
@@ -177,4 +169,4 @@ fc['validation_TaskNameArray_TaskNameArray__length'] = function(formId, controlN
 	   
 	   
 };
-tibcoforms.formCode['_BC4ygPjyEeej8uWuBC0YMQ']['defineValidations']();
+tibcoforms.formCode['_EBR9APlEEeeqiZsRWP-qWg']['defineValidations']();

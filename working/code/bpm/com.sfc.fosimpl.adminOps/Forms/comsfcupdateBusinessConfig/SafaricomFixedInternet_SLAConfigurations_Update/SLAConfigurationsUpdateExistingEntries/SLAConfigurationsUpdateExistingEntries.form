@@ -7,8 +7,6 @@
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_mmLHY-ViEee0aKkJX_OoAg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_SLAConfigurations_Update%26n=SLA_Configuration?" name="data.SLA_Configuration" label="SLA_Configuration" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_-rMtkNZvEeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=SLA_Configuration?" type="com.example.sfc_provisioningbom::SLA_Configuration" isArray="true" inout="INOUT"/>
-    <form:parameter generated="true" name="data.TaskNameArray" label="Task Name Array" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
-    <form:parameter generated="true" name="data.ProcessNameArray" label="ProcessNameArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -69,30 +67,6 @@
     <form:binding generated="true" direction="bothways" name="_kMyTwPUpEeeqxaA99Iy2Jg">
       <form:source target="pane.SLA_Configuration" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_HWIL0OViEee0aKkJX_OoAg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=enableDisableFlag?" data="form.pane.SLA_Configuration.value.enableDisableFlag"></form:source>
       <form:destination target="control.SLA_Configuration_enableDisableFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.SLA_Configuration_enableDisableFlag.value"></form:destination>
-    </form:binding>
-    <form:binding generated="true" direction="bothways" name="_5tiC8PUqEeeqxaA99Iy2Jg">
-      <form:source target="data.TaskNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.TaskNameArray.value"></form:source>
-      <form:destination target="control.TaskNameArray" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskNameArray.value"></form:destination>
-    </form:binding>
-    <form:binding generated="true" direction="bothways" name="_5vi1IPUqEeeqxaA99Iy2Jg">
-      <form:source target="data.ProcessNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ProcessNameArray.value"></form:source>
-      <form:destination target="control.ProcessNameArray" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ProcessNameArray.value"></form:destination>
-    </form:binding>
-    <form:binding direction="sourceToDest" name="_DqolQPUrEeeqxaA99Iy2Jg">
-      <form:source target="data.TaskNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.TaskNameArray.value"></form:source>
-      <form:destination target="control.SLA_Configuration_taskName" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.SLA_Configuration_taskName.choiceLabels"></form:destination>
-    </form:binding>
-    <form:binding direction="sourceToDest" name="_FI56EPUrEeeqxaA99Iy2Jg">
-      <form:source target="data.TaskNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.TaskNameArray.value"></form:source>
-      <form:destination target="control.SLA_Configuration_taskName" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.SLA_Configuration_taskName.choiceValues"></form:destination>
-    </form:binding>
-    <form:binding direction="sourceToDest" name="_1QVCYPUrEeeqxaA99Iy2Jg">
-      <form:source target="data.ProcessNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ProcessNameArray.value"></form:source>
-      <form:destination target="control.SLA_Configuration_processName" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.SLA_Configuration_processName.choiceLabels"></form:destination>
-    </form:binding>
-    <form:binding direction="sourceToDest" name="_2lW7oPUrEeeqxaA99Iy2Jg">
-      <form:source target="data.ProcessNameArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ProcessNameArray.value"></form:source>
-      <form:destination target="control.SLA_Configuration_processName" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.SLA_Configuration_processName.choiceValues"></form:destination>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -157,33 +131,29 @@
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_dgwPANZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=SLALevel?" syncFlags="524288" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_SLALevel">
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_dgwPANZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=SLALevel?" syncFlags="540672" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_SLALevel">
             <form:propertySet xsi:type="et:TextPropertySet"/>
             <form:label>SLALevel</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
+            <form:enabled>false</form:enabled>
             <form:required>true</form:required>
           </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_6KMtIOVNEeeRkLvTRwuu3w?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=processName?" syncFlags="524288" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_processName">
-            <form:propertySet xsi:type="et:MultiChoicePropertySet">
-              <et:choiceType>bindings</et:choiceType>
-            </form:propertySet>
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_6KMtIOVNEeeRkLvTRwuu3w?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=processName?" syncFlags="540672" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_processName">
+            <form:propertySet xsi:type="et:TextPropertySet"/>
             <form:label>ProcessName</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
+            <form:enabled>false</form:enabled>
             <form:visual width="150"/>
             <form:required>true</form:required>
           </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_fioAINZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=taskName?" syncFlags="524288" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.SLA_Configuration_taskName">
-            <form:propertySet xsi:type="et:MultiChoicePropertySet">
-              <et:choiceType>bindings</et:choiceType>
-            </form:propertySet>
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_fioAINZ8EeevAohC3a_ghw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aSLA_Configuration%26n=taskName?" syncFlags="540672" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SLA_Configuration_taskName">
+            <form:propertySet xsi:type="et:TextPropertySet"/>
             <form:label>Task Name</form:label>
             <form:hint></form:hint>
             <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
+            <form:enabled>false</form:enabled>
             <form:visual width="150"/>
             <form:required>true</form:required>
           </form:control>
@@ -259,19 +229,6 @@
         </form:pane>
       </form:pane>
     </form:pane>
-    <form:control generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_nLKT8PUqEeeqxaA99Iy2Jg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_SLAConfigurations_Update%26n=TaskNameArray?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.TaskNameArray">
-      <form:propertySet xsi:type="et:TextAreaPropertySet">
-        <form:list>true</form:list>
-        <et:rows>10</et:rows>
-        <et:cols>25</et:cols>
-        <et:maxLength>100</et:maxLength>
-      </form:propertySet>
-      <form:label>Task Name Array</form:label>
-      <form:hint></form:hint>
-      <form:visible>false</form:visible>
-      <form:enabled>true</form:enabled>
-      <form:required>false</form:required>
-    </form:control>
     <form:control generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_ddYnEPUqEeeqxaA99Iy2Jg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_SLAConfigurations_Update%26n=ProcessNameArray?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ProcessNameArray">
       <form:propertySet xsi:type="et:TextAreaPropertySet">
         <form:list>true</form:list>

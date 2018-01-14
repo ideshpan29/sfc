@@ -22,26 +22,26 @@
         </task>
         <task name="CreateEntryforContractorNormalUsers">
             <startingVariables>
-                <variable>ContractorGroupArrRef</variable>
                 <variable>ContractorNormalUsers</variable>
+                <variable>ContractorGroupArrRef</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ContractorNormalUsers</variable>
                 <variable>tmpGroupName</variable>
+                <variable>ContractorNormalUsers</variable>
             </ProcessManagerScript>
         </task>
         <task name="UpdateResource">
             <startingVariables>
-                <variable>BusinessUser</variable>
-                <variable>GroupName</variable>
-                <variable>LoginName</variable>
+                <variable>resourceList</variable>
+                <variable>ContractorGroup</variable>
+                <variable>decision</variable>
                 <variable>ContractorNormalUsers</variable>
                 <variable>ContractorSingleUser</variable>
-                <variable>ContractorMasterUserFlag</variable>
-                <variable>resourceList</variable>
-                <variable>decision</variable>
-                <variable>ContractorGroup</variable>
                 <variable>BPMUsers</variable>
+                <variable>LoginName</variable>
+                <variable>GroupName</variable>
+                <variable>BusinessUser</variable>
+                <variable>ContractorMasterUserFlag</variable>
             </startingVariables>
         </task>
         <task name="_BX_sequence_2">
@@ -51,8 +51,8 @@
         </task>
         <task name="CreateEntryforContractorGroup">
             <startingVariables>
-                <variable>ContractorGroupRef</variable>
                 <variable>ContractorGroup</variable>
+                <variable>ContractorGroupRef</variable>
             </startingVariables>
         </task>
         <task name="LDAPEntryContractorMasterUser">
@@ -63,11 +63,11 @@
         </task>
         <task name="ContractorMasterUserCheck">
             <startingVariables>
-                <variable>ContractorGroupArrRef</variable>
-                <variable>LoginName</variable>
-                <variable>tmpGroupName</variable>
-                <variable>ContractorMasterUserFlag</variable>
                 <variable>decision</variable>
+                <variable>tmpGroupName</variable>
+                <variable>LoginName</variable>
+                <variable>ContractorMasterUserFlag</variable>
+                <variable>ContractorGroupArrRef</variable>
             </startingVariables>
         </task>
         <task name="FetchGroupList">
@@ -82,8 +82,8 @@
         </task>
         <task name="LDAPEntryContractorNormalUsers">
             <ProcessManagerScript type="Initiate">
-                <variable>ContractorNormalUsers</variable>
                 <variable>LDAPEntry</variable>
+                <variable>ContractorNormalUsers</variable>
             </ProcessManagerScript>
         </task>
         <task name="_BX_sequence_5">
@@ -112,9 +112,9 @@
         <bpws:variable name="ResourceEntry"
             tibex:class="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.ldapentryinputrepeatType" tibex:xpdlId="_1K02UPBUEeeuzZ1H_57zBQ"/>
         <bpws:variable name="ContractorGroup"
-            tibex:class="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="__CZRAPBXEeeuzZ1H_57zBQ"/>
+            tibex:class="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="__CZRAPBXEeeuzZ1H_57zBQ"/>
         <bpws:variable name="ContractorGroupRef"
-            tibex:classRef="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_a_36oPB7EeeuzZ1H_57zBQ"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="_a_36oPB7EeeuzZ1H_57zBQ"/>
         <bpws:variable name="decision"
             tibex:xpdlId="_WFbVsPCCEeeuzZ1H_57zBQ" type="xsd:string"/>
         <bpws:variable name="BusinessUser"
@@ -122,11 +122,11 @@
         <bpws:variable name="LDAPEntry"
             tibex:class="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.ldapentryinputrepeatType" tibex:xpdlId="_s0Fj4PEPEeeW2tm46yiN8A"/>
         <bpws:variable name="ContractorGroupArrRef" tibex:array="yes"
-            tibex:classRef="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_aTAKIPEWEeeW2tm46yiN8A"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="_aTAKIPEWEeeW2tm46yiN8A"/>
         <bpws:variable name="ContractorMasterUserFlag"
             tibex:xpdlId="_yMRsYPEWEeeW2tm46yiN8A" type="xsd:boolean"/>
         <bpws:variable name="ContractorNormalUsers" tibex:array="yes"
-            tibex:class="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_GbLOoPEXEeeW2tm46yiN8A"/>
+            tibex:class="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="_GbLOoPEXEeeW2tm46yiN8A"/>
         <bpws:variable name="tmpGroupName"
             tibex:xpdlId="_vunFMPEYEeeW2tm46yiN8A" type="xsd:string"/>
         <bpws:variable name="BPMUsers" tibex:array="yes"
@@ -134,13 +134,13 @@
         <bpws:variable name="LoginName"
             tibex:xpdlId="_HHS5cPRnEeeRs7eYTPjalw" type="xsd:string"/>
         <bpws:variable name="ContractorSingleUser"
-            tibex:class="com.example.sfc_provisioningbom.ContractorGroups" tibex:xpdlId="_XYYsAPVcEee_HfiEwKRl-A"/>
+            tibex:class="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="_XYYsAPVcEee_HfiEwKRl-A"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_NjrLEPXoEeece_lcXQdS9Q">
+    <bpws:flow name="_BX_flow_B7mjMPjyEeej8uWuBC0YMQ">
         <bpws:links>
             <bpws:link name="BusinessUsers to UpdateResourceResult" tibex:xpdlId="_wbEA8PVJEee786-X2LpNbg"/>
             <bpws:link
@@ -251,7 +251,7 @@ GroupName.add("TESOSG");]]></tibex:completedScript>
                 <bpws:sources>
                     <bpws:source linkName="_7kmKEPB7EeeuzZ1H_57zBQ to _pGDy8PEPEeeW2tm46yiN8A"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ContractorGroupRef = cac_com_example_sfc_provisioningbom_ContractorGroups.create(ContractorGroup);]]></tibex:script>
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ContractorGroupRef = cac_com_sfc_fosImpl_dataModel_ContractorGroups.create(ContractorGroup);]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:scope name="BusinessUsers" tibex:type="serviceTask" tibex:xpdlId="_1RQtUPCHEeesJ4bn2tlLXg">
@@ -449,7 +449,7 @@ if (LDAPEntry != null && LDAPEntry.input != null) {
 
 LoginName=Process.getOriginatorName();
 
-ContractorGroupArrRef=cac_com_example_sfc_provisioningbom_ContractorGroups.findByCriteria(criteria);
+ContractorGroupArrRef=cac_com_sfc_fosImpl_dataModel_ContractorGroups.findByCriteria(criteria);
 
 if(ContractorGroupArrRef.size()>0){
 	ContractorMasterUserFlag=true;
@@ -458,7 +458,8 @@ if(ContractorGroupArrRef.size()>0){
 }
 else {
 	ContractorMasterUserFlag=false;
-}]]></tibex:script>
+}
+]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
@@ -472,7 +473,7 @@ else {
                 <bpws:sources>
                     <bpws:source linkName="_WDcHgPEYEeeW2tm46yiN8A to _7YTsMPEYEeeW2tm46yiN8A"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ContractorGroupArrRef = cac_com_example_sfc_provisioningbom_ContractorGroups.create(ContractorNormalUsers);]]></tibex:script>
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ContractorGroupArrRef = cac_com_sfc_fosImpl_dataModel_ContractorGroups.create(ContractorNormalUsers);]]></tibex:script>
                 <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[
 for(var i=0;i<ContractorNormalUsers.size();i++){
 ContractorNormalUsers.get(i).contractorGroupName = tmpGroupName;

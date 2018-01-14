@@ -10,15 +10,15 @@
         <task name="DeleteError">
             <startingVariables>
                 <variable>ErrorDetail</variable>
-                <variable>DeleteCaseFailed</variable>
                 <variable>ErrorCode</variable>
+                <variable>DeleteCaseFailed</variable>
             </startingVariables>
         </task>
         <task name="LookupCase">
             <startingVariables>
                 <variable>SystemParametersRef</variable>
-                <variable>propertyName</variable>
                 <variable>SystemParameters</variable>
+                <variable>propertyName</variable>
             </startingVariables>
         </task>
         <task name="IdentifyCase">
@@ -53,9 +53,9 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable name="SystemParameters"
-            tibex:class="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_ws9hVOVOEeeRkLvTRwuu3w"/>
+            tibex:class="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_ws9hVOVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="SystemParametersRef"
-            tibex:classRef="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_ws9hVeVOEeeRkLvTRwuu3w"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_ws9hVeVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="propertyName"
             tibex:xpdlId="_wtGEEOVOEeeRkLvTRwuu3w" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
@@ -68,7 +68,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_Nah2IPXoEeece_lcXQdS9Q" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_B4XpAPjyEeej8uWuBC0YMQ" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link name="Start to IdentifyCase" tibex:xpdlId="_ws9hRuVOEeeRkLvTRwuu3w"/>
             <bpws:link name="LookupCase to _ws9hOOVOEeeRkLvTRwuu3w" tibex:xpdlId="_ws9hSOVOEeeRkLvTRwuu3w"/>
@@ -134,10 +134,11 @@
                 <bpws:sources>
                     <bpws:source linkName="LookupCase to _ws9hOOVOEeeRkLvTRwuu3w"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef=cac_com_example_sfc_provisioningbom_SystemParameters.findByPropertyName(propertyName);
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef=cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(propertyName);
 if (SystemParametersRef != null) {
 SystemParameters = SystemParametersRef.readSystemParameters();
-}]]></tibex:script>
+}
+]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:empty name="_BX_gateway__ws9hOOVOEeeRkLvTRwuu3w"

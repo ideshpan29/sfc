@@ -9,21 +9,21 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="DeleteError">
             <startingVariables>
-                <variable>ErrorDetail</variable>
-                <variable>DeleteCaseFailed</variable>
                 <variable>ErrorCode</variable>
+                <variable>DeleteCaseFailed</variable>
+                <variable>ErrorDetail</variable>
             </startingVariables>
         </task>
         <task name="FindSLAEntries">
             <startingVariables>
-                <variable>SLA_ConfigurationRef</variable>
                 <variable>SLA_Configuration</variable>
+                <variable>SLA_ConfigurationRef</variable>
             </startingVariables>
         </task>
         <task name="DisplayDataToBeDeleted">
             <startingVariables>
-                <variable>SLA_Configuration_To_Be_Deleted</variable>
                 <variable>SLA_Configuration</variable>
+                <variable>SLA_Configuration_To_Be_Deleted</variable>
             </startingVariables>
         </task>
         <task name="DeleteCase">
@@ -47,9 +47,9 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable name="SLA_Configuration" tibex:array="yes"
-            tibex:class="com.example.sfc_provisioningbom.SLA_Configuration" tibex:xpdlId="_oi552uViEee0aKkJX_OoAg"/>
+            tibex:class="com.sfc.fosImpl.dataModel.SLA_Configuration" tibex:xpdlId="_oi552uViEee0aKkJX_OoAg"/>
         <bpws:variable name="SLA_ConfigurationRef" tibex:array="yes"
-            tibex:classRef="com.example.sfc_provisioningbom.SLA_Configuration" tibex:xpdlId="_oi552-ViEee0aKkJX_OoAg"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.SLA_Configuration" tibex:xpdlId="_oi552-ViEee0aKkJX_OoAg"/>
         <bpws:variable name="SLALevel"
             tibex:xpdlId="_ojAAYOViEee0aKkJX_OoAg" type="xsd:long"/>
         <bpws:variable name="taskName"
@@ -58,7 +58,7 @@
             tibex:xpdlId="_ojAAYuViEee0aKkJX_OoAg" type="xsd:string"/>
         <bpws:variable name="SLA_Configuration_To_Be_Deleted"
             tibex:array="yes"
-            tibex:class="com.example.sfc_provisioningbom.SLA_Configuration" tibex:xpdlId="_di-U4PUuEeeqxaA99Iy2Jg"/>
+            tibex:class="com.sfc.fosImpl.dataModel.SLA_Configuration" tibex:xpdlId="_di-U4PUuEeeqxaA99Iy2Jg"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -69,7 +69,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_NhdkkPXoEeece_lcXQdS9Q">
+    <bpws:flow name="_BX_flow_B5zMYPjyEeej8uWuBC0YMQ">
         <bpws:links>
             <bpws:link name="_BX_normalFlow to End" tibex:xpdlId="_oi55y-ViEee0aKkJX_OoAg"/>
             <bpws:link name="_BX_scope_DeleteCase to DeleteError" tibex:xpdlId="_oi551OViEee0aKkJX_OoAg"/>
@@ -108,13 +108,14 @@
                         <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[##otherwise##]]></bpws:transitionCondition>
                     </bpws:source>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SLA_ConfigurationRef = cac_com_example_sfc_provisioningbom_SLA_Configuration.findAll();
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SLA_ConfigurationRef = cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findAll();
 
 for(var i=0;i<SLA_ConfigurationRef.size();i++) {
 	SLA_Configuration.add(SLA_ConfigurationRef.get(i).readSLA_Configuration());	
 }
 
-Log.write("[SFC] ProcessName: ");]]></tibex:script>
+Log.write("[SFC] ProcessName: ");
+]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
@@ -197,7 +198,7 @@ Log.write("[SFC] ProcessName: ");]]></tibex:script>
                             <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[_BX_fanVariable=0; true]]></bpws:transitionCondition>
                         </bpws:source>
                     </bpws:sources>
-                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[cac_com_example_sfc_provisioningbom_SLA_Configuration.deleteRefs(SLA_ConfigurationRef);]]></tibex:script>
+                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[cac_com_sfc_fosImpl_dataModel_SLA_Configuration.deleteRefs(SLA_ConfigurationRef);]]></tibex:script>
                 </tibex:extActivity>
             </bpws:extensionActivity>
         </bpws:scope>

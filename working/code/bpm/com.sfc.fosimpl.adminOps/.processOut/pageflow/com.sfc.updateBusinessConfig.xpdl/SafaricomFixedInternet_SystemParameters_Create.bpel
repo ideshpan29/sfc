@@ -14,8 +14,8 @@
         </task>
         <task name="CreateCaseData">
             <startingVariables>
-                <variable>SystemParameters</variable>
                 <variable>SystemParametersRef</variable>
+                <variable>SystemParameters</variable>
             </startingVariables>
         </task>
         <task name="EnterDataToCreateCase">
@@ -33,9 +33,9 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable name="SystemParameters"
-            tibex:class="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_tRjxZOVOEeeRkLvTRwuu3w"/>
+            tibex:class="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_tRjxZOVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="SystemParametersRef"
-            tibex:classRef="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_tRjxZeVOEeeRkLvTRwuu3w"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_tRjxZeVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="ErrorCode"
             tibex:xpdlId="_tRjxZuVOEeeRkLvTRwuu3w" type="xsd:string"/>
         <bpws:variable name="ErrorDetail"
@@ -50,7 +50,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_M-ZTwPXoEeece_lcXQdS9Q" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_B3YKgPjyEeej8uWuBC0YMQ" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link name="StartEvent to EnterDataToCreateCase" tibex:xpdlId="_tRjxX-VOEeeRkLvTRwuu3w"/>
             <bpws:link
@@ -159,7 +159,7 @@
                             <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[_BX_fanVariable=0; true]]></bpws:transitionCondition>
                         </bpws:source>
                     </bpws:sources>
-                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef = cac_com_example_sfc_provisioningbom_SystemParameters.create(SystemParameters);]]></tibex:script>
+                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef = cac_com_sfc_fosImpl_dataModel_SystemParameters.create(SystemParameters);]]></tibex:script>
                 </tibex:extActivity>
             </bpws:extensionActivity>
         </bpws:scope>

@@ -9,9 +9,9 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="LookupCase">
             <startingVariables>
-                <variable>propertyName</variable>
-                <variable>SystemParameters</variable>
                 <variable>SystemParametersRef</variable>
+                <variable>SystemParameters</variable>
+                <variable>propertyName</variable>
             </startingVariables>
         </task>
         <task name="ModifyData">
@@ -26,8 +26,8 @@
         </task>
         <task name="UpdateCase">
             <startingVariables>
-                <variable>SystemParameters</variable>
                 <variable>SystemParametersRef</variable>
+                <variable>SystemParameters</variable>
             </startingVariables>
         </task>
         <task name="UpdateFailed">
@@ -51,9 +51,9 @@
             </bpws:from>
         </bpws:variable>
         <bpws:variable name="SystemParameters"
-            tibex:class="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_u73XIeVOEeeRkLvTRwuu3w"/>
+            tibex:class="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_u73XIeVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="SystemParametersRef"
-            tibex:classRef="com.example.sfc_provisioningbom.SystemParameters" tibex:xpdlId="_u73XIuVOEeeRkLvTRwuu3w"/>
+            tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_u73XIuVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="propertyName"
             tibex:xpdlId="_u7-EsOVOEeeRkLvTRwuu3w" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
@@ -66,7 +66,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_NGSrgPXoEeece_lcXQdS9Q" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_B35u8PjyEeej8uWuBC0YMQ" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link name="Start to IdentifyCase" tibex:xpdlId="_u73XFuVOEeeRkLvTRwuu3w"/>
             <bpws:link name="LookupCase to _u73XCOVOEeeRkLvTRwuu3w" tibex:xpdlId="_u73XGOVOEeeRkLvTRwuu3w"/>
@@ -127,10 +127,11 @@
                 <bpws:sources>
                     <bpws:source linkName="LookupCase to _u73XCOVOEeeRkLvTRwuu3w"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef=cac_com_example_sfc_provisioningbom_SystemParameters.findByPropertyName(propertyName);
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef=cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(propertyName);
 if (SystemParametersRef != null) {
 SystemParameters = SystemParametersRef.readSystemParameters();
-}]]></tibex:script>
+}
+]]></tibex:script>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:empty name="_BX_gateway__u73XCOVOEeeRkLvTRwuu3w"

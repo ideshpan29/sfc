@@ -70,18 +70,31 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:Onbordingoutput"/>
-    <pd:endX>791</pd:endX>
-    <pd:endY>218</pd:endY>
+    <pd:endX>1048</pd:endX>
+    <pd:endY>86</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
     </pd:errorSchemas>
-    <pd:processVariables/>
+    <pd:processVariables>
+        <Onboarding>
+            <xsd:element name="status" type="xsd:string"/>
+        </Onboarding>
+    </pd:processVariables>
+    <pd:partners>
+        <row>
+            <partnerName/>
+            <partnerInterfaceName/>
+            <partnerInterfaceNs/>
+            <partnerConfig/>
+            <partnerInterfaceLocation/>
+        </row>
+    </pd:partners>
     <pd:targetNamespace>http://xmlns.example.com/1513751864936</pd:targetNamespace>
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>234</pd:x>
-        <pd:y>3</pd:y>
+        <pd:x>355</pd:x>
+        <pd:y>1</pd:y>
         <pd:width>192</pd:width>
         <pd:height>156</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -116,8 +129,8 @@
         <pd:activity name="Call LdapEntry">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>336</pd:x>
-            <pd:y>90</pd:y>
+            <pd:x>457</pd:x>
+            <pd:y>88</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
             </config>
@@ -264,8 +277,8 @@
     <pd:activity name="Catch All Eception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>436</pd:x>
-        <pd:y>212</pd:y>
+        <pd:x>799</pd:x>
+        <pd:y>354</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -275,8 +288,8 @@
     <pd:activity name="Call Send Exception Request">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>664</pd:x>
-        <pd:y>218</pd:y>
+        <pd:x>998</pd:x>
+        <pd:y>360</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
         </config>
@@ -311,6 +324,20 @@
             </ns12:ExceptionRequest>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>444</pd:x>
+        <pd:y>252</pd:y>
+        <config>
+            <variableName>Onboarding</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
@@ -323,7 +350,8 @@
         <pd:to>Group</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($Start/wsdlPfx:Onbordinginput/ldapentryinput/pfx:ldapentryinputrepeat/pfx:input)&gt;0</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 2</pd:from>
@@ -348,6 +376,20 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

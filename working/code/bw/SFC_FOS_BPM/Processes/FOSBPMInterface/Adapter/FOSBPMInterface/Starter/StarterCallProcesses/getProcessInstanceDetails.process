@@ -76,7 +76,7 @@
                             </activity_name>
                         </xsl:if>
                         <activity_dur>
-                            <xsl:value-of select="if(column[name=&quot;ACTIVE_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;ACTIVE_DUR&quot;]/value else  tib:current-dateTime-timezone(0,0) - column[name=&quot;FIRST_OFFER_TIME&quot;]/value"/>
+                            <xsl:value-of select="if(column[name=&quot;ACTIVE_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;ACTIVE_DUR&quot;]/value else  tib:current-dateTime-timezone(0,0) - tib:add-to-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),0)"/>
                         </activity_dur>
                         <wait_dur>
                             <xsl:value-of select="if(column[name=&quot;WAIT_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;WAIT_DUR&quot;]/value else &quot;NA&quot;"/>

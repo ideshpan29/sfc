@@ -41,7 +41,7 @@
                         <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
                     </pfx8:status>
                     <pfx8:exec_mills>
-                        <xsl:value-of select="if(column[name=&quot;EXEC_MILLS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLS&quot;]/value  else tib:current-dateTime-timezone(5,30) - column[name=&quot;START_TIME&quot;]/value"/>
+                        <xsl:value-of select="if(column[name=&quot;EXEC_MILLS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLS&quot;]/value  else tib:current-dateTime-timezone(5,30) - tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
                     </pfx8:exec_mills>
                 </pfx8:searchrecord>
             </xsl:for-each>
@@ -68,7 +68,7 @@
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from &quot;,$_globalVariables/ns1:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where &quot;, $Start/root/searchkey,&quot;='&quot;,$Start/root/searchvalue,&quot;' and process_template= '&quot;,$Start/root/processname,&quot;'&quot;)"/>
+                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, start_time,attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from &quot;,$_globalVariables/ns1:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_PE_STATUS where &quot;, $Start/root/searchkey,&quot;='&quot;,$Start/root/searchvalue,&quot;' and process_template= '&quot;,$Start/root/processname,&quot;'&quot;)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>

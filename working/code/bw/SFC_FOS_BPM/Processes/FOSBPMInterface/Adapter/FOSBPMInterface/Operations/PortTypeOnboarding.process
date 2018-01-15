@@ -9,9 +9,62 @@
     <pd:returnBindings>
         <wsdlPfx:Onbordingoutput>
             <ldapentryoutput>
-                <pfx:ldapentryoutput>
-                    <xsl:value-of select="''"/>
-                </pfx:ldapentryoutput>
+                <pfx:ldapentryinputrepeat>
+                    <xsl:for-each select="$Call-LdapEntry/pfx:ldapentryinputrepeat/pfx:input">
+                        <pfx:input>
+                            <xsl:if test="pfx:firstname">
+                                <pfx:firstname>
+                                    <xsl:value-of select="pfx:firstname"/>
+                                </pfx:firstname>
+                            </xsl:if>
+                            <xsl:if test="pfx:lastname">
+                                <pfx:lastname>
+                                    <xsl:value-of select="pfx:lastname"/>
+                                </pfx:lastname>
+                            </xsl:if>
+                            <xsl:if test="pfx:loginName">
+                                <pfx:loginName>
+                                    <xsl:value-of select="pfx:loginName"/>
+                                </pfx:loginName>
+                            </xsl:if>
+                            <xsl:if test="pfx:email">
+                                <pfx:email>
+                                    <xsl:value-of select="pfx:email"/>
+                                </pfx:email>
+                            </xsl:if>
+                            <xsl:if test="pfx:password">
+                                <pfx:password>
+                                    <xsl:value-of select="pfx:password"/>
+                                </pfx:password>
+                            </xsl:if>
+                            <xsl:if test="pfx:orgmodelname">
+                                <pfx:orgmodelname>
+                                    <xsl:value-of select="pfx:orgmodelname"/>
+                                </pfx:orgmodelname>
+                            </xsl:if>
+                            <xsl:if test="pfx:flag">
+                                <pfx:flag>
+                                    <xsl:value-of select="pfx:flag"/>
+                                </pfx:flag>
+                            </xsl:if>
+                            <xsl:if test="pfx:entity">
+                                <pfx:entity>
+                                    <xsl:value-of select="pfx:entity"/>
+                                </pfx:entity>
+                            </xsl:if>
+                            <xsl:if test="pfx:addby">
+                                <pfx:addby>
+                                    <xsl:value-of select="pfx:addby"/>
+                                </pfx:addby>
+                            </xsl:if>
+                            <xsl:if test="pfx:response">
+                                <pfx:response>
+                                    <xsl:value-of select="pfx:response"/>
+                                </pfx:response>
+                            </xsl:if>
+                        </pfx:input>
+                    </xsl:for-each>
+                </pfx:ldapentryinputrepeat>
             </ldapentryoutput>
         </wsdlPfx:Onbordingoutput>
     </pd:returnBindings>
@@ -27,7 +80,7 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>233</pd:x>
+        <pd:x>234</pd:x>
         <pd:y>3</pd:y>
         <pd:width>192</pd:width>
         <pd:height>156</pd:height>
@@ -39,7 +92,7 @@
             <pd:groupType>inputLoop</pd:groupType>
             <pd:serializable>false</pd:serializable>
             <pd:over>$Start/wsdlPfx:Onbordinginput/ldapentryinput/pfx:ldapentryinputrepeat/pfx:input</pd:over>
-            <pd:iterationElementSlot>iter</pd:iterationElementSlot>
+            <pd:iterationElementSlot>entries</pd:iterationElementSlot>
             <pd:indexSlot>index</pd:indexSlot>
             <pd:activityOutputName/>
             <pd:accumulateOutput>false</pd:accumulateOutput>
@@ -63,17 +116,68 @@
         <pd:activity name="Call LdapEntry">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>332</pd:x>
-            <pd:y>91</pd:y>
+            <pd:x>336</pd:x>
+            <pd:y>90</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
             </config>
             <pd:inputBindings>
-                <pfx:ldapentryinput>
-                    <xsl:copy-of select="$iter/pfx:input/ancestor-or-self::*/namespace::node()"/>
-                    <xsl:copy-of select="$iter/pfx:input/@*"/>
-                    <xsl:copy-of select="$iter/pfx:input/node()"/>
-                </pfx:ldapentryinput>
+                <pfx:ldapentryinputrepeat>
+                    <xsl:for-each select="$entries/pfx:input">
+                        <pfx:input>
+                            <xsl:if test="pfx:firstname">
+                                <pfx:firstname>
+                                    <xsl:value-of select="pfx:firstname"/>
+                                </pfx:firstname>
+                            </xsl:if>
+                            <xsl:if test="pfx:lastname">
+                                <pfx:lastname>
+                                    <xsl:value-of select="pfx:lastname"/>
+                                </pfx:lastname>
+                            </xsl:if>
+                            <xsl:if test="pfx:loginName">
+                                <pfx:loginName>
+                                    <xsl:value-of select="pfx:loginName"/>
+                                </pfx:loginName>
+                            </xsl:if>
+                            <xsl:if test="pfx:email">
+                                <pfx:email>
+                                    <xsl:value-of select="pfx:email"/>
+                                </pfx:email>
+                            </xsl:if>
+                            <xsl:if test="pfx:password">
+                                <pfx:password>
+                                    <xsl:value-of select="pfx:password"/>
+                                </pfx:password>
+                            </xsl:if>
+                            <xsl:if test="pfx:orgmodelname">
+                                <pfx:orgmodelname>
+                                    <xsl:value-of select="pfx:orgmodelname"/>
+                                </pfx:orgmodelname>
+                            </xsl:if>
+                            <xsl:if test="pfx:flag">
+                                <pfx:flag>
+                                    <xsl:value-of select="pfx:flag"/>
+                                </pfx:flag>
+                            </xsl:if>
+                            <xsl:if test="pfx:entity">
+                                <pfx:entity>
+                                    <xsl:value-of select="pfx:entity"/>
+                                </pfx:entity>
+                            </xsl:if>
+                            <xsl:if test="pfx:addby">
+                                <pfx:addby>
+                                    <xsl:value-of select="pfx:addby"/>
+                                </pfx:addby>
+                            </xsl:if>
+                            <xsl:if test="pfx:response">
+                                <pfx:response>
+                                    <xsl:value-of select="pfx:response"/>
+                                </pfx:response>
+                            </xsl:if>
+                        </pfx:input>
+                    </xsl:for-each>
+                </pfx:ldapentryinputrepeat>
             </pd:inputBindings>
         </pd:activity>
     </pd:group>

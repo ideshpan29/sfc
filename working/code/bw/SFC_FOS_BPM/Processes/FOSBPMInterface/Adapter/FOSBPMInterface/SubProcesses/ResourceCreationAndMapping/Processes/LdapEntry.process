@@ -13,18 +13,67 @@
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startType ref="pfx13:ldapentryinput"/>
+    <pd:startType ref="pfx13:ldapentryinputrepeat"/>
     <pd:startX>59</pd:startX>
     <pd:startY>34</pd:startY>
     <pd:returnBindings>
-        <pfx13:createresourceoutput>
-            <pfx13:outputmessage>
-                <xsl:value-of select="$Call-Resource-Mapping-Process/pfx13:createresourceoutput/pfx13:outputmessage"/>
-            </pfx13:outputmessage>
-        </pfx13:createresourceoutput>
+        <pfx13:ldapentryinputrepeat>
+            <xsl:for-each select="$Start/pfx13:ldapentryinputrepeat/pfx13:input">
+                <pfx13:input>
+                    <xsl:if test="pfx13:firstname">
+                        <pfx13:firstname>
+                            <xsl:value-of select="pfx13:firstname"/>
+                        </pfx13:firstname>
+                    </xsl:if>
+                    <xsl:if test="pfx13:lastname">
+                        <pfx13:lastname>
+                            <xsl:value-of select="pfx13:lastname"/>
+                        </pfx13:lastname>
+                    </xsl:if>
+                    <xsl:if test="pfx13:loginName">
+                        <pfx13:loginName>
+                            <xsl:value-of select="pfx13:loginName"/>
+                        </pfx13:loginName>
+                    </xsl:if>
+                    <xsl:if test="pfx13:email">
+                        <pfx13:email>
+                            <xsl:value-of select="pfx13:email"/>
+                        </pfx13:email>
+                    </xsl:if>
+                    <xsl:if test="pfx13:password">
+                        <pfx13:password>
+                            <xsl:value-of select="pfx13:password"/>
+                        </pfx13:password>
+                    </xsl:if>
+                    <xsl:if test="pfx13:orgmodelname">
+                        <pfx13:orgmodelname>
+                            <xsl:value-of select="pfx13:orgmodelname"/>
+                        </pfx13:orgmodelname>
+                    </xsl:if>
+                    <xsl:if test="pfx13:flag">
+                        <pfx13:flag>
+                            <xsl:value-of select="pfx13:flag"/>
+                        </pfx13:flag>
+                    </xsl:if>
+                    <xsl:if test="pfx13:entity">
+                        <pfx13:entity>
+                            <xsl:value-of select="pfx13:entity"/>
+                        </pfx13:entity>
+                    </xsl:if>
+                    <xsl:if test="pfx13:addby">
+                        <pfx13:addby>
+                            <xsl:value-of select="pfx13:addby"/>
+                        </pfx13:addby>
+                    </xsl:if>
+                    <pfx13:response>
+                        <xsl:value-of select="$Call-Resource-Mapping-Process/pfx13:createresourceinput/pfx13:createresourcerequest[1]/pfx13:result"/>
+                    </pfx13:response>
+                </pfx13:input>
+            </xsl:for-each>
+        </pfx13:ldapentryinputrepeat>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
-    <pd:endType ref="pfx13:createresourceoutput"/>
+    <pd:endType ref="pfx13:ldapentryinputrepeat"/>
     <pd:endX>775</pd:endX>
     <pd:endY>34</pd:endY>
     <pd:errorSchemas/>
@@ -40,31 +89,51 @@
         </config>
         <pd:inputBindings>
             <pfx13:createresourceinput>
-                <pfx13:createresourcerequest>
-                    <pfx13:name>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:orgmodelname"/>
-                    </pfx13:name>
-                    <pfx13:orgname>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:orgmodelname"/>
-                    </pfx13:orgname>
-                    <pfx13:flag>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:flag"/>
-                    </pfx13:flag>
-                    <pfx13:entityname>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:entity"/>
-                    </pfx13:entityname>
-                    <pfx13:email>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:email"/>
-                    </pfx13:email>
-                    <pfx13:password>
-                        <xsl:value-of select="generate-id($Start/pfx13:ldapentryinput)"/>
-                    </pfx13:password>
-                    <xsl:if test="$Start/pfx13:ldapentryinput/pfx13:addby">
-                        <pfx13:addby>
-                            <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:addby"/>
-                        </pfx13:addby>
-                    </xsl:if>
-                </pfx13:createresourcerequest>
+                <xsl:for-each select="$Start/pfx13:ldapentryinputrepeat/pfx13:input">
+                    <pfx13:createresourcerequest>
+                        <xsl:if test="pfx13:loginName">
+                            <pfx13:name>
+                                <xsl:value-of select="pfx13:loginName"/>
+                            </pfx13:name>
+                        </xsl:if>
+                        <xsl:if test="pfx13:orgmodelname">
+                            <pfx13:orgname>
+                                <xsl:value-of select="pfx13:orgmodelname"/>
+                            </pfx13:orgname>
+                        </xsl:if>
+                        <xsl:if test="pfx13:flag">
+                            <pfx13:flag>
+                                <xsl:value-of select="pfx13:flag"/>
+                            </pfx13:flag>
+                        </xsl:if>
+                        <xsl:if test="pfx13:entity">
+                            <pfx13:entityname>
+                                <xsl:value-of select="pfx13:entity"/>
+                            </pfx13:entityname>
+                        </xsl:if>
+                        <xsl:if test="pfx13:email">
+                            <pfx13:email>
+                                <xsl:value-of select="pfx13:email"/>
+                            </pfx13:email>
+                        </xsl:if>
+                        <xsl:if test="pfx13:password">
+                            <pfx13:password>
+                                <xsl:value-of select="pfx13:password"/>
+                            </pfx13:password>
+                        </xsl:if>
+                        <xsl:if test="pfx13:addby">
+                            <pfx13:addby>
+                                <xsl:value-of select="pfx13:addby"/>
+                            </pfx13:addby>
+                        </xsl:if>
+                        <pfx13:action>
+                            <xsl:value-of select="'ADD'"/>
+                        </pfx13:action>
+                        <pfx13:result>
+                            <xsl:value-of select="'FAILED'"/>
+                        </pfx13:result>
+                    </pfx13:createresourcerequest>
+                </xsl:for-each>
             </pfx13:createresourceinput>
         </pd:inputBindings>
     </pd:activity>
@@ -141,7 +210,10 @@ public class LdapEntryLdapEntryCode{
 	protected String resourceCreationDN = "";
 	protected String SucessoutputMessage = "";
 	protected String FailureOutputMessage = "";
-	protected String LDapPort = "";
+	protected int LDapPort = 0;
+	protected String FirstName = "";
+	protected String LastName = "";
+	protected String EmployeeType = "";
 	protected String outputMessage = "";
 	public String getName() {
 		return Name;
@@ -203,11 +275,29 @@ public class LdapEntryLdapEntryCode{
 	public void setFailureOutputMessage(String val) {
 		FailureOutputMessage = val;
 	}
-	public String getLDapPort() {
+	public int getLDapPort() {
 		return LDapPort;
 	}
-	public void setLDapPort(String val) {
+	public void setLDapPort(int val) {
 		LDapPort = val;
+	}
+	public String getFirstName() {
+		return FirstName;
+	}
+	public void setFirstName(String val) {
+		FirstName = val;
+	}
+	public String getLastName() {
+		return LastName;
+	}
+	public void setLastName(String val) {
+		LastName = val;
+	}
+	public String getEmployeeType() {
+		return EmployeeType;
+	}
+	public void setEmployeeType(String val) {
+		EmployeeType = val;
 	}
 	public String getoutputMessage() {
 		return outputMessage;
@@ -230,7 +320,10 @@ public class LdapEntryLdapEntryCode{
 	In  : String resourceCreationDN
 	In  : String SucessoutputMessage
 	In  : String FailureOutputMessage
-	In  : String LDapPort
+	In  : int LDapPort
+	In  : String FirstName
+	In  : String LastName
+	In  : String EmployeeType
 	Out : String outputMessage
 * Available Variables: DO NOT MODIFY *****/
 
@@ -293,7 +386,9 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
 			            "ObjectClass: top",
 			            "cn: "+getName(),
 			            "sn: "+getName(),
-				    "mail: "+getmail(),
+				    "mail: "+getmail(),	
+				     "employeeType: "+getEmployeeType(),		
+				    "LastName: "+getLastName(),
 				    "userpassword: "+getpassword()
 			            ) );
 					setoutputMessage(getSucessoutputMessage());
@@ -369,24 +464,39 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
                     <fieldType>int</fieldType>
                     <fieldRequired>optional</fieldRequired>
                 </row>
+                <row>
+                    <fieldName>FirstName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>LastName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>EmployeeType</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
             </inputData>
             <byteCode>
                 <class>
                     <name>LdapEntryLdapEntryCode</name>
-                    <byteCode>yv66vgAAADQA+AkATQCKCQBNAIsJAE0AjAkATQCNCQBNAI4JAE0AjwkATQCQCQBNAJEJAE0AkgkATQCTCQBNAJQJAE0AlQoAPQCWCACXBwCYCgBNAJkKAE0AmgoADwCbCgBNAJwKAE0AnQsAngCfBwCgCgAWAKEHAKIKABgAlgkAowCkCwClAKYHAKcIAKgLAKUAqQsApQCqBwCrCgBNAKwKACAArQsApQCuBwCvCgAkAKEHALAKACYAlggAsQoAJgCyCgBNALMIALQKACYAtQsApQC2BwC3CgAuAKELAJ4AuAsAuQC6CwC5ALsHALwHAL0LADQAvgcAvwoANgChBwDACADBCgBNAMIIAMMKAE0AxAcAxQgAxggAxwgAyAgAyQgAyggAywgAzAoATQDNCgA4AM4LAJ4AzwoATQDQCgBNANEHANIKAEoAoQoATQDTBwDUAQAETmFtZQEAEkxqYXZhL2xhbmcvU3RyaW5nOwEABG1haWwBAAhwYXNzd29yZAEADExEYXBIb3N0TmFtZQEADExEYXBVc2VyTmFtZQEADExEYXBQYXNzd29yZAEAEUxEYXBQYXJ0aXRpb25OYW1lAQAScmVzb3VyY2VDcmVhdGlvbkROAQATU3VjZXNzb3V0cHV0TWVzc2FnZQEAFEZhaWx1cmVPdXRwdXRNZXNzYWdlAQAITERhcFBvcnQBAAFJAQANb3V0cHV0TWVzc2FnZQEAB2dldE5hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAAdzZXROYW1lAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWAQAHZ2V0bWFpbAEAB3NldG1haWwBAAtnZXRwYXNzd29yZAEAC3NldHBhc3N3b3JkAQAPZ2V0TERhcEhvc3ROYW1lAQAPc2V0TERhcEhvc3ROYW1lAQAPZ2V0TERhcFVzZXJOYW1lAQAPc2V0TERhcFVzZXJOYW1lAQAPZ2V0TERhcFBhc3N3b3JkAQAPc2V0TERhcFBhc3N3b3JkAQAUZ2V0TERhcFBhcnRpdGlvbk5hbWUBABRzZXRMRGFwUGFydGl0aW9uTmFtZQEAFWdldHJlc291cmNlQ3JlYXRpb25ETgEAFXNldHJlc291cmNlQ3JlYXRpb25ETgEAFmdldFN1Y2Vzc291dHB1dE1lc3NhZ2UBABZzZXRTdWNlc3NvdXRwdXRNZXNzYWdlAQAXZ2V0RmFpbHVyZU91dHB1dE1lc3NhZ2UBABdzZXRGYWlsdXJlT3V0cHV0TWVzc2FnZQEAC2dldExEYXBQb3J0AQADKClJAQALc2V0TERhcFBvcnQBAAQoSSlWAQAQZ2V0b3V0cHV0TWVzc2FnZQEAEHNldG91dHB1dE1lc3NhZ2UBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwDUBwDVBwCgBwDWBwCvBwC3BwDXBwC/BwDSAQAKRXhjZXB0aW9ucwEAClNvdXJjZUZpbGUBABtMZGFwRW50cnlMZGFwRW50cnlDb2RlLmphdmEMAE4ATwwAUABPDABRAE8MAFIATwwAUwBPDABUAE8MAFUATwwAVgBPDABXAE8MAFgATwwAWQBaDABbAE8MAHoAewEAAAEAOm9yZy9hcGFjaGUvZGlyZWN0b3J5L2xkYXAvY2xpZW50L2FwaS9MZGFwTmV0d29ya0Nvbm5lY3Rpb24MAGYAXQwAdAB1DAB6ANgMAGgAXQwAagBdBwDVDADZANoBABNqYXZhL2xhbmcvRXhjZXB0aW9uDADbAHsBAD1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlcXVlc3RJbXBsBwDcDADdAN4HANYMAN8A4AEAEGphdmEvbGFuZy9TdHJpbmcBAAEqDADhAOIMAOMA5AEAK29yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL25hbWUvRG4MAGwAXQwAegDlDADmAOcBAERvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEludmFsaWREbkV4Y2VwdGlvbgEAF2phdmEvbGFuZy9TdHJpbmdCdWlsZGVyAQAGKG1haWw9DADoAOkMAGIAXQEAASkMAOoAXQwA6wDsAQA7b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZXhjZXB0aW9uL0xkYXBFeGNlcHRpb24MAO0A7gcA1wwA7wDwDADxAPIBADRvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1Jlc3BvbnNlAQA9b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXN1bHRFbnRyeQwA8wD0AQA6b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL0N1cnNvckV4Y2VwdGlvbgEANm9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2VudHJ5L0RlZmF1bHRFbnRyeQEAA09VPQwAXABdAQABLAwAbgBdAQAQamF2YS9sYW5nL09iamVjdAEAGU9iamVjdENsYXNzOmluZXRPcmdQZXJzb24BABNPYmplY3RDbGFzczpwZXJzb24gAQAQT2JqZWN0Q2xhc3M6IHRvcAEABGNuOiABAARzbjogAQAGbWFpbDogAQAOdXNlcnBhc3N3b3JkOiAMAGQAXQwAegD1DAD2APcMAHAAXQwAeQBhAQBNb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZXhjZXB0aW9uL0xkYXBFbnRyeUFscmVhZHlFeGlzdHNFeGNlcHRpb24MAHIAXQEAhFByb2Nlc3Nlcy9GT1NCUE1JbnRlcmZhY2UvQWRhcHRlci9GT1NCUE1JbnRlcmZhY2UvU3ViUHJvY2Vzc2VzL1Jlc291cmNlQ3JlYXRpb25BbmRNYXBwaW5nL1Byb2Nlc3Nlcy9MZGFwRW50cnkvTGRhcEVudHJ5TGRhcEVudHJ5Q29kZQEAM29yZy9hcGFjaGUvZGlyZWN0b3J5L2xkYXAvY2xpZW50L2FwaS9MZGFwQ29ubmVjdGlvbgEAOW9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdAEAN29yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2N1cnNvci9TZWFyY2hDdXJzb3IBABYoTGphdmEvbGFuZy9TdHJpbmc7SSlWAQAEYmluZAEAJyhMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL1N0cmluZzspVgEAD3ByaW50U3RhY2tUcmFjZQEAN29yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoU2NvcGUBAAdTVUJUUkVFAQA5TG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoU2NvcGU7AQAIc2V0U2NvcGUBAHYoTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoU2NvcGU7KUxvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlcXVlc3Q7AQANYWRkQXR0cmlidXRlcwEAUChbTGphdmEvbGFuZy9TdHJpbmc7KUxvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlcXVlc3Q7AQAMc2V0VGltZUxpbWl0AQA+KEkpTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBABYoW0xqYXZhL2xhbmcvU3RyaW5nOylWAQAHc2V0QmFzZQEAaihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbmFtZS9EbjspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAZhcHBlbmQBAC0oTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvU3RyaW5nQnVpbGRlcjsBAAh0b1N0cmluZwEACXNldEZpbHRlcgEATyhMamF2YS9sYW5nL1N0cmluZzspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAZzZWFyY2gBAHYoTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2N1cnNvci9TZWFyY2hDdXJzb3I7AQAEbmV4dAEAAygpWgEAA2dldAEAFCgpTGphdmEvbGFuZy9PYmplY3Q7AQAIZ2V0RW50cnkBADMoKUxv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</byteCode>
+                    <byteCode>yv66vgAAADQBDwkAVACaCQBUAJsJAFQAnAkAVACdCQBUAJ4JAFQAnwkAVACgCQBUAKEJAFQAogkAVACjCQBUAKQJAFQApQkAVACmCQBUAKcJAFQAqAoAQACpCACqBwCrCgBUAKwKAFQArQoAEgCuCgBUAK8KAFQAsAsAsQCyBwCzCgAZALQHALUKABsAqQkAtgC3CwC4ALkHALoIALsLALgAvAsAuAC9BwC+CgBUAL8KACMAwAsAuADBBwDCCgAnALQHAMMKACkAqQgAxAoAKQDFCgBUAMYIAMcKACkAyAsAuADJBwDKCgAxALQLALEAywsAzADNCwDMAM4HAM8HANALADcA0QcA0goAOQC0BwDTCADUCgBUANUIANYKAFQA1wcA2AgA2QgA2ggA2wgA3AgA3QgA3ggA3woAVADgCADhCgBUAOIIAOMKAFQA5AoAOwDlCwCxAOYKAFQA5woAVADoBwDpCgBRALQKAFQA6gcA6wEABE5hbWUBABJMamF2YS9sYW5nL1N0cmluZzsBAARtYWlsAQAIcGFzc3dvcmQBAAxMRGFwSG9zdE5hbWUBAAxMRGFwVXNlck5hbWUBAAxMRGFwUGFzc3dvcmQBABFMRGFwUGFydGl0aW9uTmFtZQEAEnJlc291cmNlQ3JlYXRpb25ETgEAE1N1Y2Vzc291dHB1dE1lc3NhZ2UBABRGYWlsdXJlT3V0cHV0TWVzc2FnZQEACExEYXBQb3J0AQABSQEACUZpcnN0TmFtZQEACExhc3ROYW1lAQAMRW1wbG95ZWVUeXBlAQANb3V0cHV0TWVzc2FnZQEAB2dldE5hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAAdzZXROYW1lAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWAQAHZ2V0bWFpbAEAB3NldG1haWwBAAtnZXRwYXNzd29yZAEAC3NldHBhc3N3b3JkAQAPZ2V0TERhcEhvc3ROYW1lAQAPc2V0TERhcEhvc3ROYW1lAQAPZ2V0TERhcFVzZXJOYW1lAQAPc2V0TERhcFVzZXJOYW1lAQAPZ2V0TERhcFBhc3N3b3JkAQAPc2V0TERhcFBhc3N3b3JkAQAUZ2V0TERhcFBhcnRpdGlvbk5hbWUBABRzZXRMRGFwUGFydGl0aW9uTmFtZQEAFWdldHJlc291cmNlQ3JlYXRpb25ETgEAFXNldHJlc291cmNlQ3JlYXRpb25ETgEAFmdldFN1Y2Vzc291dHB1dE1lc3NhZ2UBABZzZXRTdWNlc3NvdXRwdXRNZXNzYWdlAQAXZ2V0RmFpbHVyZU91dHB1dE1lc3NhZ2UBABdzZXRGYWlsdXJlT3V0cHV0TWVzc2FnZQEAC2dldExEYXBQb3J0AQADKClJAQALc2V0TERhcFBvcnQBAAQoSSlWAQAMZ2V0Rmlyc3ROYW1lAQAMc2V0Rmlyc3ROYW1lAQALZ2V0TGFzdE5hbWUBAAtzZXRMYXN0TmFtZQEAD2dldEVtcGxveWVlVHlwZQEAD3NldEVtcGxveWVlVHlwZQEAEGdldG91dHB1dE1lc3NhZ2UBABBzZXRvdXRwdXRNZXNzYWdlAQAGPGluaXQ+AQADKClWAQAGaW52b2tlAQANU3RhY2tNYXBUYWJsZQcA6wcA7AcAswcA7QcAwgcAygcA7gcA0gcA6QEACkV4Y2VwdGlvbnMBAApTb3VyY2VGaWxlAQAbTGRhcEVudHJ5TGRhcEVudHJ5Q29kZS5qYXZhDABVAFYMAFcAVgwAWABWDABZAFYMAFoAVgwAWwBWDABcAFYMAF0AVgwAXgBWDABfAFYMAGAAYQwAYgBWDABjAFYMAGQAVgwAZQBWDACKAIsBAAABADpvcmcvYXBhY2hlL2RpcmVjdG9yeS9sZGFwL2NsaWVudC9hcGkvTGRhcE5ldHdvcmtDb25uZWN0aW9uDABwAGcMAH4AfwwAigDvDAByAGcMAHQAZwcA7AwA8ADxAQATamF2YS9sYW5nL0V4Y2VwdGlvbgwA8gCLAQA9b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0SW1wbAcA8wwA9AD1BwDtDAD2APcBABBqYXZhL2xhbmcvU3RyaW5nAQABKgwA+AD5DAD6APsBACtvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9uYW1lL0RuDAB2AGcMAIoA/AwA/QD+AQBEb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZXhjZXB0aW9uL0xkYXBJbnZhbGlkRG5FeGNlcHRpb24BABdqYXZhL2xhbmcvU3RyaW5nQnVpbGRlcgEABihtYWlsPQwA/wEADABsAGcBAAEpDAEBAGcMAQIBAwEAO29yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2V4Y2VwdGlvbi9MZGFwRXhjZXB0aW9uDAEEAQUHAO4MAQYBBwwBCAEJAQA0b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9SZXNwb25zZQEAPW9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVzdWx0RW50cnkMAQoBCwEAOm9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2N1cnNvci9DdXJzb3JFeGNlcHRpb24BADZvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9lbnRyeS9EZWZhdWx0RW50cnkBAANPVT0MAGYAZwEAASwMAHgAZwEAEGphdmEvbGFuZy9PYmplY3QBABlPYmplY3RDbGFzczppbmV0T3JnUGVyc29uAQATT2JqZWN0Q2xhc3M6cGVyc29uIAEAEE9iamVjdENsYXNzOiB0b3ABAARjbjogAQAEc246IAEABm1haWw6IAEADmVtcGxveWVlVHlwZTogDACGAGcBAApMYXN0TmFtZTogDACEAGcBAA51c2VycGFzc3dvcmQ6IAwAbgBnDACKAQwMAQ0BDgwAegBnDACJAGsBAE1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEVudHJ5QWxyZWFkeUV4aXN0c0V4Y2VwdGlvbgwAfABnAQCEUHJvY2Vzc2VzL0ZPU0JQTUludGVyZmFjZS9BZGFwdGVyL0ZPU0JQTUludGVyZmFjZS9TdWJQcm9jZXNzZXMvUmVzb3VyY2VDcmVhdGlvbkFuZE1hcHBpbmcvUHJvY2Vzc2VzL0xkYXBFbnRyeS9MZGFwRW50cnlMZGFwRW50cnlDb2RlAQAzb3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBDb25uZWN0aW9uAQA5b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0AQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL1NlYXJjaEN1cnNvcgEAFihMamF2YS9sYW5nL1N0cmluZztJKVYBAARiaW5kAQAnKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOylWAQAPcHJpbnRTdGFja1RyYWNlAQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZQEAB1NVQlRSRUUBADlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTsBAAhzZXRTY29wZQEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAA1hZGRBdHRyaWJ1dGVzAQBQKFtMamF2YS9sYW5nL1N0cmluZzspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAxzZXRUaW1lTGltaXQBAD4oSSlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdzZXRCYXNlAQBqKExvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9uYW1lL0RuOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABmFwcGVuZAEALShMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmdCdWlsZGVyOwEACHRvU3RyaW5nAQAJc2V0RmlsdGVyAQBPKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAv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</byteCode>
                 </class>
             </byteCode>
         </config>
         <pd:inputBindings>
             <javaCodeActivityInput>
                 <Name>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:orgmodelname"/>
+                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
                 </Name>
                 <mail>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinput/pfx13:email"/>
+                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
                 </mail>
                 <password>
-                    <xsl:value-of select="generate-id($Start/pfx13:ldapentryinput)"/>
+                    <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
                 </password>
                 <LDapHostName>
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPHost"/>
@@ -412,6 +522,28 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
                 <LDapPort>
                     <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/port"/>
                 </LDapPort>
+                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
+                    <FirstName>
+                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
+                    </FirstName>
+                </xsl:if>
+                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
+                    <LastName>
+                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
+                    </LastName>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:entity='Contractor'">
+                        <EmployeeType>
+                            <xsl:value-of select="'CONTRACTOR'"/>
+                        </EmployeeType>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <EmployeeType>
+                            <xsl:value-of select="'PERMENANT'"/>
+                        </EmployeeType>
+                    </xsl:otherwise>
+                </xsl:choose>
             </javaCodeActivityInput>
         </pd:inputBindings>
     </pd:activity>

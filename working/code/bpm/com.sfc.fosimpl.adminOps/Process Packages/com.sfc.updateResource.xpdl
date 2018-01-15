@@ -152,7 +152,7 @@
     </xpdl2:Pool>
   </xpdl2:Pools>
   <xpdl2:WorkflowProcesses>
-    <xpdl2:WorkflowProcess Id="_fXJkEPBTEeeuzZ1H_57zBQ" xpdExt:XpdModelType="PageFlow" xpdExt:PublishAsBusinessService="true" xpdExt:DisplayName="com.sfc.fosImpl.mapResources" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /User Onboarding /" Name="comsfcfosImplmapResources">
+    <xpdl2:WorkflowProcess Id="_fXJkEPBTEeeuzZ1H_57zBQ" xpdExt:XpdModelType="PageFlow" xpdExt:PublishAsBusinessService="true" xpdExt:DisplayName="SafaricomFixedInternet_MapResources" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet / Admin /Map Resources" Name="SafaricomFixedInternet_MapResources">
       <xpdl2:ProcessHeader/>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_ranV8PBTEeeuzZ1H_57zBQ" xpdExt:DisplayName="resource List" Name="resourceList" IsArray="true">
@@ -273,7 +273,7 @@
           </xpdl2:TransitionRestrictions>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="47.0" LaneId="_fXJkEvBTEeeuzZ1H_57zBQ" Width="31.0">
-              <xpdl2:Coordinates XCoordinate="1145.0" YCoordinate="115.0"/>
+              <xpdl2:Coordinates XCoordinate="1224.0" YCoordinate="115.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -487,7 +487,15 @@ for(var i=0;i&lt;BusinessUser.createresourcerequest.size();i++) {&#xD;
                     </xpdExt:DataMappings>
                   </xpdExt:InputMappings>
                 </xpdl2:MessageIn>
-                <xpdl2:MessageOut Id="_qc304fEPEeeW2tm46yiN8A"/>
+                <xpdl2:MessageOut Id="_qc304fEPEeeW2tm46yiN8A">
+                  <xpdExt:OutputMappings MapperContext="OutputFromService" MappingDirection="OUT">
+                    <xpdExt:DataMappings>
+                      <xpdExt:DataMapping xpdExt:SourceContributorId="OutputFromService.DataMapperContent" xpdExt:TargetContributorId="ActivityInterface.DataMapperContent" Direction="IN" Formal="LDAPEntry.input">
+                        <xpdl2:Actual ScriptGrammar="JavaScript">ldapentryoutput.input</xpdl2:Actual>
+                      </xpdExt:DataMapping>
+                    </xpdExt:DataMappings>
+                  </xpdExt:OutputMappings>
+                </xpdl2:MessageOut>
                 <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://schemas.xmlsoap.org/soap/http" xpdExt:Alias="_QmiNoPCOEeesJ4bn2tlLXg" OperationName="Onboarding">
                   <xpdl2:Service xpdExt:IsRemote="true" PortName="PortTypeEndpoint0" ServiceName="FOSBPMInterface-service0">
                     <xpdl2:EndPoint EndPointType="WSDL">
@@ -524,11 +532,18 @@ entry.firstname=ContractorGroup.firstName;&#xD;
 entry.flag=&quot;G&quot;;&#xD;
 entry.lastname=ContractorGroup.lastName;&#xD;
 entry.orgmodelname=ContractorGroup.loginName;&#xD;
+entry.loginName = ContractorGroup.loginName;&#xD;
 entry.password=&quot;NA&quot;;&#xD;
+entry.addby = Process.getOriginatorName();&#xD;
 LDAPEntry.input.add(entry);&#xD;
 &#xD;
 &#xD;
+&#xD;
 </xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">&#xD;
+var entry=LDAPEntry.input.get(0);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -612,7 +627,15 @@ ContractorNormalUsers.get(i).masterUser = &quot;N&quot;;&#xD;
                     </xpdExt:DataMappings>
                   </xpdExt:InputMappings>
                 </xpdl2:MessageIn>
-                <xpdl2:MessageOut Id="_AHRVs_EZEeeW2tm46yiN8A"/>
+                <xpdl2:MessageOut Id="_AHRVs_EZEeeW2tm46yiN8A">
+                  <xpdExt:OutputMappings MapperContext="OutputFromService" MappingDirection="OUT">
+                    <xpdExt:DataMappings>
+                      <xpdExt:DataMapping xpdExt:SourceContributorId="OutputFromService.DataMapperContent" xpdExt:TargetContributorId="ActivityInterface.DataMapperContent" Direction="IN" Formal="LDAPEntry.input">
+                        <xpdl2:Actual ScriptGrammar="JavaScript">ldapentryoutput.input</xpdl2:Actual>
+                      </xpdExt:DataMapping>
+                    </xpdExt:DataMappings>
+                  </xpdExt:OutputMappings>
+                </xpdl2:MessageOut>
                 <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://schemas.xmlsoap.org/soap/http" xpdExt:Alias="_QmiNoPCOEeesJ4bn2tlLXg" OperationName="Onboarding">
                   <xpdl2:Service xpdExt:IsRemote="true" PortName="PortTypeEndpoint0" ServiceName="FOSBPMInterface-service0">
                     <xpdl2:EndPoint EndPointType="WSDL">
@@ -652,8 +675,24 @@ entry.firstname=ContractorNormalUsers.get(i).firstName;&#xD;
 entry.flag=&quot;G&quot;;&#xD;
 entry.lastname=ContractorNormalUsers.get(i).lastName;&#xD;
 entry.orgmodelname=ContractorNormalUsers.get(i).loginName;&#xD;
+entry.loginName =ContractorNormalUsers.get(i).loginName;&#xD;
+entry.addby = Process.getOriginatorName();&#xD;
 entry.password=&quot;NA&quot;;&#xD;
 LDAPEntry.input.add(entry);&#xD;
+}&#xD;
+&#xD;
+&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">for(var i=0;i&lt;LDAPEntry.input.size();i++) {&#xD;
+	if(LDAPEntry.input.get(i).response==&quot;SUCCESS&quot;) {&#xD;
+		LDAPEntry.input.get(i).response=&quot;Intended Action has been performed successfully&quot;;&#xD;
+		&#xD;
+	}&#xD;
+	else {&#xD;
+		LDAPEntry.input.get(i).response=&quot;Error: Please contact System Administrator&quot;;	&#xD;
+	}&#xD;
 }&#xD;
 &#xD;
 &#xD;
@@ -693,6 +732,73 @@ LDAPEntry.input.add(entry);&#xD;
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
+        <xpdl2:Activity Id="_JAChIPm0Eee1r_rrBJBvlg" Name="UpdateResourceResultContractorMasterUser" xpdExt:Visibility="Private" xpdExt:DisplayName="Update Resource Result - Contractor Master User">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_JAChIfm0Eee1r_rrBJBvlg"/>
+                <xpdl2:MessageOut Id="_JAChIvm0Eee1r_rrBJBvlg"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcupdateResource/comsfcfosImplmapResources/UpdateResourceResultContractorMasterUser/UpdateResourceResultContractorMasterUser.form"/>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcupdateResource/comsfcfosImplmapResources/UpdateResourceResultContractorMasterUser/UpdateResourceResultContractorMasterUser.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_fXJkEvBTEeeuzZ1H_57zBQ" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="946.0" YCoordinate="115.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="LDAPEntry" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="ContractorGroup" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_3LHhcPnIEeepcKbonwg3GQ" Name="UpdateResourceResultContractorNormalUsers" xpdExt:Visibility="Private" xpdExt:DisplayName="Update Resource Result - Contractor Normal Users">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_3LHhcfnIEeepcKbonwg3GQ"/>
+                <xpdl2:MessageOut Id="_3LHhcvnIEeepcKbonwg3GQ"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcupdateResource/comsfcfosImplmapResources/UpdateResourceResultContractorNormalUsers/UpdateResourceResultContractorNormalUsers.form"/>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcupdateResource/comsfcfosImplmapResources/UpdateResourceResultContractorNormalUsers/UpdateResourceResultContractorNormalUsers.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_fXJkEvBTEeeuzZ1H_57zBQ" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="954.0" YCoordinate="245.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="LDAPEntry" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+        </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
         <xpdl2:Transition Id="_y6r1IvBTEeeuzZ1H_57zBQ" xpdExt:DisplayName="" Name="" From="_qfHo4PEVEeeW2tm46yiN8A" To="_y6rOEPBTEeeuzZ1H_57zBQ">
@@ -706,7 +812,7 @@ LDAPEntry.input.add(entry);&#xD;
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_ACOBMPBWEeeuzZ1H_57zBQ" xpdExt:DisplayName="" Name="" From="_pGDy8PEPEeeW2tm46yiN8A" To="_fXKyNPBTEeeuzZ1H_57zBQ">
+        <xpdl2:Transition Id="_ACOBMPBWEeeuzZ1H_57zBQ" xpdExt:DisplayName="" Name="" From="_JAChIPm0Eee1r_rrBJBvlg" To="_fXKyNPBTEeeuzZ1H_57zBQ">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
@@ -745,12 +851,13 @@ LDAPEntry.input.add(entry);&#xD;
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_9sZ1wPEYEeeW2tm46yiN8A" Name="" From="_7YTsMPEYEeeW2tm46yiN8A" To="_fXKyNPBTEeeuzZ1H_57zBQ">
+        <xpdl2:Transition Id="_9sZ1wPEYEeeW2tm46yiN8A" xpdExt:DisplayName="" Name="" From="_3LHhcPnIEeepcKbonwg3GQ" To="_fXKyNPBTEeeuzZ1H_57zBQ">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
               <xpdl2:Coordinates XCoordinate="48.488796658054035" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_R7THQPE1EeeWw8R4pwNr1Q" xpdExt:DisplayName="" Name="" From="_WDcHgPEYEeeW2tm46yiN8A" To="_7YTsMPEYEeeW2tm46yiN8A">
@@ -782,6 +889,16 @@ LDAPEntry.input.add(entry);&#xD;
               <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
               <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_JADIMPm0Eee1r_rrBJBvlg" xpdExt:DisplayName="" Name="" From="_pGDy8PEPEeeW2tm46yiN8A" To="_JAChIPm0Eee1r_rrBJBvlg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_3LHhc_nIEeepcKbonwg3GQ" xpdExt:DisplayName="" Name="" From="_7YTsMPEYEeeW2tm46yiN8A" To="_3LHhcPnIEeepcKbonwg3GQ">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
       </xpdl2:Transitions>

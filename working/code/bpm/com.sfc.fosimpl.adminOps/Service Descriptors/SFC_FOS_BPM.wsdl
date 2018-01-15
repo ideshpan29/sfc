@@ -178,14 +178,16 @@
                         <xs:element name="input" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element name="firstname" type="xs:string"/>
-                                    <xs:element name="lastname" type="xs:string"/>
-                                    <xs:element name="email" type="xs:string"/>
+                                    <xs:element name="firstname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="lastname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="loginName" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="email" type="xs:string" minOccurs="0"/>
                                     <xs:element name="password" type="xs:string" minOccurs="0"/>
-                                    <xs:element name="orgmodelname" type="xs:string"/>
-                                    <xs:element name="flag" type="xs:string"/>
-                                    <xs:element name="entity" type="xs:string"/>
+                                    <xs:element name="orgmodelname" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="flag" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="entity" type="xs:string" minOccurs="0"/>
                                     <xs:element name="addby" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="response" type="xs:string" minOccurs="0"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -460,7 +462,7 @@
         <wsdl:part name="ldapentryinput" element="ns0:ldapentryinputrepeat"/>
     </wsdl:message>
     <wsdl:message name="Onbordingoutput">
-        <wsdl:part name="ldapentryoutput" element="ns0:ldapentryoutput"/>
+        <wsdl:part name="ldapentryoutput" element="ns0:ldapentryinputrepeat"/>
     </wsdl:message>
     <wsdl:message name="Onbordingfault">
         <wsdl:part name="fault" element="ns0:fault"/>

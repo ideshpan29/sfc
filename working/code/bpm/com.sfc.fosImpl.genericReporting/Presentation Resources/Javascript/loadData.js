@@ -209,15 +209,29 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					
 					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
-					
-					record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
-					
+					var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					record.setTime(timeValue);
 					}
 					else
 					{
 					
 						//record.setTime(time);
-						record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						
+						var ms=(recordSet[i].childNodes[0].nodeValue);
+						
+						var days = Math.floor(ms / (24*60*60*1000));
+    					var daysms=ms % (24*60*60*1000);
+   						var hours = Math.floor((daysms)/(60*60*1000));
+    					var hoursms=ms % (60*60*1000);
+   						var minutes = Math.floor((hoursms)/(60*1000));
+    					var minutesms=ms % (60*1000);
+ 					    var sec = Math.floor((minutesms)/(1000));
+ 					    
+						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						record.setTime(timeValue);
 					}
 					}
 					
@@ -435,24 +449,42 @@ var tmpURL = url+funcName;
 					
 					
 					logger.info(".............");
-					logger.info((DAYS*1440));
-					logger.info(HOURS*60);
-					logger.info(MINUTES*1);
-					logger.info(SECONDS/60);
+					logger.info("DAYS: "+DAYS);
+					logger.info("HOURS: "+HOURS);
+					logger.info("MINUTES: "+MINUTES);
+					logger.info("SECONDS: "+SECONDS);
 				
-					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
-					logger.info("//////////////"+1.456765.toFixed(2));
-					logger.info(9692.089866666667.toFixed(2));
-					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
-					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
 					
-					record.setTaskDuration(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					
+					
+					
+					
+						var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+						logger.info("''''''''''''''''''''''''''''''''''''''''''''''''"+timeValue);
+					//record.setTaskDuration(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					record.setTaskDuration(timeValue);
 					}
 					else
 					{
 						
-						record.setTaskDuration(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						
+						var ms=(recordSet[i].childNodes[0].nodeValue);
+						
+						var days = Math.floor(ms / (24*60*60*1000));
+    					var daysms=ms % (24*60*60*1000);
+   						var hours = Math.floor((daysms)/(60*60*1000));
+    					var hoursms=ms % (60*60*1000);
+   						var minutes = Math.floor((hoursms)/(60*1000));
+    					var minutesms=ms % (60*1000);
+ 					    var sec = Math.floor((minutesms)/(1000));
+ 					    
+						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						record.setTaskDuration(timeValue);
+						
+						
+						//record.setTaskDuration(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 					}
 						
 						logger.info("in rewcord add activity duration"+record.getProcessInstance());
@@ -462,11 +494,25 @@ var tmpURL = url+funcName;
 					
 					recordSet = xmlDoc.getElementsByTagName("wait_dur");
 					if(recordSet[i].childNodes[0]!=null)	{	
-					var time=parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2);
-					if(time=="NaN")
-					time="NA";
-					else
-					time=time+" minutes"
+					var time=(recordSet[i].childNodes[0].nodeValue);
+					if(time!="NA")
+					{
+					
+					var ms=time
+						
+						var days = Math.floor(ms / (24*60*60*1000));
+    					var daysms=ms % (24*60*60*1000);
+   						var hours = Math.floor((daysms)/(60*60*1000));
+    					var hoursms=ms % (60*60*1000);
+   						var minutes = Math.floor((hoursms)/(60*1000));
+    					var minutesms=ms % (60*1000);
+ 					    var sec = Math.floor((minutesms)/(1000));
+ 					    
+						time=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						
+						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						//record.setTaskDuration(timeValue);
+					}
 							
 						record.setWaitDuration(time);
 						logger.info("in rewcord add waitduration"+record.getProcessInstance());
@@ -476,12 +522,32 @@ var tmpURL = url+funcName;
 					recordSet = xmlDoc.getElementsByTagName("work_time_dur");
 					if(recordSet[i].childNodes[0]!=null)	{	
 					
+					var time=(recordSet[i].childNodes[0].nodeValue);		
+					
+					if(time!="NA")
+					{
+					
+					var ms=time
+						
+						var days = Math.floor(ms / (24*60*60*1000));
+    					var daysms=ms % (24*60*60*1000);
+   						var hours = Math.floor((daysms)/(60*60*1000));
+    					var hoursms=ms % (60*60*1000);
+   						var minutes = Math.floor((hoursms)/(60*1000));
+    					var minutesms=ms % (60*1000);
+ 					    var sec = Math.floor((minutesms)/(1000));
+ 					    
+						time=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						
+						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						//record.setTaskDuration(timeValue);
+					}
+					
+					
+					
+					
+					
 							
-					var time=parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2);
-					if(time=="NaN")
-					time="NA";
-					else
-					time=time+" minutes"		
 						record.setWorkDuration(time);
 						logger.info("in workduration"+record.getProcessInstance());
 					}
@@ -653,14 +719,30 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
 					
-					record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
+					record.setTime(timeValue);
+					
+					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					
 					}
 					else
 					{
 					
-						//record.setTime(time);
-						record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						var ms=(recordSet[i].childNodes[0].nodeValue);
+						
+						var days = Math.floor(ms / (24*60*60*1000));
+    					var daysms=ms % (24*60*60*1000);
+   						var hours = Math.floor((daysms)/(60*60*1000));
+    					var hoursms=ms % (60*60*1000);
+   						var minutes = Math.floor((hoursms)/(60*1000));
+    					var minutesms=ms % (60*1000);
+ 					    var sec = Math.floor((minutesms)/(1000));
+ 					    
+						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
+						record.setTime(timeValue);
 					}
 						
 							

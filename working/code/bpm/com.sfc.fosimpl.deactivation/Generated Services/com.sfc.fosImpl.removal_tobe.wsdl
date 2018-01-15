@@ -494,19 +494,51 @@
           </xsd:element>
         </xsd:sequence>
       </xsd:complexType>
-      <xsd:complexType name="TaskTable">
+      <xsd:complexType name="LookupTable">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="1" name="taskKey">
+          <xsd:element maxOccurs="1" minOccurs="0" name="lookupValue">
             <xsd:simpleType>
               <xsd:restriction base="xsd:string">
                 <xsd:maxLength value="400"/>
               </xsd:restriction>
             </xsd:simpleType>
           </xsd:element>
-          <xsd:element maxOccurs="1" minOccurs="0" name="taskValue">
+          <xsd:element maxOccurs="1" minOccurs="0" name="autoCaseIdentifier1">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="lookupKey">
             <xsd:simpleType>
               <xsd:restriction base="xsd:string">
-                <xsd:maxLength value="400"/>
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="enableFlag">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ProcessNameAndSteps">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="processName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="stepName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
               </xsd:restriction>
             </xsd:simpleType>
           </xsd:element>
@@ -565,7 +597,8 @@
       <xsd:element name="ContractorGroupsElement" type="ContractorGroups"/>
       <xsd:element name="CommentDataElement" type="CommentData"/>
       <xsd:element name="CommentDataCaseElement" type="CommentDataCase"/>
-      <xsd:element name="TaskTableElement" type="TaskTable"/>
+      <xsd:element name="LookupTableElement" type="LookupTable"/>
+      <xsd:element name="ProcessNameAndStepsElement" type="ProcessNameAndSteps"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="comsfcfosImplremoval_tobeRemoval_CatchMessageEvent_INPUT">

@@ -9,21 +9,22 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ConfirmDetails">
             <startingVariables>
-                <variable>GroupNames</variable>
+                <variable>TaskName</variable>
                 <variable>CommentText</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentHistory</variable>
+                <variable>GroupNames</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>SelectedContractor</variable>
                 <variable>SelectedGroup</variable>
-                <variable>TechnicalInfo</variable>
                 <variable>ContractorNames</variable>
-                <variable>TaskName</variable>
-                <variable>Provisioning_Data</variable>
             </startingVariables>
         </task>
         <task name="ScriptTask">
             <startingVariables>
                 <variable>CommentDataSet</variable>
-                <variable>CommentHistory</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
         </task>
         <task name="ServiceTask">
@@ -32,9 +33,10 @@
                 <variable>commentDataCase</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>CommentText</variable>
                 <variable>TaskName</variable>
                 <variable>commentDataCase</variable>
+                <variable>CommentText</variable>
+                <variable>Provisioning_Data</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -81,7 +83,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_vCQpMPjyEeej8uWuBC0YMQ">
+    <bpws:flow name="_BX_flow_7r37YPm-Eeec_I4oCcyvoQ">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -96,20 +98,20 @@
                     <bpws:source linkName="StartEvent to ScriptTask"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="SelectedContractor"/>
-                    <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
                     <parameterDescription mode="InOut" name="TaskName"/>
+                    <parameterDescription mode="InOut" name="Mail"/>
                     <parameterDescription mode="InOut" name="commentDataCase"/>
                     <parameterDescription mode="InOut" name="CommentText"/>
-                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
                     <parameterDescription mode="InOut" name="CommentDataSet"/>
-                    <parameterDescription mode="InOut" name="SelectedGroup"/>
-                    <parameterDescription mode="InOut" name="TechnicalInfo"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
                     <parameterDescription mode="InOut" name="CommentHistory"/>
                     <parameterDescription mode="InOut" name="EscalationEmail"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
+                    <parameterDescription mode="InOut" name="GroupNames"/>
+                    <parameterDescription mode="InOut" name="TechnicalInfo"/>
+                    <parameterDescription mode="InOut" name="SelectedContractor"/>
+                    <parameterDescription mode="InOut" name="SelectedGroup"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -151,6 +153,8 @@
                             mode="INOUT" name="ContractorNames"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="CommentText"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="CommentHistory"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>
@@ -173,9 +177,12 @@ commentDataCase.taskName=CommentHistory.get(size).stepName;
 commentDataCase.time=CommentHistory.get(size).time;
 */
 commentDataCase=com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();
-commentDataCase.addedby=Process.getOriginator();
+commentDataCase.addedby=Process.getOriginatorName();
 commentDataCase.comments=CommentText;
-commentDataCase.taskName=TaskName;
+for(var index=0; index<TaskName.length; index++) {
+	var name=TaskName.replace("_"," ");
+}
+commentDataCase.taskName=name;
 commentDataCase.time=DateTimeUtil.createDatetime();
 commentDataCase.siebelCircuitID=Provisioning_Data.siebelCircuitID;
 
@@ -196,10 +203,11 @@ Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.taskName);]]></tibe
                 </bpws:sources>
                 <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "siebelCircuitID='"+Provisioning_Data.siebelCircuitID+"'";
 CommentDataSet=cac_com_sfc_fosImpl_dataModel_CommentDataCase.findByCriteria(criteria);
-var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();
+
 CommentHistory.clear();
 if(CommentDataSet.size()>0){
 	for(var index=0; index<CommentDataSet.size(); index++) {
+		var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();
 		comment.addedby=CommentDataSet.get(index).readCommentDataCase().addedby;
 		comment.comments=CommentDataSet.get(index).readCommentDataCase().comments;
 		comment.stepName=CommentDataSet.get(index).readCommentDataCase().taskName;

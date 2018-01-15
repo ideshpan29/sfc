@@ -192,6 +192,7 @@
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false"/>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit/>
         </xpdl2:Activity>
@@ -228,9 +229,12 @@ commentDataCase.taskName=CommentHistory.get(size).stepName;&#xD;
 commentDataCase.time=CommentHistory.get(size).time;&#xD;
 */&#xD;
 commentDataCase=com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();&#xD;
-commentDataCase.addedby=Process.getOriginator();&#xD;
+commentDataCase.addedby=Process.getOriginatorName();&#xD;
 commentDataCase.comments=CommentText;&#xD;
-commentDataCase.taskName=TaskName;&#xD;
+for(var index=0; index&lt;TaskName.length; index++) {
+	var name=TaskName.replace(&quot;_&quot;,&quot; &quot;);
+}&#xD;
+commentDataCase.taskName=name;&#xD;
 commentDataCase.time=DateTimeUtil.createDatetime();&#xD;
 commentDataCase.siebelCircuitID=Provisioning_Data.siebelCircuitID;&#xD;
 &#xD;
@@ -247,10 +251,11 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
               <xpdl2:TaskScript>
                 <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;siebelCircuitID='&quot;+Provisioning_Data.siebelCircuitID+&quot;'&quot;;&#xD;
 CommentDataSet=cac_com_sfc_fosImpl_dataModel_CommentDataCase.findByCriteria(criteria);&#xD;
-var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();&#xD;
+&#xD;
 CommentHistory.clear();&#xD;
 if(CommentDataSet.size()>0){&#xD;
 	for(var index=0; index&lt;CommentDataSet.size(); index++) {&#xD;
+		var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();&#xD;
 		comment.addedby=CommentDataSet.get(index).readCommentDataCase().addedby;&#xD;
 		comment.comments=CommentDataSet.get(index).readCommentDataCase().comments;&#xD;
 		comment.stepName=CommentDataSet.get(index).readCommentDataCase().taskName;&#xD;

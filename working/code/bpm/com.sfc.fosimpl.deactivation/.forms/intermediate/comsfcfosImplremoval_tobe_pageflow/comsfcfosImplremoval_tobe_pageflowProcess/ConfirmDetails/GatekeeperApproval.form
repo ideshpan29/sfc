@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_Xmm6QPj2Eeej8uWuBC0YMQ" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_kXfN4PnJEeec_I4oCcyvoQ" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.dataModel.DataModelPackage</form:package>
     <form:factory>com.sfc.fosImpl.dataModel.DataModelFactory</form:factory>
-    <form:class>com.sfc.fosImpl.dataModel.TehnicalInformation</form:class>
     <form:class>com.sfc.fosImpl.dataModel.EquipmentDetails</form:class>
-    <form:class>com.sfc.fosImpl.dataModel.ProvisioningDataModel</form:class>
     <form:class>com.sfc.fosImpl.dataModel.CommentData</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.TehnicalInformation</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.ProvisioningDataModel</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -47,9 +47,9 @@
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
     </form:rule>
     <form:rule name="rule.initrule1" label="initrule1">
-      <form:event source="#_Xmm6QPj2Eeej8uWuBC0YMQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_kXfN4PnJEeec_I4oCcyvoQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>if(data.getTaskName()==&quot;Deactivation Process Initiate&quot;) {&#xD;
+        <form:script>if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
 pane.serviceRequest.setEnabled(true);&#xD;
@@ -74,10 +74,17 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
-      <form:event source="#_Xmm6QPj2Eeej8uWuBC0YMQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_kXfN4PnJEeec_I4oCcyvoQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
-        <form:script>//data.setTaskName(&quot;Deactivation Process Initiate&quot;);&#xD;
-pane.content.setLabel(data.getTaskName());&#xD;
+        <form:script>//data.setTaskName(&quot;PM_Review&quot;);&#xD;
+logger.info(data.getTaskName().length);&#xD;
+var name=data.getTaskName();&#xD;
+for(var index=0; index&lt;name.length; index++) {
+	name=name.replace(&quot;_&quot;,&quot; &quot;);&#xD;
+	//data.setTaskName(name);
+}&#xD;
+logger.info(name);&#xD;
+pane.content.setLabel(name);&#xD;
 &#xD;
 pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
 pane.selectContractorAgency.setVisible(false);&#xD;
@@ -93,11 +100,11 @@ control.lblEscalatePM.setVisible(false);&#xD;
 pane.MarginPaneTechnicalInfo.setVisible(true);&#xD;
 //pane.pane13.setVisible(false);&#xD;
 &#xD;
-if(data.getTaskName()==&quot;Deactivation Process Initiate&quot;){&#xD;
+if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;){&#xD;
 control.addEquipment.setVisible(true);&#xD;
 }&#xD;
 &#xD;
-if(data.getTaskName()==&quot;Select Contractor Agency&quot;){&#xD;
+if(data.getTaskName()==&quot;Select_Contractor&quot;){&#xD;
 pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
 pane.selectContractorAgency.setVisible(false);&#xD;
 &#xD;
@@ -110,7 +117,7 @@ pane.pneMarginPaneSelectContractor.setVisible(true);&#xD;
 pane.selectContractor.setVisible(true);&#xD;
 }&#xD;
 &#xD;
-if(data.getTaskName()==&quot;Process Manager Review&quot;){&#xD;
+if(data.getTaskName()==&quot;PM_Review&quot;){&#xD;
 control.lblContractorAgency.setVisible(true);&#xD;
 control.lblSelectContractor.setVisible(false);&#xD;
 &#xD;

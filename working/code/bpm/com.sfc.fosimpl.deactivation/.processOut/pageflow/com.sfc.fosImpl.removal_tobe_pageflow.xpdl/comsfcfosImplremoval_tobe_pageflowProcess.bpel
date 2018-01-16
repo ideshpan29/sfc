@@ -83,7 +83,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_7r37YPm-Eeec_I4oCcyvoQ">
+    <bpws:flow name="_BX_flow_4psxgPqHEeec_I4oCcyvoQ">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -157,6 +157,14 @@
                             mode="INOUT" name="CommentHistory"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
+                <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name=TaskName;
+var Log_Activity_Type="End";
+var Log_Activity_Resource="USER";
+Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+",CLIENT_NAME="+Provisioning_Data.clientName+",PVM_ID="+Process.getId()+",PROCESS_NAME="+Process.getName()+",ACTIVITY_NAME="+Log_Activity_Name+",ACTIVITY_TYPE="+Log_Activity_Type+",ACTIVITY_RESOURCE="+Log_Activity_Resource+",END_TIME="+DateTimeUtil.createDatetime()+",");]]></tibex:completedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name=TaskName;
+var Log_Activity_Type="Start";
+var Log_Activity_Resource="USER";
+Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+",CLIENT_NAME="+Provisioning_Data.clientName+",PVM_ID="+Process.getId()+",PROCESS_NAME="+Process.getName()+",ACTIVITY_NAME="+Log_Activity_Name+",ACTIVITY_TYPE="+Log_Activity_Type+",ACTIVITY_RESOURCE="+Log_Activity_Resource+",BEGIN_TIME="+DateTimeUtil.createDatetime()+",");]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
@@ -216,6 +224,15 @@ if(CommentDataSet.size()>0){
 	}
 }
 ]]></tibex:script>
+                <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name="Script Task";
+var Log_Activity_Type="End";
+var Log_Activity_Resource="SYSTEM";
+Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+",CLIENT_NAME="+Provisioning_Data.clientName+",PVM_ID="+Process.getId()+",PROCESS_NAME="+Process.getName()+",ACTIVITY_NAME="+Log_Activity_Name+",ACTIVITY_TYPE="+Log_Activity_Type+",ACTIVITY_RESOURCE="+Log_Activity_Resource+",END_TIME="+DateTimeUtil.createDatetime()+",");
+]]></tibex:completedScript>
+                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name="Script Task";
+var Log_Activity_Type="Start";
+var Log_Activity_Resource="SYSTEM";
+Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+",CLIENT_NAME="+Provisioning_Data.clientName+",PVM_ID="+Process.getId()+",PROCESS_NAME="+Process.getName()+",ACTIVITY_NAME="+Log_Activity_Name+",ACTIVITY_TYPE="+Log_Activity_Type+",ACTIVITY_RESOURCE="+Log_Activity_Resource+",BEGIN_TIME="+DateTimeUtil.createDatetime()+",");]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
     </bpws:flow>

@@ -194,7 +194,20 @@
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false"/>
           </xpdExt:AssociatedParameters>
-          <xpdExt:Audit/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=TaskName;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;USER&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=TaskName;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;USER&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_GAOiUPaZEee_OvMSeNQu6A" Name="ServiceTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Service Task">
           <xpdl2:Implementation>
@@ -276,7 +289,21 @@ if(CommentDataSet.size()>0){&#xD;
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
-          <xpdExt:Audit/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>

@@ -952,7 +952,17 @@ Safaricom Team  </email:Body>
               <xpdExt:Information ScriptGrammar="JavaScript">CircuitID=Provisioning_Data.siebelCircuitID;&#xD;
 ClientId=Provisioning_Data.clientID;&#xD;
 ClientName=Provisioning_Data.clientName;&#xD;
-Email=Provisioning_Data.email;</xpdExt:Information>
+Email=Provisioning_Data.email;&#xD;
+var Log_Activity_Name=&quot;Request Initiate Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Request Initiate Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -1032,6 +1042,17 @@ Safaricom Team</email:Body>
 ClientID=Provisioning_Data.clientID;&#xD;
 ClientName=Provisioning_Data.clientName;&#xD;
 CircuitID=Provisioning_Data.siebelCircuitID;&#xD;
+var Log_Activity_Name=&quot;Service Acknowledge Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Service Acknowledge Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);&#xD;
 </xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
@@ -1045,7 +1066,7 @@ CircuitID=Provisioning_Data.siebelCircuitID;&#xD;
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1157,7 +1178,16 @@ return toSendEmail;		&#xD;
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: &quot;+SLAFLAGGlobal);&#xD;
-</xpdExt:Information>
+var Log_Activity_Name=&quot;SLA Breach Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;SLA Breach Mail&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -1170,7 +1200,7 @@ return toSendEmail;		&#xD;
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Process Manager Review','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1212,7 +1242,7 @@ Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 02: &q
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">Log.write(&quot;At Second Task&quot;);&#xD;
-FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual Installation Removal : Contractor','Decomissioning');&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual_Installation_Removal','Decomissioning');&#xD;
 if(FetchSLA1.readSLA_Configuration().emailTo=='PM'){&#xD;
 FetchSLA1.readSLA_Configuration().emailConfig=Mail;&#xD;
 Log.write(&quot;Mail Value Set&quot;);&#xD;
@@ -1270,7 +1300,20 @@ for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
-          <xpdExt:Audit/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_L2COcPEPEeeJiLkPq4yokA" Name="ScriptTask2" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task 2">
           <xpdl2:Implementation>
@@ -1292,6 +1335,20 @@ MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorG
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;ScriptTask&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_Tyh5APEREeeJiLkPq4yokA" Name="Select_Contractor" xpdExt:Visibility="Private" xpdExt:OverwriteAlreadyModifiedTaskData="false" xpdExt:ActivityDeadlineEventId="_FljCMPjuEeej8uWuBC0YMQ" xpdExt:DisplayName="Select Contractor">
           <xpdl2:Implementation>
@@ -1395,6 +1452,20 @@ for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;Start&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
+var Log_Activity_Type=&quot;End&quot;;&#xD;
+var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_N-az8PUEEeeywP4RjejZPQ" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
           <xpdl2:Event>
@@ -1405,7 +1476,7 @@ for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_Management_IP','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1446,7 +1517,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision Mngment IP : TES FAE Team','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_Management_IP','Decomissioning');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1487,7 +1558,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select Contractor Agency','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select_Contractor','Decomissioning');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1509,7 +1580,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select Contractor Agency','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select_Contractor','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1531,7 +1602,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual Installation Removal : Contractor','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual_Installation_Removal','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
@@ -1552,7 +1623,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES OSG Verification','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES_OSG_Verification','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
@@ -1573,7 +1644,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES OSG Verification','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES_OSG_Verification','Decomissioning');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -1595,7 +1666,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision IP : TES Team','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_IPs','Decomissioning');&#xD;
 DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
@@ -1616,7 +1687,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:Deadline>
-            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision IP : TES Team','Decomissioning');&#xD;
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_IPs','Decomissioning');&#xD;
 DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
@@ -2053,7 +2124,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
         </xpdExt:DataWorkItemAttributeMapping>
       </xpdExt:ProcessDataWorkItemAttributeMappings>
     </xpdl2:WorkflowProcess>
-    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
+    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /Start Case" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
       <xpdl2:ProcessHeader/>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_cIE1EOPTEeeoTJ_gSITXzA" xpdExt:DisplayName="TaskName" Name="TaskName" IsArray="false" ReadOnly="false">
@@ -2524,6 +2595,7 @@ Siebel ID : %SiebelCircuitID%</email:Body>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC] Decomissioning.Process: SLAFlagGlobal At Email Sub process Call: &quot;+SLAFLAGGlobal);&#xD;
+&#xD;
 &#xD;
 if(SLA.readSLA_Configuration().emailTo==&quot;SPECIFIC&quot;) {&#xD;
 	EmailTo = SLA.readSLA_Configuration().emailConfig;&#xD;

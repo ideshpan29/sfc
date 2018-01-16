@@ -209,7 +209,7 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					
 					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
-					var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+					var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
 					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTime(timeValue);
 					}
@@ -228,7 +228,7 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
     					var minutesms=ms % (60*1000);
  					    var sec = Math.floor((minutesms)/(1000));
  					    
-						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
 						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTime(timeValue);
@@ -459,7 +459,7 @@ var tmpURL = url+funcName;
 					
 					
 					
-						var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+						var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
 						logger.info("''''''''''''''''''''''''''''''''''''''''''''''''"+timeValue);
 					//record.setTaskDuration(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTaskDuration(timeValue);
@@ -478,7 +478,7 @@ var tmpURL = url+funcName;
     					var minutesms=ms % (60*1000);
  					    var sec = Math.floor((minutesms)/(1000));
  					    
-						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
 						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTaskDuration(timeValue);
@@ -719,7 +719,7 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
 					
-					var timeValue=DAYS+" DAYS  "+HOURS+" HOURS  "+MINUTES+" MINUTES  "+SECONDS+" SECONDS.";
+					var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
 					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTime(timeValue);
 					
@@ -739,7 +739,7 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
     					var minutesms=ms % (60*1000);
  					    var sec = Math.floor((minutesms)/(1000));
  					    
-						var timeValue=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
 						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTime(timeValue);

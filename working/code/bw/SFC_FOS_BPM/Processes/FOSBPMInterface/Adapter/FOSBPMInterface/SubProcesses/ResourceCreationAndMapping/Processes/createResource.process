@@ -504,8 +504,8 @@
         <pd:group name="Interation To get the Guid from Group name">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1542</pd:x>
-            <pd:y>81</pd:y>
+            <pd:x>1550</pd:x>
+            <pd:y>71</pd:y>
             <pd:width>237</pd:width>
             <pd:height>267</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -555,8 +555,8 @@
             <pd:activity name="AssignGuid">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>1647</pd:x>
-                <pd:y>145</pd:y>
+                <pd:x>1654</pd:x>
+                <pd:y>134</pd:y>
                 <config>
                     <variableName>groupGuid</variableName>
                 </config>
@@ -578,8 +578,8 @@
             <pd:activity name="Null1">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1655</pd:x>
-                <pd:y>272</pd:y>
+                <pd:x>1662</pd:x>
+                <pd:y>261</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -685,7 +685,7 @@
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
             <pd:x>1543</pd:x>
-            <pd:y>370</pd:y>
+            <pd:y>371</pd:y>
             <pd:width>240</pd:width>
             <pd:height>190</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -736,30 +736,21 @@
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
                 <pd:x>1655</pd:x>
-                <pd:y>425</pd:y>
+                <pd:y>426</pd:y>
                 <config>
                     <variableName>PositionId</variableName>
                 </config>
                 <pd:inputBindings>
-                    <xsl:choose>
-                        <xsl:when test="$position/position/@name=$Start/pfx15:Request/pfx15:entityname">
-                            <PositionId>
-                                <xsl:value-of select="$position/position/@guid"/>
-                            </PositionId>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <PositionId>
-                                <xsl:value-of select="&quot;&quot;"/>
-                            </PositionId>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <PositionId>
+                        <xsl:value-of select="$position/position/@guid"/>
+                    </PositionId>
                 </pd:inputBindings>
             </pd:activity>
             <pd:activity name="Null2">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
                 <pd:x>1658</pd:x>
-                <pd:y>506</pd:y>
+                <pd:y>507</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -945,8 +936,8 @@
                 <inputOutputVersion>5.2.0</inputOutputVersion>
                 <host>%%BPM/CreateResource/Emails/ResourceCreationMails/EmailServerHost%%</host>
                 <authenticate>true</authenticate>
-                <username>%%BPM/CreateResource/Emails/ResourceCreationMails/FromTag%%</username>
-                <password>%%BPM/CreateResource/Emails/ResourceCreationMails/Password%%</password>
+                <username>%%SharedResources/Connections/Emails/UserName%%</username>
+                <password>%%SharedResources/Connections/Emails/Password%%</password>
                 <InputHeaders>
                     <xsd:element name="root">
                         <xsd:complexType>
@@ -959,12 +950,6 @@
             </config>
             <pd:inputBindings>
                 <ns3:mailActivityInput>
-                    <username>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/UserName"/>
-                    </username>
-                    <password>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/Password"/>
-                    </password>
                     <from>
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/FromTag"/>
                     </from>
@@ -987,7 +972,7 @@
                                 </content-type>
                             </mimeHeaders>
                             <textContent>
-                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for Safaricom Fixed Internet Solution &lt;br> url: &quot;,$_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL/URL ,&quot;&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br> Password : &quot;,$ParseIndex1/pfx17:users/pfx17:password,&quot;&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
+                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for Safaricom Fixed Internet Solution &lt;br> url: &quot;,$_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL ,&quot;&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br> Password : &quot;,$ParseIndex1/pfx17:users/pfx17:password,&quot;&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
                             </textContent>
                         </mimePart>
                     </ns42:mimeEnvelopeElement>
@@ -1018,12 +1003,6 @@
             </config>
             <pd:inputBindings>
                 <ns3:mailActivityInput>
-                    <username>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/UserName"/>
-                    </username>
-                    <password>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/Password"/>
-                    </password>
                     <from>
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/Emails/ResourceCreationMails/FromTag"/>
                     </from>

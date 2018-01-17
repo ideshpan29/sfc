@@ -83,7 +83,7 @@
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select activity_name, sum(CASE status when to_nchar('COMPLETED') then 1 else 0 end) COMPLETED , sum(CASE status when to_nchar('OPENED') then 1 else 0 end) OPENED, sum(CASE status when to_nchar('CANCELLED') then 1 else 0 end) Cancelled,sum(CASE status when to_nchar('OFFERED') then 1 else 0 end) Offered from &quot;,$_globalVariables/ns:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_WI_STATUS where activity_name='&quot;,$Start/activityname,&quot;' GROUP by ACTIVITY_NAME&quot;)"/>
+                    <xsl:value-of select="concat(&quot;select activity_name, sum(CASE status when to_nchar('COMPLETED') then 1 else 0 end) COMPLETED , sum(CASE status when to_nchar('OPENED') then 1 else 0 end) OPENED, sum(CASE status when to_nchar('CANCELLED') then 1 else 0 end) Cancelled,sum(CASE status when to_nchar('OFFERED') then 1 else 0 end) Offered from EC_WI_STATUS where activity_name='&quot;,$Start/activityname,&quot;' GROUP by ACTIVITY_NAME&quot;)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>

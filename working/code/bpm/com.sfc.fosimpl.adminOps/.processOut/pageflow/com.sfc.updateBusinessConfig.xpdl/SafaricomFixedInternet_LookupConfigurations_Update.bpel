@@ -9,8 +9,8 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="LookupCase">
             <startingVariables>
-                <variable>LookupTableRef</variable>
                 <variable>LookupTable</variable>
+                <variable>LookupTableRef</variable>
                 <variable>autoCaseIdentifier1</variable>
             </startingVariables>
         </task>
@@ -26,15 +26,15 @@
         </task>
         <task name="UpdateCase">
             <startingVariables>
-                <variable>LookupTableRef</variable>
                 <variable>LookupTable</variable>
+                <variable>LookupTableRef</variable>
             </startingVariables>
         </task>
         <task name="UpdateFailed">
             <startingVariables>
                 <variable>ErrorCode</variable>
-                <variable>CaseOutOfSynchError</variable>
                 <variable>ErrorDetail</variable>
+                <variable>CaseOutOfSynchError</variable>
             </startingVariables>
         </task>
     </tibex:VariableDescriptor>
@@ -66,7 +66,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_dZv2kPlDEeeqiZsRWP-qWg" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_wQhRQPtREeeupNwu8S8N4Q" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link name="_ljT2IPksEeeqiZsRWP-qWg to ModifyData" tibex:xpdlId="_ljT2MfksEeeqiZsRWP-qWg"/>
             <bpws:link name="_ljT2IPksEeeqiZsRWP-qWg to IdentifyCase"
@@ -99,7 +99,9 @@
             </bpws:targets>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="IdentifyCase" tibex:type="userTask"
+            <tibex:extActivity name="IdentifyCase"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Update/IdentifyCase/IdentifyCase.form&#xd;&#xa;"
+                tibex:type="userTask"
                 tibex:xpdlId="_ljTPFPksEeeqiZsRWP-qWg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
                     <bpws:target linkName="_ljT2IPksEeeqiZsRWP-qWg to IdentifyCase"/>
@@ -148,7 +150,9 @@ LookupTable = LookupTableRef.readLookupTable();
             </bpws:sources>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="ModifyData" tibex:type="userTask"
+            <tibex:extActivity name="ModifyData"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Update/ModifyData/ModifyData.form&#xd;&#xa;"
+                tibex:type="userTask"
                 tibex:xpdlId="_ljT2IfksEeeqiZsRWP-qWg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
                     <bpws:target linkName="_ljT2IPksEeeqiZsRWP-qWg to ModifyData"/>

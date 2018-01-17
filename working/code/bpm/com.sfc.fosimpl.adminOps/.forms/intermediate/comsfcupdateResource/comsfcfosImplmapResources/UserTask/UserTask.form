@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_TkvkgPk8EeeqiZsRWP-qWg" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_uus5MPtREeeupNwu8S8N4Q" formatVersion="4.0.0">
   <form:runtimeDependencies>
+    <form:package>com.sfc.fosImpl.dataModel.DataModelPackage</form:package>
     <form:package>com.sfc.fosImpl.adminOps.dataModel.DataModelPackage</form:package>
     <form:package>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaPackage</form:package>
-    <form:package>com.sfc.fosImpl.dataModel.DataModelPackage</form:package>
+    <form:factory>com.sfc.fosImpl.dataModel.DataModelFactory</form:factory>
     <form:factory>com.sfc.fosImpl.adminOps.dataModel.DataModelFactory</form:factory>
     <form:factory>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.SchemaFactory</form:factory>
-    <form:factory>com.sfc.fosImpl.dataModel.DataModelFactory</form:factory>
-    <form:class>com.sfc.fosImpl.adminOps.dataModel.Resource</form:class>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType</form:class>
     <form:class>com.sfc.fosImpl.dataModel.ContractorGroups</form:class>
-    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType</form:class>
+    <form:class>com.sfc.fosImpl.adminOps.dataModel.Resource</form:class>
     <form:class>com.sfc.fosImpl.adminOps.dataModel.BPMUsers</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourcerequestType</form:class>
+    <form:class>com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.createresourceinputType</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -85,7 +85,7 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.setPanesVisibility" label="Set Panes Visibility">
-      <form:event source="#_TkvkgPk8EeeqiZsRWP-qWg" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_uus5MPtREeeupNwu8S8N4Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.setPanesVisibility" label="Set Panes Visibility">
         <form:script>//control.ContractorMasterUserFlag.setValue(false);&#xD;
 &#xD;
@@ -325,7 +325,7 @@ pane.ContractorNormalUsers.getValue().add(data.getContractorSingleUser());&#xD;
     <form:label>Map Resources</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
-    <form:visual bgColor="#ffffff" width="1027"/>
+    <form:visual bgColor="#ffffff" width="1200"/>
     <form:labelProperties visible="true"/>
     <form:defaults>
       <form:visual bgColor="#ffffff"/>
@@ -756,7 +756,7 @@ pane.ContractorNormalUsers.getValue().add(data.getContractorSingleUser());&#xD;
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
-            <form:visual width="150"/>
+            <form:visual width="200"/>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="ContractorNormalUsers_loginName__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
             </form:validation>
@@ -770,7 +770,7 @@ pane.ContractorNormalUsers.getValue().add(data.getContractorSingleUser());&#xD;
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
-            <form:visual width="150"/>
+            <form:visual width="200"/>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="ContractorNormalUsers_firstName__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
             </form:validation>
@@ -784,7 +784,7 @@ pane.ContractorNormalUsers.getValue().add(data.getContractorSingleUser());&#xD;
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
-            <form:visual width="150"/>
+            <form:visual width="200"/>
             <form:validation generated="true" messageRef="resource.common.validation_text_length" name="ContractorNormalUsers_lastName__length" type="javascript" when="oncontrolchange" simple="true">
               <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 100) ? true : [context.control.getLabel(), '100'] : context.value.length &lt;= 100;</form:script>
             </form:validation>

@@ -2,9 +2,9 @@
 
 if (typeof(tibcoforms) == 'undefined') tibcoforms = new Object();
 if (typeof(tibcoforms.formCode) == 'undefined') tibcoforms.formCode = new Object();
-tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg'] = new Object();
-tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg']['defineActions'] = function() {
-var fc = tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg'];
+tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q'] = new Object();
+tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q']['defineActions'] = function() {
+var fc = tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q'];
     fc['rule_cancel'] = function(formId, context, thisObj) {
 	   try {
 			tibco.forms.Util.handleScriptAction.call(thisObj, formId, context, thisObj, "cancel", "cancel", fc['action_cancel']);
@@ -51,10 +51,16 @@ var fc = tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg'];
         return "TIBCO Forms 4.1.0 V17 compliant";
     }
 };
-tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg']['defineActions']();
+tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q']['defineActions']();
 
-tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg']['defineValidations'] = function() {
-var fc = tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg'];
+tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q']['defineValidations'] = function() {
+var fc = tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q'];
+	
+fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, cloneUID, listIndex) {
+	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
+	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode: ErrorCode__length", true, true);
+	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode__length", true, true);
+}
 	
 	
 fc['validation_ErrorDetail_ErrorDetail__length'] = function(formId, controlName, cloneUID, listIndex) {
@@ -63,18 +69,12 @@ fc['validation_ErrorDetail_ErrorDetail__length'] = function(formId, controlName,
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorDetail__length", true, true);
 }
 	
+	
 fc['validation_CaseOutOfSynchError_CaseOutOfSynchError__length'] = function(formId, controlName, cloneUID, listIndex) {
 	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 150) ? true : [context.control.getLabel(), \'150\'] : context.value.length <= 150;';
 	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CaseOutOfSynchError: CaseOutOfSynchError__length", true, true);
 	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "CaseOutOfSynchError__length", true, true);
 }
-	
-fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, cloneUID, listIndex) {
-	var valScr = 'typeof context.stringValue != \'undefined\' && typeof tibco.forms.Util != \'undefined\' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), \'50\'] : context.value.length <= 50;';
-	// return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode: ErrorCode__length", true, true);
-	return tibco.forms.Util.handleInlineValidation.call(this, formId, this, cloneUID, listIndex, valScr, "ErrorCode__length", true, true);
-}
-	
 	
 	
 	
@@ -133,4 +133,4 @@ fc['validation_ErrorCode_ErrorCode__length'] = function(formId, controlName, clo
 	   
 	   
 };
-tibcoforms.formCode['_cutVgPlDEeeqiZsRWP-qWg']['defineValidations']();
+tibcoforms.formCode['_uxH7EPtREeeupNwu8S8N4Q']['defineValidations']();

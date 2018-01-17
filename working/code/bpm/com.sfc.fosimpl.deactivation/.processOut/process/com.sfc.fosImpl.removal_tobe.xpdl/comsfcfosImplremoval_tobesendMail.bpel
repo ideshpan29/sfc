@@ -8,23 +8,22 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendMailTask">
             <startingVariables>
-                <variable>SLALevel</variable>
                 <variable>SiebelCircuitID</variable>
                 <variable>SubjectLineEmail</variable>
-                <variable>PendingAt</variable>
                 <variable>EmailTo</variable>
+                <variable>SLALevel</variable>
+                <variable>PendingAt</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>SLALevel</variable>
                 <variable>SiebelCircuitID</variable>
-                <variable>Task</variable>
-                <variable>SLAFLAGGlobal</variable>
-                <variable>EscalationToEmail</variable>
-                <variable>Provision</variable>
                 <variable>SubjectLineEmail</variable>
-                <variable>PendingAt</variable>
                 <variable>EmailTo</variable>
                 <variable>SLAFlagCheck</variable>
+                <variable>EscalationToEmail</variable>
+                <variable>SLALevel</variable>
+                <variable>SLAFLAGGlobal</variable>
+                <variable>Provision</variable>
+                <variable>PendingAt</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -53,7 +52,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_5CA-UPqcEeec_I4oCcyvoQ">
+    <bpws:flow name="_BX_flow_JAok0PtmEeeupNwu8S8N4Q">
         <bpws:links>
             <bpws:link name="StartEvent to _BX_scope_SendMailTask" tibex:xpdlId="_wGCyk-SHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_scope_SendMailTask to EndEvent" tibex:xpdlId="_q8L81OSHEee4r8nNLd6bUg"/>
@@ -67,10 +66,10 @@
                 </bpws:sources>
                 <tibex:parameters>
                     <parameterDescription mode="InOut" name="Task"/>
-                    <parameterDescription mode="InOut" name="Provision"/>
-                    <parameterDescription mandatory="yes" mode="InOut" name="EscalationToEmail"/>
                     <parameterDescription mode="InOut" name="SLA"/>
                     <parameterDescription mode="InOut" name="SLAFlagCheck"/>
+                    <parameterDescription mandatory="yes" mode="InOut" name="EscalationToEmail"/>
+                    <parameterDescription mode="InOut" name="Provision"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -94,7 +93,7 @@ if(SLA.readSLA_Configuration().emailTo=="SPECIFIC") {
 else {
 	EmailTo=EscalationToEmail;
 }
-PendingAt=SLA.readSLA_Configuration().taskName;
+PendingAt=Task;
 SLALevel=SLA.readSLA_Configuration().SLALevel;
 SiebelCircuitID=Provision.siebelCircuitID;
 
@@ -145,10 +144,10 @@ else {
                             <variables index="48" name="%SLALevel%"/>
                         </subject>
                         <body>
-                            <body value="Required Action at Task : %PendingAt%&#xd;&#xa;SLA Level : %SLALevel%&#xd;&#xa;Siebel ID : %SiebelCircuitID%">
-                                <variables index="26" name="%PendingAt%"/>
-                                <variables index="51" name="%SLALevel%"/>
-                                <variables index="75" name="%SiebelCircuitID%"/>
+                            <body value="Required Action at Task : %Task%&#xd;&#xa;SLA Level : %SLALevel%&#xd;&#xa;Siebel ID : %SiebelCircuitID%">
+                                <variables index="26" name="%Task%"/>
+                                <variables index="46" name="%SLALevel%"/>
+                                <variables index="70" name="%SiebelCircuitID%"/>
                             </body>
                         </body>
                         <server>

@@ -36,12 +36,35 @@
     </form:rule>
     <form:rule generated="true" name="rule.submit" label="Submit">
       <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
-      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+      <form:action xsi:type="form:ScriptAction" name="action.SubmitForm" label="Submit Form">
+        <form:script>if(data.getTaskName()=='PM_Review'){&#xD;
+	if((control.contractorAgency.getValue()==null) || (control.contractorAgency.getValue() ==&quot;&quot; )) {&#xD;
+		alert(&quot;Please select the Contractor Agency before proceeding.&quot;);&#xD;
+	}&#xD;
+	else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}&#xD;
+	&#xD;
+}&#xD;
+else if(data.getTaskName()=='Select_Contractor'){&#xD;
+	if((control.availableContractors.getValue()==null) || (control.availableContractors.getValue() ==&quot;&quot; )) {&#xD;
+		alert(&quot;Please select the Contractor before proceeding.&quot;);&#xD;
+	}&#xD;
+	else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}&#xD;
+	&#xD;
+}&#xD;
+else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}</form:script>
+      </form:action>
     </form:rule>
     <form:rule name="rule.initrule1" label="initrule1">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;) {&#xD;
+        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
+if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
 pane.serviceRequest.setEnabled(true);&#xD;
@@ -68,7 +91,7 @@ else {&#xD;
     <form:rule name="rule.setHeaderName" label="setHeaderName">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
-        <form:script>//data.setTaskName(&quot;PM_Review&quot;);&#xD;
+        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
 logger.info(data.getTaskName().length);&#xD;
 var name=data.getTaskName();&#xD;
 for(var index=0; index&lt;name.length; index++) {
@@ -551,6 +574,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:hint></form:hint>
               <form:visible>true</form:visible>
               <form:enabled>true</form:enabled>
+              <form:font fontColor="#000000" fontName="" fontSize="" fontWeight=""/>
               <form:required>false</form:required>
             </form:control>
           </form:pane>
@@ -965,6 +989,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
+            <form:font fontColor="#000000" fontName="" fontSize="" fontWeight=""/>
             <form:required>false</form:required>
           </form:control>
           <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_qbCv8M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceEnd?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceEnd">

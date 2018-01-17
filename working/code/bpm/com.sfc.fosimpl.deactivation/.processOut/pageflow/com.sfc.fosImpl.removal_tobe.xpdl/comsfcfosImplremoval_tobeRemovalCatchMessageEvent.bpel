@@ -21,44 +21,45 @@
         <task name="_BX_assign">
             <startingVariables>
                 <variable>Provisioning_Data</variable>
-                <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
+                <variable>TaskName</variable>
             </startingVariables>
         </task>
         <task name="Deactivation_Process_Initiate">
             <startingVariables>
-                <variable>MasterContractor</variable>
+                <variable>SelectedContractor</variable>
+                <variable>EscalationEmail</variable>
+                <variable>ContractorNames</variable>
+                <variable>SelectedGroup</variable>
+                <variable>GroupNames</variable>
+                <variable>CommentText</variable>
+                <variable>Mail</variable>
+                <variable>TaskName</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
                 <variable>CommentHistory</variable>
-                <variable>TaskName</variable>
-                <variable>SelectedGroup</variable>
-                <variable>CommentText</variable>
-                <variable>ContractorNames</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>Mail</variable>
-                <variable>EscalationEmail</variable>
-                <variable>SelectedContractor</variable>
-                <variable>GroupNames</variable>
+                <variable>MasterContractor</variable>
+                <variable>CommentDataCase</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Complete">
-                <variable>Provisioning_Data</variable>
                 <variable>CommentText</variable>
                 <variable>TechnicalInfo</variable>
+                <variable>Provisioning_Data</variable>
             </ProcessManagerScript>
         </task>
         <task name="ServiceTask">
             <startingVariables>
-                <variable>CommentdataCaseRef</variable>
                 <variable>CommentDataCase</variable>
+                <variable>CommentdataCaseRef</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
+                <variable>CommentText</variable>
                 <variable>Provisioning_Data</variable>
                 <variable>TaskName</variable>
-                <variable>CommentText</variable>
                 <variable>CommentDataCase</variable>
             </ProcessManagerScript>
         </task>
@@ -107,7 +108,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_5BG_YPqcEeec_I4oCcyvoQ">
+    <bpws:flow name="_BX_flow_I--_APtmEeeupNwu8S8N4Q">
         <bpws:links>
             <bpws:link name="ServiceTask to InvokeCatchMessageEvent" tibex:xpdlId="_cIS3iOPTEeeoTJ_gSITXzA"/>
             <bpws:link name="Start to _cIS3guPTEeeoTJ_gSITXzA" tibex:xpdlId="_cIS3h-PTEeeoTJ_gSITXzA"/>

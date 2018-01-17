@@ -9,16 +9,16 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="DeleteError">
             <startingVariables>
-                <variable>ErrorDetail</variable>
                 <variable>ErrorCode</variable>
+                <variable>ErrorDetail</variable>
                 <variable>DeleteCaseFailed</variable>
             </startingVariables>
         </task>
         <task name="LookupCase">
             <startingVariables>
+                <variable>SystemParameters</variable>
                 <variable>propertyName</variable>
                 <variable>SystemParametersRef</variable>
-                <variable>SystemParameters</variable>
             </startingVariables>
         </task>
         <task name="IdentifyCase">
@@ -28,8 +28,8 @@
         </task>
         <task name="DisplayDataToBeDeleted">
             <startingVariables>
-                <variable>ConfirmCaseObjectDelete</variable>
                 <variable>SystemParameters</variable>
+                <variable>ConfirmCaseObjectDelete</variable>
             </startingVariables>
         </task>
         <task name="DeleteCase">
@@ -68,7 +68,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_dWPPkPlDEeeqiZsRWP-qWg" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_wM2SMPtREeeupNwu8S8N4Q" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link name="Start to IdentifyCase" tibex:xpdlId="_ws9hRuVOEeeRkLvTRwuu3w"/>
             <bpws:link name="LookupCase to _ws9hOOVOEeeRkLvTRwuu3w" tibex:xpdlId="_ws9hSOVOEeeRkLvTRwuu3w"/>
@@ -105,7 +105,9 @@
             </bpws:targets>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="IdentifyCase" tibex:type="userTask"
+            <tibex:extActivity name="IdentifyCase"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateBusinessConfig/SafaricomFixedInternet_SystemParameters_Delete/IdentifyCase/IdentifyCase.form&#xd;&#xa;"
+                tibex:type="userTask"
                 tibex:xpdlId="_ws9hNOVOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
                     <bpws:target linkName="Start to IdentifyCase"/>
@@ -157,6 +159,7 @@ SystemParameters = SystemParametersRef.readSystemParameters();
         </bpws:empty>
         <bpws:extensionActivity>
             <tibex:extActivity name="DisplayDataToBeDeleted"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateBusinessConfig/SafaricomFixedInternet_SystemParameters_Delete/DisplayDataToBeDeleted/DisplayDataToBeDeleted.form&#xd;&#xa;"
                 tibex:type="userTask"
                 tibex:xpdlId="_ws9hOeVOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>

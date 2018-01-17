@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_u05n0PtREeeupNwu8S8N4Q" formatVersion="4.0.0">
+  <form:runtimeDependencies/>
+  <form:externalResources>
+    <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.form" uri="IdentifyCase.properties" internal="true" localized="true"/>
+    <form:externalResource name="resource.safaricom" uri="../../../CSS/safaricom.css"/>
+    <form:externalResource name="resource.SFC" uri="../../../Images/SFC.png"/>
+  </form:externalResources>
+  <form:dataModel>
+    <form:parameter generated="true" name="data.propertyName" label="propertyName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
+  </form:dataModel>
+  <form:services/>
+  <form:actions/>
+  <form:conditions/>
+  <form:rules>
+    <form:rule generated="true" name="rule.cancel" label="Cancel">
+      <form:event source="#control.cancel" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.cancel.select"/>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.cancel"/>
+    </form:rule>
+    <form:rule generated="true" name="rule.submit" label="Submit">
+      <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
+      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+    </form:rule>
+  </form:rules>
+  <form:bindings>
+    <form:binding generated="true" direction="bothways" name="_rcb_kPtDEeeupNwu8S8N4Q">
+      <form:source target="data.propertyName" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.propertyName.value"></form:source>
+      <form:destination target="control.propertyName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.propertyName.value"></form:destination>
+    </form:binding>
+  </form:bindings>
+  <form:targets>
+    <form:target ref="iProcessWorkspace_10.7"/>
+  </form:targets>
+  <form:defaults>
+    <form:labelProperties position="top"/>
+  </form:defaults>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.content" paneType="com.tibco.forms.panes.vertical">
+    <form:label>Identify Case</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:visual width="1027"/>
+    <form:labelProperties visible="false"/>
+    <form:defaults>
+      <form:labelProperties position="top"/>
+    </form:defaults>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.searchSystemParameters">
+      <form:label>Search System Parameters</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.image1">
+      <form:propertySet xsi:type="et:ImagePropertySet">
+        <et:url>../../../Images/SFC.png</et:url>
+      </form:propertySet>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.propertyNameSearch">
+      <form:label>Property Name Search</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control generated="true" styleClass="vPaneBorderMain" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.propertyName">
+      <form:propertySet xsi:type="et:TextPropertySet">
+        <et:displayLength>40</et:displayLength>
+        <et:maxLength>50</et:maxLength>
+      </form:propertySet>
+      <form:label>Enter Property</form:label>
+      <form:hint></form:hint>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:visual padding="40"/>
+      <form:validation generated="true" messageRef="resource.common.validation_text_length" name="propertyName__length" type="javascript" when="oncontrolchange" simple="true">
+        <form:script>typeof context.stringValue != 'undefined' &amp;&amp; typeof tibco.forms.Util != 'undefined' ? tibco.forms.Util.checkTextLength(context.stringValue, 50) ? true : [context.control.getLabel(), '50'] : context.value.length &lt;= 50;</form:script>
+      </form:validation>
+      <form:required>true</form:required>
+    </form:control>
+  </form:pane>
+  <form:pane gwt:toolbar="true" styleClass="toolbar" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.toolbar" paneType="com.tibco.forms.panes.horizontal">
+    <form:label>Toolbar</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:visual width="200"/>
+    <form:labelProperties visible="false"/>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.cancel">
+      <form:propertySet xsi:type="et:ButtonPropertySet"/>
+      <form:label>Cancel</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.submit">
+      <form:propertySet xsi:type="et:ButtonPropertySet">
+        <et:type>primary</et:type>
+      </form:propertySet>
+      <form:label>Submit</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+  </form:pane>
+  <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.messages" name="pane.messages" paneType="com.tibco.forms.panes.messages">
+    <form:propertySet xsi:type="et:MessagesPanePropertySet"/>
+    <form:label>Invalid Entries</form:label>
+    <form:visible>true</form:visible>
+    <form:enabled>true</form:enabled>
+    <form:labelProperties visible="false"/>
+  </form:pane>
+</form:form>

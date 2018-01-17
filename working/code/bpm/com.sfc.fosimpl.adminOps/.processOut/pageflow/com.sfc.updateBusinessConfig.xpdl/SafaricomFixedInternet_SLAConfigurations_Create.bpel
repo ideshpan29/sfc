@@ -20,13 +20,16 @@
         </task>
         <task name="SLAConfigurationsCreateNewEntry">
             <startingVariables>
+                <variable>TaskNameArray</variable>
                 <variable>SLA_Configuration</variable>
+                <variable>ProcessNameArray</variable>
+                <variable>tmpTaskNameArray</variable>
             </startingVariables>
         </task>
         <task name="CreateCaseData">
             <startingVariables>
-                <variable>SLA_ConfigurationRef</variable>
                 <variable>SLA_Configuration</variable>
+                <variable>SLA_ConfigurationRef</variable>
             </startingVariables>
         </task>
         <task name="FetchLookUpArrays">
@@ -70,7 +73,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_dXB5wPlDEeeqiZsRWP-qWg" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_wN8eYPtREeeupNwu8S8N4Q" tibex:sequenceFlow="yes">
         <bpws:links>
             <bpws:link
                 name="FetchLookUpArrays to _kE1zAuViEee0aKkJX_OoAg" tibex:xpdlId="_kE1zD-ViEee0aKkJX_OoAg"/>
@@ -161,10 +164,10 @@ Log.write("Task Name Size : "+TaskNameArray.size());
                 <bpws:source linkName="FetchLookUpArrays to _kE1zAuViEee0aKkJX_OoAg"/>
             </bpws:sources>
             <bpws:variables>
-                <bpws:variable name="_BX_ProcessNameArray"
-                    tibex:array="yes" type="xsd:string"/>
                 <bpws:variable name="_BX_TaskNameArray"
                     tibex:array="yes" tibex:class="com.sfc.fosImpl.dataModel.ProcessNameAndSteps"/>
+                <bpws:variable name="_BX_ProcessNameArray"
+                    tibex:array="yes" type="xsd:string"/>
             </bpws:variables>
             <bpws:sequence name="_BX_sequence">
                 <bpws:extensionActivity>
@@ -172,9 +175,9 @@ Log.write("Task Name Size : "+TaskNameArray.size());
                         <tibex:callProcess followParentLifecycle="yes"
                             priority="inline" subProcessId="_65P38Pk3EeeqiZsRWP-qWg">
                             <tibex:subProcessOutput>
+                                <tibex:mapping field="_BX_TaskNameArray" formalParameter="TaskNameArray"/>
                                 <tibex:mapping
                                     field="_BX_ProcessNameArray" formalParameter="ProcessNameArray"/>
-                                <tibex:mapping field="_BX_TaskNameArray" formalParameter="TaskNameArray"/>
                             </tibex:subProcessOutput>
                         </tibex:callProcess>
                     </tibex:extActivity>

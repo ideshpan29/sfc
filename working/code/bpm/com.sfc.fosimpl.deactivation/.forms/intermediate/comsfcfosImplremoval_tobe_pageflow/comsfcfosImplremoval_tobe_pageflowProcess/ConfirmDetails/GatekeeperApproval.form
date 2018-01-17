@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_42tGMPqcEeec_I4oCcyvoQ" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_IyR_wPtmEeeupNwu8S8N4Q" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.dataModel.DataModelPackage</form:package>
     <form:factory>com.sfc.fosImpl.dataModel.DataModelFactory</form:factory>
-    <form:class>com.sfc.fosImpl.dataModel.EquipmentDetails</form:class>
-    <form:class>com.sfc.fosImpl.dataModel.CommentData</form:class>
     <form:class>com.sfc.fosImpl.dataModel.TehnicalInformation</form:class>
     <form:class>com.sfc.fosImpl.dataModel.ProvisioningDataModel</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.EquipmentDetails</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.CommentData</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -44,12 +44,35 @@
     </form:rule>
     <form:rule generated="true" name="rule.submit" label="Submit">
       <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
-      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+      <form:action xsi:type="form:ScriptAction" name="action.SubmitForm" label="Submit Form">
+        <form:script>if(data.getTaskName()=='PM_Review'){&#xD;
+	if((control.contractorAgency.getValue()==null) || (control.contractorAgency.getValue() ==&quot;&quot; )) {&#xD;
+		alert(&quot;Please select the Contractor Agency before proceeding.&quot;);&#xD;
+	}&#xD;
+	else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}&#xD;
+	&#xD;
+}&#xD;
+else if(data.getTaskName()=='Select_Contractor'){&#xD;
+	if((control.availableContractors.getValue()==null) || (control.availableContractors.getValue() ==&quot;&quot; )) {&#xD;
+		alert(&quot;Please select the Contractor before proceeding.&quot;);&#xD;
+	}&#xD;
+	else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}&#xD;
+	&#xD;
+}&#xD;
+else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}</form:script>
+      </form:action>
     </form:rule>
     <form:rule name="rule.initrule1" label="initrule1">
-      <form:event source="#_42tGMPqcEeec_I4oCcyvoQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_IyR_wPtmEeeupNwu8S8N4Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;) {&#xD;
+        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
+if(data.getTaskName()==&quot;Deactivation_Process_Initiate&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
 pane.serviceRequest.setEnabled(true);&#xD;
@@ -74,9 +97,9 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
-      <form:event source="#_42tGMPqcEeec_I4oCcyvoQ" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_IyR_wPtmEeeupNwu8S8N4Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
-        <form:script>//data.setTaskName(&quot;PM_Review&quot;);&#xD;
+        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
 logger.info(data.getTaskName().length);&#xD;
 var name=data.getTaskName();&#xD;
 for(var index=0; index&lt;name.length; index++) {
@@ -567,6 +590,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:hint></form:hint>
               <form:visible>true</form:visible>
               <form:enabled>true</form:enabled>
+              <form:font fontColor="#000000" fontName="" fontSize="" fontWeight=""/>
               <form:required>false</form:required>
             </form:control>
           </form:pane>
@@ -1036,6 +1060,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
+            <form:font fontColor="#000000" fontName="" fontSize="" fontWeight=""/>
             <form:required>false</form:required>
           </form:control>
           <form:control generated="true" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceEnd">

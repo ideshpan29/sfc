@@ -9,9 +9,8 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="LookupCase">
             <startingVariables>
-                <variable>SystemParametersRef</variable>
-                <variable>propertyName</variable>
                 <variable>SystemParameters</variable>
+                <variable>SystemParametersRef</variable>
             </startingVariables>
         </task>
         <task name="ModifyData">
@@ -19,21 +18,16 @@
                 <variable>SystemParameters</variable>
             </startingVariables>
         </task>
-        <task name="IdentifyCase">
-            <startingVariables>
-                <variable>propertyName</variable>
-            </startingVariables>
-        </task>
         <task name="UpdateCase">
             <startingVariables>
-                <variable>SystemParametersRef</variable>
                 <variable>SystemParameters</variable>
+                <variable>SystemParametersRef</variable>
             </startingVariables>
         </task>
         <task name="UpdateFailed">
             <startingVariables>
-                <variable>CaseOutOfSynchError</variable>
                 <variable>ErrorCode</variable>
+                <variable>CaseOutOfSynchError</variable>
                 <variable>ErrorDetail</variable>
             </startingVariables>
         </task>
@@ -50,9 +44,9 @@
                 <bpws:literal><![CDATA[Your local copy of the case object is out of synch. The case object has been changed by something else since your copy was fetched.]]></bpws:literal>
             </bpws:from>
         </bpws:variable>
-        <bpws:variable name="SystemParameters"
+        <bpws:variable name="SystemParameters" tibex:array="yes"
             tibex:class="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_u73XIeVOEeeRkLvTRwuu3w"/>
-        <bpws:variable name="SystemParametersRef"
+        <bpws:variable name="SystemParametersRef" tibex:array="yes"
             tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_u73XIuVOEeeRkLvTRwuu3w"/>
         <bpws:variable name="propertyName"
             tibex:xpdlId="_u7-EsOVOEeeRkLvTRwuu3w" type="xsd:string"/>
@@ -66,19 +60,14 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_dVY7APlDEeeqiZsRWP-qWg" tibex:sequenceFlow="yes">
+    <bpws:flow name="_BX_flow_wMRqcPtREeeupNwu8S8N4Q">
         <bpws:links>
-            <bpws:link name="Start to IdentifyCase" tibex:xpdlId="_u73XFuVOEeeRkLvTRwuu3w"/>
+            <bpws:link name="Start to LookupCase" tibex:xpdlId="_FUBaIPqrEeec_I4oCcyvoQ"/>
             <bpws:link name="LookupCase to _u73XCOVOEeeRkLvTRwuu3w" tibex:xpdlId="_u73XGOVOEeeRkLvTRwuu3w"/>
-            <bpws:link name="IdentifyCase to LookupCase" tibex:xpdlId="_u73XF-VOEeeRkLvTRwuu3w"/>
             <bpws:link name="_u73XCOVOEeeRkLvTRwuu3w to ModifyData" tibex:xpdlId="_u73XGeVOEeeRkLvTRwuu3w"/>
-            <bpws:link name="_u73XCOVOEeeRkLvTRwuu3w to IdentifyCase"
-                tibex:loopback="yes" tibex:xpdlId="_u73XGuVOEeeRkLvTRwuu3w"/>
             <bpws:link name="ModifyData to _BX_scope_UpdateCase" tibex:xpdlId="_u73XG-VOEeeRkLvTRwuu3w"/>
             <bpws:link name="_BX_scope_UpdateCase to UpdateFailed" tibex:xpdlId="_u73XHOVOEeeRkLvTRwuu3w"/>
             <bpws:link name="_BX_normalFlow to End" tibex:xpdlId="_u73XFeVOEeeRkLvTRwuu3w"/>
-            <bpws:link name="UpdateFailed to IdentifyCase"
-                tibex:loopback="yes" tibex:xpdlId="_u73XHeVOEeeRkLvTRwuu3w"/>
             <bpws:link name="UpdateCase to _BX_normalFlow"/>
         </bpws:links>
         <bpws:extensionActivity>
@@ -86,7 +75,7 @@
                 name="Start" tibex:type="startEvent"
                 tibex:xpdlId="_u73XAuVOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:sources>
-                    <bpws:source linkName="Start to IdentifyCase"/>
+                    <bpws:source linkName="Start to LookupCase"/>
                 </bpws:sources>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -99,37 +88,18 @@
             </bpws:targets>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="IdentifyCase" tibex:type="userTask"
-                tibex:xpdlId="_u73XBOVOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
-                <bpws:targets>
-                    <bpws:target linkName="Start to IdentifyCase"/>
-                    <bpws:target linkName="_u73XCOVOEeeRkLvTRwuu3w to IdentifyCase"/>
-                    <bpws:target linkName="UpdateFailed to IdentifyCase"/>
-                </bpws:targets>
-                <bpws:sources>
-                    <bpws:source linkName="IdentifyCase to LookupCase"/>
-                </bpws:sources>
-                <model:PageActivityDataModelType xmi:version="2.0"
-                    xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
-                    <pageActivityParameters>
-                        <pageActivityParameter mandatory="true"
-                            mode="INOUT" name="propertyName"/>
-                    </pageActivityParameters>
-                </model:PageActivityDataModelType>
-            </tibex:extActivity>
-        </bpws:extensionActivity>
-        <bpws:extensionActivity>
             <tibex:extActivity name="LookupCase" tibex:type="scriptTask"
                 tibex:xpdlId="_u73XB-VOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
-                    <bpws:target linkName="IdentifyCase to LookupCase"/>
+                    <bpws:target linkName="Start to LookupCase"/>
                 </bpws:targets>
                 <bpws:sources>
                     <bpws:source linkName="LookupCase to _u73XCOVOEeeRkLvTRwuu3w"/>
                 </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef=cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(propertyName);
-if (SystemParametersRef != null) {
-SystemParameters = SystemParametersRef.readSystemParameters();
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef= cac_com_sfc_fosImpl_dataModel_SystemParameters.findAll();
+
+for(var i=0;i<SystemParametersRef.size();i++) {
+	SystemParameters.add(SystemParametersRef.get(i).readSystemParameters());	
 }
 ]]></tibex:script>
             </tibex:extActivity>
@@ -139,17 +109,16 @@ SystemParameters = SystemParametersRef.readSystemParameters();
             <bpws:targets>
                 <bpws:target linkName="LookupCase to _u73XCOVOEeeRkLvTRwuu3w"/>
             </bpws:targets>
-            <bpws:sources tibex:maxTrue="1">
+            <bpws:sources>
                 <bpws:source linkName="_u73XCOVOEeeRkLvTRwuu3w to ModifyData">
                     <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[##otherwise##]]></bpws:transitionCondition>
-                </bpws:source>
-                <bpws:source linkName="_u73XCOVOEeeRkLvTRwuu3w to IdentifyCase">
-                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef == null;]]></bpws:transitionCondition>
                 </bpws:source>
             </bpws:sources>
         </bpws:empty>
         <bpws:extensionActivity>
-            <tibex:extActivity name="ModifyData" tibex:type="userTask"
+            <tibex:extActivity name="ModifyData"
+                tibex:extendedAttributes="bpmJspTask=form\://comsfcupdateBusinessConfig/SafaricomFixedInternet_SystemParameters_Update/ModifyData/ModifyData.form&#xd;&#xa;"
+                tibex:type="userTask"
                 tibex:xpdlId="_u73XCeVOEeeRkLvTRwuu3w" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
                     <bpws:target linkName="_u73XCOVOEeeRkLvTRwuu3w to ModifyData"/>
@@ -172,9 +141,6 @@ SystemParameters = SystemParametersRef.readSystemParameters();
                 <bpws:targets>
                     <bpws:target linkName="_BX_scope_UpdateCase to UpdateFailed"/>
                 </bpws:targets>
-                <bpws:sources>
-                    <bpws:source linkName="UpdateFailed to IdentifyCase"/>
-                </bpws:sources>
                 <model:PageActivityDataModelType xmi:version="2.0"
                     xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
                     <pageActivityParameters>
@@ -228,7 +194,7 @@ SystemParameters = SystemParametersRef.readSystemParameters();
                             <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[_BX_fanVariable=0; true]]></bpws:transitionCondition>
                         </bpws:source>
                     </bpws:sources>
-                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParametersRef.updateSystemParameters(SystemParameters);]]></tibex:script>
+                    <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[cac_com_sfc_fosImpl_dataModel_SystemParameters.update(SystemParametersRef, SystemParameters);]]></tibex:script>
                 </tibex:extActivity>
             </bpws:extensionActivity>
         </bpws:scope>

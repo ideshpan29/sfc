@@ -508,7 +508,7 @@ var tmpURL = url+funcName;
     					var minutesms=ms % (60*1000);
  					    var sec = Math.floor((minutesms)/(1000));
  					    
-						time=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						time=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
 						
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						//record.setTaskDuration(timeValue);
@@ -537,7 +537,7 @@ var tmpURL = url+funcName;
     					var minutesms=ms % (60*1000);
  					    var sec = Math.floor((minutesms)/(1000));
  					    
-						time=days+" DAYS  "+hours+" HOURS  "+minutes+" MINUTES  "+sec+" SECONDS.";
+						time=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
 						
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						//record.setTaskDuration(timeValue);

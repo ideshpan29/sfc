@@ -104,7 +104,7 @@
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select activity_name,count(activity_name) ACTIVITYCOUNT, sum(WORK_TIME_DUR) TOTALWORKTIME,max(WORK_TIME_DUR) MAXWORKTIME,min(WORK_TIME_DUR) MINWORKTIME,FLOOR(AVG(WORK_TIME_DUR)) AVGWORKTIME, sum(CASE status when to_nchar('COMPLETED') then 1 else 0 end) COMPLETED , sum(CASE status when to_nchar('OPENED') then 1 else 0 end) OPENED, sum(CASE status when to_nchar('CANCELLED') then 1 else 0 end) Cancelled,sum(CASE status when to_nchar('OFFERED') then 1 else 0 end) Offered from  &quot;,$_globalVariables/ns1:GlobalVariables/BPM/ProcessAnalysis/BPMDatabasename,&quot;.EC_WI_STATUS GROUP by ACTIVITY_NAME&quot;)"/>
+                    <xsl:value-of select="&quot;select activity_name,count(activity_name) ACTIVITYCOUNT, sum(WORK_TIME_DUR) TOTALWORKTIME,max(WORK_TIME_DUR) MAXWORKTIME,min(WORK_TIME_DUR) MINWORKTIME,FLOOR(AVG(WORK_TIME_DUR)) AVGWORKTIME, sum(CASE status when to_nchar('COMPLETED') then 1 else 0 end) COMPLETED , sum(CASE status when to_nchar('OPENED') then 1 else 0 end) OPENED, sum(CASE status when to_nchar('CANCELLED') then 1 else 0 end) Cancelled,sum(CASE status when to_nchar('OFFERED') then 1 else 0 end) Offered from EC_WI_STATUS GROUP by ACTIVITY_NAME&quot;"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>

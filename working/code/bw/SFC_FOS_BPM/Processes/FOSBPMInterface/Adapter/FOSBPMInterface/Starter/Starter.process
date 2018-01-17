@@ -66,6 +66,11 @@
                     <attributeType>string</attributeType>
                     <attributeCard>optional</attributeCard>
                 </row>
+                <row>
+                    <attribute>status</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
             </customField>
             <Headers>
                 <xsd:element name="root">
@@ -167,8 +172,8 @@
     <pd:activity name="Call Search Process Instances">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>338</pd:y>
+        <pd:x>348</pd:x>
+        <pd:y>337</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstanceSOAP.process</processName>
         </config>
@@ -262,6 +267,11 @@
                                 <xsl:value-of select="$Call-Get-Process-Names/response"/>
                             </asciiContent>
                         </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'">
+                        <asciiContent>
+                            <xsl:value-of select="$CallResourceWiseAnalysis/Output/response"/>
+                        </asciiContent>
                     </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'">
                         <xsl:if test="$Call-Get-Process-Instances/response">
@@ -474,6 +484,25 @@
             </root>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="CallResourceWiseAnalysis">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>240</pd:x>
+        <pd:y>774</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/ResourceWiseAnalysis.process</processName>
+        </config>
+        <pd:inputBindings>
+            <input>
+                <processName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </processName>
+                <status>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/status"/>
+                </status>
+            </input>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
@@ -639,6 +668,21 @@
         <pd:from>Call getusers process</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallResourceWiseAnalysis</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallResourceWiseAnalysis</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

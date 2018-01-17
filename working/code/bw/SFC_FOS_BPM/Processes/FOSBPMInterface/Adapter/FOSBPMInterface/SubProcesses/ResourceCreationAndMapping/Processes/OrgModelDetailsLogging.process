@@ -2,38 +2,16 @@
 <pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://orgmodel.api.de.bpm.tibco.com">
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/OrgModelService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/OrgModelDetailsLogging.process</pd:name>
-    <pd:startName>HTTP Receiver</pd:startName>
+    <pd:startName>onStartup</pd:startName>
     <pd:startX>0</pd:startX>
     <pd:startY>0</pd:startY>
     <pd:returnBindings/>
-    <pd:starter name="HTTP Receiver">
-        <pd:type>com.tibco.plugin.http.HTTPEventSource</pd:type>
-        <pd:resourceType>httppalette.httpEventSource</pd:resourceType>
-        <pd:x>110</pd:x>
-        <pd:y>57</pd:y>
-        <config>
-            <outputMode>String</outputMode>
-            <defaultEncoding>ISO8859_1</defaultEncoding>
-            <inputOutputVersion>5.3.0</inputOutputVersion>
-            <newMimeSupport>true</newMimeSupport>
-            <sharedChannel>/SharedResources/Connections/HTTP/HTTPStarterProcess.sharedhttp</sharedChannel>
-            <Headers>
-                <xsd:element name="root">
-                    <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="Accept" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Accept-Charset" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Accept-Encoding" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Content-Length" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Connection" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Cookie" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                </xsd:element>
-            </Headers>
-        </config>
+    <pd:starter name="onStartup">
+        <pd:type>com.tibco.pe.core.OnStartupEventSource</pd:type>
+        <pd:resourceType>ae.activities.onStartup</pd:resourceType>
+        <pd:x>65</pd:x>
+        <pd:y>66</pd:y>
+        <config/>
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
@@ -80,36 +58,6 @@
             </ns:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Send HTTP Response">
-        <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
-        <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
-        <pd:x>613</pd:x>
-        <pd:y>61</pd:y>
-        <config>
-            <closeConnection>true</closeConnection>
-            <eventSource>HTTP Receiver</eventSource>
-            <Headers>
-                <xsd:element name="root">
-                    <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Set-Cookie" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
-                            <xsd:element name="Location" type="xsd:string" minOccurs="0"/>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                </xsd:element>
-            </Headers>
-        </config>
-        <pd:inputBindings>
-            <ResponseActivityInput>
-                <asciiContent>
-                    <xsl:value-of select="'Details Logged'"/>
-                </asciiContent>
-            </ResponseActivityInput>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
@@ -127,27 +75,6 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
-        <pd:from>HTTP Receiver</pd:from>
-        <pd:to>GetOrgModelDetails</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>OrgModelLog</pd:from>
-        <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Send HTTP Response</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>GetOrgModelDetails</pd:from>
         <pd:to>Render XML</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -157,6 +84,20 @@
     <pd:transition>
         <pd:from>Render XML</pd:from>
         <pd:to>OrgModelLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>OrgModelLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>onStartup</pd:from>
+        <pd:to>GetOrgModelDetails</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

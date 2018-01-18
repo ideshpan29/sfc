@@ -66,6 +66,12 @@
                 <variable>TaskName</variable>
             </ProcessManagerScript>
         </task>
+        <task name="TL14">
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+                <variable>FetchSLA1</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="PM_Review">
             <startingVariables>
                 <variable>TaskName</variable>
@@ -457,7 +463,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_Zc5MkPwOEeeupNwu8S8N4Q">
+    <bpws:flow name="_BX_flow_DNre8Pw7EeeupNwu8S8N4Q">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_continue_2 to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -481,6 +487,7 @@
             <bpws:link name="_BX_continue_3 to TL12" tibex:xpdlId="_8LTf4PjuEeej8uWuBC0YMQ"/>
             <bpws:link name="_BX_continue_4 to TL13" tibex:xpdlId="_8m_9YPjuEeej8uWuBC0YMQ"/>
             <bpws:link name="_BX_continue_9 to TL10" tibex:xpdlId="_dbmToPUEEeeywP4RjejZPQ"/>
+            <bpws:link name="TL14 to CatchLinkEvent2"/>
             <bpws:link name="CatchLinkEvent to _7k_psN_HEeec4K-r6PSjHg" tibex:xpdlId="_R0OE8N_IEeec4K-r6PSjHg"/>
             <bpws:link
                 name="_BX_normalFlow_6 to _BX_scope_Manual_Installatio" tibex:xpdlId="_YS1joN_HEeec4K-r6PSjHg"/>
@@ -508,6 +515,7 @@
                 name="_BX_normalFlow_3 to _BX_scope_TES_OSG_Verificati" tibex:xpdlId="_2xISEN_HEeec4K-r6PSjHg"/>
             <bpws:link name="TL11 to CatchLinkEvent2"/>
             <bpws:link name="TL1 to CatchLinkEvent2"/>
+            <bpws:link name="TimerEvent to TL14" tibex:xpdlId="_OB6R0PwgEeeupNwu8S8N4Q"/>
             <bpws:link name="TL3 to CatchLinkEvent2"/>
             <bpws:link name="TL4 to CatchLinkEvent2"/>
             <bpws:link name="TL7 to CatchLinkEvent2"/>
@@ -744,7 +752,8 @@ Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+
         </bpws:scope>
         <bpws:empty name="TL1" tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_r37BwOSGEee4r8nNLd6bUg">
             <tibex:initiatedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[TaskName="PM_Review";]]></tibex:initiatedScript>
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');
+TaskName="PM_Review";]]></tibex:initiatedScript>
             <bpws:targets>
                 <bpws:target linkName="_BX_continue to TL1"/>
             </bpws:targets>
@@ -761,6 +770,7 @@ Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+
             <bpws:targets>
                 <bpws:target linkName="TL2 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL6 to CatchLinkEvent2"/>
+                <bpws:target linkName="TL14 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL10 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL11 to CatchLinkEvent2"/>
                 <bpws:target linkName="TL1 to CatchLinkEvent2"/>
@@ -866,7 +876,8 @@ _BX_Task = TaskName;
         </bpws:scope>
         <bpws:empty name="TL2" tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_1lTQoOY0Eeep9dkvO_z3LA">
             <tibex:initiatedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[TaskName="PM_Review";]]></tibex:initiatedScript>
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');
+TaskName="PM_Review";]]></tibex:initiatedScript>
             <bpws:targets>
                 <bpws:target linkName="_BX_continue_2 to TL2"/>
             </bpws:targets>
@@ -1074,6 +1085,17 @@ Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+
                 <bpws:source linkName="_4eQpgPm2Eeec_I4oCcyvoQ to _7k_psN_HEeec4K-r6PSjHg"/>
             </bpws:sources>
         </bpws:empty>
+        <bpws:empty name="TL14" tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_NVc0cPwgEeeupNwu8S8N4Q">
+            <tibex:initiatedScript
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(0,'PM_Review','Decomissioning');
+TaskName="PM_Review";]]></tibex:initiatedScript>
+            <bpws:targets>
+                <bpws:target linkName="TimerEvent to TL14"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="TL14 to CatchLinkEvent2"/>
+            </bpws:sources>
+        </bpws:empty>
         <bpws:scope name="_BX_scope_PM_Review" tibex:migrationAllowed="yes">
             <bpws:targets>
                 <bpws:target linkName="ScriptTask to _BX_scope_PM_Review"/>
@@ -1111,6 +1133,20 @@ Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 01: "+SLAFL
 Log.write("[SFC] Decomissioning.Process: SLAFlagGlobal At SLA Breach 02: "+SLAFLAGGlobal);]]></tibex:completedScript>
                             <bpws:sources>
                                 <bpws:source linkName="_BX_continue_2 to TL2"/>
+                            </bpws:sources>
+                        </bpws:empty>
+                    </bpws:scope>
+                </bpws:onAlarm>
+                <bpws:onAlarm>
+                    <tibex:userTaskParticipant entity="GROUP"
+                        modelVersion="1"
+                        uniqueId="_lCh2ALk-EeenBJWclYhCxA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA2=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(0,'PM_Review','Decomissioning');DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA2.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:scope name="_BX_scope__sdW9EPwfEeeupNwu8S8N4Q">
+                        <bpws:empty name="TimerEvent"
+                            tibex:type="boundaryTimerEvent" tibex:xpdlId="_sdW9EPwfEeeupNwu8S8N4Q">
+                            <bpws:sources>
+                                <bpws:source linkName="TimerEvent to TL14"/>
                             </bpws:sources>
                         </bpws:empty>
                     </bpws:scope>

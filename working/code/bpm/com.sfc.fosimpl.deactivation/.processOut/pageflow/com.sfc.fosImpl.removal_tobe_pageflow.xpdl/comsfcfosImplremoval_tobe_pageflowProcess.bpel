@@ -92,12 +92,16 @@
         <bpws:variable name="commentDataCaseRef"
             tibex:classRef="com.sfc.fosImpl.dataModel.CommentDataCase"
             tibex:parameter="inout" tibex:xpdlId="_kf1YAfacEee_OvMSeNQu6A"/>
+        <bpws:variable name="AccountType" tibex:array="yes"
+            tibex:xpdlId="_PNS9kPt1EeeupNwu8S8N4Q" type="xsd:string"/>
+        <bpws:variable name="AccountEntries"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_ej8-gft1EeeupNwu8S8N4Q"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_Ap6aMPtVEeeupNwu8S8N4Q">
+    <bpws:flow name="_BX_flow_ZcIXkPwOEeeupNwu8S8N4Q">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -237,6 +241,7 @@ if(CommentDataSet.size()>0){
 		CommentHistory.add(comment);	
 	}
 }
+var criteria = "enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'";
 ]]></tibex:script>
                 <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name="Script Task";
 var Log_Activity_Type="End";

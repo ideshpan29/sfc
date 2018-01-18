@@ -395,9 +395,7 @@
         <bpws:variable name="Mail"
             tibex:xpdlId="_yiq20OYYEee0aKkJX_OoAg" type="xsd:string"/>
         <bpws:variable name="TimerLimit"
-            tibex:xpdlId="_0XpVQOY1Eeep9dkvO_z3LA" type="xsd:double">
-            <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[0.75]]></bpws:from>
-        </bpws:variable>
+            tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_0XpVQOY1Eeep9dkvO_z3LA"/>
         <bpws:variable name="Fetch_Groups" tibex:array="yes"
             tibex:classRef="com.sfc.fosImpl.dataModel.ContractorGroups" tibex:xpdlId="_OWNwYPEIEee5fIpJptHEZA"/>
         <bpws:variable name="GroupNames" tibex:array="yes"
@@ -459,7 +457,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_I8GqIPtmEeeupNwu8S8N4Q">
+    <bpws:flow name="_BX_flow_Zc5MkPwOEeeupNwu8S8N4Q">
         <bpws:links>
             <bpws:link name="CatchLinkEvent2 to CallSubProcess" tibex:xpdlId="_mqrEUOSHEee4r8nNLd6bUg"/>
             <bpws:link name="_BX_continue_2 to TL2" tibex:xpdlId="_4d6cgOY0Eeep9dkvO_z3LA"/>
@@ -1085,7 +1083,7 @@ Log.write("[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID="+Provisioning_Data.siebelCircuitID+
                     <tibex:userTaskParticipant entity="GROUP"
                         modelVersion="1"
                         uniqueId="_lCh2ALk-EeenBJWclYhCxA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');TimerLimit=cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("PreSLA Breach Mail Configuration");DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__Zgjo4OSGEee4r8nNLd6bUg">
                         <bpws:empty name="_BX_continue"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_Zgjo4OSGEee4r8nNLd6bUg">
@@ -1200,7 +1198,7 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                     <tibex:userTaskParticipant entity="GROUP"
                         modelVersion="1"
                         uniqueId="_mEwvELk-EeenBJWclYhCxA" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_IPs','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_IPs','Decomissioning');DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__LXOs8PjuEeej8uWuBC0YMQ">
                         <bpws:empty name="_BX_continue_3"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_LXOs8PjuEeej8uWuBC0YMQ">
@@ -1323,7 +1321,7 @@ SLAFLAGGlobal="2";
                     </bpws:scope>
                 </bpws:onAlarm>
                 <bpws:onAlarm>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual_Installation_Removal','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual_Installation_Removal','Decomissioning');DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__HbOxcPjuEeej8uWuBC0YMQ">
                         <bpws:empty name="_BX_continue_6"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_HbOxcPjuEeej8uWuBC0YMQ">
@@ -1416,7 +1414,7 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                     <tibex:userTaskParticipant entity="GROUP"
                         modelVersion="1"
                         uniqueId="_NWWeQM27EeeozIUd784NFw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES_OSG_Verification','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES_OSG_Verification','Decomissioning');DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__IliocPjuEeej8uWuBC0YMQ">
                         <bpws:empty name="_BX_continue_7"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_IliocPjuEeej8uWuBC0YMQ">
@@ -1527,7 +1525,7 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                     <tibex:userTaskParticipant entity="GROUP"
                         modelVersion="1"
                         uniqueId="_QqfvkM27EeeozIUd784NFw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_Management_IP','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_Management_IP','Decomissioning');DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__N-az8PUEEeeywP4RjejZPQ">
                         <bpws:empty name="_BX_continue_9"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_N-az8PUEEeeywP4RjejZPQ">
@@ -1649,7 +1647,7 @@ Log.write("[SFC] DeactivationProcess: Comment Text is: "+CommentText+" at Task "
                     </bpws:scope>
                 </bpws:onAlarm>
                 <bpws:onAlarm>
-                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select_Contractor','Decomissioning');DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
+                    <bpws:until expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select_Contractor','Decomissioning');DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));]]></bpws:until>
                     <bpws:scope name="_BX_scope__G5XagPjuEeej8uWuBC0YMQ">
                         <bpws:empty name="_BX_continue_12"
                             tibex:type="boundaryTimerEvent" tibex:xpdlId="_G5XagPjuEeej8uWuBC0YMQ">

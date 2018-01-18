@@ -220,10 +220,11 @@
         </xpdl2:DataField>
         <xpdl2:DataField Id="_0XpVQOY1Eeep9dkvO_z3LA" xpdExt:DisplayName="TimerLimit" Name="TimerLimit" ReadOnly="false">
           <xpdl2:DataType>
-            <xpdl2:BasicType Type="FLOAT">
-              <xpdl2:Precision>10</xpdl2:Precision>
-              <xpdl2:Scale>2</xpdl2:Scale>
-            </xpdl2:BasicType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_8CyNENAdEeeYN6H5-MXFxQ"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
           </xpdl2:DataType>
           <xpdl2:InitialValue/>
           <xpdExt:InitialValues>
@@ -1067,7 +1068,8 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+TimerLimit=cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(&quot;PreSLA Breach Mail Configuration&quot;);&#xD;
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
 </xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
@@ -1497,8 +1499,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_Management_IP','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
-</xpdl2:DeadlineDuration>
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_8omYsOCsEeeeKsD8kq9l7g" Width="27.0">
@@ -1620,8 +1621,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Select_Contractor','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
-</xpdl2:DeadlineDuration>
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
@@ -1649,7 +1649,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Manual_Installation_Removal','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
@@ -1677,7 +1677,7 @@ DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Config
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'TES_OSG_Verification','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_HE7U4N_BEee7mPhVBav8gw" Width="27.0">
@@ -1734,7 +1734,7 @@ DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().S
           </xpdl2:Event>
           <xpdl2:Deadline>
             <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Deprovision_IPs','Decomissioning');&#xD;
-DateTimeUtil.createDuration(TimerLimit*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
           </xpdl2:Deadline>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_LE6_kN_BEee7mPhVBav8gw" Width="27.0">

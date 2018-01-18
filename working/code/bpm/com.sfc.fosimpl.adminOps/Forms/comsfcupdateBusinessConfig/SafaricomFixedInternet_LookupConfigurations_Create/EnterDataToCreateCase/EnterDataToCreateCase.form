@@ -4,6 +4,8 @@
     <form:externalResource name="resource.common" uri="pathmap://FORMS_RESOURCES/common.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.form" uri="comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Create/EnterDataToCreateCase/EnterDataToCreateCase.properties" sfRelative="true" internal="true" localized="true"/>
     <form:externalResource name="resource.safaricom" uri="CSS/safaricom.css" sfRelative="true"/>
+    <form:externalResource name="resource.helper" uri="JavaScript/helper.js" sfRelative="true"/>
+    <form:externalResource name="resource.jquery3" uri="JQuery/jquery-3.2.1.min.js" sfRelative="true"/>
   </form:externalResources>
   <form:dataModel>
     <form:parameter generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_iDqfevksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Create%26n=LookupTable?" name="data.LookupTable" label="LookupTable" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" type="com.sfc.fosImpl.dataModel::LookupTable" inout="INOUT"/>
@@ -19,6 +21,18 @@
     <form:rule generated="true" name="rule.submit" label="Submit">
       <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+    </form:rule>
+    <form:rule name="rule.onFormLoadInitiate" label="On Form Load Initiate">
+      <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:action xsi:type="form:ScriptAction" name="action.setEnabled" label="Set Enabled">
+        <form:script>var a;&#xD;
+control.LookupTable_enableFlag.setValue(&quot;Y&quot;);&#xD;
+</form:script>
+      </form:action>
+      <form:action xsi:type="form:ScriptAction" name="action.SetLabelBackground" label="Set Label Background">
+        <form:script>var a;&#xD;
+setupFontColor('[id$=lookupTableEnterDataToCreateCase]');</form:script>
+      </form:action>
     </form:rule>
   </form:rules>
   <form:bindings>
@@ -71,17 +85,27 @@
       <form:enabled>true</form:enabled>
       <form:required>false</form:required>
     </form:control>
-    <form:pane generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_iDqfevksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Create%26n=LookupTable?" syncFlags="327680" styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" name="pane.LookupTable" paneType="com.tibco.forms.panes.vertical">
+    <form:pane generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_iDqfevksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Create%26n=LookupTable?" syncFlags="2949120" styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" name="pane.LookupTable" paneType="com.tibco.forms.panes.vertical">
       <form:hint></form:hint>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
       <form:defaults>
         <form:labelProperties position="left"/>
       </form:defaults>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.LookupTable_lookupValue">
-        <form:propertySet xsi:type="et:TextAreaPropertySet">
-          <et:rows>10</et:rows>
-          <et:cols>25</et:cols>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_lookupKey">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>50</et:displayLength>
+          <et:maxLength>50</et:maxLength>
+        </form:propertySet>
+        <form:label>lookupKey</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_lookupValue">
+        <form:propertySet xsi:type="et:TextPropertySet">
+          <et:displayLength>50</et:displayLength>
           <et:maxLength>400</et:maxLength>
         </form:propertySet>
         <form:label>LookupValue</form:label>
@@ -103,21 +127,12 @@
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_lookupKey">
-        <form:propertySet xsi:type="et:TextPropertySet">
-          <et:displayLength>40</et:displayLength>
-          <et:maxLength>50</et:maxLength>
-        </form:propertySet>
-        <form:label>lookupKey</form:label>
-        <form:hint></form:hint>
-        <form:visible>true</form:visible>
-        <form:enabled>true</form:enabled>
-        <form:required>false</form:required>
-      </form:control>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_enableFlag">
-        <form:propertySet xsi:type="et:TextPropertySet">
-          <et:displayLength>40</et:displayLength>
-          <et:maxLength>50</et:maxLength>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.LookupTable_enableFlag">
+        <form:propertySet xsi:type="et:MultiChoicePropertySet">
+          <et:choiceValues>Y</et:choiceValues>
+          <et:choiceValues>N</et:choiceValues>
+          <et:choiceLabels>Y</et:choiceLabels>
+          <et:choiceLabels>N</et:choiceLabels>
         </form:propertySet>
         <form:label>EnableFlag</form:label>
         <form:hint></form:hint>

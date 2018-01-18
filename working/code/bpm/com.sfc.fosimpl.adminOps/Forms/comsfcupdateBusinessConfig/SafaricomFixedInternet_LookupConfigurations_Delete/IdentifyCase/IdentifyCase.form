@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmlns:xpdl2="http://www.wfmc.org/2008/XPDL2.1" generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_ozP85PksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aActivity%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=IdentifyCase?" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmlns:xpdl2="http://www.wfmc.org/2008/XPDL2.1" generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_XoeooPwOEeeQG6rB-oZQFw?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aActivity%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=ConfirmDataTobeDeleted?" formatVersion="4.0.0">
   <form:externalResources>
     <form:externalResource name="resource.common" uri="pathmap://FORMS_RESOURCES/common.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.form" uri="comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Delete/IdentifyCase/IdentifyCase.properties" sfRelative="true" internal="true" localized="true"/>
     <form:externalResource name="resource.safaricom" uri="CSS/safaricom.css" sfRelative="true"/>
+    <form:externalResource name="resource.helper" uri="JavaScript/helper.js" sfRelative="true"/>
+    <form:externalResource name="resource.jquery3" uri="JQuery/jquery-3.2.1.min.js" sfRelative="true"/>
   </form:externalResources>
   <form:dataModel>
-    <form:parameter generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_oz3n8PksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=autoCaseIdentifier1?" name="data.autoCaseIdentifier1" label="autoCaseIdentifier1" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_BRY7wHvBEdy0U8_1u7Q20g" type="BomPrimitiveTypes::Integer" length="10" inout="INOUT"/>
+    <form:parameter generated="true" name="data.LookupTable" label="LookupTable" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" type="com.sfc.fosImpl.dataModel::LookupTable" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.LookupSelectionCopyForDeletion" label="LookupSelectionCopyForDeletion" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" type="com.sfc.fosImpl.dataModel::LookupTable" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.taskName" label="taskName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
+    <form:parameter generated="true" name="data.DecisionForDeletion" label="DecisionForDeletion" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_pSJ7cHvAEdy0U8_1u7Q20g" type="BomPrimitiveTypes::Boolean" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -17,14 +22,95 @@
       <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.cancel"/>
     </form:rule>
     <form:rule generated="true" name="rule.submit" label="Submit">
-      <form:event source="#control.submit" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.submit.select"/>
-      <form:action ref="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#action.submit"/>
+      <form:event source="#control.confirm" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.confirm.select"/>
+      <form:event source="#control.ReSelect" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.control.ReSelect.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.ConfirmDeletion" label="ConfirmDeletion">
+        <form:script>if(context.control.getName()==&quot;confirm&quot;) {&#xD;
+	data.setDecisionForDeletion(true);&#xD;
+}&#xD;
+else {&#xD;
+	data.setDecisionForDeletion(false);&#xD;
+}&#xD;
+this.getForm().invokeAction(&quot;submit&quot;,this,context);</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.changeLabelBackground" label="Change Label Background">
+      <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:action xsi:type="form:ScriptAction" name="action.changeLabelBackground" label="Change Label Background">
+        <form:script>setupFontColor('[id$=lblIdentifyRecords]');&#xD;
+if(data.getTaskName()==&quot;IdentifyDataTobeDeleted&quot;) {&#xD;
+	control.lblIdentifyRecords.setLabel(&quot;Identify Records For Deletion&quot;);&#xD;
+	pane.pneLookupDataMaster.setVisible(true);&#xD;
+	control.ReSelect.setVisible(false);&#xD;
+}&#xD;
+else if(data.getTaskName()==&quot;ConfirmDataTobeDeleted&quot;) {&#xD;
+	control.lblIdentifyRecords.setLabel(&quot;Confirm Records For Deletion&quot;);&#xD;
+	pane.pneLookupDataDeletionMaster.setVisible(true);&#xD;
+	control.ReSelect.setVisible(true);&#xD;
+}</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.copySelectedRecords" label="Copy Selected Records">
+      <form:event source="#pane.LookupTable" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#select" subject="form.pane.LookupTable.select"/>
+      <form:action xsi:type="form:ScriptAction" name="action.copySelectedRecords" label="Copy Selected Records">
+        <form:script>var a;&#xD;
+&#xD;
+if(pane.LookupTable.getSelection()!=null) {&#xD;
+	for(var i=0;i&lt;pane.LookupTable.getSelection().size();i++) {&#xD;
+		pane.LookupSelectionCopyForDeletion.getValue().add(pane.LookupTable.getSelection().get(i));&#xD;
+	}&#xD;
+}</form:script>
+      </form:action>
     </form:rule>
   </form:rules>
   <form:bindings>
-    <form:binding generated="true" direction="bothways" name="_lS_QIPq2Eeec_I4oCcyvoQ">
-      <form:source target="data.autoCaseIdentifier1" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.autoCaseIdentifier1.value"></form:source>
-      <form:destination target="control.autoCaseIdentifier1" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.autoCaseIdentifier1.value"></form:destination>
+    <form:binding generated="true" direction="bothways" name="_TzCvgPwLEeeQG6rB-oZQFw">
+      <form:source target="data.LookupTable" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.LookupTable.value"></form:source>
+      <form:destination target="pane.LookupTable" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.LookupTable.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_TzIPEPwLEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupTable" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" data="form.pane.LookupTable.value.lookupValue"></form:source>
+      <form:destination target="control.LookupTable_lookupValue" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupTable_lookupValue.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_TzNuoPwLEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupTable" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_fhM_MPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=autoCaseIdentifier1?" data="form.pane.LookupTable.value.autoCaseIdentifier1"></form:source>
+      <form:destination target="control.LookupTable_autoCaseIdentifier1" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupTable_autoCaseIdentifier1.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_TzT1QPwLEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupTable" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" data="form.pane.LookupTable.value.lookupKey"></form:source>
+      <form:destination target="control.LookupTable_lookupKey" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupTable_lookupKey.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_TzZU0PwLEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupTable" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" data="form.pane.LookupTable.value.enableFlag"></form:source>
+      <form:destination target="control.LookupTable_enableFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupTable_enableFlag.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_6f0a8PwOEeeQG6rB-oZQFw">
+      <form:source target="data.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.LookupSelectionCopyForDeletion.value"></form:source>
+      <form:destination target="pane.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.LookupSelectionCopyForDeletion.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_6f4sYPwOEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" data="form.pane.LookupSelectionCopyForDeletion.value.lookupValue"></form:source>
+      <form:destination target="control.LookupSelectionCopyForDeletion_lookupValue" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupSelectionCopyForDeletion_lookupValue.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="sourceToDest" name="_6f-L8PwOEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_fhM_MPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=autoCaseIdentifier1?" data="form.pane.LookupSelectionCopyForDeletion.value.autoCaseIdentifier1"></form:source>
+      <form:destination target="control.LookupSelectionCopyForDeletion_autoCaseIdentifier1" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupSelectionCopyForDeletion_autoCaseIdentifier1.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_6gCdYPwOEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" data="form.pane.LookupSelectionCopyForDeletion.value.lookupKey"></form:source>
+      <form:destination target="control.LookupSelectionCopyForDeletion_lookupKey" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupSelectionCopyForDeletion_lookupKey.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_6gH88PwOEeeQG6rB-oZQFw">
+      <form:source target="pane.LookupSelectionCopyForDeletion" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" data="form.pane.LookupSelectionCopyForDeletion.value.enableFlag"></form:source>
+      <form:destination target="control.LookupSelectionCopyForDeletion_enableFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.LookupSelectionCopyForDeletion_enableFlag.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_M5p5APwPEeeQG6rB-oZQFw">
+      <form:source target="data.taskName" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.taskName.value"></form:source>
+      <form:destination target="control.taskName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.taskName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_1GphYPwPEeeQG6rB-oZQFw">
+      <form:source target="data.DecisionForDeletion" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.DecisionForDeletion.value"></form:source>
+      <form:destination target="control.DecisionForDeletion" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.DecisionForDeletion.value"></form:destination>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -49,32 +135,176 @@
       <form:enabled>true</form:enabled>
       <form:required>false</form:required>
     </form:control>
-    <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.identifyCaseforLookup">
-      <form:label>Identify Case for Lookup</form:label>
+    <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblIdentifyRecords">
+      <form:label>Identify Entries for Deletion</form:label>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
       <form:required>false</form:required>
     </form:control>
-    <form:control generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_oz3n8PksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=autoCaseIdentifier1?" syncFlags="65536" styleClass="vPaneBorderMain" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.autoCaseIdentifier1">
-      <form:propertySet xsi:type="et:TextPropertySet">
-        <et:displayLength>15</et:displayLength>
-        <et:maxLength>10</et:maxLength>
-        <et:numeric>true</et:numeric>
-        <et:formatRef>resource.common.format_integer</et:formatRef>
-      </form:propertySet>
-      <form:label>Case Identifier Entry</form:label>
-      <form:hint></form:hint>
-      <form:visible>true</form:visible>
+    <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneLookupDataMaster" paneType="com.tibco.forms.panes.vertical">
+      <form:visible>false</form:visible>
       <form:enabled>true</form:enabled>
-      <form:visual padding="40"/>
-      <form:required>true</form:required>
+      <form:labelProperties visible="false"/>
+      <form:defaults>
+        <form:labelProperties position="top" visible="true" width="120"/>
+      </form:defaults>
+      <form:pane generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_ozQkA_ksEeeqiZsRWP-qWg?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=LookupTable?" syncFlags="2637824" styleClass="marginPane" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" name="pane.LookupTable" paneType="com.tibco.forms.panes.grid">
+        <form:propertySet xsi:type="et:GridPanePropertySet">
+          <et:showNavigator>false</et:showNavigator>
+          <et:editable>true</et:editable>
+          <et:selectionModel>multiple</et:selectionModel>
+          <et:rowLabel>{0}</et:rowLabel>
+        </form:propertySet>
+        <form:label>LookupTable</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:defaults>
+          <form:labelProperties position="top"/>
+        </form:defaults>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_fhM_MPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=autoCaseIdentifier1?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_autoCaseIdentifier1">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>20</et:displayLength>
+            <et:maxLength>19</et:maxLength>
+            <et:numeric>true</et:numeric>
+            <et:formatRef>resource.common.format_integer</et:formatRef>
+          </form:propertySet>
+          <form:label>autoCaseIdentifier1</form:label>
+          <form:hint></form:hint>
+          <form:visible>false</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_lookupKey">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>lookupKey</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_lookupValue">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>400</et:maxLength>
+          </form:propertySet>
+          <form:label>LookupValue</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupTable_enableFlag">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>EnableFlag</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+      </form:pane>
+    </form:pane>
+    <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneLookupDataDeletionMaster" paneType="com.tibco.forms.panes.vertical">
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:labelProperties visible="false"/>
+      <form:defaults>
+        <form:labelProperties position="top" visible="true" width="120"/>
+      </form:defaults>
+      <form:pane generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_nQN54fwLEeeQG6rB-oZQFw?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=LookupSelectionCopyForDeletion?" syncFlags="2637824" styleClass="marginPane" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_8a3T8PjwEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=LookupTable?" name="pane.LookupSelectionCopyForDeletion" paneType="com.tibco.forms.panes.grid">
+        <form:propertySet xsi:type="et:GridPanePropertySet">
+          <et:showNavigator>false</et:showNavigator>
+          <et:editable>true</et:editable>
+          <et:sortable>true</et:sortable>
+          <et:rowLabel>{0}</et:rowLabel>
+        </form:propertySet>
+        <form:label>LookupSelectionCopyForDeletion</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:defaults>
+          <form:labelProperties position="top"/>
+        </form:defaults>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_fhM_MPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=autoCaseIdentifier1?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupSelectionCopyForDeletion_autoCaseIdentifier1">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>20</et:displayLength>
+            <et:maxLength>19</et:maxLength>
+            <et:numeric>true</et:numeric>
+            <et:formatRef>resource.common.format_integer</et:formatRef>
+          </form:propertySet>
+          <form:label>autoCaseIdentifier1</form:label>
+          <form:hint></form:hint>
+          <form:visible>false</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_A3DycPjxEeej8uWuBC0YMQ?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupValue?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupSelectionCopyForDeletion_lookupValue">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>400</et:maxLength>
+          </form:propertySet>
+          <form:label>LookupValue</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_7aMfUPkrEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=lookupKey?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupSelectionCopyForDeletion_lookupKey">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>lookupKey</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_m_ajkPkzEeeqiZsRWP-qWg?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aLookupTable%26n=enableFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" readOnly="true" controlType="com.tibco.forms.controls.textinput" name="control.LookupSelectionCopyForDeletion_enableFlag">
+          <form:propertySet xsi:type="et:TextPropertySet">
+            <et:displayLength>40</et:displayLength>
+            <et:maxLength>50</et:maxLength>
+          </form:propertySet>
+          <form:label>EnableFlag</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+      </form:pane>
+    </form:pane>
+    <form:control generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_m5i-8PwOEeeQG6rB-oZQFw?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=taskName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.taskName">
+      <form:propertySet xsi:type="et:TextPropertySet">
+        <et:displayLength>40</et:displayLength>
+        <et:maxLength>50</et:maxLength>
+      </form:propertySet>
+      <form:label>taskName</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:control generated="true" generatorSource="com.sfc.updateBusinessConfig.xpdl#_vxR_MPwPEeeQG6rB-oZQFw?p=com.sfc.fosimpl.adminOps%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcupdateBusinessConfig%3a%3aSafaricomFixedInternet_LookupConfigurations_Delete%26n=DecisionForDeletion?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.DecisionForDeletion">
+      <form:label>DecisionForDeletion</form:label>
+      <form:hint></form:hint>
+      <form:visible>false</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
     </form:control>
   </form:pane>
   <form:pane gwt:toolbar="true" styleClass="toolbar" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.toolbar" paneType="com.tibco.forms.panes.horizontal">
     <form:label>Toolbar</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
-    <form:visual width="200"/>
+    <form:visual width="250"/>
     <form:labelProperties visible="false"/>
     <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.cancel">
       <form:propertySet xsi:type="et:ButtonPropertySet"/>
@@ -83,11 +313,17 @@
       <form:enabled>true</form:enabled>
       <form:required>false</form:required>
     </form:control>
-    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.submit">
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.ReSelect">
+      <form:propertySet xsi:type="et:ButtonPropertySet"/>
+      <form:label>ReSelect</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+    </form:control>
+    <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.confirm">
       <form:propertySet xsi:type="et:ButtonPropertySet">
         <et:type>primary</et:type>
       </form:propertySet>
-      <form:label>Submit</form:label>
+      <form:label>Confirm</form:label>
       <form:visible>true</form:visible>
       <form:enabled>true</form:enabled>
       <form:required>false</form:required>

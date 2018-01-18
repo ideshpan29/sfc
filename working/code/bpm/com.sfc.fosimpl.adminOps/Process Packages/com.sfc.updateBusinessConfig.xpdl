@@ -1528,10 +1528,7 @@ Log.write(&quot;Task Name Size : &quot;+TaskNameArray.size());&#xD;
 &#xD;
 for(var i=0;i&lt;SLA_ConfigurationRef.size();i++) {&#xD;
 	SLA_Configuration.add(SLA_ConfigurationRef.get(i).readSLA_Configuration());	&#xD;
-}&#xD;
-&#xD;
-Log.write(&quot;[SFC] ProcessName: &quot;);&#xD;
-</xpdl2:Script>
+}</xpdl2:Script>
               </xpdl2:TaskScript>
             </xpdl2:Task>
           </xpdl2:Implementation>
@@ -1931,7 +1928,7 @@ Log.write(&quot;[SFC] ProcessName: &quot;);
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_iDp4YvksEeeqiZsRWP-qWg" Name="EnterDataToCreateCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Enter Data To Create Case">
+        <xpdl2:Activity Id="_iDp4YvksEeeqiZsRWP-qWg" Name="CreateEntryForLookupData" xpdExt:Visibility="Private" xpdExt:DisplayName="Create Entry For Lookup Data">
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskUser Implementation="Unspecified">
@@ -2124,12 +2121,12 @@ Log.write(&quot;[SFC] ProcessName: &quot;);
             <xpdExt:Value>Your local copy of the case object is out of synch. The case object has been changed by something else since your copy was fetched.</xpdExt:Value>
           </xpdExt:InitialValues>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_ljT2OfksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTable" Name="LookupTable">
+        <xpdl2:DataField Id="_ljT2OfksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTable" Name="LookupTable" IsArray="true">
           <xpdl2:DataType>
             <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_8a3T8PjwEeej8uWuBC0YMQ"/>
           </xpdl2:DataType>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_ljT2OvksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTableRef" Name="LookupTableRef">
+        <xpdl2:DataField Id="_ljT2OvksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTableRef" Name="LookupTableRef" IsArray="true">
           <xpdl2:DataType>
             <xpdl2:RecordType>
               <xpdl2:Member>
@@ -2156,18 +2153,27 @@ Log.write(&quot;[SFC] ProcessName: &quot;);
               <xpdl2:Coordinates XCoordinate="33.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">LookupTableRef = cac_com_sfc_fosImpl_dataModel_LookupTable.findAll();&#xD;
+for(var i=0;i&lt;LookupTableRef.size();i++) {&#xD;
+	LookupTable.add(LookupTableRef.get(i).readLookupTable());&#xD;
+}</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_ljTPE_ksEeeqiZsRWP-qWg" Name="End" xpdExt:Visibility="Private" xpdExt:DisplayName="End">
           <xpdl2:Event>
             <xpdl2:EndEvent Result="None"/>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="52.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="31.0">
-              <xpdl2:Coordinates XCoordinate="916.0" YCoordinate="76.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="47.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="754.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_ljTPFPksEeeqiZsRWP-qWg" Name="IdentifyCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Identify Case">
+        <xpdl2:Activity Id="_ljTPFPksEeeqiZsRWP-qWg" Name="LookupConfigurationUpdateExistingEntries" xpdExt:Visibility="Private" xpdExt:DisplayName="Look up Configuration - Update Existing Entries">
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskUser Implementation="Unspecified">
@@ -2190,78 +2196,7 @@ Log.write(&quot;[SFC] ProcessName: &quot;);
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="147.0" YCoordinate="76.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
-            <xpdExt:WorkItemPriority InitialPriority="50"/>
-          </xpdExt:ActivityResourcePatterns>
-          <xpdExt:AssociatedParameters>
-            <xpdExt:AssociatedParameter FormalParam="autoCaseIdentifier1" Mode="INOUT" Mandatory="true">
-              <xpdl2:Description></xpdl2:Description>
-            </xpdExt:AssociatedParameter>
-          </xpdExt:AssociatedParameters>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ljTPF_ksEeeqiZsRWP-qWg" Name="LookupCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Lookup Case">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">LookupTableRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByAutoCaseIdentifier1(autoCaseIdentifier1);
-if (LookupTableRef != null) {
-LookupTable = LookupTableRef.readLookupTable();
-}</xpdl2:Script>
-              </xpdl2:TaskScript>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="72.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="122.0">
-              <xpdl2:Coordinates XCoordinate="313.0" YCoordinate="76.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
-          </xpdExt:ActivityResourcePatterns>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ljT2IPksEeeqiZsRWP-qWg" xpdExt:DisplayName="">
-          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
-                <xpdl2:TransitionRefs>
-                  <xpdl2:TransitionRef Id="_ljT2MfksEeeqiZsRWP-qWg"/>
-                  <xpdl2:TransitionRef Id="_ljT2MvksEeeqiZsRWP-qWg"/>
-                </xpdl2:TransitionRefs>
-              </xpdl2:Split>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="43.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="41.0">
-              <xpdl2:Coordinates XCoordinate="440.0" YCoordinate="76.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ljT2IfksEeeqiZsRWP-qWg" Name="ModifyData" xpdExt:Visibility="Private" xpdExt:DisplayName="Modify Data">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskUser Implementation="Unspecified">
-                <xpdl2:Performers>
-                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
-                </xpdl2:Performers>
-                <xpdl2:MessageIn Id="_ljT2IvksEeeqiZsRWP-qWg"/>
-                <xpdl2:MessageOut Id="_ljT2I_ksEeeqiZsRWP-qWg"/>
-                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Update/ModifyData/ModifyData.form"/>
-              </xpdl2:TaskUser>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:ExtendedAttributes>
-            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Update/ModifyData/ModifyData.form"/>
-          </xpdl2:ExtendedAttributes>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="68.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="125.0">
-              <xpdl2:Coordinates XCoordinate="581.0" YCoordinate="76.0"/>
+              <xpdl2:Coordinates XCoordinate="243.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -2270,8 +2205,8 @@ LookupTable = LookupTableRef.readLookupTable();
             <xpdExt:WorkItemPriority InitialPriority="50"/>
           </xpdExt:ActivityResourcePatterns>
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
-            <xpdExt:AssociatedParameter FormalParam="LookupTable" Mode="INOUT" Mandatory="true">
-              <xpdl2:Description></xpdl2:Description>
+            <xpdExt:AssociatedParameter FormalParam="LookupTable" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
@@ -2292,7 +2227,7 @@ LookupTable = LookupTableRef.readLookupTable();
           </xpdl2:Implementation>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="68.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="130.0">
-              <xpdl2:Coordinates XCoordinate="778.0" YCoordinate="76.0"/>
+              <xpdl2:Coordinates XCoordinate="538.0" YCoordinate="76.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -2321,7 +2256,7 @@ LookupTable = LookupTableRef.readLookupTable();
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="27.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="27.0">
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="62.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="92.0">
               <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </xpdl2:NodeGraphicsInfo>
             <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
@@ -2347,7 +2282,7 @@ LookupTable = LookupTableRef.readLookupTable();
           </xpdl2:Implementation>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="70.0" LaneId="_ljTPEfksEeeqiZsRWP-qWg" Width="112.0">
-              <xpdl2:Coordinates XCoordinate="828.0" YCoordinate="211.0"/>
+              <xpdl2:Coordinates XCoordinate="588.0" YCoordinate="207.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -2380,36 +2315,8 @@ LookupTable = LookupTableRef.readLookupTable();
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_ljT2L_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljTPFPksEeeqiZsRWP-qWg" To="_ljTPF_ksEeeqiZsRWP-qWg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ljT2MPksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljTPF_ksEeeqiZsRWP-qWg" To="_ljT2IPksEeeqiZsRWP-qWg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ljT2MfksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljT2IPksEeeqiZsRWP-qWg" To="_ljT2IfksEeeqiZsRWP-qWg">
+        <xpdl2:Transition Id="_ljT2MfksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljTPFPksEeeqiZsRWP-qWg" To="_ljT2JPksEeeqiZsRWP-qWg">
           <xpdl2:Condition Type="OTHERWISE"/>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ljT2MvksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljT2IPksEeeqiZsRWP-qWg" To="_ljTPFPksEeeqiZsRWP-qWg">
-          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">LookupTableRef == null;</xpdl2:Expression></xpdl2:Condition>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-20.0" YCoordinate="130.0"/>
-              <xpdl2:Coordinates XCoordinate="273.0" YCoordinate="130.0"/>
-              <xpdl2:Coordinates XCoordinate="-240.0" YCoordinate="130.0"/>
-              <xpdl2:Coordinates XCoordinate="53.0" YCoordinate="130.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ljT2M_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljT2IfksEeeqiZsRWP-qWg" To="_ljT2JPksEeeqiZsRWP-qWg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
@@ -2422,10 +2329,8 @@ LookupTable = LookupTableRef.readLookupTable();
         <xpdl2:Transition Id="_ljT2NfksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ljT2KvksEeeqiZsRWP-qWg" To="_ljTPFPksEeeqiZsRWP-qWg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-16.0" YCoordinate="54.0"/>
-              <xpdl2:Coordinates XCoordinate="665.0" YCoordinate="185.0"/>
-              <xpdl2:Coordinates XCoordinate="-641.0" YCoordinate="54.0"/>
-              <xpdl2:Coordinates XCoordinate="40.0" YCoordinate="185.0"/>
+              <xpdl2:Coordinates XCoordinate="-346.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="130.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
           </xpdl2:ConnectorGraphicsInfos>
@@ -2471,12 +2376,12 @@ LookupTable = LookupTableRef.readLookupTable();
             <xpdExt:Value>Error(s) encountered deleting this case data</xpdExt:Value>
           </xpdExt:InitialValues>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_ozQkA_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTable" Name="LookupTable">
+        <xpdl2:DataField Id="_ozQkA_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTable" Name="LookupTable" IsArray="true">
           <xpdl2:DataType>
             <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_8a3T8PjwEeej8uWuBC0YMQ"/>
           </xpdl2:DataType>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_ozQkBPksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTableRef" Name="LookupTableRef">
+        <xpdl2:DataField Id="_ozQkBPksEeeqiZsRWP-qWg" xpdExt:DisplayName="LookupTableRef" Name="LookupTableRef" IsArray="true">
           <xpdl2:DataType>
             <xpdl2:RecordType>
               <xpdl2:Member>
@@ -2492,6 +2397,30 @@ LookupTable = LookupTableRef.readLookupTable();
             </xpdl2:BasicType>
           </xpdl2:DataType>
         </xpdl2:DataField>
+        <xpdl2:DataField Id="_nQN54fwLEeeQG6rB-oZQFw" xpdExt:DisplayName="LookupSelectionCopyForDeletion" Name="LookupSelectionCopyForDeletion" IsArray="true">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_8a3T8PjwEeej8uWuBC0YMQ"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_m5i-8PwOEeeQG6rB-oZQFw" xpdExt:DisplayName="taskName" Name="taskName">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_vxR_MPwPEeeQG6rB-oZQFw" xpdExt:DisplayName="DecisionForDeletion" Name="DecisionForDeletion">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="BOOLEAN"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_zuG1kPwZEeemPJ7j9FaLOg" xpdExt:DisplayName="loopSize" Name="loopSize">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="INTEGER">
+              <xpdl2:Precision>9</xpdl2:Precision>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
       </xpdl2:DataFields>
       <xpdl2:Activities>
         <xpdl2:Activity Id="_ozP84vksEeeqiZsRWP-qWg" Name="Start" xpdExt:Visibility="Private" xpdExt:DisplayName="Start">
@@ -2503,18 +2432,27 @@ LookupTable = LookupTableRef.readLookupTable();
               <xpdl2:Coordinates XCoordinate="33.0" YCoordinate="79.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">LookupTableRef = cac_com_sfc_fosImpl_dataModel_LookupTable.findAll();&#xD;
+for(var i=0;i&lt;LookupTableRef.size();i++) {&#xD;
+	LookupTable.add(LookupTableRef.get(i).readLookupTable());&#xD;
+}</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_ozP84_ksEeeqiZsRWP-qWg" Name="End" xpdExt:Visibility="Private" xpdExt:DisplayName="End">
           <xpdl2:Event>
             <xpdl2:EndEvent Result="None"/>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="52.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="31.0">
-              <xpdl2:Coordinates XCoordinate="1013.0" YCoordinate="79.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="47.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="31.0">
+              <xpdl2:Coordinates XCoordinate="997.0" YCoordinate="81.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_ozP85PksEeeqiZsRWP-qWg" Name="IdentifyCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Identify Case">
+        <xpdl2:Activity Id="_ozP85PksEeeqiZsRWP-qWg" Name="IdentifyDataTobeDeleted" xpdExt:Visibility="Private" xpdExt:DisplayName="Identify Data To be Deleted">
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskUser Implementation="Unspecified">
@@ -2545,85 +2483,31 @@ LookupTable = LookupTableRef.readLookupTable();
             <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
             <xpdExt:WorkItemPriority InitialPriority="50"/>
           </xpdExt:ActivityResourcePatterns>
-          <xpdExt:AssociatedParameters>
-            <xpdExt:AssociatedParameter FormalParam="autoCaseIdentifier1" Mode="INOUT" Mandatory="true">
-              <xpdl2:Description></xpdl2:Description>
-            </xpdExt:AssociatedParameter>
-          </xpdExt:AssociatedParameters>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ozP85_ksEeeqiZsRWP-qWg" Name="LookupCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Lookup Case">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">LookupTableRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByAutoCaseIdentifier1(autoCaseIdentifier1);
-if (LookupTableRef != null) {
-LookupTable = LookupTableRef.readLookupTable();
-}</xpdl2:Script>
-              </xpdl2:TaskScript>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="72.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="122.0">
-              <xpdl2:Coordinates XCoordinate="313.0" YCoordinate="79.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
-          </xpdExt:ActivityResourcePatterns>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ozP86PksEeeqiZsRWP-qWg" xpdExt:DisplayName="">
-          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
-                <xpdl2:TransitionRefs>
-                  <xpdl2:TransitionRef Id="_ozQj-PksEeeqiZsRWP-qWg"/>
-                  <xpdl2:TransitionRef Id="_ozQj-fksEeeqiZsRWP-qWg"/>
-                </xpdl2:TransitionRefs>
-              </xpdl2:Split>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="43.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="41.0">
-              <xpdl2:Coordinates XCoordinate="440.0" YCoordinate="79.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ozP86fksEeeqiZsRWP-qWg" Name="DisplayDataToBeDeleted" xpdExt:Visibility="Private" xpdExt:DisplayName="Display Data To Be Deleted">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskUser Implementation="Unspecified">
-                <xpdl2:Performers>
-                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
-                </xpdl2:Performers>
-                <xpdl2:MessageIn Id="_ozP86vksEeeqiZsRWP-qWg"/>
-                <xpdl2:MessageOut Id="_ozP86_ksEeeqiZsRWP-qWg"/>
-                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Delete/DisplayDataToBeDeleted/DisplayDataToBeDeleted.form"/>
-              </xpdl2:TaskUser>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:ExtendedAttributes>
-            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Delete/DisplayDataToBeDeleted/DisplayDataToBeDeleted.form"/>
-          </xpdl2:ExtendedAttributes>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="78.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="135.0">
-              <xpdl2:Coordinates XCoordinate="603.0" YCoordinate="79.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
-            <xpdExt:WorkItemPriority InitialPriority="50"/>
-          </xpdExt:ActivityResourcePatterns>
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
-            <xpdExt:AssociatedParameter FormalParam="ConfirmCaseObjectDelete" Mode="OUT" Mandatory="false">
+            <xpdExt:AssociatedParameter FormalParam="LookupTable" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
-            <xpdExt:AssociatedParameter FormalParam="LookupTable" Mode="IN" Mandatory="true">
+            <xpdExt:AssociatedParameter FormalParam="LookupSelectionCopyForDeletion" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="taskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="DecisionForDeletion" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;[SFC_FOS_IMPL] Size of Selected Lookup Array&quot;+LookupSelectionCopyForDeletion.size());&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">taskName=&quot;IdentifyDataTobeDeleted&quot;;&#xD;
+LookupSelectionCopyForDeletion.clear();&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_ozP87PksEeeqiZsRWP-qWg" Name="DeleteCase" xpdExt:Visibility="Private" xpdExt:DisplayName="Delete Case">
           <xpdl2:Implementation>
@@ -2640,33 +2524,40 @@ LookupTable = LookupTableRef.readLookupTable();
               </xpdl2:TaskService>
             </xpdl2:Task>
           </xpdl2:Implementation>
+          <xpdl2:Loop LoopType="Standard">
+            <xpdl2:LoopStandard TestTime="Before">
+              <xpdl2:LoopCondition ScriptGrammar="JavaScript">loopSize>0;</xpdl2:LoopCondition>
+            </xpdl2:LoopStandard>
+          </xpdl2:Loop>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="68.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="130.0">
-              <xpdl2:Coordinates XCoordinate="889.0" YCoordinate="79.0"/>
+              <xpdl2:Coordinates XCoordinate="679.0" YCoordinate="81.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_ozP87_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="">
-          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
-                <xpdl2:TransitionRefs>
-                  <xpdl2:TransitionRef Id="_ozQj-vksEeeqiZsRWP-qWg"/>
-                  <xpdl2:TransitionRef Id="_ozQj_PksEeeqiZsRWP-qWg"/>
-                </xpdl2:TransitionRefs>
-              </xpdl2:Split>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="43.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="41.0">
-              <xpdl2:Coordinates XCoordinate="728.0" YCoordinate="79.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">LookupTableRef.clear();&#xD;
+&#xD;
+&#xD;
+var varLookupValue= LookupSelectionCopyForDeletion.get(Process.getActivityLoopIndex()).lookupValue;&#xD;
+var varLookupKey= LookupSelectionCopyForDeletion.get(Process.getActivityLoopIndex()).lookupKey;&#xD;
+&#xD;
+var criteria = &quot;lookupValue='&quot;+varLookupValue+&quot;' and lookupKey='&quot;+varLookupKey+&quot;'&quot;;&#xD;
+Log.write(criteria);&#xD;
+&#xD;
+LookupTableRef = cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">loopSize--;&#xD;
+Log.write(&quot;loopSize&quot;);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_ozP88PksEeeqiZsRWP-qWg" Name="ErrorEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Error Event">
           <xpdl2:Event>
@@ -2688,7 +2579,7 @@ LookupTable = LookupTableRef.readLookupTable();
             </xpdl2:IntermediateEvent>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="27.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="27.0">
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="47.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="59.0">
               <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </xpdl2:NodeGraphicsInfo>
             <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
@@ -2710,7 +2601,7 @@ LookupTable = LookupTableRef.readLookupTable();
           </xpdl2:Implementation>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="934.0" YCoordinate="204.0"/>
+              <xpdl2:Coordinates XCoordinate="724.0" YCoordinate="227.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -2730,6 +2621,77 @@ LookupTable = LookupTableRef.readLookupTable();
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
+        <xpdl2:Activity Id="_XoeooPwOEeeQG6rB-oZQFw" Name="ConfirmDataTobeDeleted" xpdExt:Visibility="Private" xpdExt:DisplayName="Confirm Data To be Deleted">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskUser Implementation="Unspecified">
+                <xpdl2:Performers>
+                  <xpdl2:Performer>-defined-in-Activity-Performer-</xpdl2:Performer>
+                </xpdl2:Performers>
+                <xpdl2:MessageIn Id="_XoeoofwOEeeQG6rB-oZQFw"/>
+                <xpdl2:MessageOut Id="_XoeoovwOEeeQG6rB-oZQFw"/>
+                <xpdExt:FormImplementation FormType="Form" FormURI="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Delete/IdentifyCase/IdentifyCase.form"/>
+              </xpdl2:TaskUser>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:ExtendedAttributes>
+            <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="form://comsfcupdateBusinessConfig/SafaricomFixedInternet_LookupConfigurations_Delete/IdentifyCase/IdentifyCase.form"/>
+          </xpdl2:ExtendedAttributes>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="64.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="340.0" YCoordinate="79.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
+            <xpdExt:WorkItemPriority InitialPriority="50"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">taskName=&quot;ConfirmDataTobeDeleted&quot;;&#xD;
+Log.write(&quot;[SFC_FOS_IMPL] Size of Selected Lookup Array&quot;+LookupSelectionCopyForDeletion.size());&#xD;
+&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">loopSize = LookupSelectionCopyForDeletion.size();&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="LookupSelectionCopyForDeletion" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="DecisionForDeletion" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="taskName" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="LookupTable" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description></xpdl2:Description>
+            </xpdExt:AssociatedParameter>
+          </xpdExt:AssociatedParameters>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_tIRmgPwYEeemPJ7j9FaLOg">
+          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
+                <xpdl2:TransitionRefs>
+                  <xpdl2:TransitionRef Id="_iYToYPwOEeeQG6rB-oZQFw"/>
+                  <xpdl2:TransitionRef Id="_1YUKEPwYEeemPJ7j9FaLOg"/>
+                </xpdl2:TransitionRefs>
+              </xpdl2:Split>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="205,158,233" Height="43.0" LaneId="_ozP84fksEeeqiZsRWP-qWg" Width="41.0">
+              <xpdl2:Coordinates XCoordinate="466.0" YCoordinate="81.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
         <xpdl2:Transition Id="_ozQj9PksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP87PksEeeqiZsRWP-qWg" To="_ozP84_ksEeeqiZsRWP-qWg">
@@ -2743,76 +2705,53 @@ LookupTable = LookupTableRef.readLookupTable();
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj9vksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP85PksEeeqiZsRWP-qWg" To="_ozP85_ksEeeqiZsRWP-qWg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj9_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP85_ksEeeqiZsRWP-qWg" To="_ozP86PksEeeqiZsRWP-qWg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj-PksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP86PksEeeqiZsRWP-qWg" To="_ozP86fksEeeqiZsRWP-qWg">
-          <xpdl2:Condition Type="OTHERWISE"/>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj-fksEeeqiZsRWP-qWg" xpdExt:DisplayName="lookup failed" Name="lookupfailed" From="_ozP86PksEeeqiZsRWP-qWg" To="_ozP85PksEeeqiZsRWP-qWg">
-          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">LookupTableRef == null;</xpdl2:Expression></xpdl2:Condition>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-20.0" YCoordinate="177.0"/>
-              <xpdl2:Coordinates XCoordinate="273.0" YCoordinate="177.0"/>
-              <xpdl2:Coordinates XCoordinate="-246.0" YCoordinate="177.0"/>
-              <xpdl2:Coordinates XCoordinate="47.0" YCoordinate="177.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj-vksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP87_ksEeeqiZsRWP-qWg" To="_ozP87PksEeeqiZsRWP-qWg">
-          <xpdl2:Condition Type="CONDITION">
-<xpdl2:Expression ScriptGrammar="JavaScript">ConfirmCaseObjectDelete == true;</xpdl2:Expression>
-</xpdl2:Condition>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj-_ksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP86fksEeeqiZsRWP-qWg" To="_ozP87_ksEeeqiZsRWP-qWg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj_PksEeeqiZsRWP-qWg" xpdExt:DisplayName="delete cancelled by user" Name="deletecancelledbyuser" From="_ozP87_ksEeeqiZsRWP-qWg" To="_ozP85PksEeeqiZsRWP-qWg">
-          <xpdl2:Condition Type="OTHERWISE"/>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-20.0" YCoordinate="212.0"/>
-              <xpdl2:Coordinates XCoordinate="561.0" YCoordinate="212.0"/>
-              <xpdl2:Coordinates XCoordinate="-534.0" YCoordinate="212.0"/>
-              <xpdl2:Coordinates XCoordinate="47.0" YCoordinate="212.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.LabelAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="51.840168243953734" YCoordinate="0.0"/>
-              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="-13.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
         <xpdl2:Transition Id="_ozQj_fksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozP88PksEeeqiZsRWP-qWg" To="_ozQj8fksEeeqiZsRWP-qWg">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_ozQj_vksEeeqiZsRWP-qWg" xpdExt:DisplayName="" Name="" From="_ozQj8fksEeeqiZsRWP-qWg" To="_ozP85PksEeeqiZsRWP-qWg">
+        <xpdl2:Transition Id="_Y79CsPwOEeeQG6rB-oZQFw" Name="" From="_ozP85PksEeeqiZsRWP-qWg" To="_XoeooPwOEeeQG6rB-oZQFw">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="60.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_iYToYPwOEeeQG6rB-oZQFw" xpdExt:DisplayName="" Name="" From="_tIRmgPwYEeemPJ7j9FaLOg" To="_ozP87PksEeeqiZsRWP-qWg">
+          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">(DecisionForDeletion==true);&#xD;
+&#xD;
+</xpdl2:Expression></xpdl2:Condition>
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="58.68544600938967" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_tISNkPwYEeemPJ7j9FaLOg" xpdExt:DisplayName="" Name="" From="_XoeooPwOEeeQG6rB-oZQFw" To="_tIRmgPwYEeemPJ7j9FaLOg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="10.625" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_1YUKEPwYEeemPJ7j9FaLOg" Name="" From="_tIRmgPwYEeemPJ7j9FaLOg" To="_ozP85PksEeeqiZsRWP-qWg">
+          <xpdl2:Condition Type="OTHERWISE"/>
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-46.0" YCoordinate="104.0"/>
-              <xpdl2:Coordinates XCoordinate="741.0" YCoordinate="229.0"/>
-              <xpdl2:Coordinates XCoordinate="-768.0" YCoordinate="104.0"/>
-              <xpdl2:Coordinates XCoordinate="19.0" YCoordinate="229.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="109.0"/>
+              <xpdl2:Coordinates XCoordinate="318.0" YCoordinate="100.0"/>
+              <xpdl2:Coordinates XCoordinate="-174.0" YCoordinate="109.0"/>
+              <xpdl2:Coordinates XCoordinate="145.0" YCoordinate="100.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="35.0" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>

@@ -268,6 +268,11 @@
                             </asciiContent>
                         </xsl:if>
                     </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'">
+                        <asciiContent>
+                            <xsl:value-of select="$CallProcessCurrentStateActivityWise/output/response"/>
+                        </asciiContent>
+                    </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'">
                         <asciiContent>
                             <xsl:value-of select="$CallResourceWiseAnalysis/Output/response"/>
@@ -503,6 +508,22 @@
             </input>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="CallProcessCurrentStateActivityWise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>367</pd:x>
+        <pd:y>831</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/CurrentStateActivityWise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <input>
+                <processName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                </processName>
+            </input>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
@@ -685,5 +706,20 @@
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallProcessCurrentStateActivityWise</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallProcessCurrentStateActivityWise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'</pd:xpath>
     </pd:transition>
 </pd:ProcessDefinition>

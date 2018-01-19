@@ -14,8 +14,8 @@
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx13:ldapentryinputrepeat"/>
-    <pd:startX>59</pd:startX>
-    <pd:startY>34</pd:startY>
+    <pd:startX>104</pd:startX>
+    <pd:startY>138</pd:startY>
     <pd:returnBindings>
         <pfx13:ldapentryinputrepeat>
             <xsl:for-each select="$Start/pfx13:ldapentryinputrepeat/pfx13:input">
@@ -83,8 +83,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx13:ldapentryinputrepeat"/>
-    <pd:endX>775</pd:endX>
-    <pd:endY>34</pd:endY>
+    <pd:endX>828</pd:endX>
+    <pd:endY>136</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <LdapCreation>
@@ -92,11 +92,25 @@
         </LdapCreation>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1509441068367</pd:targetNamespace>
+    <pd:activity name="Assign Error">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>529</pd:x>
+        <pd:y>381</pd:y>
+        <config>
+            <variableName>LdapCreation</variableName>
+        </config>
+        <pd:inputBindings>
+            <Status>
+                <xsl:value-of select="'FAILED'"/>
+            </Status>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Call Resource Mapping Process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>635</pd:x>
-        <pd:y>43</pd:y>
+        <pd:x>680</pd:x>
+        <pd:y>146</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
         </config>
@@ -153,12 +167,13 @@
     <pd:activity name="Failure LDAP Entry Log">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>499</pd:x>
-        <pd:y>306</pd:y>
+        <pd:x>828</pd:x>
+        <pd:y>422</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
             <append>true</append>
+            <createMissingDirectories>true</createMissingDirectories>
         </config>
         <pd:inputBindings>
             <ns5:WriteActivityInputTextClass>
@@ -177,8 +192,8 @@
     <pd:activity name="Ldap Entry Code">
         <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
         <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
-        <pd:x>213</pd:x>
-        <pd:y>56</pd:y>
+        <pd:x>258</pd:x>
+        <pd:y>138</pd:y>
         <config>
             <javaArchive>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/SharedResources/AliasLibrary.aliaslib</javaArchive>
             <fileName>LdapEntryLdapEntryCode</fileName>
@@ -559,39 +574,15 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
             </javaCodeActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Successfull LDAP Entry Log">
-        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
-        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>502</pd:x>
-        <pd:y>43</pd:y>
-        <config>
-            <encoding>text</encoding>
-            <compressFile>None</compressFile>
-            <append>true</append>
-        </config>
-        <pd:inputBindings>
-            <ns5:WriteActivityInputTextClass>
-                <fileName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
-                </fileName>
-                <textContent>
-                    <xsl:value-of select="concat($Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName,&quot;LDAP Entry Created Succesfully &quot;)"/>
-                </textContent>
-                <addLineSeparator>
-                    <xsl:value-of select="1"/>
-                </addLineSeparator>
-            </ns5:WriteActivityInputTextClass>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="Password Logs">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>347</pd:x>
-        <pd:y>34</pd:y>
+        <pd:x>392</pd:x>
+        <pd:y>138</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
-            <createMissingDirectories>false</createMissingDirectories>
+            <createMissingDirectories>true</createMissingDirectories>
             <append>true</append>
         </config>
         <pd:inputBindings>
@@ -608,19 +599,47 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
             </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Assign">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>322</pd:x>
-        <pd:y>305</pd:y>
+    <pd:activity name="Successfull LDAP Entry Log">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>146</pd:y>
         <config>
-            <variableName>LdapCreation</variableName>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <append>true</append>
+            <createMissingDirectories>true</createMissingDirectories>
         </config>
         <pd:inputBindings>
-            <Status>
-                <xsl:value-of select="'FAILED'"/>
-            </Status>
+            <ns5:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="concat($Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName,&quot;LDAP Entry Created Succesfully &quot;)"/>
+                </textContent>
+                <addLineSeparator>
+                    <xsl:value-of select="1"/>
+                </addLineSeparator>
+            </ns5:WriteActivityInputTextClass>
         </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>826</pd:x>
+        <pd:y>566</pd:y>
+        <pd:handler>true</pd:handler>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Assign Eror">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>826</pd:x>
+        <pd:y>297</pd:y>
+        <config/>
+        <pd:inputBindings/>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
@@ -631,7 +650,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
     </pd:transition>
     <pd:transition>
         <pd:from>Ldap Entry Code</pd:from>
-        <pd:to>Assign</pd:to>
+        <pd:to>Assign Error</pd:to>
         <pd:xpathDescription>Failure</pd:xpathDescription>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -647,7 +666,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
     </pd:transition>
     <pd:transition>
         <pd:from>Failure LDAP Entry Log</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>Assign Eror</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -674,8 +693,22 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Assign</pd:from>
+        <pd:from>Catch</pd:from>
         <pd:to>Failure LDAP Entry Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign Error</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign Eror</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

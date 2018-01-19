@@ -11,8 +11,8 @@
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx17:createresourceinput"/>
-    <pd:startX>43</pd:startX>
-    <pd:startY>493</pd:startY>
+    <pd:startX>33</pd:startX>
+    <pd:startY>570</pd:startY>
     <pd:returnBindings>
         <pfx17:createresourceinput>
             <xsl:for-each select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest">
@@ -66,8 +66,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx17:createresourceinput"/>
-    <pd:endX>2652</pd:endX>
-    <pd:endY>364</pd:endY>
+    <pd:endX>3269</pd:endX>
+    <pd:endY>556</pd:endY>
     <pd:errorSchemas>
         <ParseDataError>
             <xsd:element name="root">
@@ -110,8 +110,8 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>248</pd:x>
-        <pd:y>362</pd:y>
+        <pd:x>271</pd:x>
+        <pd:y>351</pd:y>
         <pd:width>210</pd:width>
         <pd:height>243</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -161,8 +161,8 @@
         <pd:activity name="AssignContainerID">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>354</pd:x>
-            <pd:y>424</pd:y>
+            <pd:x>377</pd:x>
+            <pd:y>412</pd:y>
             <config>
                 <variableName>LDAPContainerID</variableName>
             </config>
@@ -180,8 +180,87 @@
         <pd:activity name="Null">
             <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
             <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>348</pd:x>
-            <pd:y>536</pd:y>
+            <pd:x>371</pd:x>
+            <pd:y>524</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:group name="Group (1)">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>280</pd:x>
+        <pd:y>612</pd:y>
+        <pd:width>217</pd:width>
+        <pd:height>252</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$listContainer/outputMessage/ns:listContainersResponse/ldap-container</pd:over>
+            <pd:iterationElementSlot>InternelContainerIDIndex</pd:iterationElementSlot>
+            <pd:indexSlot>InternalContainerID</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Null-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>AssignContainerID-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$InternelContainerIDIndex/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPContainerName</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>AssignContainerID-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="AssignContainerID-1">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>377</pd:x>
+            <pd:y>676</pd:y>
+            <config>
+                <variableName>LDAPContainerID</variableName>
+            </config>
+            <pd:inputBindings>
+                <Container>
+                    <Id>
+                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/@id"/>
+                    </Id>
+                    <alias>
+                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/primary-ldap/@ldap-alias"/>
+                    </alias>
+                </Container>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null-1">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>366</pd:x>
+            <pd:y>788</pd:y>
             <config/>
             <pd:inputBindings/>
         </pd:activity>
@@ -189,10 +268,10 @@
     <pd:group name="Iterate For each record present in CSV File">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>912</pd:x>
-        <pd:y>1</pd:y>
-        <pd:width>1496</pd:width>
-        <pd:height>867</pd:height>
+        <pd:x>1035</pd:x>
+        <pd:y>55</pd:y>
+        <pd:width>2011</pd:width>
+        <pd:height>983</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -210,7 +289,7 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Assign-2</pd:to>
+            <pd:to>Assign Failure Initially</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -318,7 +397,7 @@
         </pd:transition>
         <pd:transition>
             <pd:from>getLdapEntry</pd:from>
-            <pd:to>Assign</pd:to>
+            <pd:to>Assign Email from Ladp Emtry</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -331,7 +410,7 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign</pd:from>
+            <pd:from>Assign Email from Ladp Emtry</pd:from>
             <pd:to>SetResourceAttributes</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -418,7 +497,7 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign-2</pd:from>
+            <pd:from>Assign Failure Initially</pd:from>
             <pd:to>GetSpecificCandidate</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -434,8 +513,8 @@
         <pd:activity name="createResource">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1234</pd:x>
-            <pd:y>445</pd:y>
+            <pd:x>1401</pd:x>
+            <pd:y>539</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -471,8 +550,8 @@
         <pd:activity name="MapResourceToGroup">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1872</pd:x>
-            <pd:y>257</pd:y>
+            <pd:x>2185</pd:x>
+            <pd:y>361</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -504,10 +583,10 @@
         <pd:group name="Interation To get the Guid from Group name">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1550</pd:x>
-            <pd:y>71</pd:y>
+            <pd:x>1824</pd:x>
+            <pd:y>156</pd:y>
             <pd:width>237</pd:width>
-            <pd:height>267</pd:height>
+            <pd:height>282</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
             <pd:collapsedHeight>70</pd:collapsedHeight>
             <pd:groupVariables/>
@@ -555,8 +634,8 @@
             <pd:activity name="AssignGuid">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>1654</pd:x>
-                <pd:y>134</pd:y>
+                <pd:x>1936</pd:x>
+                <pd:y>230</pd:y>
                 <config>
                     <variableName>groupGuid</variableName>
                 </config>
@@ -578,8 +657,8 @@
             <pd:activity name="Null1">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1662</pd:x>
-                <pd:y>261</pd:y>
+                <pd:x>1942</pd:x>
+                <pd:y>364</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -587,8 +666,8 @@
         <pd:activity name="log sucess">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2315</pd:x>
-            <pd:y>385</pd:y>
+            <pd:x>2843</pd:x>
+            <pd:y>341</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -609,8 +688,8 @@
         <pd:activity name="log no such user found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1683</pd:x>
-            <pd:y>702</pd:y>
+            <pd:x>2601</pd:x>
+            <pd:y>951</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -634,8 +713,8 @@
         <pd:activity name="log group not found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2154</pd:x>
-            <pd:y>177</pd:y>
+            <pd:x>2891</pd:x>
+            <pd:y>155</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -659,8 +738,8 @@
         <pd:activity name="Resource Creation Logs">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1430</pd:x>
-            <pd:y>372</pd:y>
+            <pd:x>1689</pd:x>
+            <pd:y>535</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -684,10 +763,10 @@
         <pd:group name="Interation To get the Position ID from position name">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>1543</pd:x>
-            <pd:y>371</pd:y>
+            <pd:x>1825</pd:x>
+            <pd:y>499</pd:y>
             <pd:width>240</pd:width>
-            <pd:height>190</pd:height>
+            <pd:height>284</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
             <pd:collapsedHeight>70</pd:collapsedHeight>
             <pd:groupVariables/>
@@ -735,8 +814,8 @@
             <pd:activity name="AssignPositionId">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>1655</pd:x>
-                <pd:y>426</pd:y>
+                <pd:x>1945</pd:x>
+                <pd:y>576</pd:y>
                 <config>
                     <variableName>PositionId</variableName>
                 </config>
@@ -749,8 +828,8 @@
             <pd:activity name="Null2">
                 <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
                 <pd:resourceType>ae.activities.null</pd:resourceType>
-                <pd:x>1658</pd:x>
-                <pd:y>507</pd:y>
+                <pd:x>1939</pd:x>
+                <pd:y>716</pd:y>
                 <config/>
                 <pd:inputBindings/>
             </pd:activity>
@@ -758,8 +837,8 @@
         <pd:activity name="MapResourceToPosition">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1879</pd:x>
-            <pd:y>420</pd:y>
+            <pd:x>2260</pd:x>
+            <pd:y>563</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -791,8 +870,8 @@
         <pd:activity name="Position Mapped Success">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2144</pd:x>
-            <pd:y>431</pd:y>
+            <pd:x>2518</pd:x>
+            <pd:y>566</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -816,8 +895,8 @@
         <pd:activity name="Position Id Not Found">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2144</pd:x>
-            <pd:y>514</pd:y>
+            <pd:x>2307</pd:x>
+            <pd:y>781</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -841,8 +920,8 @@
         <pd:activity name="getLdapEntry">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1237</pd:x>
-            <pd:y>272</pd:y>
+            <pd:x>1392</pd:x>
+            <pd:y>313</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -875,8 +954,8 @@
         <pd:activity name="SetResourceAttributes">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1429</pd:x>
-            <pd:y>271</pd:y>
+            <pd:x>1551</pd:x>
+            <pd:y>528</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -912,11 +991,11 @@
                 </inputMessage>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Assign">
+        <pd:activity name="Assign Email from Ladp Emtry">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>1334</pd:x>
-            <pd:y>274</pd:y>
+            <pd:x>1539</pd:x>
+            <pd:y>316</pd:y>
             <config>
                 <variableName>Attribute</variableName>
             </config>
@@ -929,8 +1008,8 @@
         <pd:activity name="Send Mail To Contractor">
             <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
             <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
-            <pd:x>2096</pd:x>
-            <pd:y>254</pd:y>
+            <pd:x>2691</pd:x>
+            <pd:y>238</pd:y>
             <config>
                 <newMimeSupport>true</newMimeSupport>
                 <inputOutputVersion>5.2.0</inputOutputVersion>
@@ -982,8 +1061,8 @@
         <pd:activity name="Send Mail To Others">
             <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
             <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
-            <pd:x>2088</pd:x>
-            <pd:y>343</pd:y>
+            <pd:x>2702</pd:x>
+            <pd:y>450</pd:y>
             <config>
                 <newMimeSupport>true</newMimeSupport>
                 <inputOutputVersion>5.2.0</inputOutputVersion>
@@ -1020,7 +1099,7 @@
                                 </content-type>
                             </mimeHeaders>
                             <textContent>
-                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for abc.com.&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br>&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
+                                <xsl:value-of select="concat(&quot;Dear &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;,&lt;br>Following are the Login Credentials for:   &quot;, $_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL,&quot;.&lt;br> Username : &quot;,$ParseIndex1/pfx17:users/pfx17:name,&quot;&lt;br>&lt;br>Thanks and Regards &lt;br>SafariCom&quot;)"/>
                             </textContent>
                         </mimePart>
                     </ns42:mimeEnvelopeElement>
@@ -1030,8 +1109,8 @@
         <pd:activity name="ResourceAlreadyExists">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1683</pd:x>
-            <pd:y>625</pd:y>
+            <pd:x>2532</pd:x>
+            <pd:y>847</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -1055,8 +1134,8 @@
         <pd:activity name="GetSpecificCandidate">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1094</pd:x>
-            <pd:y>437</pd:y>
+            <pd:x>1246</pd:x>
+            <pd:y>536</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1106,8 +1185,8 @@
         <pd:activity name="Write to Status File">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2002</pd:x>
-            <pd:y>243</pd:y>
+            <pd:x>2518</pd:x>
+            <pd:y>364</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -1117,7 +1196,7 @@
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
                     <fileName>
-                        <xsl:value-of select="&quot;D:\resourcestatus.txt&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:orgname,&quot;, Resource Creation&quot;,&quot;, &quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;, Success&quot;)"/>
@@ -1131,17 +1210,18 @@
         <pd:activity name="Failure Status">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1558</pd:x>
-            <pd:y>593</pd:y>
+            <pd:x>1709</pd:x>
+            <pd:y>850</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
                 <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
                     <fileName>
-                        <xsl:value-of select="&quot;D:\resourcestatus.txt&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:orgname,&quot;, Resource Creation&quot;,&quot;, &quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;, Failure&quot;)"/>
@@ -1155,17 +1235,18 @@
         <pd:activity name="Failure Status 1">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1503</pd:x>
-            <pd:y>641</pd:y>
+            <pd:x>1605</pd:x>
+            <pd:y>949</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
                 <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
                     <fileName>
-                        <xsl:value-of select="&quot;D:\resourcestatus.txt&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:orgname,&quot;, Resource Creation&quot;,&quot;, &quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;, Failure&quot;)"/>
@@ -1179,17 +1260,18 @@
         <pd:activity name="Write to Status File 2">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>2006</pd:x>
-            <pd:y>161</pd:y>
+            <pd:x>2325</pd:x>
+            <pd:y>143</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
                 <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
             </config>
             <pd:inputBindings>
                 <ns0:WriteActivityInputTextClass>
                     <fileName>
-                        <xsl:value-of select="&quot;D:\resourcestatus.txt&quot;"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/FileNames/LogFile"/>
                     </fileName>
                     <textContent>
                         <xsl:value-of select="concat($ParseIndex1/pfx17:users/pfx17:orgname,&quot;, Resource Creation&quot;,&quot;, &quot;,$ParseIndex1/pfx17:users/pfx17:entityname,&quot;, Failure&quot;)"/>
@@ -1203,8 +1285,8 @@
         <pd:activity name="Process Status">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>1931</pd:x>
-            <pd:y>344</pd:y>
+            <pd:x>2326</pd:x>
+            <pd:y>366</pd:y>
             <config>
                 <variableName>ADDStatus</variableName>
             </config>
@@ -1214,11 +1296,11 @@
                 </status>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Assign-2">
+        <pd:activity name="Assign Failure Initially">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>1005</pd:x>
-            <pd:y>413</pd:y>
+            <pd:x>1128</pd:x>
+            <pd:y>542</pd:y>
             <config>
                 <variableName>ADDStatus</variableName>
             </config>
@@ -1229,11 +1311,25 @@
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
+    <pd:activity name="Assign Failure">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>3281</pd:x>
+        <pd:y>664</pd:y>
+        <config>
+            <variableName>ADDStatus</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Catch Errors">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>2691</pd:x>
-        <pd:y>755</pd:y>
+        <pd:x>3279</pd:x>
+        <pd:y>914</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -1243,8 +1339,8 @@
     <pd:activity name="GetOrgModel">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>850</pd:x>
-        <pd:y>496</pd:y>
+        <pd:x>901</pd:x>
+        <pd:y>548</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1265,8 +1361,8 @@
     <pd:activity name="listContainer">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>135</pd:x>
-        <pd:y>494</pd:y>
+        <pd:x>167</pd:x>
+        <pd:y>570</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -1287,8 +1383,8 @@
     <pd:activity name="Parse Data Error">
         <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
         <pd:resourceType>ae.activities.throw</pd:resourceType>
-        <pd:x>756</pd:x>
-        <pd:y>348</pd:y>
+        <pd:x>778</pd:x>
+        <pd:y>214</pd:y>
         <config>
             <faultName>ParseDataError</faultName>
         </config>
@@ -1307,8 +1403,8 @@
     <pd:activity name="Parse Input Data">
         <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
         <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-        <pd:x>758</pd:x>
-        <pd:y>485</pd:y>
+        <pd:x>782</pd:x>
+        <pd:y>549</pd:y>
         <config>
             <InputType>File</InputType>
             <Encoding>ASCII</Encoding>
@@ -1328,8 +1424,8 @@
     <pd:activity name="Set Batch Mode Input File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>605</pd:x>
-        <pd:y>492</pd:y>
+        <pd:x>672</pd:x>
+        <pd:y>493</pd:y>
         <config>
             <variableName>inputFile</variableName>
         </config>
@@ -1342,8 +1438,8 @@
     <pd:activity name="Set Single Entry File Name">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>753</pd:x>
-        <pd:y>592</pd:y>
+        <pd:x>707</pd:x>
+        <pd:y>635</pd:y>
         <config>
             <variableName>inputFile</variableName>
         </config>
@@ -1356,8 +1452,8 @@
     <pd:activity name="Write Data">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>607</pd:x>
-        <pd:y>586</pd:y>
+        <pd:x>648</pd:x>
+        <pd:y>748</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -1378,8 +1474,8 @@
     <pd:activity name="Write to Errorlogs">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>2697</pd:x>
-        <pd:y>626</pd:y>
+        <pd:x>3280</pd:x>
+        <pd:y>787</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -1395,99 +1491,6 @@
                     <xsl:value-of select="concat(current-dateTime(),$Catch-Errors/exceptiondata/*)"/>
                 </textContent>
             </ns0:WriteActivityInputTextClass>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:group name="Group (1)">
-        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
-        <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>245</pd:x>
-        <pd:y>606</pd:y>
-        <pd:width>217</pd:width>
-        <pd:height>252</pd:height>
-        <pd:collapsedWidth>57</pd:collapsedWidth>
-        <pd:collapsedHeight>70</pd:collapsedHeight>
-        <pd:groupVariables/>
-        <pd:joinToggle>inherit</pd:joinToggle>
-        <config>
-            <pd:groupType>inputLoop</pd:groupType>
-            <pd:serializable>false</pd:serializable>
-            <pd:over>$listContainer/outputMessage/ns:listContainersResponse/ldap-container</pd:over>
-            <pd:iterationElementSlot>InternelContainerIDIndex</pd:iterationElementSlot>
-            <pd:indexSlot>InternalContainerID</pd:indexSlot>
-            <pd:activityOutputName/>
-            <pd:accumulateOutput>false</pd:accumulateOutput>
-        </config>
-        <pd:inputBindings/>
-        <pd:expanded>true</pd:expanded>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>Null-1</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>AssignContainerID-1</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$InternelContainerIDIndex/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPContainerName</pd:xpath>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Null-1</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>AssignContainerID-1</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:activity name="AssignContainerID-1">
-            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>338</pd:x>
-            <pd:y>670</pd:y>
-            <config>
-                <variableName>LDAPContainerID</variableName>
-            </config>
-            <pd:inputBindings>
-                <Container>
-                    <Id>
-                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/@id"/>
-                    </Id>
-                    <alias>
-                        <xsl:value-of select="$InternelContainerIDIndex/ldap-container/primary-ldap/@ldap-alias"/>
-                    </alias>
-                </Container>
-            </pd:inputBindings>
-        </pd:activity>
-        <pd:activity name="Null-1">
-            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-            <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>332</pd:x>
-            <pd:y>782</pd:y>
-            <config/>
-            <pd:inputBindings/>
-        </pd:activity>
-    </pd:group>
-    <pd:activity name="Assign-1">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>2654</pd:x>
-        <pd:y>484</pd:y>
-        <config>
-            <variableName>ADDStatus</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'FAILED'"/>
-            </status>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -1600,13 +1603,13 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Write to Errorlogs</pd:from>
-        <pd:to>Assign-1</pd:to>
+        <pd:to>Assign Failure</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Assign-1</pd:from>
+        <pd:from>Assign Failure</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

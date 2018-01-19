@@ -31,8 +31,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:FetchResourceoutput"/>
-    <pd:endX>792</pd:endX>
-    <pd:endY>159</pd:endY>
+    <pd:endX>948</pd:endX>
+    <pd:endY>153</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:WorkCompletionfault"/>
     </pd:errorSchemas>
@@ -73,9 +73,9 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>296</pd:x>
-        <pd:y>16</pd:y>
-        <pd:width>273</pd:width>
+        <pd:x>336</pd:x>
+        <pd:y>8</pd:y>
+        <pd:width>398</pd:width>
         <pd:height>278</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
@@ -94,7 +94,8 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Assign</pd:to>
+            <pd:to>Assign Group Guid</pd:to>
+            <pd:xpathDescription>If Group Name Matches</pd:xpathDescription>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>xpath</pd:conditionType>
@@ -104,11 +105,11 @@
             <pd:from>start</pd:from>
             <pd:to>Null</pd:to>
             <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:lineColor>-65536</pd:lineColor>
             <pd:conditionType>otherwise</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign</pd:from>
+            <pd:from>Assign Group Guid</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -124,16 +125,16 @@
         <pd:activity name="Null">
             <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
             <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>426</pd:x>
-            <pd:y>223</pd:y>
+            <pd:x>549</pd:x>
+            <pd:y>209</pd:y>
             <config/>
             <pd:inputBindings/>
         </pd:activity>
-        <pd:activity name="Assign">
+        <pd:activity name="Assign Group Guid">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>433</pd:x>
-            <pd:y>92</pd:y>
+            <pd:x>535</pd:x>
+            <pd:y>81</pd:y>
             <config>
                 <variableName>Variable0</variableName>
             </config>
@@ -149,8 +150,8 @@
     <pd:activity name="GetAllResources">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>663</pd:x>
-        <pd:y>162</pd:y>
+        <pd:x>819</pd:x>
+        <pd:y>156</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -173,6 +174,17 @@
                 </ns:findResources>
             </inputMessage>
         </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>951</pd:x>
+        <pd:y>272</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
@@ -197,6 +209,13 @@
     </pd:transition>
     <pd:transition>
         <pd:from>GetAllResources</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

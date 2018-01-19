@@ -9,15 +9,15 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ConfirmDetails">
             <startingVariables>
+                <variable>TechnicalInfo</variable>
+                <variable>SelectedContractor</variable>
                 <variable>TaskName</variable>
                 <variable>GroupNames</variable>
                 <variable>ContractorNames</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>CommentText</variable>
-                <variable>SelectedContractor</variable>
-                <variable>CommentHistory</variable>
                 <variable>SelectedGroup</variable>
+                <variable>CommentText</variable>
+                <variable>CommentHistory</variable>
             </startingVariables>
             <ProcessManagerScript type="Complete">
                 <variable>TaskName</variable>
@@ -43,13 +43,13 @@
         </task>
         <task name="ServiceTask">
             <startingVariables>
-                <variable>commentDataCase</variable>
                 <variable>commentDataCaseRef</variable>
+                <variable>commentDataCase</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>TaskName</variable>
-                <variable>Provisioning_Data</variable>
                 <variable>commentDataCase</variable>
+                <variable>Provisioning_Data</variable>
                 <variable>CommentText</variable>
             </ProcessManagerScript>
         </task>
@@ -101,7 +101,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_ZcIXkPwOEeeupNwu8S8N4Q">
+    <bpws:flow name="_BX_flow_b7POgPzjEeehkqoKISnbpw">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -116,20 +116,20 @@
                     <bpws:source linkName="StartEvent to ScriptTask"/>
                 </bpws:sources>
                 <tibex:parameters>
+                    <parameterDescription mode="InOut" name="SelectedContractor"/>
                     <parameterDescription mode="InOut" name="EscalationEmail"/>
                     <parameterDescription mode="InOut" name="TaskName"/>
                     <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
                     <parameterDescription mode="InOut" name="Provisioning_Data"/>
-                    <parameterDescription mode="InOut" name="CommentDataSet"/>
                     <parameterDescription mode="InOut" name="commentDataCase"/>
-                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
                     <parameterDescription mode="InOut" name="CommentText"/>
                     <parameterDescription mode="InOut" name="TechnicalInfo"/>
-                    <parameterDescription mode="InOut" name="SelectedContractor"/>
-                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
                     <parameterDescription mode="InOut" name="SelectedGroup"/>
+                    <parameterDescription mode="InOut" name="CommentDataSet"/>
                     <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="CommentHistory"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>

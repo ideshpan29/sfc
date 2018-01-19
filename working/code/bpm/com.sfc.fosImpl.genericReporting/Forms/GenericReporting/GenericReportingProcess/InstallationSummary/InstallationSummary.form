@@ -18,6 +18,8 @@
     <form:parameter generated="true" name="data.IsGateKeeper" label="IsGateKeeper" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.loginName" label="loginName" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.TaskList" label="TaskList" dataType="uml:Class GenericReporting.bom#_hTFMsPH9EeeIX9PjIyxHhQ?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Task?" type="com.sfc.fosImpl.genericReporting::Task" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.ResourceList" label="ResourceList" dataType="uml:Class GenericReporting.bom#_gRVpAPtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=ResourceDetails?" type="com.sfc.fosImpl.genericReporting::ResourceDetails" isArray="true" inout="INOUT"/>
+    <form:parameter generated="true" name="data.ActivityList" label="ActivityList" dataType="uml:Class GenericReporting.bom#_atyOEPxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Activity?" type="com.sfc.fosImpl.genericReporting::Activity" isArray="true" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -54,11 +56,17 @@ pane.pneSearchCriteria.setVisible(false);&#xD;
         <form:script>&#xD;
 if (control.rdioSearchOption.getValue()==&quot;SEARCH&quot;)&#xD;
 {&#xD;
+	&#xD;
 	pane.CancelledInstances.getValue().clear();&#xD;
 	pane.CompletedInstances.getValue().clear();&#xD;
 	pane.HaltedInstances.getValue().clear();&#xD;
 	pane.StartedInstances.getValue().clear();&#xD;
+	pane.ListOfTables.setVisible(true);&#xD;
 	pane.pneSearchCriteria.setVisible(true);&#xD;
+	pane.pneResourceDetails.setVisible(false);&#xD;
+	pane.ActivityList.setVisible(false);&#xD;
+	&#xD;
+	&#xD;
 }&#xD;
 else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
 {&#xD;
@@ -66,6 +74,38 @@ else if (control.rdioSearchOption.getValue()==&quot;VIEWALL&quot;)&#xD;
 	pane.pneSearchCriteria.setVisible(false);&#xD;
 	control.optnSearchCriteria.setValue(null);&#xD;
 	control.txtSearchValue.setValue(&quot;&quot;);&#xD;
+	pane.ListOfTables.setVisible(true);&#xD;
+	pane.pneResourceDetails.setVisible(false);&#xD;
+	pane.ActivityList.setVisible(false);&#xD;
+}&#xD;
+else if (control.rdioSearchOption.getValue()==&quot;RESOURCEANALYSIS&quot;)&#xD;
+{&#xD;
+	&#xD;
+	pane.pneResourceDetails.setVisible(true);&#xD;
+	pane.ResourceList.setVisible(false);&#xD;
+	control.groupList.setVisible(true);&#xD;
+	pane.ListOfTables.setVisible(false);&#xD;
+	pane.pneSearchCriteria.setVisible(false);&#xD;
+	pane.ActivityList.setVisible(false);&#xD;
+	&#xD;
+&#xD;
+	&#xD;
+	&#xD;
+}&#xD;
+&#xD;
+else if (control.rdioSearchOption.getValue()==&quot;CURRENTSTATE&quot;)&#xD;
+{&#xD;
+	&#xD;
+	pane.pneResourceDetails.setVisible(false);&#xD;
+	pane.ResourceList.setVisible(false);&#xD;
+	control.groupList.setVisible(false);&#xD;
+	pane.ListOfTables.setVisible(false);&#xD;
+	pane.pneSearchCriteria.setVisible(false);&#xD;
+	pane.ActivityList.setVisible(true);&#xD;
+&#xD;
+	ldCurrentProcessStateData(factory,pane,control,logger,data.getFetchDataURL(),&quot;getProcessCurrentStateActivityWise?processname=&quot;+control.optnSelectProcess.getValue());&#xD;
+	&#xD;
+	&#xD;
 }&#xD;
 &#xD;
 </form:script>
@@ -159,6 +199,15 @@ setupFontColor('[id$=lblCancelled]');&#xD;
 &#xD;
 &#xD;
 &#xD;
+</form:script>
+      </form:action>
+    </form:rule>
+    <form:rule name="rule.showResourceDetails" label="ShowResourceDetails">
+      <form:event source="#control.groupList" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.groupList.update"/>
+      <form:action xsi:type="form:ScriptAction" name="action.showResourceDetails" label="ShowResourceDetails">
+        <form:script>pane.ResourceList.setVisible(true);&#xD;
+ldResourceData(factory,pane,control,logger,data.getFetchDataURL(),&quot;ResourceWiseAnalysis?processname=&quot;+control.optnSelectProcess.getValue()+&quot;&amp;status=COMPLETED&quot;,control.groupList.getValue());&#xD;
+	&#xD;
 </form:script>
       </form:action>
     </form:rule>
@@ -332,6 +381,34 @@ setupFontColor('[id$=lblCancelled]');&#xD;
       <form:source target="pane.TaskList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_gKS7gPIEEee4P5gHOvsDrg?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aTask%26n=status?" data="form.pane.TaskList.value.status"></form:source>
       <form:destination target="control.TaskList_status" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.TaskList_status.value"></form:destination>
     </form:binding>
+    <form:binding generated="true" direction="bothways" name="_GCR6IPtiEeeLb4hQs9WX0Q">
+      <form:source target="data.ResourceList" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ResourceList.value"></form:source>
+      <form:destination target="pane.ResourceList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.ResourceList.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_GCWyoPtiEeeLb4hQs9WX0Q">
+      <form:source target="pane.ResourceList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_k2mj8PtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=resourceName?" data="form.pane.ResourceList.value.resourceName"></form:source>
+      <form:destination target="control.ResourceList_resourceName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResourceList_resourceName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_GCadAPtiEeeLb4hQs9WX0Q">
+      <form:source target="pane.ResourceList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_lJN98PtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=resourceEntity?" data="form.pane.ResourceList.value.resourceEntity"></form:source>
+      <form:destination target="control.ResourceList_resourceEntity" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResourceList_resourceEntity.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_GCeHYPtiEeeLb4hQs9WX0Q">
+      <form:source target="pane.ResourceList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_lR71EPtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=caseCount?" data="form.pane.ResourceList.value.caseCount"></form:source>
+      <form:destination target="control.ResourceList_caseCount" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ResourceList_caseCount.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_y4TRUPxNEeedYo2shDdA0Q">
+      <form:source target="data.ActivityList" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ActivityList.value"></form:source>
+      <form:destination target="pane.ActivityList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value" data="form.pane.ActivityList.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_y4WUoPxNEeedYo2shDdA0Q">
+      <form:source target="pane.ActivityList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_fOcV0PxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aActivity%26n=activityName?" data="form.pane.ActivityList.value.activityName"></form:source>
+      <form:destination target="control.ActivityList_activityName" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ActivityList_activityName.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_y4Z_APxNEeedYo2shDdA0Q">
+      <form:source target="pane.ActivityList" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value GenericReporting.bom#_fbpEUPxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aActivity%26n=activityCount?" data="form.pane.ActivityList.value.activityCount"></form:source>
+      <form:destination target="control.ActivityList_activityCount" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.ActivityList_activityCount.value"></form:destination>
+    </form:binding>
   </form:bindings>
   <form:targets>
     <form:target ref="iProcessWorkspace_10.7"/>
@@ -357,6 +434,90 @@ setupFontColor('[id$=lblCancelled]');&#xD;
       <form:visual width="800"/>
       <form:required>false</form:required>
     </form:control>
+    <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblSearch">
+      <form:label>Search</form:label>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:required>false</form:required>
+    </form:control>
+    <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneSearch" paneType="com.tibco.forms.panes.vertical">
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:labelProperties visible="false"/>
+      <form:defaults>
+        <form:labelProperties position="top" visible="true" width="120"/>
+      </form:defaults>
+      <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane3" paneType="com.tibco.forms.panes.vertical">
+        <form:label>Pane 3</form:label>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:defaults>
+          <form:labelProperties position="top" visible="true" width="120"/>
+        </form:defaults>
+        <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.optnSelectProcess">
+          <form:propertySet xsi:type="et:MultiChoicePropertySet">
+            <et:choiceValues>value1</et:choiceValues>
+            <et:choiceValues>value2</et:choiceValues>
+            <et:choiceLabels>Label 1</et:choiceLabels>
+            <et:choiceLabels>Label 2</et:choiceLabels>
+          </form:propertySet>
+          <form:label>Select Process</form:label>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+        </form:control>
+        <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.radiogroup" controlType="com.tibco.forms.controls.radiogroup" name="control.rdioSearchOption">
+          <form:propertySet xsi:type="et:RadioGroupPropertySet">
+            <et:choiceValues>VIEWALL</et:choiceValues>
+            <et:choiceValues>SEARCH</et:choiceValues>
+            <et:choiceValues>RESOURCEANALYSIS</et:choiceValues>
+            <et:choiceValues>CURRENTSTATE</et:choiceValues>
+            <et:choiceLabels>View All</et:choiceLabels>
+            <et:choiceLabels>Search</et:choiceLabels>
+            <et:choiceLabels>Resource Analysis</et:choiceLabels>
+            <et:choiceLabels>Current State</et:choiceLabels>
+            <et:nColumns>1</et:nColumns>
+          </form:propertySet>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
+        </form:control>
+        <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneSearchCriteria" paneType="com.tibco.forms.panes.horizontal">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
+          <form:defaults>
+            <form:labelProperties position="top"/>
+          </form:defaults>
+          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.optnSearchCriteria">
+            <form:propertySet xsi:type="et:MultiChoicePropertySet">
+              <et:choiceValues>attribute3</et:choiceValues>
+              <et:choiceValues>attribute2</et:choiceValues>
+              <et:choiceValues>attribute9</et:choiceValues>
+              <et:choiceLabels>Customer Name</et:choiceLabels>
+              <et:choiceLabels>Siebel Circuit ID</et:choiceLabels>
+              <et:choiceLabels>Project Manager</et:choiceLabels>
+            </form:propertySet>
+            <form:label>Search Criteria</form:label>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+          </form:control>
+          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.txtSearchValue">
+            <form:propertySet xsi:type="et:TextPropertySet"/>
+            <form:label>Search Value</form:label>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control styleClass="btnSearch" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.btnSearch">
+            <form:propertySet xsi:type="et:ButtonPropertySet"/>
+            <form:label>Search</form:label>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+          </form:control>
+        </form:pane>
+      </form:pane>
+    </form:pane>
     <form:pane generated="true" syncFlags="851968" styleClass="pneWindow" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.ListOfTables" paneType="com.tibco.forms.panes.vertical">
       <form:label>List Of Tables</form:label>
       <form:hint></form:hint>
@@ -366,86 +527,6 @@ setupFontColor('[id$=lblCancelled]');&#xD;
       <form:defaults>
         <form:labelProperties position="top"/>
       </form:defaults>
-      <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblSearch">
-        <form:label>Search</form:label>
-        <form:visible>true</form:visible>
-        <form:enabled>true</form:enabled>
-        <form:required>false</form:required>
-      </form:control>
-      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneSearch" paneType="com.tibco.forms.panes.vertical">
-        <form:visible>true</form:visible>
-        <form:enabled>true</form:enabled>
-        <form:labelProperties visible="false"/>
-        <form:defaults>
-          <form:labelProperties position="top" visible="true" width="120"/>
-        </form:defaults>
-        <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane3" paneType="com.tibco.forms.panes.vertical">
-          <form:label>Pane 3</form:label>
-          <form:visible>true</form:visible>
-          <form:enabled>true</form:enabled>
-          <form:labelProperties visible="false"/>
-          <form:defaults>
-            <form:labelProperties position="top" visible="true" width="120"/>
-          </form:defaults>
-          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.optnSelectProcess">
-            <form:propertySet xsi:type="et:MultiChoicePropertySet">
-              <et:choiceValues>value1</et:choiceValues>
-              <et:choiceValues>value2</et:choiceValues>
-              <et:choiceLabels>Label 1</et:choiceLabels>
-              <et:choiceLabels>Label 2</et:choiceLabels>
-            </form:propertySet>
-            <form:label>Select Process</form:label>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-          </form:control>
-          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.radiogroup" controlType="com.tibco.forms.controls.radiogroup" name="control.rdioSearchOption">
-            <form:propertySet xsi:type="et:RadioGroupPropertySet">
-              <et:choiceValues>VIEWALL</et:choiceValues>
-              <et:choiceValues>SEARCH</et:choiceValues>
-              <et:choiceLabels>View All</et:choiceLabels>
-              <et:choiceLabels>Search</et:choiceLabels>
-              <et:nColumns>1</et:nColumns>
-            </form:propertySet>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:labelProperties visible="false"/>
-          </form:control>
-          <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneSearchCriteria" paneType="com.tibco.forms.panes.horizontal">
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:labelProperties visible="false"/>
-            <form:defaults>
-              <form:labelProperties position="top"/>
-            </form:defaults>
-            <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.optnSearchCriteria">
-              <form:propertySet xsi:type="et:MultiChoicePropertySet">
-                <et:choiceValues>attribute3</et:choiceValues>
-                <et:choiceValues>attribute2</et:choiceValues>
-                <et:choiceValues>attribute9</et:choiceValues>
-                <et:choiceLabels>Customer Name</et:choiceLabels>
-                <et:choiceLabels>Siebel Circuit ID</et:choiceLabels>
-                <et:choiceLabels>Project Manager</et:choiceLabels>
-              </form:propertySet>
-              <form:label>Search Criteria</form:label>
-              <form:visible>true</form:visible>
-              <form:enabled>true</form:enabled>
-            </form:control>
-            <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.txtSearchValue">
-              <form:propertySet xsi:type="et:TextPropertySet"/>
-              <form:label>Search Value</form:label>
-              <form:visible>true</form:visible>
-              <form:enabled>true</form:enabled>
-              <form:required>false</form:required>
-            </form:control>
-            <form:control styleClass="btnSearch" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.button" controlType="com.tibco.forms.controls.button" name="control.btnSearch">
-              <form:propertySet xsi:type="et:ButtonPropertySet"/>
-              <form:label>Search</form:label>
-              <form:visible>true</form:visible>
-              <form:enabled>true</form:enabled>
-            </form:control>
-          </form:pane>
-        </form:pane>
-      </form:pane>
       <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblComplete">
         <form:label>Provisioning Completed</form:label>
         <form:visible>true</form:visible>
@@ -559,8 +640,8 @@ setupFontColor('[id$=lblCancelled]');&#xD;
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane1" paneType="com.tibco.forms.panes.vertical">
-        <form:label>Pane 1</form:label>
+      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneStarted" paneType="com.tibco.forms.panes.vertical">
+        <form:label></form:label>
         <form:visible>true</form:visible>
         <form:enabled>true</form:enabled>
         <form:labelProperties visible="false"/>
@@ -667,8 +748,8 @@ setupFontColor('[id$=lblCancelled]');&#xD;
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane2" paneType="com.tibco.forms.panes.vertical">
-        <form:label>Pane 2</form:label>
+      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneHalted" paneType="com.tibco.forms.panes.vertical">
+        <form:label></form:label>
         <form:visible>true</form:visible>
         <form:enabled>true</form:enabled>
         <form:labelProperties visible="false"/>
@@ -1003,6 +1084,131 @@ setupFontColor('[id$=lblCancelled]');&#xD;
           <form:required>false</form:required>
         </form:control>
       </form:pane>
+    </form:pane>
+    <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneResourceDetails" paneType="com.tibco.forms.panes.vertical">
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.groupList">
+        <form:propertySet xsi:type="et:MultiChoicePropertySet">
+          <et:choiceValues>PM</et:choiceValues>
+          <et:choiceValues>GateKeeper</et:choiceValues>
+          <et:choiceValues>InfraEngineer</et:choiceValues>
+          <et:choiceValues>ProvisionEngineer</et:choiceValues>
+          <et:choiceValues>TESFAE</et:choiceValues>
+          <et:choiceValues>TESOSG</et:choiceValues>
+          <et:choiceValues>CONTRACTOR</et:choiceValues>
+          <et:choiceLabels>PM</et:choiceLabels>
+          <et:choiceLabels>Gate Keeper</et:choiceLabels>
+          <et:choiceLabels>Infra Engineer</et:choiceLabels>
+          <et:choiceLabels>Provision Engineer</et:choiceLabels>
+          <et:choiceLabels>TES FAE</et:choiceLabels>
+          <et:choiceLabels>TES OSG</et:choiceLabels>
+          <et:choiceLabels>Contractor</et:choiceLabels>
+        </form:propertySet>
+        <form:label>Groups</form:label>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+      </form:control>
+      <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblResourceList">
+        <form:label>Resource List</form:label>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneResourceList" paneType="com.tibco.forms.panes.vertical">
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:labelProperties visible="false"/>
+        <form:pane generated="true" generatorSource="GenericReporting.xpdl#_t0DnIPtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=GenericReporting%3a%3aGenericReportingTaskAnalysis%26n=ResourceList?" syncFlags="344064" styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_gRVpAPtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=ResourceDetails?" readOnly="true" name="pane.ResourceList" paneType="com.tibco.forms.panes.grid">
+          <form:propertySet xsi:type="et:GridPanePropertySet">
+            <et:showNavigator>false</et:showNavigator>
+            <et:editable>true</et:editable>
+            <et:sortable>true</et:sortable>
+            <et:rowLabel>{0}</et:rowLabel>
+          </form:propertySet>
+          <form:label>Resource List</form:label>
+          <form:hint></form:hint>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:defaults>
+            <form:labelProperties position="top"/>
+          </form:defaults>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_k2mj8PtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=resourceName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResourceList_resourceName">
+            <form:propertySet xsi:type="et:TextAreaPropertySet">
+              <et:rows>10</et:rows>
+              <et:cols>25</et:cols>
+              <et:maxLength>500</et:maxLength>
+            </form:propertySet>
+            <form:label>Resource Name</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_lJN98PtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=resourceEntity?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResourceList_resourceEntity">
+            <form:propertySet xsi:type="et:TextAreaPropertySet">
+              <et:rows>10</et:rows>
+              <et:cols>25</et:cols>
+              <et:maxLength>500</et:maxLength>
+            </form:propertySet>
+            <form:label>Resource Entity</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:control generated="true" generatorSource="GenericReporting.bom#_lR71EPtXEeeLb4hQs9WX0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aResourceDetails%26n=caseCount?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ResourceList_caseCount">
+            <form:propertySet xsi:type="et:TextAreaPropertySet">
+              <et:rows>10</et:rows>
+              <et:cols>25</et:cols>
+              <et:maxLength>500</et:maxLength>
+            </form:propertySet>
+            <form:label>Case Count</form:label>
+            <form:hint></form:hint>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+        </form:pane>
+      </form:pane>
+    </form:pane>
+    <form:pane generated="true" generatorSource="GenericReporting.xpdl#_qU00YPxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=GenericReporting%3a%3aGenericReportingTaskAnalysis%26n=ActivityList?" syncFlags="344064" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class GenericReporting.bom#_atyOEPxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.genericReporting%26n=Activity?" readOnly="true" name="pane.ActivityList" paneType="com.tibco.forms.panes.grid">
+      <form:propertySet xsi:type="et:GridPanePropertySet">
+        <et:showNavigator>false</et:showNavigator>
+        <et:editable>true</et:editable>
+        <et:sortable>true</et:sortable>
+        <et:rowLabel>{0}</et:rowLabel>
+      </form:propertySet>
+      <form:hint></form:hint>
+      <form:visible>true</form:visible>
+      <form:enabled>true</form:enabled>
+      <form:defaults>
+        <form:labelProperties position="top"/>
+      </form:defaults>
+      <form:control generated="true" generatorSource="GenericReporting.bom#_fOcV0PxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aActivity%26n=activityName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ActivityList_activityName">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>500</et:maxLength>
+        </form:propertySet>
+        <form:label>Activity Name</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" generatorSource="GenericReporting.bom#_fbpEUPxNEeedYo2shDdA0Q?p=com.sfc.fosImpl.genericReporting%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.genericReporting%3a%3aActivity%26n=activityCount?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.ActivityList_activityCount">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>500</et:maxLength>
+        </form:propertySet>
+        <form:label>Activity Count</form:label>
+        <form:hint></form:hint>
+        <form:visible>true</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
     </form:pane>
   </form:pane>
   <form:pane gwt:toolbar="true" styleClass="toolbar" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.toolbar" paneType="com.tibco.forms.panes.horizontal">

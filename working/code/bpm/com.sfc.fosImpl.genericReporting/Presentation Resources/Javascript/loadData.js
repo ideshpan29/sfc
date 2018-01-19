@@ -578,6 +578,183 @@ var tmpURL = url+funcName;
 }
 
 
+function ldResourceData(factory,pane,control,logger,url,funcName,groupName)
+{
+	try {
+logger.info("in task analysis"+url+funcName);
+
+var tmpURL = url+funcName;
+		  var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('GET',tmpURL,true);
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)	{		
+				var xm = xmlhttp.responseText;
+				
+				
+				
+				if (window.XMLHttpRequest) {
+    // code for modern browsers
+    parser=new DOMParser();
+    xmlDoc = parser.parseFromString(xm,"text/xml");
+  } 
+  else {
+    // code for old IE browsers
+    xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+  
+    xmlDoc.loadXML(xm);
+}
+				//var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				
+				logger.info(xm);
+				xmlDoc.async = false; 
+				
+				
+				
+				var recordSet = xmlDoc.getElementsByTagName("Record");
+				var lngth = recordSet.length;
+				logger.info("Lengh of the incoming array for Records: "+lngth);
+				
+				
+				pane.ResourceList.getValue().clear();
+				
+				
+				
+							
+				for(var i=0;i<lngth;i++) {
+					
+					
+					 
+					var record=factory.com_sfc_fosImpl_genericReporting.createResourceDetails(); 
+					 
+					
+					recordSet = xmlDoc.getElementsByTagName("resourceName");
+					if(recordSet[i].childNodes[0]!=null)	{
+							
+						record.setResourceName(recordSet[i].childNodes[0].nodeValue);
+						
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("resourceEntity");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setResourceEntity(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("count");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setCaseCount(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					
+					
+					if(record.getResourceEntity()==groupName)
+						pane.ResourceList.getValue().add(record);
+						
+						
+				}
+				
+				
+			}
+				};
+		result = xmlhttp.send();
+	}
+	catch (e) {
+		alert("Catch: Error: Please contact System Administrator");
+	}
+	
+}
+
+
+
+
+
+function ldCurrentProcessStateData(factory,pane,control,logger,url,funcName)
+{
+
+	try {
+		var tmpURL = url+funcName;
+		  var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('GET',tmpURL,true);
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)	{		
+				var xm = xmlhttp.responseText;
+				
+				
+				
+				if (window.XMLHttpRequest) {
+    // code for modern browsers
+    parser=new DOMParser();
+    xmlDoc = parser.parseFromString(xm,"text/xml");
+  } 
+  else {
+    // code for old IE browsers
+    xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+  
+    xmlDoc.loadXML(xm);
+}
+				//var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				
+				logger.info(xm);
+    			
+			
+				xmlDoc.async = false; 
+				
+				logger.info(xm);
+				
+				
+				
+				var recordSet = xmlDoc.getElementsByTagName("Record");
+				var lngth = recordSet.length;
+				logger.info("Lengh of the incoming array for Records: "+lngth);
+				
+			pane.ActivityList.getValue().clear(); 
+				
+				
+				
+							
+				for(var i=0;i<lngth;i++) {
+					
+					
+					 
+					var record=factory.com_sfc_fosImpl_genericReporting.createActivity();
+	
+			
+					 
+					
+					recordSet = xmlDoc.getElementsByTagName("activityName");
+					if(recordSet[i].childNodes[0]!=null)	{
+							
+						record.setActivityName(recordSet[i].childNodes[0].nodeValue);
+						
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("activityCount");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setActivityCount(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					
+					pane.ActivityList.getValue().add(record);
+				}
+				
+				
+			}	
+				
+			
+				};
+		result = xmlhttp.send();
+	}
+	catch (e) {
+		alert("Catch: Error: Please contact System Administrator");
+	}
+
+}
+
+
+
+
+
+
+
 function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginName) {
 	try {
 		var tmpURL = url+funcName;

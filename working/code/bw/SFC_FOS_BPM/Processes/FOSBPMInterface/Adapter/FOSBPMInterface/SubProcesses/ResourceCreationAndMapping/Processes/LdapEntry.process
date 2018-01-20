@@ -630,7 +630,9 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
         <pd:x>826</pd:x>
         <pd:y>566</pd:y>
         <pd:handler>true</pd:handler>
-        <config/>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
         <pd:inputBindings/>
     </pd:activity>
     <pd:activity name="Assign Eror">
@@ -638,8 +640,14 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
         <pd:x>826</pd:x>
         <pd:y>297</pd:y>
-        <config/>
-        <pd:inputBindings/>
+        <config>
+            <variableName>LdapCreation</variableName>
+        </config>
+        <pd:inputBindings>
+            <Status>
+                <xsl:value-of select="'FAILED'"/>
+            </Status>
+        </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>

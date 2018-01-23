@@ -10,13 +10,13 @@
         <pd:type>com.tibco.pe.core.OnStartupEventSource</pd:type>
         <pd:resourceType>ae.activities.onStartup</pd:resourceType>
         <pd:x>65</pd:x>
-        <pd:y>66</pd:y>
+        <pd:y>57</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
     <pd:endX>748</pd:endX>
-    <pd:endY>63</pd:endY>
+    <pd:endY>57</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1515660512308</pd:targetNamespace>
@@ -45,8 +45,8 @@
     <pd:activity name="OrgModelLog">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>480</pd:x>
-        <pd:y>59</pd:y>
+        <pd:x>589</pd:x>
+        <pd:y>55</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -61,8 +61,8 @@
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>362</pd:x>
-        <pd:y>130</pd:y>
+        <pd:x>446</pd:x>
+        <pd:y>53</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -72,6 +72,33 @@
         </config>
         <pd:inputBindings>
             <xsl:copy-of select="$GetOrgModelDetails/outputMessage/ns2:getOrgModelResponse"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>750</pd:x>
+        <pd:y>280</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Error Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>745</pd:x>
+        <pd:y>162</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <message>
+                    <xsl:value-of select="'The Organizational Model details could not be logged '"/>
+                </message>
+            </ns:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -98,6 +125,20 @@
     <pd:transition>
         <pd:from>onStartup</pd:from>
         <pd:to>GetOrgModelDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Error Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Error Log</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

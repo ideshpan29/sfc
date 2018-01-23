@@ -7,8 +7,8 @@
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceRemoval.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx6:createresourceinput"/>
-    <pd:startX>59</pd:startX>
-    <pd:startY>72</pd:startY>
+    <pd:startX>58</pd:startX>
+    <pd:startY>128</pd:startY>
     <pd:returnBindings>
         <pfx6:createresourceinput>
             <xsl:for-each select="$Start/pfx6:createresourceinput/pfx6:createresourcerequest">
@@ -63,7 +63,7 @@
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx6:createresourceinput"/>
     <pd:endX>1501</pd:endX>
-    <pd:endY>73</pd:endY>
+    <pd:endY>154</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Removal>
@@ -84,60 +84,6 @@
         </Container>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1515499243451</pd:targetNamespace>
-    <pd:activity name="GetResourceId">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>650</pd:x>
-        <pd:y>86</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx3:DirectoryService_1.8.0</service>
-            <servicePort>DirectoryService.soap</servicePort>
-            <operation>getCandidateDetail</operation>
-            <soapAction>getCandidateDetail</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns:getCandidateDetail>
-                    <xsl:attribute name="ldap-alias">
-                        <xsl:value-of select="$Container/data/LdapAlias"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="ldap-dn">
-                        <xsl:value-of select="concat(&quot;ou=&quot;,$Start/pfx6:createresourceinput/pfx6:createresourcerequest[1]/pfx6:name,&quot;,&quot;,$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn)"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="container-id">
-                        <xsl:value-of select="$Container/data/id"/>
-                    </xsl:attribute>
-                </ns:getCandidateDetail>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="LIstContainers">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>257</pd:x>
-        <pd:y>54</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx3:DirectoryService_1.8.0</service>
-            <servicePort>DirectoryService.soap</servicePort>
-            <operation>listContainers</operation>
-            <soapAction>listContainers</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns:listContainers/>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:group name="FindContainerGroup">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
@@ -217,61 +163,6 @@
             <pd:inputBindings/>
         </pd:activity>
     </pd:group>
-    <pd:activity name="RemoveResource">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>1206</pd:x>
-        <pd:y>93</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx2:OrgResourceService_1.8.0</service>
-            <servicePort>OrgResourceService.soap</servicePort>
-            <operation>updateResource</operation>
-            <soapAction>updateResource</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/OrgResourceService</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns2:updateResource>
-                    <resource>
-                        <xsl:attribute name="guid">
-                            <xsl:value-of select="$GetResourceId/outputMessage/ns:getCandidateDetailResponse/@guid"/>
-                        </xsl:attribute>
-                        <remove-group>
-                            <xsl:attribute name="guid">
-                                <xsl:value-of select="$Group/guid"/>
-                            </xsl:attribute>
-                        </remove-group>
-                    </resource>
-                </ns2:updateResource>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="GetGroups">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>761</pd:x>
-        <pd:y>166</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx4:OrgModelService_1.8.0</service>
-            <servicePort>OrgModelService.soap</servicePort>
-            <operation>getOrgModel</operation>
-            <soapAction>getOrgModel</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/OrgModelService</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <pfx5:getOrgModel/>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
@@ -346,11 +237,11 @@
             <pd:inputBindings/>
         </pd:activity>
     </pd:group>
-    <pd:activity name="Assign-2">
+    <pd:activity name="Assign Failure Status Intially">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
         <pd:x>155</pd:x>
-        <pd:y>101</pd:y>
+        <pd:y>138</pd:y>
         <config>
             <variableName>Removal</variableName>
         </config>
@@ -364,7 +255,7 @@
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
         <pd:x>1360</pd:x>
-        <pd:y>85</pd:y>
+        <pd:y>154</pd:y>
         <config>
             <variableName>Removal</variableName>
         </config>
@@ -374,22 +265,11 @@
             </status>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Catch">
-        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
-        <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>1446</pd:x>
-        <pd:y>218</pd:y>
-        <pd:handler>true</pd:handler>
-        <config>
-            <catchAll>true</catchAll>
-        </config>
-        <pd:inputBindings/>
-    </pd:activity>
     <pd:activity name="Assign-4">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>1540</pd:x>
-        <pd:y>173</pd:y>
+        <pd:x>1507</pd:x>
+        <pd:y>260</pd:y>
         <config>
             <variableName>Removal</variableName>
         </config>
@@ -399,9 +279,129 @@
             </status>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1508</pd:x>
+        <pd:y>378</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetGroups">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>774</pd:x>
+        <pd:y>149</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx4:OrgModelService_1.8.0</service>
+            <servicePort>OrgModelService.soap</servicePort>
+            <operation>getOrgModel</operation>
+            <soapAction>getOrgModel</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/OrgModelService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <pfx5:getOrgModel/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetResourceId">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>659</pd:x>
+        <pd:y>150</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx3:DirectoryService_1.8.0</service>
+            <servicePort>DirectoryService.soap</servicePort>
+            <operation>getCandidateDetail</operation>
+            <soapAction>getCandidateDetail</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:getCandidateDetail>
+                    <xsl:attribute name="ldap-alias">
+                        <xsl:value-of select="$Container/data/LdapAlias"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="ldap-dn">
+                        <xsl:value-of select="concat(&quot;ou=&quot;,$Start/pfx6:createresourceinput/pfx6:createresourcerequest[1]/pfx6:name,&quot;,&quot;,$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn)"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="container-id">
+                        <xsl:value-of select="$Container/data/id"/>
+                    </xsl:attribute>
+                </ns:getCandidateDetail>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LIstContainers">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>257</pd:x>
+        <pd:y>138</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx3:DirectoryService_1.8.0</service>
+            <servicePort>DirectoryService.soap</servicePort>
+            <operation>listContainers</operation>
+            <soapAction>listContainers</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:listContainers/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RemoveResource">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1206</pd:x>
+        <pd:y>154</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:OrgResourceService_1.8.0</service>
+            <servicePort>OrgResourceService.soap</servicePort>
+            <operation>updateResource</operation>
+            <soapAction>updateResource</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/OrgResourceService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:updateResource>
+                    <resource>
+                        <xsl:attribute name="guid">
+                            <xsl:value-of select="$GetResourceId/outputMessage/ns:getCandidateDetailResponse/@guid"/>
+                        </xsl:attribute>
+                        <remove-group>
+                            <xsl:attribute name="guid">
+                                <xsl:value-of select="$Group/guid"/>
+                            </xsl:attribute>
+                        </remove-group>
+                    </resource>
+                </ns2:updateResource>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Assign-2</pd:to>
+        <pd:to>Assign Failure Status Intially</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -449,7 +449,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Assign-2</pd:from>
+        <pd:from>Assign Failure Status Intially</pd:from>
         <pd:to>LIstContainers</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

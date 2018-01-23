@@ -6,8 +6,8 @@
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceDeletion.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx2:createresourceinput"/>
-    <pd:startX>73</pd:startX>
-    <pd:startY>248</pd:startY>
+    <pd:startX>43</pd:startX>
+    <pd:startY>260</pd:startY>
     <pd:returnBindings>
         <pfx2:createresourceinput>
             <xsl:for-each select="$Start/pfx2:createresourceinput/pfx2:createresourcerequest">
@@ -61,8 +61,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx2:createresourceinput"/>
-    <pd:endX>1059</pd:endX>
-    <pd:endY>161</pd:endY>
+    <pd:endX>1109</pd:endX>
+    <pd:endY>269</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Deletion>
@@ -80,11 +80,222 @@
         </Container>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1515494456888</pd:targetNamespace>
+    <pd:group name="Iterate to find the external Ldap details">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>380</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>198</pd:width>
+        <pd:height>267</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$LIstContainers/outputMessage/ns2:listContainersResponse/ldap-container</pd:over>
+            <pd:iterationElementSlot>Containers</pd:iterationElementSlot>
+            <pd:indexSlot>ContainerIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Assign External Ldap details</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$Containers/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPContainerName</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Null</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign External Ldap details</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Assign External Ldap details">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>473</pd:x>
+            <pd:y>84</pd:y>
+            <config>
+                <variableName>Container</variableName>
+            </config>
+            <pd:inputBindings>
+                <data>
+                    <id>
+                        <xsl:value-of select="$Containers/ldap-container/@id"/>
+                    </id>
+                    <ldap-alias>
+                        <xsl:value-of select="$Containers/ldap-container/primary-ldap/@ldap-alias"/>
+                    </ldap-alias>
+                </data>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>478</pd:x>
+            <pd:y>202</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:group name="Iterate to find the internal Ldap details">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>374</pd:x>
+        <pd:y>313</pd:y>
+        <pd:width>237</pd:width>
+        <pd:height>255</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$LIstContainers/outputMessage/ns2:listContainersResponse/ldap-container</pd:over>
+            <pd:iterationElementSlot>ExternalContainer</pd:iterationElementSlot>
+            <pd:indexSlot>ExternalContainerIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Null-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Assign internal Ldap details</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$ExternalContainer/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPContainerName</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign internal Ldap details</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Assign internal Ldap details">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>489</pd:x>
+            <pd:y>399</pd:y>
+            <config>
+                <variableName>Container</variableName>
+            </config>
+            <pd:inputBindings>
+                <data>
+                    <id>
+                        <xsl:value-of select="$ExternalContainer/ldap-container/@id"/>
+                    </id>
+                    <ldap-alias>
+                        <xsl:value-of select="$ExternalContainer/ldap-container/primary-ldap/@ldap-alias"/>
+                    </ldap-alias>
+                </data>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null-1">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>491</pd:x>
+            <pd:y>503</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Assign Status Intially">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>156</pd:x>
+        <pd:y>267</pd:y>
+        <config>
+            <variableName>Deletion</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign Status Success">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>982</pd:x>
+        <pd:y>278</pd:y>
+        <config>
+            <variableName>Deletion</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'SUCCESS'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign-3">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>1106</pd:x>
+        <pd:y>372</pd:y>
+        <config>
+            <variableName>Deletion</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1108</pd:x>
+        <pd:y>500</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
     <pd:activity name="DeleteResource">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>844</pd:x>
-        <pd:y>204</pd:y>
+        <pd:x>867</pd:x>
+        <pd:y>271</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -109,8 +320,8 @@
     <pd:activity name="GetResourceId">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>681</pd:x>
-        <pd:y>200</pd:y>
+        <pd:x>731</pd:x>
+        <pd:y>269</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -158,8 +369,8 @@
     <pd:activity name="LIstContainers">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>263</pd:x>
-        <pd:y>241</pd:y>
+        <pd:x>264</pd:x>
+        <pd:y>261</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -177,219 +388,9 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:group name="Group">
-        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
-        <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>364</pd:x>
-        <pd:y>7</pd:y>
-        <pd:width>198</pd:width>
-        <pd:height>267</pd:height>
-        <pd:collapsedWidth>57</pd:collapsedWidth>
-        <pd:collapsedHeight>70</pd:collapsedHeight>
-        <pd:groupVariables/>
-        <pd:joinToggle>inherit</pd:joinToggle>
-        <config>
-            <pd:groupType>inputLoop</pd:groupType>
-            <pd:serializable>false</pd:serializable>
-            <pd:over>$LIstContainers/outputMessage/ns2:listContainersResponse/ldap-container</pd:over>
-            <pd:iterationElementSlot>Containers</pd:iterationElementSlot>
-            <pd:indexSlot>ContainerIndex</pd:indexSlot>
-            <pd:activityOutputName/>
-            <pd:accumulateOutput>false</pd:accumulateOutput>
-        </config>
-        <pd:inputBindings/>
-        <pd:expanded>true</pd:expanded>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>Assign</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$Containers/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPContainerName</pd:xpath>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>Null</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Assign</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Null</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:activity name="Assign">
-            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>456</pd:x>
-            <pd:y>102</pd:y>
-            <config>
-                <variableName>Container</variableName>
-            </config>
-            <pd:inputBindings>
-                <data>
-                    <id>
-                        <xsl:value-of select="$Containers/ldap-container/@id"/>
-                    </id>
-                    <ldap-alias>
-                        <xsl:value-of select="$Containers/ldap-container/primary-ldap/@ldap-alias"/>
-                    </ldap-alias>
-                </data>
-            </pd:inputBindings>
-        </pd:activity>
-        <pd:activity name="Null">
-            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-            <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>456</pd:x>
-            <pd:y>194</pd:y>
-            <config/>
-            <pd:inputBindings/>
-        </pd:activity>
-    </pd:group>
-    <pd:activity name="Assign-1">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>177</pd:x>
-        <pd:y>194</pd:y>
-        <config>
-            <variableName>Deletion</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'FAILED'"/>
-            </status>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Assign-2">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>931</pd:x>
-        <pd:y>169</pd:y>
-        <config>
-            <variableName>Deletion</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'SUCCESS'"/>
-            </status>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Catch">
-        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
-        <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>1061</pd:x>
-        <pd:y>411</pd:y>
-        <pd:handler>true</pd:handler>
-        <config>
-            <catchAll>true</catchAll>
-        </config>
-        <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Assign-3">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>1047</pd:x>
-        <pd:y>269</pd:y>
-        <config>
-            <variableName>Deletion</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'FAILED'"/>
-            </status>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:group name="Group (1)">
-        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
-        <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>360</pd:x>
-        <pd:y>280</pd:y>
-        <pd:width>237</pd:width>
-        <pd:height>255</pd:height>
-        <pd:collapsedWidth>62</pd:collapsedWidth>
-        <pd:collapsedHeight>69</pd:collapsedHeight>
-        <pd:groupVariables/>
-        <config>
-            <pd:groupType>inputLoop</pd:groupType>
-            <pd:serializable>false</pd:serializable>
-            <pd:over>$LIstContainers/outputMessage/ns2:listContainersResponse/ldap-container</pd:over>
-            <pd:iterationElementSlot>ExternalContainer</pd:iterationElementSlot>
-            <pd:indexSlot>ExternalContainerIndex</pd:indexSlot>
-            <pd:activityOutputName/>
-            <pd:accumulateOutput>false</pd:accumulateOutput>
-        </config>
-        <pd:inputBindings/>
-        <pd:expanded>true</pd:expanded>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>Null-1</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>start</pd:from>
-            <pd:to>Assign-4</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>xpath</pd:conditionType>
-            <pd:xpath>$ExternalContainer/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPContainerName</pd:xpath>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Assign-4</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Null-1</pd:from>
-            <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:activity name="Assign-4">
-            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>476</pd:x>
-            <pd:y>367</pd:y>
-            <config>
-                <variableName>Container</variableName>
-            </config>
-            <pd:inputBindings>
-                <data>
-                    <id>
-                        <xsl:value-of select="$ExternalContainer/ldap-container/@id"/>
-                    </id>
-                    <ldap-alias>
-                        <xsl:value-of select="$ExternalContainer/ldap-container/primary-ldap/@ldap-alias"/>
-                    </ldap-alias>
-                </data>
-            </pd:inputBindings>
-        </pd:activity>
-        <pd:activity name="Null-1">
-            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
-            <pd:resourceType>ae.activities.null</pd:resourceType>
-            <pd:x>479</pd:x>
-            <pd:y>449</pd:y>
-            <config/>
-            <pd:inputBindings/>
-        </pd:activity>
-    </pd:group>
     <pd:transition>
         <pd:from>DeleteResource</pd:from>
-        <pd:to>Assign-2</pd:to>
+        <pd:to>Assign Status Success</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -403,35 +404,35 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Assign-1</pd:to>
+        <pd:to>Assign Status Intially</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>LIstContainers</pd:from>
-        <pd:to>Group</pd:to>
+        <pd:to>Iterate to find the external Ldap details</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$Start/pfx2:createresourceinput/pfx2:createresourcerequest/pfx2:entityname!='Contractor'</pd:xpath>
     </pd:transition>
     <pd:transition>
-        <pd:from>Group</pd:from>
+        <pd:from>Iterate to find the external Ldap details</pd:from>
         <pd:to>GetResourceId</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Assign-1</pd:from>
+        <pd:from>Assign Status Intially</pd:from>
         <pd:to>LIstContainers</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Assign-2</pd:from>
+        <pd:from>Assign Status Success</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -453,13 +454,13 @@
     </pd:transition>
     <pd:transition>
         <pd:from>LIstContainers</pd:from>
-        <pd:to>Group (1)</pd:to>
+        <pd:to>Iterate to find the internal Ldap details</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Group (1)</pd:from>
+        <pd:from>Iterate to find the internal Ldap details</pd:from>
         <pd:to>GetResourceId</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns13="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeOnboarding.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:Onbordinginput"/>
+    <pd:startX>40</pd:startX>
+    <pd:startY>92</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:Onbordingoutput>
+            <ldapentryoutput>
+                <pfx:ldapentryinputrepeat>
+                    <xsl:for-each select="$Call-LdapEntry/pfx:ldapentryinputrepeat/pfx:input">
+                        <pfx:input>
+                            <xsl:if test="pfx:firstname">
+                                <pfx:firstname>
+                                    <xsl:value-of select="pfx:firstname"/>
+                                </pfx:firstname>
+                            </xsl:if>
+                            <xsl:if test="pfx:lastname">
+                                <pfx:lastname>
+                                    <xsl:value-of select="pfx:lastname"/>
+                                </pfx:lastname>
+                            </xsl:if>
+                            <xsl:if test="pfx:loginName">
+                                <pfx:loginName>
+                                    <xsl:value-of select="pfx:loginName"/>
+                                </pfx:loginName>
+                            </xsl:if>
+                            <xsl:if test="pfx:email">
+                                <pfx:email>
+                                    <xsl:value-of select="pfx:email"/>
+                                </pfx:email>
+                            </xsl:if>
+                            <xsl:if test="pfx:password">
+                                <pfx:password>
+                                    <xsl:value-of select="pfx:password"/>
+                                </pfx:password>
+                            </xsl:if>
+                            <xsl:if test="pfx:orgmodelname">
+                                <pfx:orgmodelname>
+                                    <xsl:value-of select="pfx:orgmodelname"/>
+                                </pfx:orgmodelname>
+                            </xsl:if>
+                            <xsl:if test="pfx:flag">
+                                <pfx:flag>
+                                    <xsl:value-of select="pfx:flag"/>
+                                </pfx:flag>
+                            </xsl:if>
+                            <xsl:if test="pfx:entity">
+                                <pfx:entity>
+                                    <xsl:value-of select="pfx:entity"/>
+                                </pfx:entity>
+                            </xsl:if>
+                            <xsl:if test="pfx:addby">
+                                <pfx:addby>
+                                    <xsl:value-of select="pfx:addby"/>
+                                </pfx:addby>
+                            </xsl:if>
+                            <xsl:if test="pfx:response">
+                                <pfx:response>
+                                    <xsl:value-of select="pfx:response"/>
+                                </pfx:response>
+                            </xsl:if>
+                        </pfx:input>
+                    </xsl:for-each>
+                </pfx:ldapentryinputrepeat>
+            </ldapentryoutput>
+        </wsdlPfx:Onbordingoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:Onbordingoutput"/>
+    <pd:endX>1048</pd:endX>
+    <pd:endY>86</pd:endY>
+    <pd:errorSchemas>
+        <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Onboarding>
+            <xsd:element name="status" type="xsd:string"/>
+        </Onboarding>
+    </pd:processVariables>
+    <pd:partners>
+        <row>
+            <partnerName/>
+            <partnerInterfaceName/>
+            <partnerInterfaceNs/>
+            <partnerConfig/>
+            <partnerInterfaceLocation/>
+        </row>
+    </pd:partners>
+    <pd:targetNamespace>http://xmlns.example.com/1513751864936</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>355</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>192</pd:width>
+        <pd:height>156</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/wsdlPfx:Onbordinginput/ldapentryinput/pfx:ldapentryinputrepeat/pfx:input</pd:over>
+            <pd:iterationElementSlot>entries</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Call LdapEntry</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Call LdapEntry</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Call LdapEntry">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>457</pd:x>
+            <pd:y>88</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:ldapentryinputrepeat>
+                    <xsl:for-each select="$entries/pfx:input">
+                        <pfx:input>
+                            <xsl:if test="pfx:firstname">
+                                <pfx:firstname>
+                                    <xsl:value-of select="pfx:firstname"/>
+                                </pfx:firstname>
+                            </xsl:if>
+                            <xsl:if test="pfx:lastname">
+                                <pfx:lastname>
+                                    <xsl:value-of select="pfx:lastname"/>
+                                </pfx:lastname>
+                            </xsl:if>
+                            <xsl:if test="pfx:loginName">
+                                <pfx:loginName>
+                                    <xsl:value-of select="pfx:loginName"/>
+                                </pfx:loginName>
+                            </xsl:if>
+                            <xsl:if test="pfx:email">
+                                <pfx:email>
+                                    <xsl:value-of select="pfx:email"/>
+                                </pfx:email>
+                            </xsl:if>
+                            <xsl:if test="pfx:password">
+                                <pfx:password>
+                                    <xsl:value-of select="pfx:password"/>
+                                </pfx:password>
+                            </xsl:if>
+                            <xsl:if test="pfx:orgmodelname">
+                                <pfx:orgmodelname>
+                                    <xsl:value-of select="pfx:orgmodelname"/>
+                                </pfx:orgmodelname>
+                            </xsl:if>
+                            <xsl:if test="pfx:flag">
+                                <pfx:flag>
+                                    <xsl:value-of select="pfx:flag"/>
+                                </pfx:flag>
+                            </xsl:if>
+                            <xsl:if test="pfx:entity">
+                                <pfx:entity>
+                                    <xsl:value-of select="pfx:entity"/>
+                                </pfx:entity>
+                            </xsl:if>
+                            <xsl:if test="pfx:addby">
+                                <pfx:addby>
+                                    <xsl:value-of select="pfx:addby"/>
+                                </pfx:addby>
+                            </xsl:if>
+                            <xsl:if test="pfx:response">
+                                <pfx:response>
+                                    <xsl:value-of select="pfx:response"/>
+                                </pfx:response>
+                            </xsl:if>
+                        </pfx:input>
+                    </xsl:for-each>
+                </pfx:ldapentryinputrepeat>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="send Log Request AUDIT 1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>137</pd:x>
+        <pd:y>99</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>793</pd:x>
+        <pd:y>94</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+            <spawn>true</spawn>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Eception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>799</pd:x>
+        <pd:y>354</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Call Send Exception Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>998</pd:x>
+        <pd:y>360</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ExceptionRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="&quot;TestProvisioningCease&quot;"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns2:TargetSystem>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="&quot;PortTypeOnboarding&quot;"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="&quot;ERROR&quot;"/>
+                    </ns2:LogType>
+                </ns2:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$_error/ns:ErrorReport/MsgCode"/>
+                </ExceptionCode>
+                <StackTrace>
+                    <xsl:value-of select="tib:render-xml($_error/ns:ErrorReport)"/>
+                </StackTrace>
+            </ns12:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign Failure">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>444</pd:x>
+        <pd:y>252</pd:y>
+        <config>
+            <variableName>Onboarding</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'FAILED'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>send Log Request AUDIT 1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($Start/wsdlPfx:Onbordinginput/ldapentryinput/pfx:ldapentryinputrepeat/pfx:input)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Eception</pd:from>
+        <pd:to>Call Send Exception Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Send Exception Request</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>Assign Failure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign Failure</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:ns4="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:ns3="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema.xsd" xmlns:ns5="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:ns8="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns7="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Schemas/Schema1.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:WorkCompletioninput"/>
+    <pd:startX>54</pd:startX>
+    <pd:startY>59</pd:startY>
+    <pd:returnBindings>
+        <pfx:WorkCompletionoutput>
+            <workitemcompletionoutput>
+                <ns8:workitemcompletionoutput>
+                    <xsl:choose>
+                        <xsl:when test="$Variable0/root/Error!=''">
+                            <ns8:outputmessage>
+                                <xsl:value-of select="$Variable0/root/Error"/>
+                            </ns8:outputmessage>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ns8:outputmessage>
+                                <xsl:value-of select="'SUCCESS'"/>
+                            </ns8:outputmessage>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </ns8:workitemcompletionoutput>
+            </workitemcompletionoutput>
+        </pfx:WorkCompletionoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:WorkCompletionoutput"/>
+    <pd:endX>731</pd:endX>
+    <pd:endY>59</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 wsMsgRef="pfx:WorkCompletionfault"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Error" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1511772062348</pd:targetNamespace>
+    <pd:activity name="CompleteWorkItem">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>580</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/CompleteWorkItem.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <workitem_id>
+                    <xsl:value-of xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchWorklistItem/root/work_id"/>
+                </workitem_id>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FetchProcessInstance">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>294</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/QueryProcessInstance.process</processName>
+        </config>
+        <pd:inputBindings>
+            <plan_id>
+                <xsl:value-of select="$Start/pfx:WorkCompletioninput/workitemcompletioninput/ns8:workitemcompletioninput/ns8:sibelcircuitid"/>
+            </plan_id>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FetchWorklistItem">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>435</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/WorkCompletion/Processes/FetchWorkListItems.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <plan_id>
+                    <xsl:value-of select="$Start/pfx:WorkCompletioninput/workitemcompletioninput/ns8:workitemcompletioninput/ns8:sibelcircuitid"/>
+                </plan_id>
+                <resource>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/CompleteWorkListitem/resource"/>
+                </resource>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="No Process Instance Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>438</pd:x>
+        <pd:y>275</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <message>
+                    <xsl:value-of select="'No Such Process Instance'"/>
+                </message>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="WorkItem Not Found Generate-Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>584</pd:x>
+        <pd:y>271</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <message>
+                    <xsl:value-of select="'WorkItem Not Found'"/>
+                </message>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>892</pd:x>
+        <pd:y>55</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>436</pd:x>
+        <pd:y>163</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Error>
+                    <xsl:value-of select="&quot;No Process Instance Found&quot;"/>
+                </Error>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign-1">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>581</pd:x>
+        <pd:y>156</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Error>
+                    <xsl:value-of select="&quot;WorkItem Not Found&quot;"/>
+                </Error>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialize Error Variable">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>160</pd:x>
+        <pd:y>69</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Error>
+                    <xsl:value-of select="&quot;&quot;"/>
+                </Error>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>FetchProcessInstance</pd:from>
+        <pd:to>FetchWorklistItem</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchWorklistItem</pd:from>
+        <pd:to>CompleteWorkItem</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchWorklistItem</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CompleteWorkItem</pd:from>
+        <pd:to>Assign-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialize Error Variable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CompleteWorkItem</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>No Process Instance Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign-1</pd:from>
+        <pd:to>WorkItem Not Found Generate-Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialize Error Variable</pd:from>
+        <pd:to>FetchProcessInstance</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Processes/searchProcessInstance.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx2:searchprocessinstancesinput"/>
+    <pd:startX>162</pd:startX>
+    <pd:startY>96</pd:startY>
+    <pd:returnBindings>
+        <pfx2:searchprocessinstancesoutput>
+            <xsl:for-each select="$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row">
+                <pfx2:searchrecord>
+                    <pfx2:process_instance>
+                        <xsl:value-of select="if(column[name=&quot;PROCESS_INSTANCE&quot;]/value!=&quot;&quot;) then column[name=&quot;PROCESS_INSTANCE&quot;]/value else &quot;NA&quot;"/>
+                    </pfx2:process_instance>
+                    <pfx2:customer_name>
+                        <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                    </pfx2:customer_name>
+                    <pfx2:sibelcircuit_id>
+                        <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                    </pfx2:sibelcircuit_id>
+                    <pfx2:projectmanager>
+                        <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                    </pfx2:projectmanager>
+                    <pfx2:cur_activity>
+                        <xsl:value-of select="if(column[name=&quot;CUR_ACTIVITY&quot;]/value!=&quot;&quot;) then column[name=&quot;CUR_ACTIVITY&quot;]/value else &quot;NA&quot;"/>
+                    </pfx2:cur_activity>
+                    <pfx2:status>
+                        <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                    </pfx2:status>
+                    <pfx2:exec_mills>
+                        <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!='') then column[name=&quot;EXEC_MILLIS&quot;]/value else &quot;NOT COMPLETED&quot;"/>
+                    </pfx2:exec_mills>
+                </pfx2:searchrecord>
+            </xsl:for-each>
+        </pfx2:searchprocessinstancesoutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:searchprocessinstancesoutput"/>
+    <pd:endX>454</pd:endX>
+    <pd:endY>99</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1509953050277</pd:targetNamespace>
+    <pd:activity name="SQL Direct">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>295</pd:x>
+        <pd:y>99</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <statement>
+                    <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS from EC_PE_STATUS where &quot;, $Start/pfx2:searchprocessinstancesinput/pfx2:searchkey,&quot;='&quot;,$Start/pfx2:searchprocessinstancesinput/pfx2:searchvalue,&quot;' &quot;)"/>
+                </statement>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SQL Direct</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SQL Direct</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

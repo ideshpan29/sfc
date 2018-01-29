@@ -43,86 +43,6 @@
             </ns:searchprocessinstancesinput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="send Log Request AUDIT 1">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>185</pd:x>
-        <pd:y>73</pd:y>
-        <config>
-            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
-            <spawn>true</spawn>
-        </config>
-        <pd:inputBindings>
-            <ns1:LogRequest xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd">
-                <ns2:Header xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
-                    <ns2:ApplicationID>
-                        <xsl:value-of select="&quot;PortTypesearchProcessInstances&quot;"/>
-                    </ns2:ApplicationID>
-                    <ns2:SourceSystem>
-                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
-                    </ns2:SourceSystem>
-                    <ns2:TargetSystem>
-                        <xsl:value-of select="&quot;BPM&quot;"/>
-                    </ns2:TargetSystem>
-                    <ns2:ComponentName>
-                        <xsl:value-of select="&quot;PortTypesearchProcessInstances&quot;"/>
-                    </ns2:ComponentName>
-                    <ns2:Timestamp>
-                        <xsl:value-of select="current-dateTime()"/>
-                    </ns2:Timestamp>
-                    <ns2:LogType>
-                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
-                    </ns2:LogType>
-                </ns2:Header>
-                <Category>
-                    <xsl:value-of select="&quot;INFO&quot;"/>
-                </Category>
-                <Audit>
-                    <xsl:value-of select="1"/>
-                </Audit>
-            </ns1:LogRequest>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="send Log Request AUDIT 2">
-        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
-        <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>458</pd:x>
-        <pd:y>74</pd:y>
-        <config>
-            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
-            <spawn>true</spawn>
-        </config>
-        <pd:inputBindings>
-            <ns1:LogRequest xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd">
-                <ns2:Header xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
-                    <ns2:ApplicationID>
-                        <xsl:value-of select="&quot;PortTypesearchProcessInstances&quot;"/>
-                    </ns2:ApplicationID>
-                    <ns2:SourceSystem>
-                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
-                    </ns2:SourceSystem>
-                    <ns2:TargetSystem>
-                        <xsl:value-of select="&quot;BPM&quot;"/>
-                    </ns2:TargetSystem>
-                    <ns2:ComponentName>
-                        <xsl:value-of select="&quot;PortTypesearchProcessInstances&quot;"/>
-                    </ns2:ComponentName>
-                    <ns2:Timestamp>
-                        <xsl:value-of select="current-dateTime()"/>
-                    </ns2:Timestamp>
-                    <ns2:LogType>
-                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
-                    </ns2:LogType>
-                </ns2:Header>
-                <Category>
-                    <xsl:value-of select="&quot;INFO&quot;"/>
-                </Category>
-                <Audit>
-                    <xsl:value-of select="1"/>
-                </Audit>
-            </ns1:LogRequest>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="Catch-All-Exceptions-1">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
@@ -180,34 +100,6 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
-        <pd:from>Start</pd:from>
-        <pd:to>send Log Request AUDIT 1</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Call searchProcessInstance</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Call searchProcessInstance</pd:from>
-        <pd:to>send Log Request AUDIT 2</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>send Log Request AUDIT 2</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Catch-All-Exceptions-1</pd:from>
         <pd:to>send Exception Request</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -216,6 +108,20 @@
     </pd:transition>
     <pd:transition>
         <pd:from>send Exception Request</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Call searchProcessInstance</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call searchProcessInstance</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

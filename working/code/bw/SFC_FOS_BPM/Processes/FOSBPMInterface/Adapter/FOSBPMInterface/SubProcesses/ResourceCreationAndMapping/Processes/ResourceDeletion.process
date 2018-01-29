@@ -80,7 +80,7 @@
         </Container>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1515494456888</pd:targetNamespace>
-    <pd:group name="Iterate to find the external Ldap details">
+    <pd:group name="Iterate to find the internal Ldap details">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
         <pd:x>380</pd:x>
@@ -118,14 +118,14 @@
             <pd:conditionType>otherwise</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign External Ldap details</pd:from>
+            <pd:from>Null</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Null</pd:from>
+            <pd:from>Assign External Ldap details</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -159,7 +159,7 @@
             <pd:inputBindings/>
         </pd:activity>
     </pd:group>
-    <pd:group name="Iterate to find the internal Ldap details">
+    <pd:group name="Iterate to find the External Ldap details">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
         <pd:x>374</pd:x>
@@ -183,13 +183,6 @@
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>Null-1</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>otherwise</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>start</pd:from>
             <pd:to>Assign internal Ldap details</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -197,14 +190,21 @@
             <pd:xpath>$ExternalContainer/ldap-container/@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPContainerName</pd:xpath>
         </pd:transition>
         <pd:transition>
-            <pd:from>Assign internal Ldap details</pd:from>
+            <pd:from>start</pd:from>
+            <pd:to>Null-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null-1</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Null-1</pd:from>
+            <pd:from>Assign internal Ldap details</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
@@ -411,14 +411,14 @@
     </pd:transition>
     <pd:transition>
         <pd:from>LIstContainers</pd:from>
-        <pd:to>Iterate to find the external Ldap details</pd:to>
+        <pd:to>Iterate to find the internal Ldap details</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$Start/pfx2:createresourceinput/pfx2:createresourcerequest/pfx2:entityname!='Contractor'</pd:xpath>
     </pd:transition>
     <pd:transition>
-        <pd:from>Iterate to find the external Ldap details</pd:from>
+        <pd:from>Iterate to find the internal Ldap details</pd:from>
         <pd:to>GetResourceId</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -454,13 +454,13 @@
     </pd:transition>
     <pd:transition>
         <pd:from>LIstContainers</pd:from>
-        <pd:to>Iterate to find the internal Ldap details</pd:to>
+        <pd:to>Iterate to find the External Ldap details</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Iterate to find the internal Ldap details</pd:from>
+        <pd:from>Iterate to find the External Ldap details</pd:from>
         <pd:to>GetResourceId</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

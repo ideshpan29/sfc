@@ -8,32 +8,38 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendTaskNotification">
             <startingVariables>
+                <variable>ClientID</variable>
+                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
-                <variable>Task</variable>
+                <variable>CustomerID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
+                <variable>ClientID</variable>
+                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
+                <variable>CustomerID</variable>
+                <variable>Provision</variable>
             </ProcessManagerScript>
         </task>
         <task name="SendMailTask">
             <startingVariables>
-                <variable>SubjectLineEmail</variable>
-                <variable>SiebelCircuitID</variable>
-                <variable>Task</variable>
                 <variable>SLALevel</variable>
+                <variable>Task</variable>
+                <variable>SiebelCircuitID</variable>
                 <variable>EmailTo</variable>
+                <variable>SubjectLineEmail</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>SLAFlagCheck</variable>
-                <variable>PendingAt</variable>
-                <variable>Provision</variable>
-                <variable>SubjectLineEmail</variable>
-                <variable>SiebelCircuitID</variable>
-                <variable>Task</variable>
                 <variable>SLALevel</variable>
-                <variable>SLAFLAGGlobal</variable>
-                <variable>EmailTo</variable>
+                <variable>Task</variable>
                 <variable>EscalationToEmail</variable>
+                <variable>SiebelCircuitID</variable>
+                <variable>EmailTo</variable>
+                <variable>SubjectLineEmail</variable>
+                <variable>PendingAt</variable>
+                <variable>SLAFLAGGlobal</variable>
+                <variable>SLAFlagCheck</variable>
+                <variable>Provision</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -76,7 +82,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_v4yQIPzlEeehkqoKISnbpw">
+    <bpws:flow name="_BX_flow_aGeV0AZmEeiEUrigAi4Jdg">
         <bpws:links>
             <bpws:link
                 name="_0JRqcPwgEeeupNwu8S8N4Q to _BX_scope_SendTaskNotificati" tibex:xpdlId="_09No0PwgEeeupNwu8S8N4Q"/>
@@ -104,11 +110,11 @@
                     <bpws:source linkName="StartEvent to _0JRqcPwgEeeupNwu8S8N4Q"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="SLA"/>
-                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
-                    <parameterDescription mode="InOut" name="Provision"/>
                     <parameterDescription mode="InOut" name="Task"/>
                     <parameterDescription mode="InOut" name="EscalationToEmail"/>
+                    <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mode="InOut" name="Provision"/>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -282,6 +288,12 @@ else if(SLAFlagCheck=="3"){
             <bpws:variables>
                 <bpws:variable name="EmailTo"
                     tibex:xpdlId="_kblFsfwkEeeupNwu8S8N4Q" type="xsd:string"/>
+                <bpws:variable name="ClientName"
+                    tibex:xpdlId="_PIe-cP84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                <bpws:variable name="ClientID"
+                    tibex:xpdlId="_QM3zoP84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                <bpws:variable name="CustomerID"
+                    tibex:xpdlId="_SPqx0f84Eee4BtDH5WlQLQ" type="xsd:string"/>
             </bpws:variables>
             <bpws:faultHandlers>
                 <bpws:catchAll tibex:faultDetailsVar="var_errorDetail" tibex:faultNameVar="var_errorCode">
@@ -297,6 +309,9 @@ else if(SLAFlagCheck=="3"){
             </bpws:faultHandlers>
             <bpws:scope name="_BX_scope_SendTaskNotification" tibex:xpdlId="_hjxu8PwgEeeupNwu8S8N4Q">
                 <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[EmailTo="";
+ClientID=Provision.clientID;
+ClientName=Provision.clientName;
+CustomerID=Provision.siebelCircuitID;
 //var group=Process.getOrgModel().groupByName("PM").get(0).getGuid();
 Log.write("[SFC] DeactivationProcess Start Recipient:");
 for(var index=0; index<Process.getOrgModel().groupByName("PM").get(0).getResources().size(); index++) {
@@ -319,6 +334,12 @@ EmailTo=EmailTo.slice(0,EmailTo.length-1);]]></tibex:initiatedScript>
                 <bpws:variables>
                     <bpws:variable name="EmailTo"
                         tibex:xpdlId="_kblFsfwkEeeupNwu8S8N4Q" type="xsd:string"/>
+                    <bpws:variable name="ClientName"
+                        tibex:xpdlId="_PIe-cP84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                    <bpws:variable name="ClientID"
+                        tibex:xpdlId="_QM3zoP84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                    <bpws:variable name="CustomerID"
+                        tibex:xpdlId="_SPqx0f84Eee4BtDH5WlQLQ" type="xsd:string"/>
                 </bpws:variables>
                 <bpws:extensionActivity>
                     <tibex:extActivity name="SendTaskNotification"
@@ -341,8 +362,10 @@ EmailTo=EmailTo.slice(0,EmailTo.length-1);]]></tibex:initiatedScript>
                             <priority/>
                             <subject value="Task Waiting for You"/>
                             <body>
-                                <body value="%Task%">
-                                    <variables name="%Task%"/>
+                                <body value="Hello,&#xd;&#xa;A Case is waiting in your work log.&#xd;&#xa;The Details are as follows:&#xd;&#xa;Client Name : %ClientName%&#xd;&#xa;Client ID : %ClientID%&#xd;&#xa;Customer ID: %CustomerID%&#xd;&#xa;Log on to http://ideshpan-t430:60180/openspace/openspace.html&#xd;&#xa;Regards,&#xd;&#xa;Safaricom Team">
+                                    <variables index="88" name="%ClientName%"/>
+                                    <variables index="114" name="%ClientID%"/>
+                                    <variables index="139" name="%CustomerID%"/>
                                 </body>
                             </body>
                             <server>

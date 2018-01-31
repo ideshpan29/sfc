@@ -142,7 +142,7 @@
               <xpdl2:Length>50</xpdl2:Length>
             </xpdl2:BasicType>
           </xpdl2:DataType>
-          <xpdl2:InitialValue></xpdl2:InitialValue>
+          <xpdl2:InitialValue/>
         </xpdl2:DataField>
         <xpdl2:DataField Id="_ej8-gft1EeeupNwu8S8N4Q" xpdExt:DisplayName="AccountEntries" Name="AccountEntries" ReadOnly="false">
           <xpdl2:DataType>
@@ -152,7 +152,7 @@
               </xpdl2:Member>
             </xpdl2:RecordType>
           </xpdl2:DataType>
-          <xpdl2:InitialValue></xpdl2:InitialValue>
+          <xpdl2:InitialValue/>
         </xpdl2:DataField>
       </xpdl2:DataFields>
       <xpdl2:Activities>
@@ -297,7 +297,12 @@ if(CommentDataSet.size()>0){&#xD;
 	}&#xD;
 }&#xD;
 var criteria = &quot;enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'&quot;;&#xD;
-</xpdl2:Script>
+&#xD;
+if(TaskName==&quot;PM_Review&quot;){&#xD;
+var a=Process.getOriginatorName();&#xD;
+EscalationEmail=Process.getOrgModel().resourceByName(a).get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
+&#xD;
+}</xpdl2:Script>
               </xpdl2:TaskScript>
             </xpdl2:Task>
           </xpdl2:Implementation>

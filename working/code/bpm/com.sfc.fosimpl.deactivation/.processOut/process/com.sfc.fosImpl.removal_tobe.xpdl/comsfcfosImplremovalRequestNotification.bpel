@@ -7,35 +7,41 @@
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:VariableDescriptor type="PersistentBatching">
+        <task name="AdminErrorTask">
+            <startingVariables>
+                <variable>ErrorCode</variable>
+                <variable>ErrorDetail</variable>
+            </startingVariables>
+        </task>
         <task name="DecomissioningInitiateMail">
             <startingVariables>
-                <variable>ClientID</variable>
-                <variable>ClientName</variable>
-                <variable>EmailTo</variable>
-                <variable>CustomerID</variable>
                 <variable>RegisteredMail</variable>
+                <variable>ClientID</variable>
+                <variable>EmailTo</variable>
+                <variable>ClientName</variable>
+                <variable>CustomerID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientID</variable>
-                <variable>ClientName</variable>
                 <variable>Provision</variable>
-                <variable>EmailTo</variable>
-                <variable>CustomerID</variable>
                 <variable>RegisteredMail</variable>
+                <variable>ClientID</variable>
+                <variable>EmailTo</variable>
+                <variable>ClientName</variable>
+                <variable>CustomerID</variable>
             </ProcessManagerScript>
         </task>
         <task name="DecomissioningCompleteMail">
             <startingVariables>
+                <variable>EmailTo</variable>
                 <variable>ClientID</variable>
                 <variable>CircuitID</variable>
-                <variable>EmailTo</variable>
                 <variable>ClientName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>Provision</variable>
+                <variable>EmailTo</variable>
                 <variable>ClientID</variable>
                 <variable>CircuitID</variable>
-                <variable>EmailTo</variable>
                 <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
@@ -47,6 +53,10 @@
             tibex:parameter="inout" tibex:xpdlId="_b6SlmPzeEeehkqoKISnbpw"/>
         <bpws:variable name="SLAFlagCheck" tibex:parameter="inout"
             tibex:xpdlId="_r-GAYfzeEeehkqoKISnbpw" type="xsd:string"/>
+        <bpws:variable name="ErrorCode"
+            tibex:xpdlId="_9zk2oP6_EeeuGbQVt6VBIQ" type="xsd:string"/>
+        <bpws:variable name="ErrorDetail"
+            tibex:xpdlId="_-ubVUP6_EeeuGbQVt6VBIQ" type="xsd:string"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -66,21 +76,25 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_v5py0PzlEeehkqoKISnbpw">
+    <bpws:flow name="_BX_flow_aHfpgAZmEeiEUrigAi4Jdg">
         <bpws:links>
+            <bpws:link name="CatchError to AdminErrorTask" tibex:xpdlId="_5Eb8EP7BEeeuGbQVt6VBIQ"/>
+            <bpws:link name="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_By_AkP7CEeeuGbQVt6VBIQ"/>
             <bpws:link
-                name="_BX_scope_DecomissioningInit to _lJSrwPzeEeehkqoKISnbpw" tibex:xpdlId="_OSP-YPzlEeehkqoKISnbpw"/>
-            <bpws:link
-                name="_BX_scope_DecomissioningComp to _lJSrwPzeEeehkqoKISnbpw" tibex:xpdlId="_MpVf0PzlEeehkqoKISnbpw"/>
+                name="_BX_scope_DecomissioningInit to _BX_un-named" tibex:xpdlId="_jc7BEP7BEeeuGbQVt6VBIQ"/>
+            <bpws:link name="_BX_un-named to CatchError"/>
             <bpws:link name="StartEvent to _hXsCYPzeEeehkqoKISnbpw" tibex:xpdlId="_hXspcPzeEeehkqoKISnbpw"/>
-            <bpws:link name="_BX_normalFlow to _lJSrwPzeEeehkqoKISnbpw" tibex:xpdlId="_lJTS0PzeEeehkqoKISnbpw"/>
+            <bpws:link name="_BX_normalFlow to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_tXmzcP6_EeeuGbQVt6VBIQ"/>
             <bpws:link
-                name="_BX_normalFlow_2 to _lJSrwPzeEeehkqoKISnbpw" tibex:xpdlId="_lwt4IPzeEeehkqoKISnbpw"/>
+                name="_BX_normalFlow_2 to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_umdzQP6_EeeuGbQVt6VBIQ"/>
             <bpws:link
                 name="_hXsCYPzeEeehkqoKISnbpw to _BX_scope_DecomissioningInit" tibex:xpdlId="_b6mHkPzeEeehkqoKISnbpw"/>
             <bpws:link
                 name="_hXsCYPzeEeehkqoKISnbpw to _BX_scope_DecomissioningComp" tibex:xpdlId="_jvj4sPzeEeehkqoKISnbpw"/>
-            <bpws:link name="_lJSrwPzeEeehkqoKISnbpw to EndEvent" tibex:xpdlId="_Z0iaA_zeEeehkqoKISnbpw"/>
+            <bpws:link
+                name="_BX_scope_DecomissioningComp to _BX_un-named_2" tibex:xpdlId="_qnGv0P7BEeeuGbQVt6VBIQ"/>
+            <bpws:link name="_BX_un-named_2 to CatchError"/>
+            <bpws:link name="_sErL8P6_EeeuGbQVt6VBIQ to EndEvent" tibex:xpdlId="_0YYukP6_EeeuGbQVt6VBIQ"/>
             <bpws:link name="_b6SlkPzeEeehkqoKISnbpw to _BX_normalFlow"/>
             <bpws:link name="_fRaSYPzeEeehkqoKISnbpw to _BX_normalFlow_2"/>
         </bpws:links>
@@ -103,7 +117,7 @@
         <bpws:empty name="EndEvent" tibex:migrationAllowed="yes"
             tibex:type="endEvent" tibex:xpdlId="_Z0iaAvzeEeehkqoKISnbpw">
             <bpws:targets>
-                <bpws:target linkName="_lJSrwPzeEeehkqoKISnbpw to EndEvent"/>
+                <bpws:target linkName="_sErL8P6_EeeuGbQVt6VBIQ to EndEvent"/>
             </bpws:targets>
         </bpws:empty>
         <bpws:empty name="_BX_gateway__hXsCYPzeEeehkqoKISnbpw"
@@ -120,16 +134,73 @@
                 </bpws:source>
             </bpws:sources>
         </bpws:empty>
-        <bpws:empty name="_BX_gateway__lJSrwPzeEeehkqoKISnbpw"
-            tibex:type="exclusiveGateway" tibex:xpdlId="_lJSrwPzeEeehkqoKISnbpw">
+        <bpws:empty name="_BX_gateway__sErL8P6_EeeuGbQVt6VBIQ"
+            tibex:type="exclusiveGateway" tibex:xpdlId="_sErL8P6_EeeuGbQVt6VBIQ">
             <bpws:targets tibex:waitFor="1">
-                <bpws:target linkName="_BX_scope_DecomissioningInit to _lJSrwPzeEeehkqoKISnbpw"/>
-                <bpws:target linkName="_BX_scope_DecomissioningComp to _lJSrwPzeEeehkqoKISnbpw"/>
-                <bpws:target linkName="_BX_normalFlow to _lJSrwPzeEeehkqoKISnbpw"/>
-                <bpws:target linkName="_BX_normalFlow_2 to _lJSrwPzeEeehkqoKISnbpw"/>
+                <bpws:target linkName="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ"/>
+                <bpws:target linkName="_BX_normalFlow to _sErL8P6_EeeuGbQVt6VBIQ"/>
+                <bpws:target linkName="_BX_normalFlow_2 to _sErL8P6_EeeuGbQVt6VBIQ"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_lJSrwPzeEeehkqoKISnbpw to EndEvent"/>
+                <bpws:source linkName="_sErL8P6_EeeuGbQVt6VBIQ to EndEvent"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:empty name="CatchError" tibex:migrationAllowed="yes"
+            tibex:type="catchLinkIntermediateEvent" tibex:xpdlId="_2uuT0P6_EeeuGbQVt6VBIQ">
+            <bpws:targets>
+                <bpws:target linkName="_BX_un-named to CatchError"/>
+                <bpws:target linkName="_BX_un-named_2 to CatchError"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="CatchError to AdminErrorTask"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:extensionActivity>
+            <tibex:extActivity name="AdminErrorTask"
+                tibex:migrationAllowed="yes" tibex:type="userTask"
+                tibex:xpdlId="_7VQaEP6_EeeuGbQVt6VBIQ" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                <bpws:targets>
+                    <bpws:target linkName="CatchError to AdminErrorTask"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ"/>
+                </bpws:sources>
+                <model:UserTaskDataModelType
+                    distributionStrategy="OFFER" userTaskPriority="50"
+                    workModelID="WM__7VQaEP6_EeeuGbQVt6VBIQ"
+                    workModelVersionRange="[2.0.0.qualifier,2.0.0.qualifier]"
+                    xmi:version="2.0"
+                    xmlns:model="http://model.ut.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
+                    <userTaskParticipants>
+                        <userTaskParticipant
+                            entity="ORGANIZATIONAL_QUERY" rqlQuery="group(name='admin')"/>
+                    </userTaskParticipants>
+                    <userTaskParameters>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="ErrorCode"/>
+                        <userTaskParameter mandatory="false"
+                            mode="INOUT" name="ErrorDetail"/>
+                    </userTaskParameters>
+                    <userTaskGroupMemberships/>
+                </model:UserTaskDataModelType>
+            </tibex:extActivity>
+        </bpws:extensionActivity>
+        <bpws:empty name="_BX_un-named"
+            tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_E5fT8P7BEeeuGbQVt6VBIQ">
+            <bpws:targets>
+                <bpws:target linkName="_BX_scope_DecomissioningInit to _BX_un-named"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="_BX_un-named to CatchError"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:empty name="_BX_un-named_2"
+            tibex:type="throwLinkIntermediateEvent" tibex:xpdlId="_pYzJoP7BEeeuGbQVt6VBIQ">
+            <bpws:targets>
+                <bpws:target linkName="_BX_scope_DecomissioningComp to _BX_un-named_2"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="_BX_un-named_2 to CatchError"/>
             </bpws:sources>
         </bpws:empty>
         <bpws:scope name="_BX_scope_DecomissioningInitiateMail" tibex:migrationAllowed="yes">
@@ -137,7 +208,7 @@
                 <bpws:target linkName="_hXsCYPzeEeehkqoKISnbpw to _BX_scope_DecomissioningInit"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_BX_scope_DecomissioningInit to _lJSrwPzeEeehkqoKISnbpw">
+                <bpws:source linkName="_BX_scope_DecomissioningInit to _BX_un-named">
                     <bpws:transitionCondition><![CDATA[$_BX_fanVariable=1]]></bpws:transitionCondition>
                 </bpws:source>
             </bpws:sources>
@@ -155,14 +226,28 @@
             </bpws:variables>
             <bpws:faultHandlers>
                 <bpws:catchAll tibex:faultDetailsVar="var_errorDetail" tibex:faultNameVar="var_errorCode">
-                    <bpws:assign name="ErrorEvent3"
-                        tibex:type="boundaryErrorEvent"
-                        tibex:xpdlId="_HtHdcPzlEeehkqoKISnbpw" validate="no">
-                        <bpws:copy>
-                            <bpws:from><![CDATA[1]]></bpws:from>
-                            <bpws:to variable="_BX_fanVariable"/>
-                        </bpws:copy>
-                    </bpws:assign>
+                    <bpws:sequence name="_BX_sequence_2"
+                        tibex:type="boundaryErrorEvent" tibex:xpdlId="_B67tkP7AEeeuGbQVt6VBIQ">
+                        <bpws:assign name="_BX_assign_5" validate="no">
+                            <bpws:copy>
+                                <bpws:from><![CDATA[1]]></bpws:from>
+                                <bpws:to variable="_BX_fanVariable"/>
+                            </bpws:copy>
+                        </bpws:assign>
+                        <bpws:extensionActivity>
+                            <tibex:extActivity
+                                name="_BX_DataMapperScript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from '$ERRORDETAIL' to 'ErrorDetail'
+ErrorDetail = var_errorDetail;
+
+// Map from '$ERRORCODE' to 'ErrorCode'
+ErrorCode = var_errorCode;
+
+
+]]></tibex:script>
+                            </tibex:extActivity>
+                        </bpws:extensionActivity>
+                    </bpws:sequence>
                 </bpws:catchAll>
             </bpws:faultHandlers>
             <bpws:scope name="_BX_scope_DecomissioningInitiateMail" tibex:xpdlId="_b6SlkPzeEeehkqoKISnbpw">
@@ -230,7 +315,7 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
                 <bpws:target linkName="_b6SlkPzeEeehkqoKISnbpw to _BX_normalFlow"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_BX_normalFlow to _lJSrwPzeEeehkqoKISnbpw"/>
+                <bpws:source linkName="_BX_normalFlow to _sErL8P6_EeeuGbQVt6VBIQ"/>
             </bpws:sources>
         </bpws:empty>
         <bpws:scope name="_BX_scope_DecomissioningCompleteMail" tibex:migrationAllowed="yes">
@@ -238,7 +323,7 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
                 <bpws:target linkName="_hXsCYPzeEeehkqoKISnbpw to _BX_scope_DecomissioningComp"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_BX_scope_DecomissioningComp to _lJSrwPzeEeehkqoKISnbpw">
+                <bpws:source linkName="_BX_scope_DecomissioningComp to _BX_un-named_2">
                     <bpws:transitionCondition><![CDATA[$_BX_fanVariable_2=1]]></bpws:transitionCondition>
                 </bpws:source>
             </bpws:sources>
@@ -254,14 +339,28 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
             </bpws:variables>
             <bpws:faultHandlers>
                 <bpws:catchAll tibex:faultDetailsVar="var_errorDetail" tibex:faultNameVar="var_errorCode">
-                    <bpws:assign name="ErrorEvent4"
-                        tibex:type="boundaryErrorEvent"
-                        tibex:xpdlId="_IirMcPzlEeehkqoKISnbpw" validate="no">
-                        <bpws:copy>
-                            <bpws:from><![CDATA[1]]></bpws:from>
-                            <bpws:to variable="_BX_fanVariable_2"/>
-                        </bpws:copy>
-                    </bpws:assign>
+                    <bpws:sequence name="_BX_sequence_3_2"
+                        tibex:type="boundaryErrorEvent" tibex:xpdlId="_oQEnAP7BEeeuGbQVt6VBIQ">
+                        <bpws:assign name="_BX_assign_6" validate="no">
+                            <bpws:copy>
+                                <bpws:from><![CDATA[1]]></bpws:from>
+                                <bpws:to variable="_BX_fanVariable_2"/>
+                            </bpws:copy>
+                        </bpws:assign>
+                        <bpws:extensionActivity>
+                            <tibex:extActivity
+                                name="_BX_DataMapperScript_2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from '$ERRORDETAIL' to 'ErrorDetail'
+ErrorDetail = var_errorDetail;
+
+// Map from '$ERRORCODE' to 'ErrorCode'
+ErrorCode = var_errorCode;
+
+
+]]></tibex:script>
+                            </tibex:extActivity>
+                        </bpws:extensionActivity>
+                    </bpws:sequence>
                 </bpws:catchAll>
             </bpws:faultHandlers>
             <bpws:scope name="_BX_scope_DecomissioningCompleteMail" tibex:xpdlId="_fRaSYPzeEeehkqoKISnbpw">
@@ -326,7 +425,7 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
                 <bpws:target linkName="_fRaSYPzeEeehkqoKISnbpw to _BX_normalFlow_2"/>
             </bpws:targets>
             <bpws:sources>
-                <bpws:source linkName="_BX_normalFlow_2 to _lJSrwPzeEeehkqoKISnbpw"/>
+                <bpws:source linkName="_BX_normalFlow_2 to _sErL8P6_EeeuGbQVt6VBIQ"/>
             </bpws:sources>
         </bpws:empty>
     </bpws:flow>

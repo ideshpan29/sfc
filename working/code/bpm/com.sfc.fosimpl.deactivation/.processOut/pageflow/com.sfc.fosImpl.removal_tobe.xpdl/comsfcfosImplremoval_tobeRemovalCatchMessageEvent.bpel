@@ -13,41 +13,41 @@
     xmlns:ttns="http://fosImpl.sfc.com/dataModel"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:VariableDescriptor type="PersistentBatching">
-        <task name="InvokeCatchMessageEvent">
+        <task name="SendTask">
             <ProcessManagerScript type="Complete">
                 <variable>TechnicalInfo</variable>
             </ProcessManagerScript>
         </task>
-        <task name="_BX_assign">
+        <task name="_BX_sequence_2">
             <startingVariables>
-                <variable>Provisioning_Data</variable>
-                <variable>TechnicalInfo</variable>
                 <variable>TaskName</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>Provisioning_Data</variable>
             </startingVariables>
         </task>
         <task name="Deactivation_Process_Initiate">
             <startingVariables>
-                <variable>Provisioning_Data</variable>
-                <variable>SelectedContractor</variable>
-                <variable>Mail</variable>
                 <variable>EscalationEmail</variable>
-                <variable>MasterContractor</variable>
                 <variable>CommentDataCase</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>ContractorNames</variable>
-                <variable>SelectedGroup</variable>
-                <variable>CommentHistory</variable>
                 <variable>GroupNames</variable>
                 <variable>TaskName</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>SelectedGroup</variable>
+                <variable>Mail</variable>
+                <variable>SelectedContractor</variable>
+                <variable>CommentHistory</variable>
+                <variable>MasterContractor</variable>
                 <variable>CommentText</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>TechnicalInfo</variable>
                 <variable>TaskName</variable>
+                <variable>TechnicalInfo</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Complete">
-                <variable>Provisioning_Data</variable>
                 <variable>TechnicalInfo</variable>
+                <variable>Provisioning_Data</variable>
                 <variable>CommentText</variable>
             </ProcessManagerScript>
         </task>
@@ -57,10 +57,10 @@
                 <variable>CommentdataCaseRef</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>Provisioning_Data</variable>
                 <variable>CommentDataCase</variable>
-                <variable>CommentText</variable>
                 <variable>TaskName</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentText</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -69,7 +69,7 @@
         location="com.sfc.fosImpl.removal_tobe.wsdl" namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw"/>
     <bpws:partnerLinks>
         <bpws:partnerLink
-            name="comsfcfosImplremoval_tobeRemoval_Consumer2"
+            name="comsfcfosImplremoval_tobeRemoval_Consumer"
             partnerLinkType="ns0:comsfcfosImplremoval_tobeRemoval_PLT" partnerRole="comsfcfosImplremoval_tobeRemovalProvider"/>
     </bpws:partnerLinks>
     <bpws:variables>
@@ -108,9 +108,9 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_v3OJ4PzlEeehkqoKISnbpw">
+    <bpws:flow name="_BX_flow_aEEiEAZmEeiEUrigAi4Jdg">
         <bpws:links>
-            <bpws:link name="ServiceTask to InvokeCatchMessageEvent" tibex:xpdlId="_cIS3iOPTEeeoTJ_gSITXzA"/>
+            <bpws:link name="ServiceTask to SendTask" tibex:xpdlId="_NfLZIP9KEee4BtDH5WlQLQ"/>
             <bpws:link name="Start to _cIS3guPTEeeoTJ_gSITXzA" tibex:xpdlId="_cIS3h-PTEeeoTJ_gSITXzA"/>
             <bpws:link name="_cIS3guPTEeeoTJ_gSITXzA to ServiceTask" tibex:xpdlId="_8kBh0_myEeec_I4oCcyvoQ"/>
         </bpws:links>
@@ -179,37 +179,6 @@ Provisioning_Data.notesComments=CommentText;
 ]]></tibex:completedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
-        <bpws:scope name="InvokeCatchMessageEvent" tibex:type="sendTask" tibex:xpdlId="_cIS3hePTEeeoTJ_gSITXzA">
-            <tibex:completedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[Log.write("[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : "+TechnicalInfo.carrierVLAN);
-Log.write("[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : "+TechnicalInfo.clientVLAN);]]></tibex:completedScript>
-            <bpws:targets>
-                <bpws:target linkName="ServiceTask to InvokeCatchMessageEvent"/>
-            </bpws:targets>
-            <bpws:variables>
-                <bpws:variable
-                    messageType="ns0:comsfcfosImplremoval_tobeRemoval_CatchMessageEvent_INPUT" name="v_ab24b47a"/>
-            </bpws:variables>
-            <bpws:sequence name="_BX_sequence">
-                <bpws:assign name="_BX_assign" validate="no">
-                    <bpws:copy ignoreMissingFromData="yes">
-                        <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName]]></bpws:from>
-                        <bpws:to part="TaskName" variable="v_ab24b47a"/>
-                    </bpws:copy>
-                    <bpws:copy ignoreMissingFromData="yes" tibex:transform="ObjectToXml">
-                        <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ScriptUtil.copy(TechnicalInfo)]]></bpws:from>
-                        <bpws:to part="TechnicalInfo" variable="v_ab24b47a"/>
-                    </bpws:copy>
-                    <bpws:copy ignoreMissingFromData="yes" tibex:transform="ObjectToXml">
-                        <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[ScriptUtil.copy(Provisioning_Data)]]></bpws:from>
-                        <bpws:to part="Provisioning_Data" variable="v_ab24b47a"/>
-                    </bpws:copy>
-                </bpws:assign>
-                <bpws:invoke inputVariable="v_ab24b47a"
-                    name="_BX_invoke" operation="CatchMessageEvent"
-                    partnerLink="comsfcfosImplremoval_tobeRemoval_Consumer2" portType="ns0:comsfcfosImplremoval_tobeRemoval"/>
-            </bpws:sequence>
-        </bpws:scope>
         <bpws:extensionActivity>
             <tibex:extActivity name="ServiceTask"
                 tibex:type="serviceTask"
@@ -218,7 +187,7 @@ Log.write("[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN :
                     <bpws:target linkName="_cIS3guPTEeeoTJ_gSITXzA to ServiceTask"/>
                 </bpws:targets>
                 <bpws:sources>
-                    <bpws:source linkName="ServiceTask to InvokeCatchMessageEvent"/>
+                    <bpws:source linkName="ServiceTask to SendTask"/>
                 </bpws:sources>
                 <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[CommentdataCaseRef = cac_com_sfc_fosImpl_dataModel_CommentDataCase.create(CommentDataCase);]]></tibex:script>
                 <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[CommentDataCase=com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();
@@ -233,5 +202,61 @@ CommentDataCase.siebelCircuitID=Provisioning_Data.siebelCircuitID;
 ]]></tibex:initiatedScript>
             </tibex:extActivity>
         </bpws:extensionActivity>
+        <bpws:scope name="SendTask" tibex:type="sendTask" tibex:xpdlId="_MGYaMP9KEee4BtDH5WlQLQ">
+            <tibex:completedScript
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[Log.write("[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.carrierVLAN : "+TechnicalInfo.carrierVLAN);
+Log.write("[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientVLAN : "+TechnicalInfo.clientVLAN);]]></tibex:completedScript>
+            <bpws:targets>
+                <bpws:target linkName="ServiceTask to SendTask"/>
+            </bpws:targets>
+            <bpws:variables>
+                <bpws:variable
+                    messageType="ns0:comsfcfosImplremoval_tobeRemoval_CatchMessageEvent_INPUT" name="v_ab24b47a"/>
+            </bpws:variables>
+            <bpws:sequence name="_BX_sequence">
+                <bpws:scope name="_BX_ToSvcDataMapping">
+                    <bpws:variables>
+                        <bpws:variable name="MESSAGE_TaskName" type="xsd:string"/>
+                        <bpws:variable name="MESSAGE_TechnicalInfo" tibex:class="com.sfc.fosImpl.dataModel.TehnicalInformation"/>
+                        <bpws:variable name="MESSAGE_Provisioning_Data" tibex:class="com.sfc.fosImpl.dataModel.ProvisioningDataModel"/>
+                    </bpws:variables>
+                    <bpws:sequence name="_BX_sequence_2">
+                        <bpws:extensionActivity>
+                            <tibex:extActivity
+                                name="_BX_DataMapperScript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'Provisioning_Data' to 'Provisioning_Data'
+MESSAGE_Provisioning_Data = ScriptUtil.copy(Provisioning_Data);
+
+// Map from 'TaskName' to 'TaskName'
+MESSAGE_TaskName = TaskName;
+
+// Map from 'TechnicalInfo' to 'TechnicalInfo'
+MESSAGE_TechnicalInfo = ScriptUtil.copy(TechnicalInfo);
+
+
+]]></tibex:script>
+                            </tibex:extActivity>
+                        </bpws:extensionActivity>
+                        <bpws:assign name="_BX_assign_3" validate="no">
+                            <bpws:copy>
+                                <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MESSAGE_TaskName]]></bpws:from>
+                                <bpws:to part="TaskName" variable="v_ab24b47a"/>
+                            </bpws:copy>
+                            <bpws:copy tibex:transform="ObjectToXml">
+                                <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MESSAGE_TechnicalInfo]]></bpws:from>
+                                <bpws:to part="TechnicalInfo" variable="v_ab24b47a"/>
+                            </bpws:copy>
+                            <bpws:copy tibex:transform="ObjectToXml">
+                                <bpws:from expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[MESSAGE_Provisioning_Data]]></bpws:from>
+                                <bpws:to part="Provisioning_Data" variable="v_ab24b47a"/>
+                            </bpws:copy>
+                        </bpws:assign>
+                    </bpws:sequence>
+                </bpws:scope>
+                <bpws:invoke inputVariable="v_ab24b47a"
+                    name="_BX_invoke" operation="CatchMessageEvent"
+                    partnerLink="comsfcfosImplremoval_tobeRemoval_Consumer" portType="ns0:comsfcfosImplremoval_tobeRemoval"/>
+            </bpws:sequence>
+        </bpws:scope>
     </bpws:flow>
 </bpws:process>

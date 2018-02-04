@@ -1692,7 +1692,7 @@ TaskName=&quot;PM_Review&quot;;</xpdExt:Information>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_8uMzcPzREeeupNwu8S8N4Q" Name="SendInitiateDecommissioningEmailToCustomer" FinishMode="Automatic" IsATransaction="false" StartMode="Automatic" xpdExt:Visibility="Private" xpdExt:RequireNewTransaction="false" xpdExt:DisplayName="Send Initiate Decommissioning  Email To Customer">
           <xpdl2:Implementation>
-            <xpdl2:SubFlow Id="_Z0G8MPzeEeehkqoKISnbpw" xpdExt:StartStrategy="StartImmediately" xpdExt:SuspendResumeWithParent="true">
+            <xpdl2:SubFlow Execution="ASYNCHR" Id="_Z0G8MPzeEeehkqoKISnbpw" xpdExt:AsyncExecutionMode="Detached" xpdExt:StartStrategy="ScheduleStart" xpdExt:SuspendResumeWithParent="false">
               <xpdExt:InputMappings MapperContext="ProcessToSubProcess" MappingDirection="IN">
                 <xpdExt:DataMappings>
                   <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="Provision">
@@ -1708,6 +1708,7 @@ TaskName=&quot;PM_Review&quot;;</xpdExt:Information>
           <xpdl2:Performers>
             <xpdl2:Performer>_WRLGYOPDEeeYfI0_sV0YAA</xpdl2:Performer>
           </xpdl2:Performers>
+          <xpdl2:Priority></xpdl2:Priority>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="80.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="128.0">
               <xpdl2:Coordinates XCoordinate="302.0" YCoordinate="151.0"/>
@@ -2226,7 +2227,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
         </xpdExt:DataWorkItemAttributeMapping>
       </xpdExt:ProcessDataWorkItemAttributeMappings>
     </xpdl2:WorkflowProcess>
-    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /Start Case" xpdExt:BusinessServicePublishType="Mobile" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
+    <xpdl2:WorkflowProcess Id="_cHbU0OPTEeeoTJ_gSITXzA" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="comsfcfosImplremoval_tobe-Removal-Catch Message Event" xpdExt:PublishAsBusinessService="true" xpdExt:BusinessServiceCategory="Safaricom Fixed Internet /Manual Deactivation /Start Case" Name="comsfcfosImplremoval_tobeRemovalCatchMessageEvent">
       <xpdl2:ProcessHeader/>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_cIE1EOPTEeeoTJ_gSITXzA" xpdExt:DisplayName="TaskName" Name="TaskName" IsArray="false" ReadOnly="false">
@@ -2655,11 +2656,16 @@ Log.write(&quot;[SFC] Process:ManualCaseCreation Attribute:TechnicalInfo.clientV
                   <email:Definition>
                     <email:From email:Configuration="Custom">donot-reply@SafaricomCorp.com</email:From>
                     <email:To>%EmailTo%</email:To>
-                    <email:Subject>%SubjectLineEmail% %SiebelCircuitID% SLA Level: %SLALevel%</email:Subject>
+                    <email:Subject>%SubjectLineEmail% %SiebelCircuitID%</email:Subject>
                   </email:Definition>
-                  <email:Body>Required Action at Task : %Task%&#xD;
+                  <email:Body>&#xD;
+Your immediate attention is required at the task %Task%&#xD;
+&#xD;
 SLA Level : %SLALevel%&#xD;
-Siebel ID : %SiebelCircuitID%</email:Body>
+Siebel ID : %SiebelCircuitID%&#xD;
+&#xD;
+Best Regards,&#xD;
+Safaricom Team</email:Body>
                   <email:SMTP email:Configuration="Server"/>
                 </email:Email>
               </xpdl2:TaskService>
@@ -2727,10 +2733,10 @@ SLALevel=SLA.readSLA_Configuration().SLALevel;&#xD;
 SiebelCircuitID=Provision.siebelCircuitID;&#xD;
 &#xD;
 if(SLAFlagCheck==&quot;1&quot;) {&#xD;
-	SubjectLineEmail=&quot;SLA About to expire for &quot;;&#xD;
+	SubjectLineEmail=&quot;Safaricom Fixed Internet - SLA About to expire: Required Action Siebel ID &quot;;&#xD;
 }&#xD;
 else if(SLAFlagCheck==&quot;2&quot;) {&#xD;
-	SubjectLineEmail=&quot;SLA EXPIRED: Required Action Siebel ID&quot;;&#xD;
+	SubjectLineEmail=&quot;Safaricom Fixed Internet - SLA EXPIRED: Required Action for Siebel ID&quot;;&#xD;
 }&#xD;
 else if(SLAFlagCheck==&quot;3&quot;){&#xD;
 	SubjectLineEmail=&quot;Decomissioning Service Initiated&quot;;&#xD;
@@ -3051,14 +3057,18 @@ EmailTo=EmailTo.slice(0,EmailTo.length-1);</xpdExt:Information>
                     <email:To> %EmailTo%</email:To>
                     <email:Subject>Decomissioning Service Inititated</email:Subject>
                   </email:Definition>
-                  <email:Body>Hello,&#xD;
+                  <email:Body>Dear Customer,&#xD;
 We have inititated the decomissioning procedure as per your registered request.&#xD;
-Given below are some details-&#xD;
+&#xD;
+Given below are the details-&#xD;
+&#xD;
 Client ID: %ClientID%&#xD;
 Customer ID: %CustomerID%&#xD;
 Client Name: %ClientName%&#xD;
 Registered Mail ID: %RegisteredMail%&#xD;
-Regards,&#xD;
+&#xD;
+&#xD;
+Best Regards,&#xD;
 Safaricom Team  </email:Body>
                   <email:SMTP email:Configuration="Server"/>
                 </email:Email>
@@ -3141,13 +3151,17 @@ ClientName=Provision.clientName;</xpdExt:Information>
                     <email:To>%EmailTo%</email:To>
                     <email:Subject>Decomissioning Process Completed</email:Subject>
                   </email:Definition>
-                  <email:Body>Hello,&#xD;
-We have sucessfully completed your decomissioning procedure. We thank you for using our service. Given below are some details&#xD;
+                  <email:Body>Dear Customer,&#xD;
+We have sucessfully completed your decomissioning procedure. We thank you for using our service. &#xD;
+&#xD;
+Given below are the details:-&#xD;
+&#xD;
 Client ID: %ClientID%&#xD;
 Customer ID: %CircuitID%&#xD;
 Registered Mail: %EmailTo%&#xD;
 Client Name: %ClientName%&#xD;
-Regards,&#xD;
+&#xD;
+Best Regards,&#xD;
 Safaricom Team</email:Body>
                   <email:SMTP email:Configuration="Server"/>
                 </email:Email>

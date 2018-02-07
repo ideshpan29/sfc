@@ -100,8 +100,8 @@
     <pd:activity name="Call Get Process Instance Details">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>352</pd:x>
-        <pd:y>226</pd:y>
+        <pd:x>422</pd:x>
+        <pd:y>227</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstanceDetails.process</processName>
         </config>
@@ -116,8 +116,8 @@
     <pd:activity name="Call Get Process Instances">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>354</pd:x>
-        <pd:y>146</pd:y>
+        <pd:x>424</pd:x>
+        <pd:y>147</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessInstances.process</processName>
         </config>
@@ -132,8 +132,8 @@
     <pd:activity name="Call Get Process Names">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>43</pd:y>
+        <pd:x>421</pd:x>
+        <pd:y>44</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessnames.process</processName>
         </config>
@@ -142,8 +142,8 @@
     <pd:activity name="Call GetPieChart">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>490</pd:y>
+        <pd:x>421</pd:x>
+        <pd:y>491</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetPieChart.process</processName>
         </config>
@@ -156,8 +156,8 @@
     <pd:activity name="Call Process Names With Status">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>582</pd:y>
+        <pd:x>421</pd:x>
+        <pd:y>583</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/GetProcessInstancesWithStatusSOAP.process</processName>
         </config>
@@ -172,10 +172,10 @@
     <pd:activity name="Call Search Process Instances">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>348</pd:x>
-        <pd:y>337</pd:y>
+        <pd:x>418</pd:x>
+        <pd:y>338</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstanceSOAP.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/SearchProcessInstance.process</processName>
         </config>
         <pd:inputBindings>
             <root>
@@ -194,8 +194,8 @@
     <pd:activity name="Call TaskWiseAnalysis">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>423</pd:y>
+        <pd:x>421</pd:x>
+        <pd:y>424</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getProcessTasks.process</processName>
         </config>
@@ -218,22 +218,6 @@
                 <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_halted"/>
                 <xsl:copy-of select="$Call-Process-Names-With-Status/ns2:getprocessinstancesoutput/ns2:pi_cancelled"/>
             </ns2:getprocessinstancesoutput>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Render Search Data">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>479</pd:x>
-        <pd:y>333</pd:y>
-        <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term ref="ns2:searchprocessinstancesoutput"/>
-        </config>
-        <pd:inputBindings>
-            <ns2:searchprocessinstancesoutput>
-                <xsl:copy-of select="$Call-Search-Process-Instances/ns2:searchprocessinstancesoutput/ns2:searchrecord"/>
-            </ns2:searchprocessinstancesoutput>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Send HTTP Response">
@@ -269,6 +253,11 @@
                             </asciiContent>
                         </xsl:if>
                     </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'">
+                        <asciiContent>
+                            <xsl:value-of select="$Call-Search-Process-Instances/root/response"/>
+                        </asciiContent>
+                    </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'">
                         <asciiContent>
                             <xsl:value-of select="$CallProcessCurrentStateActivityWise/output/response"/>
@@ -290,13 +279,6 @@
                         <xsl:if test="$Call-Get-Process-Instance-Details/response">
                             <asciiContent>
                                 <xsl:value-of select="$Call-Get-Process-Instance-Details/response"/>
-                            </asciiContent>
-                        </xsl:if>
-                    </xsl:when>
-                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'">
-                        <xsl:if test="$Render-Search-Data/xmlString">
-                            <asciiContent>
-                                <xsl:value-of select="$Render-Search-Data/xmlString"/>
                             </asciiContent>
                         </xsl:if>
                     </xsl:when>
@@ -337,8 +319,8 @@
     <pd:activity name="send Log Request AUDIT 1">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>184</pd:x>
-        <pd:y>336</pd:y>
+        <pd:x>199</pd:x>
+        <pd:y>338</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/tmp/tmpProcess.process</processName>
             <spawn>true</spawn>
@@ -417,8 +399,8 @@
     <pd:activity name="Catch All Exception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>816</pd:x>
-        <pd:y>477</pd:y>
+        <pd:x>963</pd:x>
+        <pd:y>803</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -428,8 +410,8 @@
     <pd:activity name="Call getusers process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>352</pd:x>
-        <pd:y>674</pd:y>
+        <pd:x>422</pd:x>
+        <pd:y>675</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/getusers.process</processName>
         </config>
@@ -444,8 +426,8 @@
     <pd:activity name="CallResourceWiseAnalysis">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>240</pd:x>
-        <pd:y>774</pd:y>
+        <pd:x>420</pd:x>
+        <pd:y>898</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/ResourceWiseAnalysis.process</processName>
         </config>
@@ -463,8 +445,8 @@
     <pd:activity name="CallProcessCurrentStateActivityWise">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>367</pd:x>
-        <pd:y>831</pd:y>
+        <pd:x>419</pd:x>
+        <pd:y>788</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/StarterCallProcesses/CurrentStateActivityWise.process</processName>
         </config>
@@ -476,11 +458,11 @@
             </input>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Log">
+    <pd:activity name="LogAJAZRequest">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>106</pd:x>
-        <pd:y>200</pd:y>
+        <pd:x>131</pd:x>
+        <pd:y>204</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -492,11 +474,11 @@
             </pfx3:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Log-1">
+    <pd:activity name="LogAJAXCallsFailure">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>959</pd:x>
-        <pd:y>461</pd:y>
+        <pd:x>961</pd:x>
+        <pd:y>569</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -537,13 +519,6 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Search Process Instances</pd:from>
-        <pd:to>Render Search Data</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Call Get Process Instance Details</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
@@ -561,13 +536,6 @@
         <pd:from>Call Get Process Names</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Render Search Data</pd:from>
-        <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
@@ -658,7 +626,7 @@
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallResourceWiseAnalysis</pd:to>
-        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'</pd:xpath>
@@ -666,27 +634,27 @@
     <pd:transition>
         <pd:from>CallResourceWiseAnalysis</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>CallProcessCurrentStateActivityWise</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallProcessCurrentStateActivityWise</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'</pd:xpath>
     </pd:transition>
     <pd:transition>
-        <pd:from>Log</pd:from>
+        <pd:from>LogAJAZRequest</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -694,21 +662,28 @@
     </pd:transition>
     <pd:transition>
         <pd:from>HTTP Receiver</pd:from>
-        <pd:to>Log</pd:to>
+        <pd:to>LogAJAZRequest</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Catch All Exception</pd:from>
-        <pd:to>Log-1</pd:to>
+        <pd:to>LogAJAXCallsFailure</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Log-1</pd:from>
+        <pd:from>LogAJAXCallsFailure</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Search Process Instances</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

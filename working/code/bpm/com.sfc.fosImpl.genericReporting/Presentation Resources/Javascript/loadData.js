@@ -136,7 +136,7 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 					if(recordSet[i].childNodes[0]!=null)	{	
 					
 					var time=(recordSet[i].childNodes[0].nodeValue);
-					logger.info(time.indexOf("P"));
+					
 					if(time.indexOf("P")==0)
 					{
 					
@@ -198,17 +198,7 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
 									
 					
 					
-					logger.info(".............");
-					logger.info((DAYS*1440));
-					logger.info(HOURS*60);
-					logger.info(MINUTES*1);
-					logger.info(SECONDS/60);
-				
-					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
-					logger.info("//////////////"+1.456765.toFixed(2));
 					
-					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
-					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
 					var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
 					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTime(timeValue);
@@ -229,7 +219,7 @@ function ldPrcData(factory,pane,control,logger,url,funcName, flag, loginName) {
  					    var sec = Math.floor((minutesms)/(1000));
  					    
 						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
-						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTime(timeValue);
 					}
@@ -342,7 +332,7 @@ var tmpURL = url+funcName;
 				
 							
 				for(var i=0;i<lngth;i++) {
-					logger.info("in for");
+					
 					 var record = factory.com_sfc_fosImpl_genericReporting.createTask();
 					 
 					 
@@ -367,7 +357,7 @@ var tmpURL = url+funcName;
 					 
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setProcessInstance(recordSet[i].childNodes[0].nodeValue);
-						logger.info("in rewcord add insytnace"+record.getProcessInstance());
+						
 					}
 					
 					
@@ -376,7 +366,7 @@ var tmpURL = url+funcName;
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setTaskName(recordSet[i].childNodes[0].nodeValue);
 						
-						logger.info("in rewcord add taskname"+record.getProcessInstance());
+						
 					}
 					
 					
@@ -386,7 +376,7 @@ var tmpURL = url+funcName;
 					if(recordSet[i].childNodes[0]!=null)	{	
 							
 					var time=(recordSet[i].childNodes[0].nodeValue);
-					logger.info(time.indexOf("P"));
+					
 					if(time.indexOf("P")==0)
 					{
 					
@@ -447,20 +437,14 @@ var tmpURL = url+funcName;
 					
 									
 					
-					
-					logger.info(".............");
-					logger.info("DAYS: "+DAYS);
-					logger.info("HOURS: "+HOURS);
-					logger.info("MINUTES: "+MINUTES);
-					logger.info("SECONDS: "+SECONDS);
-				
+									
 					
 					
 					
 					
 					
 						var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
-						logger.info("''''''''''''''''''''''''''''''''''''''''''''''''"+timeValue);
+						
 					//record.setTaskDuration(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTaskDuration(timeValue);
 					}
@@ -479,7 +463,7 @@ var tmpURL = url+funcName;
  					    var sec = Math.floor((minutesms)/(1000));
  					    
 						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
-						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTaskDuration(timeValue);
 						
@@ -487,7 +471,7 @@ var tmpURL = url+funcName;
 						//record.setTaskDuration(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 					}
 						
-						logger.info("in rewcord add activity duration"+record.getProcessInstance());
+						
 					}
 					
 					
@@ -515,7 +499,7 @@ var tmpURL = url+funcName;
 					}
 							
 						record.setWaitDuration(time);
-						logger.info("in rewcord add waitduration"+record.getProcessInstance());
+					
 						
 					}
 					
@@ -549,17 +533,16 @@ var tmpURL = url+funcName;
 					
 							
 						record.setWorkDuration(time);
-						logger.info("in workduration"+record.getProcessInstance());
-					}
+											}
 					
 					recordSet = xmlDoc.getElementsByTagName("status");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setStatus(recordSet[i].childNodes[0].nodeValue);
 						
-						logger.info("status"+record.getProcessInstance());
+						
 					}
 					
-					logger.info("satish"+record);
+				
 						pane.TaskList.getValue().add(record);
 						
 				}
@@ -757,7 +740,7 @@ function ldCurrentProcessStateData(factory,pane,control,logger,url,funcName)
 
 function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginName) {
 	try {
-		var tmpURL = url+funcName;
+		var tmpURL = url+funcName+"&random="+(Math.random(999)*10000);
 		  var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open('GET',tmpURL,true);
 		xmlhttp.onreadystatechange=function() {
@@ -765,16 +748,15 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 				var xm = xmlhttp.responseText;
 				
 				
-				
-				if (window.XMLHttpRequest) {
+		if (window.XMLHttpRequest) {
     // code for modern browsers
     parser=new DOMParser();
     xmlDoc = parser.parseFromString(xm,"text/xml");
-  } 
-  else {
+   
+ } else {
     // code for old IE browsers
     xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-  
+   
     xmlDoc.loadXML(xm);
 }
 				//var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -786,9 +768,7 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 				
 				logger.info(xm);
 				
-				
-				
-				var recordSet = xmlDoc.getElementsByTagName("ns0:searchrecord");
+				var recordSet = xmlDoc.getElementsByTagName("Record");
 				var lngth = recordSet.length;
 				logger.info("Lengh of the incoming array for Records: "+lngth);
 				
@@ -805,24 +785,26 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					var record = factory.com_sfc_fosImpl_genericReporting.createRecord();
 					
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:process_instance");
+					recordSet = xmlDoc.getElementsByTagName("process_template");
+					if(recordSet[i].childNodes[0]!=null)	{			
+						record.setProcessTemplate(recordSet[i].childNodes[0].nodeValue);
+					}
+					
+					recordSet = xmlDoc.getElementsByTagName("process_instance");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setProcessInstance(recordSet[i].childNodes[0].nodeValue);
 					}
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:status");
+					recordSet = xmlDoc.getElementsByTagName("status");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setStatus(recordSet[i].childNodes[0].nodeValue);
 					}
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:exec_mills");
+					recordSet = xmlDoc.getElementsByTagName("time");
 					if(recordSet[i].childNodes[0]!=null)	{	
-						
-						
-						
-						
-						var time=(recordSet[i].childNodes[0].nodeValue);
-					logger.info(time.indexOf("P"));
+					
+					var time=(recordSet[i].childNodes[0].nodeValue);
+					
 					if(time.indexOf("P")==0)
 					{
 					
@@ -849,6 +831,7 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					{
 					HOURS=parseFloat(time.substring(Tindex+1,Hindex));
 					}
+					
 					
 					
 					if(Mindex!=-1 && Hindex!=-1)
@@ -880,32 +863,19 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
 					
 					}
 					
-					
 									
 					
 					
-					logger.info(".............");
-					logger.info((DAYS*1440));
-					logger.info(HOURS*60);
-					logger.info(MINUTES*1);
-					logger.info(SECONDS/60);
-				
-					logger.info((DAYS*1440)+(HOURS*60)+(SECONDS/60)+MINUTES);
-					logger.info("//////////////"+1.456765.toFixed(2));
-					
-					logger.info("&&&&&&&&&&&&&&&&&&&&&&&&&&");
-					logger.info(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2));
 					
 					var timeValue=DAYS+" Days  "+HOURS+" Hours  "+MINUTES+" Minutes  "+SECONDS+" Seconds.";
 					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
 					record.setTime(timeValue);
-					
-					//record.setTime(((DAYS*1440)+(HOURS*60)+(SECONDS/60)+(MINUTES)).toFixed(2)+" minutes");
-					
 					}
 					else
 					{
 					
+						//record.setTime(time);
+						
 						var ms=(recordSet[i].childNodes[0].nodeValue);
 						
 						var days = Math.floor(ms / (24*60*60*1000));
@@ -917,31 +887,26 @@ function ldPrcSearchData(factory,pane,control,logger,url,funcName, flag, loginNa
  					    var sec = Math.floor((minutesms)/(1000));
  					    
 						var timeValue=days+" Days  "+hours+" Hours  "+minutes+" Minutes  "+sec+" Seconds.";
-						logger.info("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"+timeValue);
+						
 						//record.setTime(parseFloat(((recordSet[i].childNodes[0].nodeValue)/60000)).toFixed(2)+" minutes");
 						record.setTime(timeValue);
 					}
-						
-							
-						//record.setTime(recordSet[i].childNodes[0].nodeValue);
 					}
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:sibelcircuit_id");
+					recordSet = xmlDoc.getElementsByTagName("SibelCircuitId");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setSiebelCircuitID(recordSet[i].childNodes[0].nodeValue);
 					}
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:customer_name");
+					recordSet = xmlDoc.getElementsByTagName("ClientName");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setClientName(recordSet[i].childNodes[0].nodeValue);
 					}
 					
-					recordSet = xmlDoc.getElementsByTagName("ns0:projectmanager");
+					recordSet = xmlDoc.getElementsByTagName("ProjectManager");
 					if(recordSet[i].childNodes[0]!=null)	{			
 						record.setProjectName(recordSet[i].childNodes[0].nodeValue);
 					}
-					
-					
 					
 							
 						record.setProcessTemplate(control.optnSelectProcess.getValue());

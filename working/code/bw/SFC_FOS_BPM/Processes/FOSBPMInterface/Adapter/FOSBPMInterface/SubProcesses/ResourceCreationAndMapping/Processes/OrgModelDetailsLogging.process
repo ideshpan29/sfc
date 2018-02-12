@@ -10,21 +10,48 @@
         <pd:type>com.tibco.pe.core.OnStartupEventSource</pd:type>
         <pd:resourceType>ae.activities.onStartup</pd:resourceType>
         <pd:x>65</pd:x>
-        <pd:y>57</pd:y>
+        <pd:y>53</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
     <pd:endX>748</pd:endX>
-    <pd:endY>57</pd:endY>
+    <pd:endY>53</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1515660512308</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>748</pd:x>
+        <pd:y>280</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Error Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>748</pd:x>
+        <pd:y>162</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <message>
+                    <xsl:value-of select="'The Organizational Model details could not be logged '"/>
+                </message>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="GetOrgModelDetails">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
         <pd:x>258</pd:x>
-        <pd:y>57</pd:y>
+        <pd:y>53</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -46,7 +73,7 @@
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
         <pd:x>589</pd:x>
-        <pd:y>55</pd:y>
+        <pd:y>53</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -72,33 +99,6 @@
         </config>
         <pd:inputBindings>
             <xsl:copy-of select="$GetOrgModelDetails/outputMessage/ns2:getOrgModelResponse"/>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Catch">
-        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
-        <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>750</pd:x>
-        <pd:y>280</pd:y>
-        <pd:handler>true</pd:handler>
-        <config>
-            <catchAll>true</catchAll>
-        </config>
-        <pd:inputBindings/>
-    </pd:activity>
-    <pd:activity name="Error Log">
-        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
-        <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>745</pd:x>
-        <pd:y>162</pd:y>
-        <config>
-            <role>User</role>
-        </config>
-        <pd:inputBindings>
-            <ns:ActivityInput>
-                <message>
-                    <xsl:value-of select="'The Organizational Model details could not be logged '"/>
-                </message>
-            </ns:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>

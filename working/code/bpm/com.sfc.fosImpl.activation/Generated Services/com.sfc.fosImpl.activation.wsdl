@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:ns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:ttns="http://fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="comsfcfosImplremoval_tobe" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" tibex:XPDL="com.sfc.fosImpl.activation.xpdl">
   <wsdl:types>
-    <xsd:schema xmlns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw"/>
+    <xsd:schema xmlns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw">
+      <xsd:simpleType name="string_50">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="50"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
     <xsd:schema xmlns="http://fosImpl.sfc.com/dataModel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tns1="http://fosImpl.sfc.com/dataModel" targetNamespace="http://fosImpl.sfc.com/dataModel">
       <xsd:annotation>
         <xsd:documentation>
@@ -785,9 +791,7 @@
   </wsdl:types>
   <wsdl:message name="Activation_InitiateActivation_INPUT">
     <wsdl:part name="ActivationExecutionRequest" type="ttns:ActivationExecutionRequest"/>
-  </wsdl:message>
-  <wsdl:message name="Activation_InitiateActivation_OUTPUT">
-    <wsdl:part name="ProcessId" type="xsd:string"/>
+    <wsdl:part name="Name" type="ns:string_50"/>
   </wsdl:message>
   <wsdl:portType name="Activation" tibex:FlowContainer="_n3OiwN_AEee7mPhVBav8gw">
     <wsdl:documentation>
@@ -795,7 +799,6 @@
     </wsdl:documentation>
     <wsdl:operation name="InitiateActivation">
       <wsdl:input message="ns:Activation_InitiateActivation_INPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
-      <wsdl:output message="ns:Activation_InitiateActivation_OUTPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

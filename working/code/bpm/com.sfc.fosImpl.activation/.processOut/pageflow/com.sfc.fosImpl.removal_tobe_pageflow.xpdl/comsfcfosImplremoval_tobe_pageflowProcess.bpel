@@ -15,37 +15,37 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ContractorMobileTask">
             <startingVariables>
-                <variable>CommentText</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>SelectedContractor</variable>
-                <variable>SelectedGroup</variable>
-                <variable>TaskName</variable>
                 <variable>GroupNames</variable>
+                <variable>CommentText</variable>
                 <variable>CommentHistory</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>ContractorNames</variable>
+                <variable>TaskName</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
         </task>
         <task name="ConfirmDetails">
             <startingVariables>
-                <variable>CommentText</variable>
-                <variable>SelectedGroup</variable>
-                <variable>SelectedContractor</variable>
-                <variable>TaskName</variable>
+                <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>GroupNames</variable>
+                <variable>SelectedContractor</variable>
+                <variable>CommentText</variable>
                 <variable>Provisioning_Data</variable>
                 <variable>CommentHistory</variable>
                 <variable>ResourceList</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>ContractorNames</variable>
+                <variable>TaskName</variable>
+                <variable>SelectedGroup</variable>
             </startingVariables>
             <ProcessManagerScript type="Complete">
-                <variable>TaskName</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Initiate">
-                <variable>TaskName</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </ProcessManagerScript>
         </task>
         <task name="GetResources">
@@ -60,9 +60,9 @@
                 <variable>EscalationEmail</variable>
                 <variable>CtrMobileTaskDecision</variable>
                 <variable>CommentDataSet</variable>
-                <variable>TaskName</variable>
                 <variable>CommentHistory</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </startingVariables>
             <ProcessManagerScript type="Complete">
                 <variable>Provisioning_Data</variable>
@@ -77,10 +77,10 @@
                 <variable>commentDataCaseRef</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>CommentText</variable>
                 <variable>commentDataCase</variable>
-                <variable>TaskName</variable>
+                <variable>CommentText</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -147,7 +147,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_k7l1MBGeEei-p-L5yAjJ1Q">
+    <bpws:flow name="_BX_flow_tYqd8BL4EeiDkb6OXVPa-A">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -170,21 +170,21 @@
                     <bpws:source linkName="StartEvent to ScriptTask"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="CommentText"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="commentDataCase"/>
                     <parameterDescription mode="InOut" name="EscalationEmail"/>
-                    <parameterDescription mode="InOut" name="SelectedContractor"/>
-                    <parameterDescription mode="InOut" name="SelectedGroup"/>
-                    <parameterDescription mode="InOut" name="TaskName"/>
-                    <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
-                    <parameterDescription mode="InOut" name="CommentHistory"/>
                     <parameterDescription mode="InOut" name="TechnicalInfo"/>
                     <parameterDescription mode="InOut" name="SelectedPM"/>
+                    <parameterDescription mode="InOut" name="SelectedContractor"/>
                     <parameterDescription mode="InOut" name="CommentDataSet"/>
-                    <parameterDescription mode="InOut" name="commentDataCase"/>
-                    <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="TaskName"/>
                     <parameterDescription mode="InOut" name="commentDataCaseRef"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="GroupNames"/>
+                    <parameterDescription mode="InOut" name="CommentText"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
+                    <parameterDescription mode="InOut" name="SelectedGroup"/>
+                    <parameterDescription mode="InOut" name="Mail"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>

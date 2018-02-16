@@ -229,6 +229,12 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
 } </form:script>
       </form:action>
     </form:rule>
+    <form:rule name="rule.updatePerformer" label="UpdatePerformer">
+      <form:event source="#control.selectPM" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.selectPM.update"/>
+      <form:action xsi:type="form:ScriptAction" name="action.updatePerformer" label="UpdatePerformer">
+        <form:script>data.setSelectedContractor(control.selectPM.getValue());</form:script>
+      </form:action>
+    </form:rule>
   </form:rules>
   <form:bindings>
     <form:binding generated="true" direction="bothways" name="_K2QkMNNaEeensvHbFRZDUw">
@@ -434,6 +440,14 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
     <form:binding generated="true" direction="bothways" name="_i65vcBFUEei-p-L5yAjJ1Q">
       <form:source target="data.EscalationEmail" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.EscalationEmail.value"></form:source>
       <form:destination target="control.EscalationEmail" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.EscalationEmail.value"></form:destination>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_Wn8TgBIZEei-p-L5yAjJ1Q">
+      <form:source target="data.resourceList" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.resourceList.value"></form:source>
+      <form:destination target="control.selectPM" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.selectPM.choiceLabels"></form:destination>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_X3G1UBIZEei-p-L5yAjJ1Q">
+      <form:source target="data.resourceList" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.resourceList.value"></form:source>
+      <form:destination target="control.selectPM" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.selectPM.choiceValues"></form:destination>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -1319,8 +1333,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               </form:defaults>
               <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.selectPM">
                 <form:propertySet xsi:type="et:MultiChoicePropertySet">
-                  <et:choiceValues>Court</et:choiceValues>
-                  <et:choiceLabels>Court</et:choiceLabels>
+                  <et:choiceType>bindings</et:choiceType>
                 </form:propertySet>
                 <form:label>Select PM</form:label>
                 <form:visible>true</form:visible>

@@ -19,38 +19,42 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="_BX_assign">
             <startingVariables>
-                <variable>Name</variable>
                 <variable>ActivationExecutionRequest</variable>
+                <variable>Name</variable>
             </startingVariables>
         </task>
         <task name="InvokeInitiateActivation">
             <ProcessManagerScript type="Initiate">
+                <variable>ActivationExecutionRequest</variable>
                 <variable>Provisioning_Data</variable>
                 <variable>TechnicalInfo</variable>
-                <variable>ActivationExecutionRequest</variable>
             </ProcessManagerScript>
         </task>
         <task name="UserTask">
             <startingVariables>
-                <variable>resourceList</variable>
-                <variable>EscalationEmail</variable>
                 <variable>SelectedPM</variable>
+                <variable>SelectedGroup</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentHistory</variable>
+                <variable>CommentText</variable>
+                <variable>resourceList</variable>
+                <variable>Mail</variable>
+                <variable>Name</variable>
+                <variable>GroupNames</variable>
+                <variable>EscalationEmail</variable>
+                <variable>ActivationExecutionRequest</variable>
+                <variable>Field2</variable>
                 <variable>TaskName</variable>
                 <variable>TechnicalInfo</variable>
-                <variable>Field2</variable>
-                <variable>SelectedGroup</variable>
-                <variable>ActivationExecutionRequest</variable>
-                <variable>CommentHistory</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>CommentText</variable>
-                <variable>Name</variable>
-                <variable>Mail</variable>
             </startingVariables>
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+            </ProcessManagerScript>
         </task>
         <task name="ServiceTask">
             <ProcessManagerScript type="Complete">
-                <variable>Field</variable>
-                <variable>Field2</variable>
+                <variable>FetchResourceListOutput</variable>
+                <variable>resourceList</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -115,13 +119,12 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_jjvpwBGkEei-p-L5yAjJ1Q">
+    <bpws:flow name="_BX_flow_J97s4BMHEei4EeTLKrs4Jw">
         <bpws:links>
             <bpws:link name="Start to _q3PXcBGiEei-p-L5yAjJ1Q" tibex:xpdlId="_q3P-gBGiEei-p-L5yAjJ1Q"/>
             <bpws:link name="UserTask to InvokeInitiateActivation" tibex:xpdlId="_eJlDxxF7Eei-p-L5yAjJ1Q"/>
             <bpws:link name="ServiceTask to UserTask" tibex:xpdlId="_eJlDxhF7Eei-p-L5yAjJ1Q"/>
             <bpws:link name="_q3PXcBGiEei-p-L5yAjJ1Q to ServiceTask" tibex:xpdlId="_p6tvgBF7Eei-p-L5yAjJ1Q"/>
-            <bpws:link name="_q3PXcBGiEei-p-L5yAjJ1Q to UserTask" tibex:xpdlId="_dla8EBGiEei-p-L5yAjJ1Q"/>
         </bpws:links>
         <bpws:extensionActivity>
             <tibex:receiveEvent createInstance="yes" eventTimeout="0"
@@ -142,7 +145,6 @@
                 tibex:xpdlId="_eJlDwRF7Eei-p-L5yAjJ1Q" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:targets>
                     <bpws:target linkName="ServiceTask to UserTask"/>
-                    <bpws:target linkName="_q3PXcBGiEei-p-L5yAjJ1Q to UserTask"/>
                 </bpws:targets>
                 <bpws:sources>
                     <bpws:source linkName="UserTask to InvokeInitiateActivation"/>
@@ -176,6 +178,8 @@
                             mode="INOUT" name="CommentText"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="Mail"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="GroupNames"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
                 <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[TaskName="Initiate_Activation_Process";]]></tibex:initiatedScript>
@@ -221,8 +225,9 @@ udf.name="PM_FROM_MANUAL_CASE_START";
         </bpws:scope>
         <bpws:scope name="ServiceTask" tibex:type="serviceTask" tibex:xpdlId="_p6tIcBF7Eei-p-L5yAjJ1Q">
             <tibex:completedScript
-                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[for(var i=0;i<Field.resource.size();i++) {
-	Field2.add(Field.resource.get(i).name);
+                expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[for(var i=0;i<FetchResourceListOutput.resource.size();i++) {
+	resourceList.add(FetchResourceListOutput.resource.get(i).name);
+	Log.write("SFC_FOS_BPM_Activation Resource List : "+resourceList.get(0));
 }]]></tibex:completedScript>
             <bpws:targets>
                 <bpws:target linkName="_q3PXcBGiEei-p-L5yAjJ1Q to ServiceTask"/>
@@ -289,8 +294,8 @@ MESSAGE_fetchresourceinput.processname = _f1_();
                         <bpws:extensionActivity>
                             <tibex:extActivity
                                 name="_BX_DataMapperScript_2" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
-                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'fetchresourceoutput' to 'Field'
-Field = ScriptUtil.copy(MESSAGE_fetchresourceoutput);
+                                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'fetchresourceoutput' to 'FetchResourceListOutput'
+FetchResourceListOutput = ScriptUtil.copy(MESSAGE_fetchresourceoutput);
 
 
 ]]></tibex:script>
@@ -305,13 +310,8 @@ Field = ScriptUtil.copy(MESSAGE_fetchresourceoutput);
             <bpws:targets>
                 <bpws:target linkName="Start to _q3PXcBGiEei-p-L5yAjJ1Q"/>
             </bpws:targets>
-            <bpws:sources tibex:maxTrue="1">
-                <bpws:source linkName="_q3PXcBGiEei-p-L5yAjJ1Q to ServiceTask">
-                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[1==2;]]></bpws:transitionCondition>
-                </bpws:source>
-                <bpws:source linkName="_q3PXcBGiEei-p-L5yAjJ1Q to UserTask">
-                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[##otherwise##]]></bpws:transitionCondition>
-                </bpws:source>
+            <bpws:sources>
+                <bpws:source linkName="_q3PXcBGiEei-p-L5yAjJ1Q to ServiceTask"/>
             </bpws:sources>
         </bpws:empty>
     </bpws:flow>

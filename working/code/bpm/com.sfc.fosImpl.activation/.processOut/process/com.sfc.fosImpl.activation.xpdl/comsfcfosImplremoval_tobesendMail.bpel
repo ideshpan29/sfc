@@ -8,38 +8,38 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendTaskNotification">
             <startingVariables>
-                <variable>CustomerID</variable>
-                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
+                <variable>CustomerID</variable>
                 <variable>ClientID</variable>
+                <variable>ClientName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>CustomerID</variable>
-                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
-                <variable>ClientID</variable>
+                <variable>CustomerID</variable>
                 <variable>Provision</variable>
+                <variable>ClientID</variable>
+                <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
         <task name="SendMailTask">
             <startingVariables>
-                <variable>SiebelCircuitID</variable>
                 <variable>SubjectLineEmail</variable>
-                <variable>EmailTo</variable>
-                <variable>SLALevel</variable>
                 <variable>Task</variable>
+                <variable>SLALevel</variable>
+                <variable>EmailTo</variable>
+                <variable>SiebelCircuitID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>PendingAt</variable>
                 <variable>SLAFlagCheck</variable>
-                <variable>SiebelCircuitID</variable>
-                <variable>EscalationToEmail</variable>
-                <variable>Provision</variable>
                 <variable>SubjectLineEmail</variable>
-                <variable>EmailTo</variable>
-                <variable>SLALevel</variable>
                 <variable>SLAFLAGGlobal</variable>
                 <variable>Task</variable>
+                <variable>EscalationToEmail</variable>
+                <variable>SLALevel</variable>
+                <variable>Provision</variable>
+                <variable>EmailTo</variable>
+                <variable>SiebelCircuitID</variable>
+                <variable>PendingAt</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -82,7 +82,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_jg378BGkEei-p-L5yAjJ1Q">
+    <bpws:flow name="_BX_flow_J694cBMHEei4EeTLKrs4Jw">
         <bpws:links>
             <bpws:link
                 name="_0JRqcPwgEeeupNwu8S8N4Q to _BX_scope_SendTaskNotificati" tibex:xpdlId="_09No0PwgEeeupNwu8S8N4Q"/>
@@ -110,11 +110,11 @@
                     <bpws:source linkName="StartEvent to _0JRqcPwgEeeupNwu8S8N4Q"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="SLA"/>
                     <parameterDescription mode="InOut" name="SLAFlagCheck"/>
+                    <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mode="InOut" name="Task"/>
                     <parameterDescription mode="InOut" name="EscalationToEmail"/>
                     <parameterDescription mode="InOut" name="Provision"/>
-                    <parameterDescription mode="InOut" name="Task"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>

@@ -14,26 +14,30 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="InvokeInitiateActivation">
             <ProcessManagerScript type="Initiate">
-                <variable>TechnicalInfo</variable>
                 <variable>ActivationExecutionRequest</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>Provisioning_Data</variable>
             </ProcessManagerScript>
         </task>
         <task name="UserTask">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>EscalationEmail</variable>
-                <variable>ContractorNames</variable>
                 <variable>SelectedGroup</variable>
+                <variable>TechnicalInfo</variable>
                 <variable>resourceList</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>TaskName</variable>
-                <variable>SelectedPM</variable>
                 <variable>CommentText</variable>
+                <variable>ActivationExecutionRequest</variable>
+                <variable>EscalationEmail</variable>
                 <variable>SelectedContractor</variable>
-                <variable>Mail</variable>
                 <variable>CommentHistory</variable>
+                <variable>SelectedPM</variable>
+                <variable>Mail</variable>
+                <variable>ContractorNames</variable>
+                <variable>TaskName</variable>
             </startingVariables>
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+            </ProcessManagerScript>
         </task>
         <task name="ServiceTask">
             <ProcessManagerScript type="Complete">
@@ -93,7 +97,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_jiWioBGkEei-p-L5yAjJ1Q">
+    <bpws:flow name="_BX_flow_J8aC4BMHEei4EeTLKrs4Jw">
         <bpws:links>
             <bpws:link name="Start to ServiceTask" tibex:xpdlId="_wAsBUBFREei-p-L5yAjJ1Q"/>
             <bpws:link name="UserTask to InvokeInitiateActivation" tibex:xpdlId="_bkpt9hCAEeiTfu82n897bg"/>

@@ -505,12 +505,35 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
 CommentText=&quot;&quot;;&#xD;
 Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
 &#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);&#xD;
+&#xD;
+&#xD;
+&#xD;
+&#xD;
 </xpdExt:Information>
             </xpdExt:AuditEvent>
             <xpdExt:AuditEvent Type="Completed">
               <xpdExt:Information ScriptGrammar="JavaScript">var criteria = &quot;contractorGroupName='&quot;+SelectedGroup+&quot;' and masterUser='Y'&quot;;&#xD;
 Fetch_Groups=cac_com_sfc_fosImpl_dataModel_ContractorGroups.findByCriteria(criteria);&#xD;
 MasterContractor=&quot;resource(name='&quot;+Fetch_Groups.get(0).readContractorGroups().loginName+&quot;')&quot;;&#xD;
+&#xD;
+// Task Logging&#xD;
+&#xD;
+TaskName=&quot;PM_Review&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);&#xD;
+&#xD;
+&#xD;
 </xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
@@ -583,10 +606,33 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deprovision_IPs&quot;;&#xD;
 CommentText=&quot;&quot;;&#xD;
-Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+&#xD;
+&#xD;
+//Task Logging&#xD;
+&#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">// Task Logging&#xD;
+&#xD;
+TaskName=&quot;Deprovision_IPs&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
-          <xpdExt:AssociatedParameters>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentDataSet" Mode="INOUT" Mandatory="false"/>
@@ -652,10 +698,34 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Manual_Installation_Removal&quot;;&#xD;
 CommentText=&quot;&quot;;&#xD;
-Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+&#xD;
+&#xD;
+//Task Logging&#xD;
+&#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">// Task Logging&#xD;
+&#xD;
+TaskName=&quot;Manual_Installation_Removal&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
-          <xpdExt:AssociatedParameters>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentDataSet" Mode="INOUT" Mandatory="false"/>
@@ -721,10 +791,33 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;TES_OSG_Verification&quot;;&#xD;
 CommentText=&quot;&quot;;&#xD;
-Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+&#xD;
+&#xD;
+//Task Logging&#xD;
+&#xD;
+&#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">//Task Logging&#xD;
+&#xD;
+TaskName=&quot;TES_OSG_Verification&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
-          <xpdExt:AssociatedParameters>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentDataSet" Mode="INOUT" Mandatory="false"/>
@@ -797,14 +890,39 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Deprovision_Management_IP&quot;;&#xD;
 CommentText=&quot;&quot;;&#xD;
-Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);&#xD;
+&#xD;
+// Task Logging&#xD;
+&#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);&#xD;
+&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">// Task Logging&#xD;
+&#xD;
+TaskName=&quot;Deprovision_Management_IP&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);&#xD;
+</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Offer="OfferAll" xpdExt:Strategy="SYSTEM_DETERMINED" xpdExt:ReOfferOnClose="true" xpdExt:ReOfferOnCancel="true"/>
             <xpdExt:WorkItemPriority InitialPriority="50"/>
           </xpdExt:ActivityResourcePatterns>
-          <xpdExt:AssociatedParameters>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentDataSet" Mode="INOUT" Mandatory="false"/>
@@ -1161,10 +1279,32 @@ Fetch_Groups=cac_com_sfc_fosImpl_dataModel_ContractorGroups.findByCriteria(crite
 for(var index=0; index&lt;Fetch_Groups.size(); index++) {&#xD;
 	ContractorNames.add(Fetch_Groups.get(index).readContractorGroups().loginName);&#xD;
 }&#xD;
+&#xD;
+// Task Logging&#xD;
+&#xD;
+var TaskInitiationTime=DateTimeUtil.createDatetimetz();&#xD;
+&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+&#xD;
+var TaskDetails=&quot;CustomerName:&quot;+Provisioning_Data.clientName+&quot;,SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,AccountManager:&quot;+Provisioning_Data.accountManager+&quot;,ProcessType:&quot;+&quot;Decomissioning&quot;+&quot;,TaskName:&quot;+TaskName+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskInitiationTime:&quot;+TaskInitiationTime+&quot;,TaskCompletionTime:NA,TotalTimeTaken:NA,SLAStatus:NA&quot;;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM] DeactivationProcess:&quot;+TaskDetails);&#xD;
+&#xD;
 </xpdExt:Information>
             </xpdExt:AuditEvent>
             <xpdExt:AuditEvent Type="Completed">
-              <xpdExt:Information ScriptGrammar="JavaScript">MasterContractor=&quot;resource(name='&quot;+SelectedContractor+&quot;')&quot;;</xpdExt:Information>
+              <xpdExt:Information ScriptGrammar="JavaScript">MasterContractor=&quot;resource(name='&quot;+SelectedContractor+&quot;')&quot;;&#xD;
+&#xD;
+&#xD;
+//Task Logging&#xD;
+&#xD;
+TaskName=&quot;Select_Contractor&quot;;&#xD;
+var TaskCompletionTime=DateTimeUtil.createDatetimetz();&#xD;
+var TimeDifference=ScriptUtil.subtract(TaskCompletionTime,Process.getActivityStartTime(TaskName));&#xD;
+var defaultSla=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'PM_Review','Decomissioning').readSLA_Configuration().SLA_Deadline;&#xD;
+var TaskDetails=&quot;SiebelCircuitID:&quot;+Provisioning_Data.siebelCircuitID+&quot;,ProcessType:Decomissioning&quot;+&quot;,PM:&quot;+Provisioning_Data.projectManager+&quot;,TaskDefaultSLA:&quot;+defaultSla+&quot;,TaskCompletionTime:&quot;+TaskCompletionTime+&quot;,TotalTimeTaken:&quot;+TimeDifference+&quot;,TaskName:&quot;+TaskName;&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:&quot;+TaskDetails);</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">

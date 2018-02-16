@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/DataFormat/Look Up Case Creation Format.sharedparse" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/DataFormat/SLA Case Creation Format.sharedparse" xmlns:ns="http://api.bds.tibco.com" xmlns:pfx4="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:pfx5="http://fosImpl.sfc.com/dataModel" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/DataFormat/Look Up Case Creation Format.sharedparse" schemaLocation="/SharedResources/DataFormat/Look Up Case Creation Format.sharedparse"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/DataFormat/SLA Case Creation Format.sharedparse" schemaLocation="/SharedResources/DataFormat/SLA Case Creation Format.sharedparse"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/AutomatedCaseDataCreation/SharedResources/DataFormat/Schema.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/AutomatedCaseDataCreation/SharedResources/BPM API Call Concrete WSDL/WSDL/CaseCreation.wsdl"/>
+    <pd:name>UnitTesting/AutomatedCaseDataCreation/Processes/SLAConfigurations Case Creation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>43</pd:startX>
+    <pd:startY>58</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>766</pd:endX>
+    <pd:endY>73</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1518696141335</pd:targetNamespace>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>157</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>%%BPM/AutomatedCaseDataCreation/SLAConfigurationData/DataFormat%%</ParseSharedConfig>
+            <SkipBlankLines>true</SkipBlankLines>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/SLAConfigurationData/FilePath"/>
+                </fileName>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>251</pd:x>
+        <pd:y>0</pd:y>
+        <pd:width>373</pd:width>
+        <pd:height>135</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Data/Output/Rows/SLACase</pd:over>
+            <pd:iterationElementSlot>iter</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Render XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SOAPRequestReply</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render XML</pd:from>
+            <pd:to>SOAPRequestReply</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="SOAPRequestReply">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>521</pd:x>
+            <pd:y>69</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx:BusinessDataServices_1.2.0</service>
+                <servicePort>BusinessDataServices.soap</servicePort>
+                <operation>createCase</operation>
+                <soapAction>createCase</soapAction>
+                <endpointURL>%%BPM/AutomatedCaseDataCreation/SLAConfigurationData/EndPoint%%</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns:CreateCaseRequest>
+                        <caseType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/SLAConfigurationData/CaseType"/>
+                        </caseType>
+                        <caseModelVersion>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/SLAConfigurationData/CaseModelVersion"/>
+                        </caseModelVersion>
+                        <casePayload>
+                            <xsl:value-of select="$Render-XML/xmlString"/>
+                        </casePayload>
+                    </ns:CreateCaseRequest>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Render XML">
+            <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+            <pd:x>355</pd:x>
+            <pd:y>66</pd:y>
+            <config>
+                <renderAsText>text</renderAsText>
+                <validateInput>false</validateInput>
+                <cdataSections>
+                    <row expandedName="{http://fosImpl.sfc.com/dataModel}SLA_ConfigurationElement"/>
+                </cdataSections>
+                <term ref="pfx5:SLA_ConfigurationElement"/>
+            </config>
+            <pd:inputBindings>
+                <pfx5:SLA_ConfigurationElement>
+                    <SLALevel>
+                        <xsl:value-of select="$iter/SLACase/slaLevel"/>
+                    </SLALevel>
+                    <taskName>
+                        <xsl:value-of select="$iter/SLACase/taskName"/>
+                    </taskName>
+                    <processName>
+                        <xsl:value-of select="$iter/SLACase/processName"/>
+                    </processName>
+                    <SLA_Deadline>
+                        <xsl:value-of select="$iter/SLACase/slaDeadline"/>
+                    </SLA_Deadline>
+                    <xsl:if test="$iter/SLACase/emailTo">
+                        <emailTo>
+                            <xsl:value-of select="$iter/SLACase/emailTo"/>
+                        </emailTo>
+                    </xsl:if>
+                    <taskTo>
+                        <xsl:value-of select="$iter/SLACase/taskTo"/>
+                    </taskTo>
+                    <emailConfig>
+                        <xsl:value-of select="$iter/SLACase/emailConfig"/>
+                    </emailConfig>
+                    <taskConfig>
+                        <xsl:value-of select="$iter/SLACase/taskConfig"/>
+                    </taskConfig>
+                    <enableDisableFlag>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/SLAConfigurationData/EnableDisableFlag"/>
+                    </enableDisableFlag>
+                </pfx5:SLA_ConfigurationElement>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

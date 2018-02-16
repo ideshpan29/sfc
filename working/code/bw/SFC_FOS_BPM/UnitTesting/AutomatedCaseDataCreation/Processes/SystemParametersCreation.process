@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns0="http://api.bds.tibco.com">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/AutomatedCaseDataCreation/SharedResources/DataFormat/Schema.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/AutomatedCaseDataCreation/SharedResources/BPM API Call Concrete WSDL/WSDL/CaseCreation.wsdl"/>
+    <pd:name>UnitTesting/AutomatedCaseDataCreation/Processes/SystemParametersCreation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>82</pd:startX>
+    <pd:startY>68</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>773</pd:endX>
+    <pd:endY>74</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1518762865811</pd:targetNamespace>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>187</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <SkipBlankLines>true</SkipBlankLines>
+            <ParseSharedConfig>%%BPM/AutomatedCaseDataCreation/SystemParametersData/DataFormat%%</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/SystemParametersData/FilePath"/>
+                </fileName>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>380</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>317</pd:width>
+        <pd:height>133</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Data/Output/Rows/SystemParametersCaseCreation</pd:over>
+            <pd:iterationElementSlot>iter</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Render XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SOAPRequestReply</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render XML</pd:from>
+            <pd:to>SOAPRequestReply</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="SOAPRequestReply">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>613</pd:x>
+            <pd:y>76</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx:BusinessDataServices_1.2.0</service>
+                <servicePort>BusinessDataServices.soap</servicePort>
+                <operation>createCase</operation>
+                <soapAction>createCase</soapAction>
+                <endpointURL>%%BPM/AutomatedCaseDataCreation/SystemParametersData/EndPoint%%</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns0:CreateCaseRequest>
+                        <caseType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/SystemParametersData/CaseType"/>
+                        </caseType>
+                        <caseModelVersion>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/SystemParametersData/CaseModelVersion"/>
+                        </caseModelVersion>
+                        <casePayload>
+                            <xsl:value-of select="$Render-XML/xmlString"/>
+                        </casePayload>
+                    </ns0:CreateCaseRequest>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Render XML">
+            <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+            <pd:x>475</pd:x>
+            <pd:y>71</pd:y>
+            <config>
+                <renderAsText>text</renderAsText>
+                <validateInput>false</validateInput>
+                <cdataSections>
+                    <row expandedName="{http://fosImpl.sfc.com/dataModel}SystemParametersElement"/>
+                </cdataSections>
+                <term ref="pfx2:SystemParametersElement"/>
+            </config>
+            <pd:inputBindings>
+                <pfx2:SystemParametersElement>
+                    <propertyName>
+                        <xsl:value-of select="$iter/SystemParametersCaseCreation/SystemProperty"/>
+                    </propertyName>
+                    <xsl:if test="$iter/SystemParametersCaseCreation/SystemValue">
+                        <propertyValue>
+                            <xsl:value-of select="$iter/SystemParametersCaseCreation/SystemValue"/>
+                        </propertyValue>
+                    </xsl:if>
+                </pfx2:SystemParametersElement>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

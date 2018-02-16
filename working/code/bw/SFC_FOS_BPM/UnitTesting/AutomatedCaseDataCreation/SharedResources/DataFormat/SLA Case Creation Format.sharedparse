@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <name>SLA Case Creation Format</name>
+    <resourceType>ae.shared.ParseSharedResource</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <FormatType>Delimiter separated</FormatType>
+        <ColumnSeparator>,</ColumnSeparator>
+        <ColSeparatorRule>Treat all characters as entered as a single column separator string</ColSeparatorRule>
+        <LineSeparator>
+</LineSeparator>
+        <FillCharacter>Space</FillCharacter>
+        <LineLength>1</LineLength>
+        <DataFormat>
+            <xsd:element name="SLACase">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="slaLevel" type="xsd:string"/>
+                        <xsd:element name="processName" type="xsd:string"/>
+                        <xsd:element name="taskName" type="xsd:string"/>
+                        <xsd:element name="slaDeadline" type="xsd:string"/>
+                        <xsd:element name="emailTo" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="taskTo" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="emailConfig" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="taskConfig" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ToggleValue" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </DataFormat>
+    </config>
+</BWSharedResource>

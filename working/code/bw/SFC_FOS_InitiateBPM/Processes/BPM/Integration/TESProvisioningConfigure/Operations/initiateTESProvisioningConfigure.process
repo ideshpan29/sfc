@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/Activation" xmlns:pfx="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" xmlns:pfx2="http://example.com/sfc_provisioningbom" xmlns:ns="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx3="http://fosImpl.sfc.com/dataModel" xmlns:pfx4="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx5="http://www.tibco.com/schemas/SFC_FOS_InitiateBPM/Processes/BPM/Integration/Decommissioning/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://www.tibco.com/bx/2009/management/processManagerType" xmlns:ns3="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns5="www.tibco.com/plugin/Sleep" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="http://example.com/sfc_provisioningbom"/>
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/BPM/Integration/Provisioning/SharedResources/WSDL/InitiateProvision.wsdl"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_InitiateBPM/Processes/BPM/Integration/Decommissioning/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/initiateBPM.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" location="/Processes/BPM/Integration/Decommissioning/SharedResources/WSDL/ProcessManagementService.wsdl"/>
+    <wsdl:import namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/comsfcfosImplremoval_tobeRemoval" location="/Processes/BPM/Integration/Decommissioning/SharedResources/WSDL/InitiateDecommission.wsdl"/>
+    <wsdl:import namespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw/Activation" location="/Processes/BPM/Integration/Provisioning/SharedResources/WSDL/InitiateProvision.wsdl"/>
+    <pd:name>Processes/BPM/Integration/TESProvisioningConfigure/Operations/initiateTESProvisioningConfigure.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx5:TESProvisioningConfigureRequest"/>
+    <pd:startX>204</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx5:ProvisionExecutionResponse>
+            <pfx5:Header>
+                <pfx5:planID>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:planID"/>
+                </pfx5:planID>
+                <pfx5:orderRefNum>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:orderRefNum"/>
+                </pfx5:orderRefNum>
+                <pfx5:orderID>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:orderID"/>
+                </pfx5:orderID>
+                <pfx5:correlationID>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:correlationID"/>
+                </pfx5:correlationID>
+                <pfx5:businessTransactionID>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:businessTransactionID"/>
+                </pfx5:businessTransactionID>
+            </pfx5:Header>
+            <pfx5:status>
+                <pfx5:isError>
+                    <xsl:value-of select="if(count($Catch-All-Exceptions/exceptiondata/*) > 0) then&#xA;'true'&#xA;else &#xA;'false'"/>
+                </pfx5:isError>
+                <pfx5:pvmID>
+                    <xsl:value-of select="'NA'"/>
+                </pfx5:pvmID>
+                <pfx5:statusCode>
+                    <xsl:value-of select="if(count($Catch-All-Exceptions/exceptiondata/*) > 0) then&#xA;$_globalVariables/ns6:GlobalVariables/TESProvisioningConfigure/msgCodes/Failure/statusCode&#xA;else &#xA;$_globalVariables/ns6:GlobalVariables/TESProvisioningConfigure/msgCodes/Success/statusCode"/>
+                </pfx5:statusCode>
+                <pfx5:statusDescription>
+                    <xsl:value-of select="if(count($Catch-All-Exceptions/exceptiondata/*) > 0) then&#xA;tib:render-xml($_error/ns1:ErrorReport)&#xA;else &#xA;$_globalVariables/ns6:GlobalVariables/TESProvisioningConfigure/msgCodes/Success/statusDescription"/>
+                </pfx5:statusDescription>
+            </pfx5:status>
+        </pfx5:ProvisionExecutionResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx5:ProvisionExecutionResponse"/>
+    <pd:endX>510</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1513938429988</pd:targetNamespace>
+    <pd:activity name="Catch All Exceptions">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>510</pd:x>
+        <pd:y>188</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="intiateTESProvisioningConfigure">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>343</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <timeout>%%BPM/endPointDetails/Timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx6:Activation</service>
+            <servicePort>Activation_EP</servicePort>
+            <operation>WaitforprocessComponent</operation>
+            <soapAction>WaitforprocessComponent</soapAction>
+            <endpointURL>%%BPM/endPointDetails/URL%%%%TESProvisioningConfigure/Endpoint/PAASEndpoint%%</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <WaitforprocessComponent>
+                <Correlation_Activation>
+                    <xsl:value-of select="$Start/pfx5:TESProvisioningConfigureRequest/pfx5:Header/pfx5:correlationID"/>
+                </Correlation_Activation>
+            </WaitforprocessComponent>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Catch All Exceptions</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>intiateTESProvisioningConfigure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>intiateTESProvisioningConfigure</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

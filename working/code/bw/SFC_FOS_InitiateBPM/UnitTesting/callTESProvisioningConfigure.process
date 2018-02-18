@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://fosImpl.sfc.com/dataModel" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_InitiateBPM/Processes/BPM/Integration/Decommissioning/SharedResources/SchemaDefinitions/Schema.xsd">
+    <pd:name>UnitTesting/callTESProvisioningConfigure.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1518967330403</pd:targetNamespace>
+    <pd:activity name="TESProvisioningConfigure">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>292</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/Processes/BPM/Integration/TESProvisioningConfigure/Operations/initiateTESProvisioningConfigure.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns2:TESProvisioningConfigureRequest>
+                <ns2:Header>
+                    <ns2:planID>
+                        <xsl:value-of select="'PID'"/>
+                    </ns2:planID>
+                    <ns2:orderRefNum>
+                        <xsl:value-of select="'ORFDER'"/>
+                    </ns2:orderRefNum>
+                    <ns2:orderID>
+                        <xsl:value-of select="'ORDER'"/>
+                    </ns2:orderID>
+                    <ns2:correlationID>
+                        <xsl:value-of select="'CoReID2215.22715.227'"/>
+                    </ns2:correlationID>
+                    <ns2:businessTransactionID>
+                        <xsl:value-of select="'WWQEW'"/>
+                    </ns2:businessTransactionID>
+                </ns2:Header>
+            </ns2:TESProvisioningConfigureRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TESProvisioningConfigure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TESProvisioningConfigure</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

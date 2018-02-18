@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://fosImpl.sfc.com/dataModel" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <pd:name>UnitTesting/callTESProvisioningCease.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>441</pd:endX>
+    <pd:endY>65</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1518975359402</pd:targetNamespace>
+    <pd:activity name="TESProvisioningCease">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>297</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/Processes/BPM/Integration/Decommissioning/Operations/initiateDecomissioning.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns:DecommissionExecutionRequestElement>
+                <header>
+                    <businessTransactionID>
+                        <xsl:value-of select="concat('bTxnID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </businessTransactionID>
+                    <correlationID>
+                        <xsl:value-of select="concat('corID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </correlationID>
+                    <orderID>
+                        <xsl:value-of select="concat('OID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </orderID>
+                    <orderRefNum>
+                        <xsl:value-of select="concat('OrderRefID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </orderRefNum>
+                    <planID>
+                        <xsl:value-of select="concat('PID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </planID>
+                </header>
+                <planItem>
+                    <planItemID>
+                        <xsl:value-of select="concat('PITID',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                    </planItemID>
+                    <provisioningData>
+                        <siebelCircuitID>
+                            <xsl:value-of select="concat(tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </siebelCircuitID>
+                        <clientName>
+                            <xsl:value-of select="concat('TEST_CUST_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </clientName>
+                        <accountManager>
+                            <xsl:value-of select="concat('ACC_MGR_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </accountManager>
+                        <account>
+                            <xsl:value-of select="'NEW'"/>
+                        </account>
+                        <location>
+                            <xsl:value-of select="concat('TEST_LOC_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </location>
+                        <regionView>
+                            <xsl:value-of select="concat('REG_VIEW_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </regionView>
+                        <floor>
+                            <xsl:value-of select="concat('TEST_FLR_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </floor>
+                        <clientID>
+                            <xsl:value-of select="concat('TEST_CLIENT_ID_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </clientID>
+                        <serviceType>
+                            <xsl:value-of select="'INTERNET'"/>
+                        </serviceType>
+                        <GPSCoordinates>
+                            <xsl:value-of select="'23'"/>
+                        </GPSCoordinates>
+                        <bandwidthupdown>
+                            <xsl:value-of select="'1 MBPS'"/>
+                        </bandwidthupdown>
+                        <technology>
+                            <xsl:value-of select="'FIBER'"/>
+                        </technology>
+                        <serviceStatus>
+                            <xsl:value-of select="'REGISTERED'"/>
+                        </serviceStatus>
+                        <buildingName>
+                            <xsl:value-of select="concat('BDLG_NAME_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </buildingName>
+                        <buildingID>
+                            <xsl:value-of select="concat('BDLG_ID_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </buildingID>
+                        <contactPerson>
+                            <xsl:value-of select="concat('CONTACT_PERSON_',tib:get-hours-from-dateTime(current-dateTime()),tib:get-minutes-from-dateTime(current-dateTime()),substring-before(tib:get-seconds-from-dateTime(current-dateTime()), '.'))"/>
+                        </contactPerson>
+                        <mobile>
+                            <xsl:value-of select="'909019230'"/>
+                        </mobile>
+                        <sector>
+                            <xsl:value-of select="'2'"/>
+                        </sector>
+                        <email>
+                            <xsl:value-of select="'alan@demogmail.com'"/>
+                        </email>
+                        <serviceStart>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </serviceStart>
+                        <serviceEnd>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </serviceEnd>
+                        <requestDate>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </requestDate>
+                        <installDate>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </installDate>
+                    </provisioningData>
+                    <technicalInformation>
+                        <carrierVLAN>
+                            <xsl:value-of select="'123.123.123.123'"/>
+                        </carrierVLAN>
+                        <carrierIP>
+                            <xsl:value-of select="'123'"/>
+                        </carrierIP>
+                        <aggPoint>
+                            <xsl:value-of select="'123'"/>
+                        </aggPoint>
+                        <port>
+                            <xsl:value-of select="'123'"/>
+                        </port>
+                        <clientVLAN>
+                            <xsl:value-of select="'123'"/>
+                        </clientVLAN>
+                        <clientIP>
+                            <xsl:value-of select="'123'"/>
+                        </clientIP>
+                        <SFCPOPPE>
+                            <xsl:value-of select="'123'"/>
+                        </SFCPOPPE>
+                        <portType>
+                            <xsl:value-of select="'123'"/>
+                        </portType>
+                        <equipment>
+                            <type>
+                                <xsl:value-of select="'123'"/>
+                            </type>
+                            <address>
+                                <xsl:value-of select="'123'"/>
+                            </address>
+                            <VLAN>
+                                <xsl:value-of select="'123'"/>
+                            </VLAN>
+                        </equipment>
+                        <modifiedBy>
+                            <xsl:value-of select="'GateKeeper'"/>
+                        </modifiedBy>
+                        <modifiedDate>
+                            <xsl:value-of select="current-date()"/>
+                        </modifiedDate>
+                    </technicalInformation>
+                </planItem>
+            </ns:DecommissionExecutionRequestElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TESProvisioningCease</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TESProvisioningCease</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

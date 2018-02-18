@@ -9,40 +9,45 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="AdminErrorTask">
             <startingVariables>
-                <variable>ErrorCode</variable>
                 <variable>ErrorDetail</variable>
+                <variable>ErrorCode</variable>
             </startingVariables>
         </task>
         <task name="DecomissioningInitiateMail">
             <startingVariables>
                 <variable>EmailTo</variable>
-                <variable>CustomerID</variable>
                 <variable>RegisteredMail</variable>
-                <variable>ClientID</variable>
+                <variable>CustomerID</variable>
                 <variable>ClientName</variable>
+                <variable>ClientID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>EmailTo</variable>
-                <variable>CustomerID</variable>
                 <variable>RegisteredMail</variable>
+                <variable>CustomerID</variable>
+                <variable>ClientName</variable>
                 <variable>Provision</variable>
                 <variable>ClientID</variable>
-                <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
         <task name="DecomissioningCompleteMail">
             <startingVariables>
-                <variable>ClientName</variable>
                 <variable>ClientID</variable>
                 <variable>EmailTo</variable>
                 <variable>CircuitID</variable>
+                <variable>ClientName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientName</variable>
                 <variable>ClientID</variable>
-                <variable>Provision</variable>
                 <variable>EmailTo</variable>
                 <variable>CircuitID</variable>
+                <variable>ClientName</variable>
+                <variable>Provision</variable>
+            </ProcessManagerScript>
+        </task>
+        <task name="StartEvent">
+            <ProcessManagerScript type="Complete">
+                <variable>SystemParamRef</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -57,6 +62,8 @@
             tibex:xpdlId="_9zk2oP6_EeeuGbQVt6VBIQ" type="xsd:string"/>
         <bpws:variable name="ErrorDetail"
             tibex:xpdlId="_-ubVUP6_EeeuGbQVt6VBIQ" type="xsd:string"/>
+        <bpws:variable name="SystemParamRef"
+            tibex:classRef="com.sfc.fosImpl.dataModel.SystemParameters" tibex:xpdlId="_DmO98BRaEeiI4LtXlpi0-g"/>
         <bpws:variable name="_BX_fanVariable" type="xsd:int">
             <bpws:from>
                 <bpws:literal><![CDATA[0]]></bpws:literal>
@@ -76,14 +83,17 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_J7eOwBMHEei4EeTLKrs4Jw">
+    <bpws:flow name="_BX_flow_L5gcEBSkEeiI4LtXlpi0-g">
         <bpws:links>
             <bpws:link name="CatchError to AdminErrorTask" tibex:xpdlId="_5Eb8EP7BEeeuGbQVt6VBIQ"/>
             <bpws:link name="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_By_AkP7CEeeuGbQVt6VBIQ"/>
             <bpws:link
                 name="_BX_scope_DecomissioningInit to _BX_un-named" tibex:xpdlId="_jc7BEP7BEeeuGbQVt6VBIQ"/>
             <bpws:link name="_BX_un-named to CatchError"/>
-            <bpws:link name="StartEvent to _hXsCYPzeEeehkqoKISnbpw" tibex:xpdlId="_hXspcPzeEeehkqoKISnbpw"/>
+            <bpws:link
+                name="_QQBwABRaEeiI4LtXlpi0-g to _hXsCYPzeEeehkqoKISnbpw" tibex:xpdlId="_hXspcPzeEeehkqoKISnbpw"/>
+            <bpws:link name="_QQBwABRaEeiI4LtXlpi0-g to EndEvent" tibex:xpdlId="_aZ6KEBRaEeiI4LtXlpi0-g"/>
+            <bpws:link name="StartEvent to _QQBwABRaEeiI4LtXlpi0-g" tibex:xpdlId="_QQCXEBRaEeiI4LtXlpi0-g"/>
             <bpws:link name="_BX_normalFlow to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_tXmzcP6_EeeuGbQVt6VBIQ"/>
             <bpws:link
                 name="_BX_normalFlow_2 to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_umdzQP6_EeeuGbQVt6VBIQ"/>
@@ -103,12 +113,19 @@
                 name="StartEvent" tibex:type="startEvent"
                 tibex:xpdlId="_Z0iaAfzeEeehkqoKISnbpw" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:sources>
-                    <bpws:source linkName="StartEvent to _hXsCYPzeEeehkqoKISnbpw"/>
+                    <bpws:source linkName="StartEvent to _QQBwABRaEeiI4LtXlpi0-g"/>
                 </bpws:sources>
+                <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[SystemParamRef = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("DISABLE_EMAIL_FLAG");
+
+]]></tibex:completedScript>
                 <tibex:parameters>
                     <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="Provision"/>
                 </tibex:parameters>
+                <tibex:completedScript
+                    expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SystemParamRef = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("DISABLE_EMAIL_FLAG");
+
+]]></tibex:completedScript>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
                 </tibex:eventSource>
@@ -117,13 +134,14 @@
         <bpws:empty name="EndEvent" tibex:migrationAllowed="yes"
             tibex:type="endEvent" tibex:xpdlId="_Z0iaAvzeEeehkqoKISnbpw">
             <bpws:targets>
+                <bpws:target linkName="_QQBwABRaEeiI4LtXlpi0-g to EndEvent"/>
                 <bpws:target linkName="_sErL8P6_EeeuGbQVt6VBIQ to EndEvent"/>
             </bpws:targets>
         </bpws:empty>
         <bpws:empty name="_BX_gateway__hXsCYPzeEeehkqoKISnbpw"
             tibex:type="exclusiveGateway" tibex:xpdlId="_hXsCYPzeEeehkqoKISnbpw">
             <bpws:targets>
-                <bpws:target linkName="StartEvent to _hXsCYPzeEeehkqoKISnbpw"/>
+                <bpws:target linkName="_QQBwABRaEeiI4LtXlpi0-g to _hXsCYPzeEeehkqoKISnbpw"/>
             </bpws:targets>
             <bpws:sources tibex:maxTrue="1">
                 <bpws:source linkName="_hXsCYPzeEeehkqoKISnbpw to _BX_scope_DecomissioningInit">
@@ -201,6 +219,20 @@
             </bpws:targets>
             <bpws:sources>
                 <bpws:source linkName="_BX_un-named_2 to CatchError"/>
+            </bpws:sources>
+        </bpws:empty>
+        <bpws:empty name="_BX_gateway__QQBwABRaEeiI4LtXlpi0-g"
+            tibex:type="exclusiveGateway" tibex:xpdlId="_QQBwABRaEeiI4LtXlpi0-g">
+            <bpws:targets>
+                <bpws:target linkName="StartEvent to _QQBwABRaEeiI4LtXlpi0-g"/>
+            </bpws:targets>
+            <bpws:sources tibex:maxTrue="1">
+                <bpws:source linkName="_QQBwABRaEeiI4LtXlpi0-g to _hXsCYPzeEeehkqoKISnbpw">
+                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                </bpws:source>
+                <bpws:source linkName="_QQBwABRaEeiI4LtXlpi0-g to EndEvent">
+                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[(SystemParamRef.readSystemParameters().propertyValue=="Y");]]></bpws:transitionCondition>
+                </bpws:source>
             </bpws:sources>
         </bpws:empty>
         <bpws:scope name="_BX_scope_DecomissioningInitiateMail" tibex:migrationAllowed="yes">

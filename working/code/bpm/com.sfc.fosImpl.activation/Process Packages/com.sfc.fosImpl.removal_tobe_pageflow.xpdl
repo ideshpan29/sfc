@@ -35,7 +35,7 @@
       <xpdl2:Lanes>
         <xpdl2:Lane Id="_tHTqYd_CEeec4K-r6PSjHg" xpdExt:DisplayName="Lane" Name="Lane">
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo Height="320.0"/>
+            <xpdl2:NodeGraphicsInfo Height="344.0"/>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Lane>
       </xpdl2:Lanes>
@@ -45,7 +45,7 @@
     </xpdl2:Pool>
   </xpdl2:Pools>
   <xpdl2:WorkflowProcesses>
-    <xpdl2:WorkflowProcess Id="_p7fOoN_CEeec4K-r6PSjHg" xpdExt:DisplayName="comsfcfosImplremoval_tobe_pageflow-Process" xpdExt:XpdModelType="PageFlow" Name="comsfcfosImplremoval_tobe_pageflowProcess">
+    <xpdl2:WorkflowProcess Id="_p7fOoN_CEeec4K-r6PSjHg" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="UserTaskPageFlow" Name="UserTaskPageFlow">
       <xpdl2:ProcessHeader>
         <xpdl2:Description></xpdl2:Description>
       </xpdl2:ProcessHeader>
@@ -81,7 +81,7 @@
             </xpdl2:BasicType>
           </xpdl2:DataType>
         </xpdl2:FormalParameter>
-        <xpdl2:FormalParameter Id="_8EQNMPENEeeJiLkPq4yokA" Name="SelectedGroup" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="SelectedGroup">
+        <xpdl2:FormalParameter Id="_8EQNMPENEeeJiLkPq4yokA" Name="SelectedContractorGroup" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="SelectedContractorGroup">
           <xpdl2:DataType>
             <xpdl2:BasicType Type="STRING">
               <xpdl2:Length>50</xpdl2:Length>
@@ -151,6 +151,16 @@
             </xpdl2:BasicType>
           </xpdl2:DataType>
         </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_7_cSEBRhEeiI4LtXlpi0-g" Name="mgmtIPFlag" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="mgmtIPFlag">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="BOOLEAN"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_9WKNYBRhEeiI4LtXlpi0-g" Name="equipmentFlag" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="equipmentFlag">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="BOOLEAN"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
       </xpdl2:FormalParameters>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_PNS9kPt1EeeupNwu8S8N4Q" xpdExt:DisplayName="AccountType" Name="AccountType" IsArray="true" ReadOnly="false">
@@ -185,12 +195,26 @@
             <xpdl2:BasicType Type="BOOLEAN"/>
           </xpdl2:DataType>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_W5DeUBB8EeiZiLgDoQc00Q" xpdExt:DisplayName="Fetch Resource ListOutput" Name="FetchResourceListOutput" IsArray="false">
+        <xpdl2:DataField Id="_9TAXsBPdEeiI4LtXlpi0-g" xpdExt:DisplayName="infoLoggerFlag" Name="infoLoggerFlag">
           <xpdl2:DataType>
-            <xpdl2:ExternalReference location="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemafetchresourceoutputType"/>
+            <xpdl2:BasicType Type="BOOLEAN"/>
           </xpdl2:DataType>
         </xpdl2:DataField>
-        <xpdl2:DataField Id="_mQVxYBB8EeiZiLgDoQc00Q" xpdExt:DisplayName="ResourceList" Name="ResourceList" IsArray="true">
+        <xpdl2:DataField Id="_1Xb9YBPfEeiI4LtXlpi0-g" xpdExt:DisplayName="PM_List" Name="PM_List" IsArray="true">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_cY6fUBRYEeiI4LtXlpi0-g" xpdExt:DisplayName="CtrGroups_List" Name="CtrGroups_List" IsArray="true">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_HiVqUBReEeiI4LtXlpi0-g" xpdExt:DisplayName="GrpNames" Name="GrpNames" IsArray="true">
           <xpdl2:DataType>
             <xpdl2:BasicType Type="STRING">
               <xpdl2:Length>50</xpdl2:Length>
@@ -204,12 +228,84 @@
             <xpdl2:StartEvent Trigger="None"/>
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="27.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="27.0">
-              <xpdl2:Coordinates XCoordinate="55.0" YCoordinate="155.0"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="47.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="58.0">
+              <xpdl2:Coordinates XCoordinate="155.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var  provInfoLogging = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(&quot;PROVISIONING_INFO_LOGGING&quot;);&#xD;
+if((provInfoLogging !=null) &amp;&amp; (provInfoLogging.readSystemParameters() !=null)){&#xD;
+	if(provInfoLogging.readSystemParameters().propertyValue==&quot;Y&quot;) {&#xD;
+		infoLoggerFlag=true;&#xD;
+	}&#xD;
+	else {&#xD;
+		infoLoggerFlag=false;&#xD;
+	}&#xD;
+}&#xD;
+&#xD;
+if(TaskName==&quot;GateKeeper&quot;) {&#xD;
+	var PMList=Process.getOrgModel().groupByName(&quot;PM&quot;).get(0).getResources();&#xD;
+	if(infoLoggerFlag==true) {&#xD;
+		Log.write(&quot;[SFC_FOSIMPL_BPM] UserTaskPageFLow_Complete_Script_Start_Event_PM_Performer : &quot;+PMList.size());&#xD;
+	}&#xD;
+	for(var i=0;i&lt;PMList.size();i++) {&#xD;
+		if(infoLoggerFlag==true) {&#xD;
+			Log.write(&quot;[SFC_FOSIMPL_BPM] UserTaskPageFlow_Complete_Script_Start_Event_getName : &quot;+PMList.get(i).getName());&#xD;
+		}	&#xD;
+		PM_List.add(PMList.get(i).getName());	&#xD;
+	}&#xD;
+}&#xD;
+else if(TaskName == &quot;PM_Track_Installation&quot;) {&#xD;
+	var criteria = &quot;masterUser='Y'&quot;;	&#xD;
+	var Fetch_Groups=cac_com_sfc_fosImpl_dataModel_ContractorGroups.findByCriteria(criteria);&#xD;
+	for(var i=0;i&lt;Fetch_Groups.size();i++) {	&#xD;
+		GrpNames.add(i,Fetch_Groups.get(i).readContractorGroups().contractorGroupName);&#xD;
+	}&#xD;
+}&#xD;
+&#xD;
+&#xD;
+/*&#xD;
+&#xD;
+if(TaskName==&quot;PM_Review&quot;){&#xD;
+var a=Process.getOriginatorName();&#xD;
+EscalationEmail=Process.getOrgModel().resourceByName(a).get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
+&#xD;
+}&#xD;
+&#xD;
+if(TaskName==&quot;Manual_Installation_Removal&quot;) {&#xD;
+	SystemParamRef= cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(&quot;Contractor_Mobile_Task_Flag&quot;);&#xD;
+	if(SystemParamRef.readSystemParameters().propertyValue==&quot;Enable&quot;) {&#xD;
+		CtrMobileTaskDecision = true;&#xD;
+	}&#xD;
+	else {&#xD;
+		CtrMobileTaskDecision=false;&#xD;
+	}&#xD;
+}&#xD;
+*/&#xD;
+&#xD;
+CtrMobileTaskDecision=false;&#xD;
+&#xD;
+var criteria = &quot;siebelCircuitID='&quot;+Provisioning_Data.siebelCircuitID+&quot;'&quot;;&#xD;
+CommentDataSet=cac_com_sfc_fosImpl_dataModel_CommentDataCase.findByCriteria(criteria);&#xD;
+&#xD;
+CommentHistory.clear();&#xD;
+if(CommentDataSet.size()>0){&#xD;
+	for(var index=0; index&lt;CommentDataSet.size(); index++) {&#xD;
+		var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();&#xD;
+		comment.addedby=CommentDataSet.get(index).readCommentDataCase().addedby;&#xD;
+		comment.comments=CommentDataSet.get(index).readCommentDataCase().comments;&#xD;
+		comment.stepName=CommentDataSet.get(index).readCommentDataCase().taskName;&#xD;
+		comment.time=CommentDataSet.get(index).readCommentDataCase().time;&#xD;
+		CommentHistory.add(comment);	&#xD;
+	}&#xD;
+}&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_tHTqY9_CEeec4K-r6PSjHg" Name="EndEvent" xpdExt:DisplayName="End Event">
+        <xpdl2:Activity Id="_tHTqY9_CEeec4K-r6PSjHg" Name="EndEvent" xpdExt:DisplayName="End Event" xpdExt:Visibility="Private">
           <xpdl2:Event>
             <xpdl2:EndEvent Result="None"/>
           </xpdl2:Event>
@@ -218,6 +314,14 @@
               <xpdl2:Coordinates XCoordinate="1060.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">if(infoLoggerFlag==true) {&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTaskPageFlow_Initiate_Script_End_Event&quot;);&#xD;
+}	</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_7fQnYN_CEeec4K-r6PSjHg" Name="ConfirmDetails" xpdExt:Visibility="Private" xpdExt:DisplayName="Confirm Details">
           <xpdl2:Implementation>
@@ -238,7 +342,7 @@
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="123.0">
-              <xpdl2:Coordinates XCoordinate="718.0" YCoordinate="155.0"/>
+              <xpdl2:Coordinates XCoordinate="544.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -251,27 +355,44 @@
             <xpdExt:AssociatedParameter FormalParam="TechnicalInfo" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false"/>
-            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractorGroup" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentText" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false"/>
-            <xpdExt:AssociatedParameter FormalParam="ResourceList" Mode="INOUT" Mandatory="false">
+            <xpdExt:AssociatedParameter FormalParam="SelectedPM" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="PM_List" Mode="INOUT" Mandatory="false">
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="GrpNames" Mode="INOUT" Mandatory="false">
+              <xpdl2:Description/>
+            </xpdExt:AssociatedParameter>
+            <xpdExt:AssociatedParameter FormalParam="mgmtIPFlag" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="equipmentFlag" Mode="INOUT" Mandatory="false"/>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Completed">
               <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=TaskName;&#xD;
 var Log_Activity_Type=&quot;End&quot;;&#xD;
 var Log_Activity_Resource=&quot;USER&quot;;&#xD;
-Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+if( (infoLoggerFlag==true) &amp;&amp; (TaskName==&quot;GateKeeper&quot;) ){&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTask_Complete_Script_Selected_PM : &quot;+SelectedPM);&#xD;
+}&#xD;
+else if( (infoLoggerFlag==true) &amp;&amp; (TaskName==&quot;GateKeeper&quot;)) {&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTask_Complete_Script_Selected_Contractor_Group :&quot;+SelectedContractorGroup);&#xD;
+}</xpdExt:Information>
             </xpdExt:AuditEvent>
             <xpdExt:AuditEvent Type="Initiated">
               <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=TaskName;&#xD;
 var Log_Activity_Type=&quot;Start&quot;;&#xD;
 var Log_Activity_Resource=&quot;USER&quot;;&#xD;
-Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
+&#xD;
+if( (infoLoggerFlag==true) &amp;&amp; (TaskName==&quot;GateKeeper&quot;) ){&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTask_Initiate_Script_PM_List_Size :&quot;+PM_List.size());&#xD;
+}&#xD;
+else if( (infoLoggerFlag==true) &amp;&amp; (TaskName==&quot;GateKeeper&quot;)) {&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTask_Initiate_Script_PM_List_Size :&quot;+CtrGroups_List.size());&#xD;
+}</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -329,72 +450,6 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_O0-jIPdiEeeVceMtR_75Ng" Name="ScriptTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Script Task">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">CtrMobileTaskDecision=false;&#xD;
-&#xD;
-var criteria = &quot;siebelCircuitID='&quot;+Provisioning_Data.siebelCircuitID+&quot;'&quot;;&#xD;
-CommentDataSet=cac_com_sfc_fosImpl_dataModel_CommentDataCase.findByCriteria(criteria);&#xD;
-&#xD;
-CommentHistory.clear();&#xD;
-if(CommentDataSet.size()>0){&#xD;
-	for(var index=0; index&lt;CommentDataSet.size(); index++) {&#xD;
-		var comment=com_sfc_fosImpl_dataModel_Factory.createCommentData();&#xD;
-		comment.addedby=CommentDataSet.get(index).readCommentDataCase().addedby;&#xD;
-		comment.comments=CommentDataSet.get(index).readCommentDataCase().comments;&#xD;
-		comment.stepName=CommentDataSet.get(index).readCommentDataCase().taskName;&#xD;
-		comment.time=CommentDataSet.get(index).readCommentDataCase().time;&#xD;
-		CommentHistory.add(comment);	&#xD;
-	}&#xD;
-}&#xD;
-var criteria = &quot;enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'&quot;;&#xD;
-&#xD;
-if(TaskName==&quot;PM_Review&quot;){&#xD;
-var a=Process.getOriginatorName();&#xD;
-EscalationEmail=Process.getOrgModel().resourceByName(a).get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
-&#xD;
-}&#xD;
-&#xD;
-if(TaskName==&quot;Manual_Installation_Removal&quot;) {&#xD;
-	SystemParamRef= cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName(&quot;Contractor_Mobile_Task_Flag&quot;);&#xD;
-	if(SystemParamRef.readSystemParameters().propertyValue==&quot;Enable&quot;) {&#xD;
-		CtrMobileTaskDecision = true;&#xD;
-	}&#xD;
-	else {&#xD;
-		CtrMobileTaskDecision=false;&#xD;
-	}&#xD;
-	&#xD;
-}</xpdl2:Script>
-              </xpdl2:TaskScript>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="180.0" YCoordinate="155.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
-          </xpdExt:ActivityResourcePatterns>
-          <xpdExt:Audit>
-            <xpdExt:AuditEvent Type="Completed">
-              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
-var Log_Activity_Type=&quot;End&quot;;&#xD;
-var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
-Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,END_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);&#xD;
-</xpdExt:Information>
-            </xpdExt:AuditEvent>
-            <xpdExt:AuditEvent Type="Initiated">
-              <xpdExt:Information ScriptGrammar="JavaScript">var Log_Activity_Name=&quot;Script Task&quot;;&#xD;
-var Log_Activity_Type=&quot;Start&quot;;&#xD;
-var Log_Activity_Resource=&quot;SYSTEM&quot;;&#xD;
-Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebelCircuitID+&quot;,CLIENT_NAME=&quot;+Provisioning_Data.clientName+&quot;,PVM_ID=&quot;+Process.getId()+&quot;,PROCESS_NAME=&quot;+Process.getName()+&quot;,ACTIVITY_NAME=&quot;+Log_Activity_Name+&quot;,ACTIVITY_TYPE=&quot;+Log_Activity_Type+&quot;,ACTIVITY_RESOURCE=&quot;+Log_Activity_Resource+&quot;,BEGIN_TIME=&quot;+DateTimeUtil.createDatetime()+&quot;,&quot;);</xpdExt:Information>
-            </xpdExt:AuditEvent>
-          </xpdExt:Audit>
-        </xpdl2:Activity>
         <xpdl2:Activity Id="_gfp8oAlfEeiPXa3e9UY2HA" Name="ContractorMobileTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Contractor Mobile Task">
           <xpdl2:Implementation>
             <xpdl2:Task>
@@ -413,7 +468,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="705.0" YCoordinate="249.0"/>
+              <xpdl2:Coordinates XCoordinate="531.0" YCoordinate="302.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -426,7 +481,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
             <xpdExt:AssociatedParameter FormalParam="SelectedContractor" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="TaskName" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="CommentHistory" Mode="INOUT" Mandatory="false"/>
-            <xpdExt:AssociatedParameter FormalParam="SelectedGroup" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="SelectedContractorGroup" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="GroupNames" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="Provisioning_Data" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
@@ -437,7 +492,6 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
           <xpdl2:TransitionRestrictions>
             <xpdl2:TransitionRestriction>
-              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
               <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
                 <xpdl2:TransitionRefs>
                   <xpdl2:TransitionRef Id="_5nGy8N_CEeec4K-r6PSjHg"/>
@@ -448,87 +502,9 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           </xpdl2:TransitionRestrictions>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="45.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="43.0">
-              <xpdl2:Coordinates XCoordinate="473.0" YCoordinate="155.0"/>
+              <xpdl2:Coordinates XCoordinate="294.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_roZQoBB7EeiZiLgDoQc00Q">
-          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
-                <xpdl2:TransitionRefs>
-                  <xpdl2:TransitionRef Id="_iwMb4QlfEeiPXa3e9UY2HA"/>
-                  <xpdl2:TransitionRef Id="_tbZfUBB7EeiZiLgDoQc00Q"/>
-                </xpdl2:TransitionRefs>
-              </xpdl2:Split>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="43.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="41.0">
-              <xpdl2:Coordinates XCoordinate="274.0" YCoordinate="155.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-        </xpdl2:Activity>
-        <xpdl2:Activity Id="_so32MBB7EeiZiLgDoQc00Q" Name="GetResources" xpdExt:Visibility="Private" xpdExt:DisplayName="Get Resources">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskService xpdExt:ImplementationType="WebService" Implementation="WebService">
-                <xpdl2:MessageIn Id="_9q_6cBB7EeiZiLgDoQc00Q">
-                  <xpdExt:InputMappings MapperContext="InputToService" MappingDirection="IN">
-                    <xpdExt:DataMappings>
-                      <xpdExt:DataMapping xpdExt:TargetContributorId="InputToService.DataMapperContent" Direction="IN" Formal="fetchresourceinput.processname">
-                        <xpdExt:ScriptInformation Id="_Msm4cBB8EeiZiLgDoQc00Q" Name="PMScript">
-                          <xpdExt:Expression ScriptGrammar="JavaScript">return &quot;PM&quot;;</xpdExt:Expression>
-                        </xpdExt:ScriptInformation>
-                        <xpdl2:Actual ScriptGrammar="JavaScript">__SCRIPT__</xpdl2:Actual>
-                      </xpdExt:DataMapping>
-                    </xpdExt:DataMappings>
-                  </xpdExt:InputMappings>
-                </xpdl2:MessageIn>
-                <xpdl2:MessageOut Id="_9q_6cRB7EeiZiLgDoQc00Q">
-                  <xpdExt:OutputMappings MapperContext="OutputFromService" MappingDirection="OUT">
-                    <xpdExt:DataMappings>
-                      <xpdExt:DataMapping xpdExt:SourceContributorId="OutputFromService.DataMapperContent" xpdExt:TargetContributorId="ActivityInterface.DataMapperContent" Direction="IN" Formal="FetchResourceListOutput">
-                        <xpdl2:Actual ScriptGrammar="JavaScript">fetchresourceoutput</xpdl2:Actual>
-                      </xpdExt:DataMapping>
-                    </xpdExt:DataMappings>
-                  </xpdExt:OutputMappings>
-                </xpdl2:MessageOut>
-                <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://schemas.xmlsoap.org/soap/http" xpdExt:Alias="_9rqBwBB7EeiZiLgDoQc00Q" OperationName="getResources">
-                  <xpdl2:Service xpdExt:IsRemote="true" PortName="PortTypeEndpoint0" ServiceName="FOSBPMInterface-service0">
-                    <xpdl2:EndPoint EndPointType="WSDL">
-                      <xpdl2:ExternalReference location="SFC_FOS_BPM.wsdl"/>
-                    </xpdl2:EndPoint>
-                  </xpdl2:Service>
-                </xpdl2:WebServiceOperation>
-                <xpdExt:PortTypeOperation PortTypeName="PortType" OperationName="getResources">
-                  <xpdExt:ExternalReference location="SFC_FOS_BPM.wsdl"/>
-                </xpdExt:PortTypeOperation>
-              </xpdl2:TaskService>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:Performers>
-            <xpdl2:Performer>_9rqBwBB7EeiZiLgDoQc00Q</xpdl2:Performer>
-          </xpdl2:Performers>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="360.0" YCoordinate="278.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
-          </xpdExt:ActivityResourcePatterns>
-          <xpdExt:Audit>
-            <xpdExt:AuditEvent Type="Completed">
-              <xpdExt:Information ScriptGrammar="JavaScript">for(var i=0;i&lt;FetchResourceListOutput.resource.size();i++) {&#xD;
-	ResourceList.add(FetchResourceListOutput.resource.get(i).name);&#xD;
-}&#xD;
-</xpdExt:Information>
-            </xpdExt:AuditEvent>
-          </xpdExt:Audit>
-          <xpdExt:AssociatedParameters DisableImplicitAssociation="false"/>
         </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
@@ -550,13 +526,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_O0-jIfdiEeeVceMtR_75Ng" xpdExt:DisplayName="" Name="" From="_tHTqYt_CEeec4K-r6PSjHg" To="_O0-jIPdiEeeVceMtR_75Ng">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_iwMb4QlfEeiPXa3e9UY2HA" xpdExt:DisplayName="" Name="" From="_roZQoBB7EeiZiLgDoQc00Q" To="_iwMb4AlfEeiPXa3e9UY2HA">
-          <xpdl2:Condition Type="OTHERWISE"/>
+        <xpdl2:Transition Id="_iwMb4QlfEeiPXa3e9UY2HA" xpdExt:DisplayName="" Name="" From="_tHTqYt_CEeec4K-r6PSjHg" To="_iwMb4AlfEeiPXa3e9UY2HA">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
@@ -578,44 +548,15 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
         </xpdl2:Transition>
         <xpdl2:Transition Id="_7p1uoAliEeiPXa3e9UY2HA" Name="" From="_gfp8oAlfEeiPXa3e9UY2HA" To="_GAOiUPaZEee_OvMSeNQu6A">
           <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="84.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="-192.0" YCoordinate="145.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
               <xpdl2:Coordinates XCoordinate="10.0" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
               <xpdl2:Coordinates XCoordinate="59.68750000000001" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_roZQoRB7EeiZiLgDoQc00Q" xpdExt:DisplayName="" Name="" From="_O0-jIPdiEeeVceMtR_75Ng" To="_roZQoBB7EeiZiLgDoQc00Q">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_tbZfUBB7EeiZiLgDoQc00Q" Name="" From="_roZQoBB7EeiZiLgDoQc00Q" To="_so32MBB7EeiZiLgDoQc00Q">
-          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">TaskName==&quot;GateKeeper&quot;;&#xD;
-</xpdl2:Expression></xpdl2:Condition>
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="72.0"/>
-              <xpdl2:Coordinates XCoordinate="-87.0" YCoordinate="-30.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_u3-yEBB7EeiZiLgDoQc00Q" Name="" From="_so32MBB7EeiZiLgDoQc00Q" To="_iwMb4AlfEeiPXa3e9UY2HA">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="64.0" YCoordinate="0.0"/>
-              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="102.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="9.6875" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="51.92764480818946" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
@@ -628,7 +569,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
             <simulation:ParameterDistribution ParameterId="TaskName"/>
             <simulation:ParameterDistribution ParameterId="Mail"/>
             <simulation:ParameterDistribution ParameterId="GroupNames"/>
-            <simulation:ParameterDistribution ParameterId="SelectedGroup"/>
+            <simulation:ParameterDistribution ParameterId="SelectedContractorGroup"/>
             <simulation:ParameterDistribution ParameterId="SelectedContractor"/>
             <simulation:ParameterDistribution ParameterId="ContractorNames"/>
             <simulation:ParameterDistribution ParameterId="CommentHistory"/>
@@ -638,6 +579,8 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
             <simulation:ParameterDistribution ParameterId="CommentDataSet"/>
             <simulation:ParameterDistribution ParameterId="commentDataCaseRef"/>
             <simulation:ParameterDistribution ParameterId="SelectedPM"/>
+            <simulation:ParameterDistribution ParameterId="mgmtIPFlag"/>
+            <simulation:ParameterDistribution ParameterId="equipmentFlag"/>
           </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
       </xpdl2:ExtendedAttributes>
     </xpdl2:WorkflowProcess>

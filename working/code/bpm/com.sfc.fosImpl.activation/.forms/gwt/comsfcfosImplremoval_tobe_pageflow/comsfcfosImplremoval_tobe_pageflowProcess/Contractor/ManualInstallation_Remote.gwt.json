@@ -1,15 +1,15 @@
 {"bindings":[],"rules":[{"name":"initrule1","trigger":"open","cancelOnError":
       false},{"name":"setHeaderName","trigger":"open","cancelOnError":
       false}],"name":"ManualInstallation_Remote","type":"form",
-  "reverseBindings":[],"formModelId":"_JmMiUBMHEei4EeTLKrs4Jw",
+  "reverseBindings":[],"formModelId":"_KZwgkBSkEeiI4LtXlpi0-g",
   "formPathSegmentCount":4,"formatVersion":"2.7.0.002","bomJSNames":[
     "com.sfc.fosImpl.dataModel.DataModelPackage",
     "com.sfc.fosImpl.dataModel.DataModelFactory",
+    "com.sfc.fosImpl.dataModel.ProvisioningDataModel",
     "com.sfc.fosImpl.dataModel.TechnicalInformation",
     "com.sfc.fosImpl.dataModel.EquipmentDetails",
-    "com.sfc.fosImpl.dataModel.ProvisioningDataModel",
     "com.sfc.fosImpl.dataModel.CommentData"],"styleName":null,"genCssClass":
-  "f176a6188-f956-4805-8796-35d6539c852d","labelPosition":"top",
+  "fdb439464-30b1-4640-9d88-b8d1ba05b748","labelPosition":"top",
   "externalResources":[{"name":"","uri":"ManualInstallation_Remote.gwt.js",
       "localized":false},{"name":null,"uri":
       "ManualInstallation_Remote.gwt.css","localized":false},{"name":
@@ -57,11 +57,6 @@
       "name":"data.GroupNames","type":"data","reverseBindings":[],
       "datumType":"BomPrimitiveTypes::Text","label":"GroupNames","inout":
       "INOUT","array":true,"decimalPlaces":0,"length":50,"primitive":true},{
-      "bindings":[{"name":"control.SelectedGroup","type":"control",
-          "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
-      [],"name":"data.SelectedGroup","type":"data","reverseBindings":[],
-      "datumType":"BomPrimitiveTypes::Text","label":"SelectedGroup","inout":
-      "INOUT","array":false,"decimalPlaces":0,"length":50,"primitive":true},{
       "bindings":[{"name":"control.TaskName","type":"control",
           "sourceFeature":["value"],"destinationFeature":["value"]}],"rules":
       [],"name":"data.TaskName","type":"data","reverseBindings":[],
@@ -88,10 +83,14 @@
             "value"]}],"rules":[],"name":"data.ContractorNames","type":
       "data","reverseBindings":[],"datumType":"BomPrimitiveTypes::Text",
       "label":"ContractorNames","inout":"INOUT","array":true,"decimalPlaces":
-      0,"length":50,"primitive":true}],"controlRefs":[{"name":
-      "control.Provisioning_Data_siebelCircuitID","type":"control"},{"name":
-      "control.Provisioning_Data_projectManager","type":"control"},{"name":
-      "control.Provisioning_Data_account","type":"control"},{"name":
+      0,"length":50,"primitive":true},{"bindings":[],"rules":[],"name":
+      "data.SelectedContractorGroup","type":"data","reverseBindings":[],
+      "datumType":"BomPrimitiveTypes::Text","label":
+      "SelectedContractorGroup","inout":"INOUT","array":false,
+      "decimalPlaces":0,"length":50,"primitive":true}],"controlRefs":[{
+      "name":"control.Provisioning_Data_siebelCircuitID","type":"control"},{
+      "name":"control.Provisioning_Data_projectManager","type":"control"},{
+      "name":"control.Provisioning_Data_account","type":"control"},{"name":
       "control.Provisioning_Data_clientID","type":"control"},{"name":
       "control.Provisioning_Data_accountManager","type":"control"},{"name":
       "control.Provisioning_Data_clientName","type":"control"},{"name":
@@ -159,9 +158,9 @@
       "control.btntechnicalInformation","type":"control"},{"name":
       "control.lblContractorAgency","type":"control"},{"name":
       "control.lblSelectContractor","type":"control"},{"name":
-      "control.SelectedGroup","type":"control"},{"name":"control.TaskName",
-      "type":"control"},{"name":"control.Mail","type":"control"},{"name":
-      "control.GroupNames","type":"control"},{"name":
+      "control.SelectedContractorGroup","type":"control"},{"name":
+      "control.TaskName","type":"control"},{"name":"control.Mail","type":
+      "control"},{"name":"control.GroupNames","type":"control"},{"name":
       "control.MasterContractor","type":"control"},{"name":
       "control.SelectedContractor","type":"control"},{"name":
       "control.ContractorNames","type":"control"},{"name":"control.cancel",
@@ -1067,16 +1066,13 @@
       "labelRef":"","hintRef":"","enabled":true,"visible":false,"styleName":
       "lblBackground","validations":[],"inheritsDeferInitialization":false,
       "readOnly":false,"required":false,"value":[],"tabIndex":0,
-      "alwaysRenderControl":false},{"bindings":[{"name":
-          "data.SelectedGroup","type":"data","sourceFeature":["value"],
-          "destinationFeature":["value"]}],"rules":[],"name":
-      "control.SelectedGroup","type":"control","reverseBindings":[{"name":
-          "data.SelectedGroup","type":"data","sourceFeature":["value"],
-          "destinationFeature":["value"]}],"componentType":
-      "com.tibco.forms.controls.textinput","shortLabelRef":"","labelRef":
-      "","hintRef":"","enabled":true,"visible":false,"styleName":"",
-      "validations":[{"name":"SelectedGroup__length","message":"",
-          "messageRef":"resource.common.validation_text_length","when":
+      "alwaysRenderControl":false},{"bindings":[],"rules":[],"name":
+      "control.SelectedContractorGroup","type":"control","reverseBindings":[],
+      "componentType":"com.tibco.forms.controls.textinput","shortLabelRef":
+      "","labelRef":"","hintRef":"","enabled":true,"visible":false,
+      "styleName":"","validations":[{"name":
+          "SelectedContractorGroup__length","message":"","messageRef":
+          "resource.common.validation_text_length","when":
           "oncontrolchange","list":false}],"inheritsDeferInitialization":
       false,"readOnly":false,"required":false,"value":[],"tabIndex":0,
       "alwaysRenderControl":false,"propSetList":false,
@@ -1887,7 +1883,7 @@
       false,"labelPosition":"top","dataType":null,"concreteClassifierNames":[],
       "concreteClassifierLabels":[],"children":[{"name":
           "pane.ProvisioningData","type":"pane"},{"name":
-          "control.SelectedGroup","type":"control"},{"name":
+          "control.SelectedContractorGroup","type":"control"},{"name":
           "control.TaskName","type":"control"},{"name":"control.Mail","type":
           "control"},{"name":"control.GroupNames","type":"control"},{"name":
           "control.MasterContractor","type":"control"},{"name":

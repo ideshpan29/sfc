@@ -219,6 +219,13 @@
             </xpdl2:BasicType>
           </xpdl2:DataType>
         </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_DfH80BS8EeiD7IrSiYeT4A" Name="Correlation_Activation" Mode="IN" Required="true" xpdExt:DisplayName="Correlation_Activation">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
       </xpdl2:FormalParameters>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_pMLpsOSFEeeoTJ_gSITXzA" xpdExt:DisplayName="FetchSLA1" Name="FetchSLA1" ReadOnly="false">
@@ -406,6 +413,13 @@
         <xpdl2:DataField Id="_sP3KQBSiEeiI4LtXlpi0-g" xpdExt:DisplayName="ContractorUser_Performer" Name="ContractorUser_Performer">
           <xpdl2:DataType>
             <xpdl2:BasicType Type="PERFORMER"/>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+        <xpdl2:DataField Id="_eycrcBS5EeiD7IrSiYeT4A" xpdExt:DisplayName="CorrelationID_Activation" Name="CorrelationID_Activation" ReadOnly="false" Correlation="true">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>50</xpdl2:Length>
+            </xpdl2:BasicType>
           </xpdl2:DataType>
         </xpdl2:DataField>
       </xpdl2:DataFields>
@@ -1931,6 +1945,10 @@ TechnicalInfo     = ScriptUtil.copy(ActivationExecutionRequest.planItem.technica
 &#xD;
 infoLoggerFlag=false;&#xD;
 GateKeeperTaskFlag=true;&#xD;
+var h=ActivationExecutionRequest.header;&#xD;
+&#xD;
+&#xD;
+CorrelationID_Activation=h.orderID+&quot;_&quot;+h.planID;&#xD;
 &#xD;
 </xpdExt:Information>
             </xpdExt:AuditEvent>
@@ -1938,6 +1956,7 @@ GateKeeperTaskFlag=true;&#xD;
           <xpdExt:ActivityResourcePatterns>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedCorrelationFields DisableImplicitAssociation="true"/>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_e5bgkBAAEeieQt_q3pywiQ" Name="ForkAllBranches" xpdExt:DisplayName="Fork All Branches">
           <xpdl2:Route GatewayType="Inclusive"/>
@@ -2119,6 +2138,15 @@ CommentText=&quot;&quot;;</xpdExt:Information>
             <xpdl2:Task>
               <xpdl2:TaskScript>
                 <xpdl2:Script ScriptGrammar="JavaScript">var a;&#xD;
+var h=ActivationExecutionRequest.header;&#xD;
+var msg = &quot;businessTransactionID:&quot;+h.businessTransactionID;&#xD;
+msg=msg+&quot;,correlationID:&quot;+h.correlationID;&#xD;
+msg=msg+&quot;,orderID:&quot;+h.orderID;&#xD;
+msg=msg+&quot;,orderRefNum:&quot;+h.orderRefNum;&#xD;
+msg=msg+&quot;,planID:&quot;+h.planID;&#xD;
+&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_NOTIFY_PROCESS_COMPONENTS]&quot;+msg);&#xD;
 </xpdl2:Script>
               </xpdl2:TaskScript>
             </xpdl2:Task>
@@ -2138,9 +2166,34 @@ CommentText=&quot;&quot;;</xpdExt:Information>
             <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
           </xpdExt:ActivityResourcePatterns>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_zZuGsBSTEeiI4LtXlpi0-g" Name="sendNotificationtoProcessComponent" IsATransaction="false" xpdExt:Visibility="Private" xpdExt:DisplayName="send Notification to Process Component" xpdExt:RequireNewTransaction="false">
+        <xpdl2:Activity Id="_zZuGsBSTEeiI4LtXlpi0-g" Name="WaitforprocessComponent" IsATransaction="false" xpdExt:Visibility="Private" xpdExt:RequireNewTransaction="false" xpdExt:DisplayName="Wait for process Component">
           <xpdl2:Implementation>
-            <xpdl2:No/>
+            <xpdl2:Task>
+              <xpdl2:TaskReceive xpdExt:ImplementationType="WebService" xpdExt:Generated="true" Implementation="WebService" Instantiate="false">
+                <xpdl2:Message Id="_cPowcBS5EeiD7IrSiYeT4A">
+                  <xpdl2:DataMappings>
+                    <xpdl2:DataMapping xpdExt:TargetPrimitiveProperty="true" Direction="OUT" Formal="Correlation_Activation">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">Correlation_Activation</xpdl2:Actual>
+                    </xpdl2:DataMapping>
+                  </xpdl2:DataMappings>
+                  <xpdExt:CorrelationDataMappings>
+                    <xpdExt:DataMapping xpdExt:TargetPrimitiveProperty="true" Direction="OUT" Formal="Correlation_Activation">
+                      <xpdl2:Actual ScriptGrammar="JavaScript">CorrelationID_Activation</xpdl2:Actual>
+                    </xpdExt:DataMapping>
+                  </xpdExt:CorrelationDataMappings>
+                </xpdl2:Message>
+                <xpdl2:WebServiceOperation xpdExt:SecurityProfile="" xpdExt:Transport="http://www.tibco.com/service_virtualisation" xpdExt:Alias="_WRLGYOPDEeeYfI0_sV0YAA" OperationName="">
+                  <xpdl2:Service xpdExt:IsRemote="true" PortName="" ServiceName="">
+                    <xpdl2:EndPoint EndPointType="WSDL">
+                      <xpdl2:ExternalReference location="com.sfc.fosImpl.activation.wsdl"/>
+                    </xpdl2:EndPoint>
+                  </xpdl2:Service>
+                </xpdl2:WebServiceOperation>
+                <xpdExt:PortTypeOperation PortTypeName="Activation" OperationName="WaitforprocessComponent">
+                  <xpdExt:ExternalReference location="com.sfc.fosImpl.activation.wsdl"/>
+                </xpdExt:PortTypeOperation>
+              </xpdl2:TaskReceive>
+            </xpdl2:Task>
           </xpdl2:Implementation>
           <xpdl2:Performers>
             <xpdl2:Performer>_WRLGYOPDEeeYfI0_sV0YAA</xpdl2:Performer>
@@ -2151,6 +2204,23 @@ CommentText=&quot;&quot;;</xpdExt:Information>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
+            <xpdExt:AssociatedParameter FormalParam="Correlation_Activation" Mode="IN" Mandatory="true"/>
+          </xpdExt:AssociatedParameters>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">if(infoLoggerFlag==true) {&#xD;
+	Log.write(&quot;[SFC_FOSIMPL_BPM] Wait_For_Process_Component :  &quot;+CorrelationID_Activation);&#xD;
+}	&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+          <xpdExt:AssociatedCorrelationFields>
+            <xpdExt:AssociatedCorrelationField Name="CorrelationID_Activation" CorrelationMode="Correlate"/>
+          </xpdExt:AssociatedCorrelationFields>
         </xpdl2:Activity>
         <xpdl2:Activity Id="_3hvE8BSTEeiI4LtXlpi0-g" Name="ConfiguretheIPs" xpdExt:Visibility="Private" xpdExt:DisplayName="Configure the IPs">
           <xpdl2:Implementation>
@@ -2640,7 +2710,7 @@ CommentText=&quot;&quot;;</xpdExt:Information>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_cB9WEBSTEeiI4LtXlpi0-g" Name="" From="_QIX48BSTEeiI4LtXlpi0-g" To="_Z5nJgBSTEeiI4LtXlpi0-g">
-          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">1==2;&#xD;
+          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">(Provisioning_Data.serviceType==&quot;INTERNET&quot;);&#xD;
 </xpdl2:Expression></xpdl2:Condition>
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
@@ -2713,6 +2783,7 @@ CommentText=&quot;&quot;;</xpdExt:Information>
         <xpdl2:ExtendedAttribute Name="WorkflowProcessSimulationData"><simulation:WorkflowProcessSimulationData>
             <simulation:ParameterDistribution ParameterId="ActivationExecutionRequest"/>
             <simulation:ParameterDistribution ParameterId="Name"/>
+            <simulation:ParameterDistribution ParameterId="Correlation_Activation"/>
           </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
       </xpdl2:ExtendedAttributes>
       <xpdl2:Extensions/>

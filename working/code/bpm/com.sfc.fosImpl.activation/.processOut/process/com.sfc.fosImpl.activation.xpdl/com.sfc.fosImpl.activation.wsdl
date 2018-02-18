@@ -3,6 +3,10 @@
     <partnerLinkType name="Activation_PLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
     <role name="ActivationProvider" portType="ns:Activation"/>
   </partnerLinkType>
+    <property name="Activation_CorrelationID_Activation" type="xsd:string" xmlns="http://docs.oasis-open.org/wsbpel/2.0/varprop"/>
+    <propertyAlias messageType="ns:Activation_WaitforprocessComponent_INPUT" part="Correlation_Activation" propertyName="ns:Activation_CorrelationID_Activation" xmlns="http://docs.oasis-open.org/wsbpel/2.0/varprop">
+    <query><![CDATA[.]]></query>
+  </propertyAlias>
     <wsdl:types>
     <xsd:schema xmlns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw">
       <xsd:simpleType name="string_50">
@@ -881,6 +885,9 @@
   <wsdl:message name="Activation_InitiateActivation_OUTPUT">
     <wsdl:part name="ProcessId" type="xsd:string"/>
   </wsdl:message>
+  <wsdl:message name="Activation_WaitforprocessComponent_INPUT">
+    <wsdl:part name="Correlation_Activation" type="ns:string_50"/>
+  </wsdl:message>
   <wsdl:portType name="Activation" tibex:FlowContainer="_n3OiwN_AEee7mPhVBav8gw">
     <wsdl:documentation>
       <DocumentationElement Documentation=""/>
@@ -888,6 +895,9 @@
     <wsdl:operation name="InitiateActivation">
       <wsdl:input message="ns:Activation_InitiateActivation_INPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
       <wsdl:output message="ns:Activation_InitiateActivation_OUTPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
+    </wsdl:operation>
+    <wsdl:operation name="WaitforprocessComponent">
+      <wsdl:input message="ns:Activation_WaitforprocessComponent_INPUT" tibex:Event="_zZuGsBSTEeiI4LtXlpi0-g"/>
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

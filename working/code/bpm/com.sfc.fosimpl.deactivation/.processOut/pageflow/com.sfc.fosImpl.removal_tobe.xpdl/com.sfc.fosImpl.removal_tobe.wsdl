@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:ns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:ttns="http://fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="comsfcfosImplremoval_tobe" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" tibex:XPDL="com.sfc.fosImpl.removal_tobe.xpdl">
+    <partnerLinkType name="comsfcfosImplremoval_tobeRemoval_PLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+    <role name="comsfcfosImplremoval_tobeRemovalProvider" portType="ns:comsfcfosImplremoval_tobeRemoval"/>
+  </partnerLinkType>
+    <wsdl:types>
+    <xsd:schema xmlns="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw" targetNamespace="http://www.tibco.com/bs3.0/_n2-EEN_AEee7mPhVBav8gw">
+      <xsd:simpleType name="string_50">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="50"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://fosImpl.sfc.com/dataModel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tns1="http://fosImpl.sfc.com/dataModel" targetNamespace="http://fosImpl.sfc.com/dataModel">
+      <xsd:annotation>
+        <xsd:documentation>
+          <DocumentationElement BOMORIGIN="/com.sfc.fosImpl.dataModel/Business Objects/com.sfc.fosImpl.dataModel.bom"/>
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleType name="AccountType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="NEW"/>
+          <xsd:enumeration value="MIGRATION"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ServiceType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="INTERNET"/>
+          <xsd:enumeration value="FIBER"/>
+          <xsd:enumeration value="WIMAX"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="Bandwidth">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="FFB5"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TechnologyList">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="FIBER"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ServiceStatus">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="REGISTERED"/>
+          <xsd:enumeration value="VERIFIED"/>
+          <xsd:enumeration value="APPROVED"/>
+          <xsd:enumeration value="COMPLETED"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="EmailRecipient">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="NONE"/>
+          <xsd:enumeration value="SPECIFIC"/>
+          <xsd:enumeration value="PM"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TaskRecipient">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="NONE"/>
+          <xsd:enumeration value="SPECIFIC"/>
+          <xsd:enumeration value="PM"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ProcessName">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="PROVISIONING"/>
+          <xsd:enumeration value="DECOMISSIONING"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="EnableDisable">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="ENABLE"/>
+          <xsd:enumeration value="DISABLE"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="ProvisioningDataModel">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="siebelCircuitID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="projectManager">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="clientName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="accountManager">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="account" type="AccountType"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="contractor">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="location">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="regionView">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="floor">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="clientID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="serviceType">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="GPSCoordinates">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="bandwidthupdown">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="technology">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="serviceStatus">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="buildingName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="buildingID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="contactPerson">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="mobile">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="sector">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="email">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="serviceStart" type="xsd:dateTime"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="serviceEnd" type="xsd:dateTime"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="requestDate" type="xsd:dateTime"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="installDate" type="xsd:dateTime"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="notesComments">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SystemParameters">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="propertyName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="propertyValue">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SLA_Configuration">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="SLALevel">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="taskName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="processName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SLA_Deadline">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="emailTo" type="EmailRecipient"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskTo" type="TaskRecipient"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="emailConfig">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskConfig">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="enableDisableFlag" type="EnableDisable"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TechnicalInformation">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="carrierVLAN">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="carrierIP">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="aggPoint">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="port">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="clientVLAN">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="clientIP">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SFCPOPPE">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="portType">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="equipment" type="EquipmentDetails"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="modifiedBy">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="modifiedDate" type="xsd:date"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="EquipmentDetails">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="type">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="address">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="VLAN">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ContractorGroups">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="loginName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="firstName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="lastName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="contractorGroupName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="masterUser">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="emailID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CommentData">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="addedby">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="comments">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="500"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="stepName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="time">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CommentDataCase">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="comment_Id">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="siebelCircuitID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="taskName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="addedby">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="comments">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="350"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="time">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LookupTable">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="lookupValue">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="400"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="autoCaseIdentifier1">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="lookupKey">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="enableFlag">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ProcessNameAndSteps">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="processName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="stepName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DecommissionExecutionRequest">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="header" type="Header"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="planItem" type="planItem"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Header">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="businessTransactionID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="correlationID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="orderID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="orderRefNum">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="planID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="planItem">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="planItemID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="provisioningData" type="ProvisioningDataModel"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="technicalInformation" type="TechnicalInformation"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="udf" type="UserDefinedFields"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserDefinedFields">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="evaluationPriority">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="type">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="flavour">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="name">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="value">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="50"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="BussinessUsers">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="caseID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:integer">
+                <xsd:totalDigits value="19"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="loginName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="firstName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="lastName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="groupName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="email">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="addedBy">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="addedOn">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ActivationExecutionRequest">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="header" type="Header"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="planItem" type="planItem"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Process_Logging">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="processType">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="siebelCircuitID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="taskName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="customerName">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="1" name="projectManager">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="accountManager">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskDefaultSLA">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskInitiationTime">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="taskCompletionTime">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="totalTimeTaken">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="200"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SLAStatus">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="100"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="AccountTypeElement">
+        <xsd:simpleType>
+          <xsd:restriction base="AccountType"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ServiceTypeElement">
+        <xsd:simpleType>
+          <xsd:restriction base="ServiceType"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="BandwidthElement">
+        <xsd:simpleType>
+          <xsd:restriction base="Bandwidth"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="TechnologyListElement">
+        <xsd:simpleType>
+          <xsd:restriction base="TechnologyList"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ServiceStatusElement">
+        <xsd:simpleType>
+          <xsd:restriction base="ServiceStatus"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="EmailRecipientElement">
+        <xsd:simpleType>
+          <xsd:restriction base="EmailRecipient"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="TaskRecipientElement">
+        <xsd:simpleType>
+          <xsd:restriction base="TaskRecipient"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ProcessNameElement">
+        <xsd:simpleType>
+          <xsd:restriction base="ProcessName"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="EnableDisableElement">
+        <xsd:simpleType>
+          <xsd:restriction base="EnableDisable"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ProvisioningDataModelElement" type="ProvisioningDataModel"/>
+      <xsd:element name="SystemParametersElement" type="SystemParameters"/>
+      <xsd:element name="SLA_ConfigurationElement" type="SLA_Configuration"/>
+      <xsd:element name="TechnicalInformationElement" type="TechnicalInformation"/>
+      <xsd:element name="EquipmentDetailsElement" type="EquipmentDetails"/>
+      <xsd:element name="ContractorGroupsElement" type="ContractorGroups"/>
+      <xsd:element name="CommentDataElement" type="CommentData"/>
+      <xsd:element name="CommentDataCaseElement" type="CommentDataCase"/>
+      <xsd:element name="LookupTableElement" type="LookupTable"/>
+      <xsd:element name="ProcessNameAndStepsElement" type="ProcessNameAndSteps"/>
+      <xsd:element name="DecommissionExecutionRequestElement" type="DecommissionExecutionRequest"/>
+      <xsd:element name="HeaderElement" type="Header"/>
+      <xsd:element name="planItemElement" type="planItem"/>
+      <xsd:element name="UserDefinedFieldsElement" type="UserDefinedFields"/>
+      <xsd:element name="BussinessUsersElement" type="BussinessUsers"/>
+      <xsd:element name="ActivationExecutionRequestElement" type="ActivationExecutionRequest"/>
+      <xsd:element name="Process_LoggingElement" type="Process_Logging"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="comsfcfosImplremoval_tobeRemoval_InitiateDecommision_INPUT">
+    <wsdl:part name="DecommissionExecutionRequest" type="ttns:DecommissionExecutionRequest"/>
+    <wsdl:part name="Name" type="ns:string_50"/>
+  </wsdl:message>
+  <wsdl:message name="comsfcfosImplremoval_tobeRemoval_InitiateDecommision_OUTPUT">
+    <wsdl:part name="ProcessId" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="comsfcfosImplremoval_tobeRemoval" tibex:FlowContainer="_n3OiwN_AEee7mPhVBav8gw">
+    <wsdl:documentation>
+      <DocumentationElement Documentation=""/>
+    </wsdl:documentation>
+    <wsdl:operation name="InitiateDecommision">
+      <wsdl:input message="ns:comsfcfosImplremoval_tobeRemoval_InitiateDecommision_INPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
+      <wsdl:output message="ns:comsfcfosImplremoval_tobeRemoval_InitiateDecommision_OUTPUT" tibex:Event="_m4jxUP9MEee4BtDH5WlQLQ"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

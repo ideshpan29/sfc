@@ -161,6 +161,27 @@
             <xpdl2:BasicType Type="BOOLEAN"/>
           </xpdl2:DataType>
         </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_1bmpMBUzEeiHR83Su52TNA" Name="UID" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="UID">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>100</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_4qOhUBUzEeiHR83Su52TNA" Name="FolderID" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="FolderID">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>100</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+        <xpdl2:FormalParameter Id="_5VCY4BUzEeiHR83Su52TNA" Name="xDMSURL" IsArray="false" ReadOnly="false" Mode="INOUT" Required="false" xpdExt:DisplayName="xDMSURL">
+          <xpdl2:DataType>
+            <xpdl2:BasicType Type="STRING">
+              <xpdl2:Length>300</xpdl2:Length>
+            </xpdl2:BasicType>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
       </xpdl2:FormalParameters>
       <xpdl2:DataFields>
         <xpdl2:DataField Id="_PNS9kPt1EeeupNwu8S8N4Q" xpdExt:DisplayName="AccountType" Name="AccountType" IsArray="true" ReadOnly="false">
@@ -365,10 +386,13 @@ if(CommentDataSet.size()>0){&#xD;
               <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="GrpNames" Mode="INOUT" Mandatory="false">
-              <xpdl2:Description/>
+              <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
             <xpdExt:AssociatedParameter FormalParam="mgmtIPFlag" Mode="INOUT" Mandatory="false"/>
             <xpdExt:AssociatedParameter FormalParam="equipmentFlag" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="FolderID" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="xDMSURL" Mode="INOUT" Mandatory="false"/>
+            <xpdExt:AssociatedParameter FormalParam="UID" Mode="INOUT" Mandatory="false"/>
           </xpdExt:AssociatedParameters>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Completed">
@@ -581,6 +605,9 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
             <simulation:ParameterDistribution ParameterId="SelectedPM"/>
             <simulation:ParameterDistribution ParameterId="mgmtIPFlag"/>
             <simulation:ParameterDistribution ParameterId="equipmentFlag"/>
+            <simulation:ParameterDistribution ParameterId="UID"/>
+            <simulation:ParameterDistribution ParameterId="FolderID"/>
+            <simulation:ParameterDistribution ParameterId="xDMSURL"/>
           </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
       </xpdl2:ExtendedAttributes>
     </xpdl2:WorkflowProcess>

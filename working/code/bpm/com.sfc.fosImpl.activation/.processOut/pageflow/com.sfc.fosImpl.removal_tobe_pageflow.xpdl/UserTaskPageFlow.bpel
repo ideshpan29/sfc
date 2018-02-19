@@ -8,57 +8,60 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="ContractorMobileTask">
             <startingVariables>
-                <variable>CommentText</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>GroupNames</variable>
                 <variable>ContractorNames</variable>
                 <variable>TaskName</variable>
-                <variable>TechnicalInfo</variable>
-                <variable>CommentHistory</variable>
                 <variable>Provisioning_Data</variable>
-                <variable>GroupNames</variable>
+                <variable>CommentHistory</variable>
+                <variable>CommentText</variable>
                 <variable>SelectedContractorGroup</variable>
                 <variable>SelectedContractor</variable>
             </startingVariables>
         </task>
         <task name="StartEvent">
             <ProcessManagerScript type="Complete">
-                <variable>PM_List</variable>
                 <variable>infoLoggerFlag</variable>
-                <variable>CommentDataSet</variable>
-                <variable>CtrMobileTaskDecision</variable>
                 <variable>TaskName</variable>
-                <variable>GrpNames</variable>
                 <variable>Provisioning_Data</variable>
                 <variable>CommentHistory</variable>
+                <variable>CommentDataSet</variable>
+                <variable>CtrMobileTaskDecision</variable>
+                <variable>GrpNames</variable>
+                <variable>PM_List</variable>
             </ProcessManagerScript>
         </task>
         <task name="ConfirmDetails">
             <startingVariables>
-                <variable>mgmtIPFlag</variable>
-                <variable>CommentText</variable>
-                <variable>PM_List</variable>
-                <variable>TaskName</variable>
-                <variable>GrpNames</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>SelectedContractorGroup</variable>
-                <variable>SelectedContractor</variable>
-                <variable>ContractorNames</variable>
-                <variable>SelectedPM</variable>
-                <variable>equipmentFlag</variable>
                 <variable>TechnicalInfo</variable>
-                <variable>CommentHistory</variable>
+                <variable>FolderID</variable>
                 <variable>GroupNames</variable>
+                <variable>ContractorNames</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>TaskName</variable>
+                <variable>CommentText</variable>
+                <variable>xDMSURL</variable>
+                <variable>equipmentFlag</variable>
+                <variable>UID</variable>
+                <variable>mgmtIPFlag</variable>
+                <variable>CommentHistory</variable>
+                <variable>SelectedContractorGroup</variable>
+                <variable>SelectedPM</variable>
+                <variable>GrpNames</variable>
+                <variable>PM_List</variable>
+                <variable>SelectedContractor</variable>
             </startingVariables>
             <ProcessManagerScript type="Complete">
-                <variable>SelectedPM</variable>
-                <variable>infoLoggerFlag</variable>
                 <variable>TaskName</variable>
+                <variable>infoLoggerFlag</variable>
                 <variable>SelectedContractorGroup</variable>
+                <variable>SelectedPM</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Initiate">
-                <variable>PM_List</variable>
-                <variable>infoLoggerFlag</variable>
                 <variable>TaskName</variable>
+                <variable>infoLoggerFlag</variable>
                 <variable>CtrGroups_List</variable>
+                <variable>PM_List</variable>
             </ProcessManagerScript>
         </task>
         <task name="ServiceTask">
@@ -68,9 +71,9 @@
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>commentDataCase</variable>
-                <variable>CommentText</variable>
                 <variable>TaskName</variable>
                 <variable>Provisioning_Data</variable>
+                <variable>CommentText</variable>
             </ProcessManagerScript>
         </task>
         <task name="EndEvent">
@@ -124,6 +127,12 @@
             tibex:xpdlId="_7_cSEBRhEeiI4LtXlpi0-g" type="xsd:boolean"/>
         <bpws:variable name="equipmentFlag" tibex:parameter="inout"
             tibex:xpdlId="_9WKNYBRhEeiI4LtXlpi0-g" type="xsd:boolean"/>
+        <bpws:variable name="UID" tibex:parameter="inout"
+            tibex:xpdlId="_1bmpMBUzEeiHR83Su52TNA" type="xsd:string"/>
+        <bpws:variable name="FolderID" tibex:parameter="inout"
+            tibex:xpdlId="_4qOhUBUzEeiHR83Su52TNA" type="xsd:string"/>
+        <bpws:variable name="xDMSURL" tibex:parameter="inout"
+            tibex:xpdlId="_5VCY4BUzEeiHR83Su52TNA" type="xsd:string"/>
         <bpws:variable name="AccountType" tibex:array="yes"
             tibex:xpdlId="_PNS9kPt1EeeupNwu8S8N4Q" type="xsd:string"/>
         <bpws:variable name="AccountEntries"
@@ -145,7 +154,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_QEsCEBSvEeiD7IrSiYeT4A">
+    <bpws:flow name="_BX_flow_k94fcBVoEeiHR83Su52TNA">
         <bpws:links>
             <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
             <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
@@ -230,23 +239,26 @@ if(CommentDataSet.size()>0){
 }
 ]]></tibex:completedScript>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="mgmtIPFlag"/>
-                    <parameterDescription mode="InOut" name="commentDataCase"/>
-                    <parameterDescription mode="InOut" name="CommentText"/>
-                    <parameterDescription mode="InOut" name="CommentDataSet"/>
-                    <parameterDescription mode="InOut" name="TaskName"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
-                    <parameterDescription mode="InOut" name="SelectedContractorGroup"/>
-                    <parameterDescription mode="InOut" name="SelectedContractor"/>
-                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
-                    <parameterDescription mode="InOut" name="SelectedPM"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
-                    <parameterDescription mode="InOut" name="Mail"/>
-                    <parameterDescription mode="InOut" name="equipmentFlag"/>
                     <parameterDescription mode="InOut" name="TechnicalInfo"/>
-                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="commentDataCase"/>
                     <parameterDescription mode="InOut" name="GroupNames"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="FolderID"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
+                    <parameterDescription mode="InOut" name="TaskName"/>
+                    <parameterDescription mode="InOut" name="CommentText"/>
+                    <parameterDescription mode="InOut" name="xDMSURL"/>
+                    <parameterDescription mode="InOut" name="CommentDataSet"/>
+                    <parameterDescription mode="InOut" name="equipmentFlag"/>
+                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
                     <parameterDescription mode="InOut" name="EscalationEmail"/>
+                    <parameterDescription mode="InOut" name="UID"/>
+                    <parameterDescription mode="InOut" name="Mail"/>
+                    <parameterDescription mode="InOut" name="mgmtIPFlag"/>
+                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="SelectedContractorGroup"/>
+                    <parameterDescription mode="InOut" name="SelectedPM"/>
+                    <parameterDescription mode="InOut" name="SelectedContractor"/>
                 </tibex:parameters>
                 <tibex:completedScript
                     expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[var  provInfoLogging = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("PROVISIONING_INFO_LOGGING");
@@ -371,6 +383,12 @@ if(CommentDataSet.size()>0){
                             mode="INOUT" name="mgmtIPFlag"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="equipmentFlag"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="FolderID"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="xDMSURL"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="UID"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
                 <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name=TaskName;

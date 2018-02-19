@@ -23,6 +23,9 @@
     <form:parameter generated="true" name="data.GrpNames" label="GrpNames" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.mgmtIPFlag" label="mgmtIPFlag" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_pSJ7cHvAEdy0U8_1u7Q20g" type="BomPrimitiveTypes::Boolean" inout="INOUT"/>
     <form:parameter generated="true" name="data.equipmentFlag" label="equipmentFlag" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_pSJ7cHvAEdy0U8_1u7Q20g" type="BomPrimitiveTypes::Boolean" inout="INOUT"/>
+    <form:parameter generated="true" name="data.FolderID" label="FolderID" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.xDMSURL" label="xDMSURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="300" inout="INOUT"/>
+    <form:parameter generated="true" name="data.UID" label="UID" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -57,6 +60,14 @@ else if(data.getTaskName()=='Select_Contractor'){&#xD;
 	}&#xD;
 	&#xD;
 }&#xD;
+else if(data.getTaskName()=='GateKeeper'){&#xD;
+	if((control.selectPM.getValue()==null) || (control.selectPM.getValue() ==&quot;&quot; )) {&#xD;
+		alert(&quot;Please select the Project Manager before proceeding.&quot;);&#xD;
+	}&#xD;
+	else {&#xD;
+		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
+	}&#xD;
+}&#xD;
 else {&#xD;
 		this.getForm().invokeAction(&quot;submit&quot;,this,context);&#xD;
 	}</form:script>
@@ -65,7 +76,16 @@ else {&#xD;
     <form:rule name="rule.initrule1" label="initrule1">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
+        <form:script>//data.setTaskName(&quot;Provision_Management_IP&quot;);&#xD;
+pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
+pane.selectContractorAgency.setVisible(false);&#xD;
+control.lblContractorAgency.setVisible(false);&#xD;
+control.lblSelectContractor.setVisible(false);&#xD;
+control.addEquipment.setVisible(false);&#xD;
+pane.pneSelectProjectManager.setVisible(false);&#xD;
+&#xD;
+pane.pneMarginPaneSelectContractor.setVisible(false);&#xD;
+pane.selectContractor.setVisible(false);&#xD;
 if(data.getTaskName()==&quot;Initiate_Activation_Process&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
@@ -74,8 +94,21 @@ pane.pane8.setEnabled(true);&#xD;
 pane.Pane03.setEnabled(true);&#xD;
 pane.clientDetails.setEnabled(true);&#xD;
 pane.pne01.setEnabled(true);&#xD;
-	pane.TechnicalInfo.setEnabled(true);&#xD;
+pane.TechnicalInfo.setEnabled(true);&#xD;
 	&#xD;
+}&#xD;
+else if(data.getTaskName()==&quot;Select_Contractor&quot;||data.getTaskName()==&quot;TES_OSG_Verification&quot;||data.getTaskName()==&quot;Provision_Management_IP&quot;||data.getTaskName()==&quot;Manual_Installation&quot;){&#xD;
+	pane.serviceDates.setEnabled(false);&#xD;
+	pane.contactDetails.setEnabled(false);&#xD;
+	pane.serviceRequest.setEnabled(false);&#xD;
+	pane.pane8.setEnabled(false);&#xD;
+	pane.Pane03.setEnabled(false);&#xD;
+	pane.clientDetails.setEnabled(false);&#xD;
+	pane.pne01.setEnabled(false);&#xD;
+	pane.TechnicalInfo.setEnabled(true);&#xD;
+	pane.pneTechInfoParent.setVisible(true);&#xD;
+	control.lblTechInfo.setVisible(true);&#xD;
+	control.addEquipment.setVisible(true);&#xD;
 }&#xD;
 else {&#xD;
 	pane.serviceDates.setEnabled(false);&#xD;
@@ -86,14 +119,19 @@ else {&#xD;
 	pane.clientDetails.setEnabled(false);&#xD;
 	pane.pne01.setEnabled(false);&#xD;
 	pane.TechnicalInfo.setEnabled(false);&#xD;
+	&#xD;
 }&#xD;
+//data.setXDMSURL(&quot;http://localhost:60180/xDMS&quot;);&#xD;
+//this.getControl(&quot;fileattachments&quot;).setValue(&quot;&lt;iframe SCROLLING='yes' frameborder=0 width=1000 height=250 &quot; + &quot;src='&quot;+data.getXDMSURL()+&quot;/archiv?xfunc=list&amp;folderid=&quot;+data.getProvisioning_Data().getSiebelCircuitID().toString()+&quot;&amp;xupload=true&amp;target=_blank'>&lt;/iframe>&quot;);&#xD;
+control.fileattachments.setValue(&quot;&lt;iframe SCROLLING='yes' frameborder=0 width=1000 height=250 src='&quot;+data.getXDMSURL().toString()+&quot;/archiv?xfunc=list&amp;folderid=&quot;+data.getProvisioning_Data().getSiebelCircuitID()+&quot;&amp;xupload=true&amp;target=_blank'>&lt;/iframe>&quot;);&#xD;
+&#xD;
 </form:script>
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
-        <form:script>//data.setTaskName(&quot;PM_Track_Installation&quot;);&#xD;
+        <form:script>//data.setTaskName(&quot;TES_OSG_Verification&quot;);&#xD;
 logger.info(data.getTaskName().length);&#xD;
 var name=data.getTaskName();&#xD;
 for(var index=0; index&lt;name.length; index++) {
@@ -103,14 +141,8 @@ for(var index=0; index&lt;name.length; index++) {
 logger.info(name);&#xD;
 pane.content.setLabel(name);&#xD;
 &#xD;
-pane.pneMarginPaneCntrAgnt.setVisible(false);&#xD;
-pane.selectContractorAgency.setVisible(false);&#xD;
-control.lblContractorAgency.setVisible(false);&#xD;
-control.lblSelectContractor.setVisible(false);&#xD;
-control.addEquipment.setVisible(false);&#xD;
-&#xD;
-pane.pneMarginPaneSelectContractor.setVisible(false);&#xD;
-pane.selectContractor.setVisible(false);&#xD;
+//pane.pneMarginCommentPane.setVisible(false);&#xD;
+//pane.pneMarginUploadPane.setVisible(false);&#xD;
 &#xD;
 //control.lblMgmtIP.setVisible(false);&#xD;
 //pane.pneManagementIPs.setVisible(false);&#xD;
@@ -119,6 +151,7 @@ pane.MarginPaneTechnicalInfo.setVisible(true);&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Activation_Process_Initiate&quot;){&#xD;
 control.addEquipment.setVisible(true);&#xD;
+pane.pneSelectProjectManager.setVisible(true);&#xD;
 }&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Select_Contractor&quot;){&#xD;
@@ -129,9 +162,13 @@ control.lblContractorAgency.setVisible(false);&#xD;
 &#xD;
 control.lblSelectContractor.setVisible(true);&#xD;
 &#xD;
+pane.pneTechInfoParent.setVisible(true);&#xD;
+control.lblTechInfo.setVisible(true);&#xD;
 &#xD;
 pane.pneMarginPaneSelectContractor.setVisible(true);&#xD;
 pane.selectContractor.setVisible(true);&#xD;
+&#xD;
+control.addEquipment.setVisible(true);&#xD;
 }&#xD;
 &#xD;
 if(data.getTaskName()==&quot;PM_Track_Installation&quot;){&#xD;
@@ -143,7 +180,17 @@ pane.selectContractorAgency.setVisible(true);&#xD;
 &#xD;
 pane.pneMarginPaneSelectContractor.setVisible(false);&#xD;
 pane.selectContractor.setVisible(false);&#xD;
+&#xD;
+pane.pneTechInfoParent.setVisible(false);&#xD;
+control.lblTechInfo.setVisible(false);&#xD;
 }&#xD;
+&#xD;
+if(data.getTaskName()==&quot;GateKeeper&quot;){&#xD;
+pane.pneTechInfoParent.setVisible(false);&#xD;
+control.lblTechInfo.setVisible(false);&#xD;
+pane.pneSelectProjectManager.setVisible(true);&#xD;
+}&#xD;
+&#xD;
 </form:script>
       </form:action>
       <form:action xsi:type="form:ScriptAction" name="action.setFontColor" label="Set Font Color">
@@ -173,6 +220,7 @@ setupFontColor('[id$=commentHistory]');&#xD;
       <form:event source="#control.availableContractors" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#update" subject="form.control.availableContractors.update"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule13" label="rule1 3">
         <form:script>data.setSelectedContractor(context.control.getValue());&#xD;
+control.Provisioning_Data_contractor.setValue(context.control.getValue());&#xD;
 </form:script>
       </form:action>
     </form:rule>
@@ -431,20 +479,36 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
       <form:destination target="control.selectPM" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.selectPM.choiceValues"></form:destination>
     </form:binding>
     <form:binding direction="sourceToDest" name="_97INkBRfEeiI4LtXlpi0-g">
-      <form:source target="data.GrpNames" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.GrpNames.value"/>
-      <form:destination target="control.contractorAgency" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.contractorAgency.choiceLabels"/>
+      <form:source target="data.GrpNames" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.GrpNames.value"></form:source>
+      <form:destination target="control.contractorAgency" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.contractorAgency.choiceLabels"></form:destination>
     </form:binding>
     <form:binding direction="sourceToDest" name="__IgmsBRfEeiI4LtXlpi0-g">
-      <form:source target="data.GrpNames" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.GrpNames.value"/>
-      <form:destination target="control.contractorAgency" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.contractorAgency.choiceValues"/>
+      <form:source target="data.GrpNames" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.GrpNames.value"></form:source>
+      <form:destination target="control.contractorAgency" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.contractorAgency.choiceValues"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_lc-8UBRiEeiI4LtXlpi0-g">
-      <form:source target="data.mgmtIPFlag" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.mgmtIPFlag.value"/>
-      <form:destination target="control.mgmtIPFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.mgmtIPFlag.value"/>
+      <form:source target="data.mgmtIPFlag" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.mgmtIPFlag.value"></form:source>
+      <form:destination target="control.mgmtIPFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.mgmtIPFlag.value"></form:destination>
     </form:binding>
     <form:binding generated="true" direction="bothways" name="_ldFC8BRiEeiI4LtXlpi0-g">
-      <form:source target="data.equipmentFlag" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.equipmentFlag.value"/>
-      <form:destination target="control.equipmentFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.equipmentFlag.value"/>
+      <form:source target="data.equipmentFlag" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.equipmentFlag.value"></form:source>
+      <form:destination target="control.equipmentFlag" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.equipmentFlag.value"></form:destination>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_n7jvIBU0EeiHR83Su52TNA">
+      <form:source target="data.FolderID" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.FolderID.value"/>
+      <form:destination target="control.FolderID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.FolderID.value"/>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_n8OdgBU0EeiHR83Su52TNA">
+      <form:source target="data.xDMSURL" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.xDMSURL.value"/>
+      <form:destination target="control.xDMSURL" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.xDMSURL.value"/>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_n8-rcBU0EeiHR83Su52TNA">
+      <form:source target="data.UID" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.UID.value"/>
+      <form:destination target="control.UID" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.UID.value"/>
+    </form:binding>
+    <form:binding generated="true" direction="bothways" name="_04ZJQBVFEeiHR83Su52TNA">
+      <form:source target="pane.CommentHistory" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_nDo8RPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=comments?" data="form.pane.CommentHistory.value.comments"/>
+      <form:destination target="control.CommentHistory_comments" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CommentHistory_comments.value"/>
     </form:binding>
   </form:bindings>
   <form:targets>
@@ -1246,7 +1310,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           </form:defaults>
           <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneMarginPane01" paneType="com.tibco.forms.panes.vertical">
             <form:label>pneMarginPane01</form:label>
-            <form:visible>true</form:visible>
+            <form:visible>false</form:visible>
             <form:enabled>true</form:enabled>
             <form:visual height="10"/>
           </form:pane>
@@ -1362,16 +1426,16 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:enabled>true</form:enabled>
             </form:control>
           </form:pane>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_7_cSEBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=mgmtIPFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.mgmtIPFlag">
-            <form:label>mgmtIPFlag</form:label>
-            <form:hint/>
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_7_cSEBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=mgmtIPFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.mgmtIPFlag">
+            <form:label>Provision Management IPs</form:label>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
           </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_9WKNYBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=equipmentFlag?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.equipmentFlag">
-            <form:label>equipmentFlag</form:label>
-            <form:hint/>
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_9WKNYBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=equipmentFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.equipmentFlag">
+            <form:label>Provision Equipments</form:label>
+            <form:hint></form:hint>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:required>false</form:required>
@@ -1381,6 +1445,30 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
           <form:visual height="10"/>
+          <form:labelProperties visible="false"/>
+          <form:defaults>
+            <form:labelProperties position="top"/>
+          </form:defaults>
+        </form:pane>
+        <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblUploadDocuments">
+          <form:label>Upload Documents</form:label>
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:required>false</form:required>
+        </form:control>
+        <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneUploadDocument" paneType="com.tibco.forms.panes.vertical">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.passthrough" controlType="com.tibco.forms.controls.passthrough" name="control.fileattachments">
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+          </form:control>
+        </form:pane>
+        <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneMarginUploadPane" paneType="com.tibco.forms.panes.horizontal">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:visual height="10"/>
+          <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
@@ -1406,9 +1494,11 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:defaults>
               <form:labelProperties position="top"/>
             </form:defaults>
-            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=CommentHistory?" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=CommentHistory?" syncFlags="2621440" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
+                <et:supportAddOperation>true</et:supportAddOperation>
+                <et:supportDeleteOperation>true</et:supportDeleteOperation>
                 <et:editable>true</et:editable>
                 <et:sortable>true</et:sortable>
                 <et:rowLabel>{0}</et:rowLabel>
@@ -1427,6 +1517,16 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
                 </form:propertySet>
                 <form:label>Addedby</form:label>
                 <form:hint></form:hint>
+                <form:visible>true</form:visible>
+                <form:enabled>true</form:enabled>
+                <form:required>false</form:required>
+              </form:control>
+              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8RPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=comments?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_comments">
+                <form:propertySet xsi:type="et:TextPropertySet">
+                  <et:maxLength>500</et:maxLength>
+                </form:propertySet>
+                <form:label>Comments</form:label>
+                <form:hint/>
                 <form:visible>true</form:visible>
                 <form:enabled>true</form:enabled>
                 <form:required>false</form:required>
@@ -1522,6 +1622,42 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
         </form:propertySet>
         <form:label>EscalationEmail</form:label>
         <form:hint></form:hint>
+        <form:visible>false</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_4qOhUBUzEeiHR83Su52TNA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=FolderID?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.FolderID">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>FolderID</form:label>
+        <form:hint/>
+        <form:visible>false</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_5VCY4BUzEeiHR83Su52TNA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=xDMSURL?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.xDMSURL">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>300</et:maxLength>
+        </form:propertySet>
+        <form:label>xDMSURL</form:label>
+        <form:hint/>
+        <form:visible>false</form:visible>
+        <form:enabled>true</form:enabled>
+        <form:required>false</form:required>
+      </form:control>
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_1bmpMBUzEeiHR83Su52TNA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=UID?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.UID">
+        <form:propertySet xsi:type="et:TextAreaPropertySet">
+          <et:rows>10</et:rows>
+          <et:cols>25</et:cols>
+          <et:maxLength>100</et:maxLength>
+        </form:propertySet>
+        <form:label>UID</form:label>
+        <form:hint/>
         <form:visible>false</form:visible>
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>

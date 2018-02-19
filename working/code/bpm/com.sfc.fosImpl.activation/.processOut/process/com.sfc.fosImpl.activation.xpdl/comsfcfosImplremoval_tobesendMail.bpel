@@ -8,38 +8,38 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendTaskNotification">
             <startingVariables>
-                <variable>ClientID</variable>
-                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
+                <variable>ClientID</variable>
                 <variable>CustomerID</variable>
+                <variable>ClientName</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientID</variable>
-                <variable>ClientName</variable>
-                <variable>Provision</variable>
                 <variable>EmailTo</variable>
+                <variable>ClientID</variable>
+                <variable>Provision</variable>
                 <variable>CustomerID</variable>
+                <variable>ClientName</variable>
             </ProcessManagerScript>
         </task>
         <task name="SendMailTask">
             <startingVariables>
                 <variable>SiebelCircuitID</variable>
-                <variable>SubjectLineEmail</variable>
                 <variable>SLALevel</variable>
-                <variable>EmailTo</variable>
                 <variable>Task</variable>
+                <variable>SubjectLineEmail</variable>
+                <variable>EmailTo</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>SiebelCircuitID</variable>
-                <variable>Provision</variable>
-                <variable>SubjectLineEmail</variable>
                 <variable>SLALevel</variable>
-                <variable>EmailTo</variable>
-                <variable>EscalationToEmail</variable>
-                <variable>SLAFlagCheck</variable>
                 <variable>Task</variable>
+                <variable>SLAFlagCheck</variable>
+                <variable>Provision</variable>
+                <variable>EscalationToEmail</variable>
                 <variable>PendingAt</variable>
+                <variable>SubjectLineEmail</variable>
                 <variable>SLAFLAGGlobal</variable>
+                <variable>EmailTo</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -57,6 +57,10 @@
             tibex:xpdlId="_PSJTYPUJEeeywP4RjejZPQ" type="xsd:string"/>
         <bpws:variable name="SLAFlagCheck" tibex:parameter="inout"
             tibex:xpdlId="_TScgEPUJEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="GateKeeperTask" tibex:parameter="inout"
+            tibex:xpdlId="_IuHbEBWJEeiHR83Su52TNA" type="xsd:boolean"/>
+        <bpws:variable name="selectPM" tibex:parameter="inout"
+            tibex:xpdlId="_cnEigRWJEeiHR83Su52TNA" type="xsd:string"/>
         <bpws:variable name="SubjectLineEmail"
             tibex:xpdlId="_EVdLEPUDEeeywP4RjejZPQ" type="xsd:string"/>
         <bpws:variable name="getMail" tibex:array="yes"
@@ -82,7 +86,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_k3dHUBVoEeiHR83Su52TNA">
+    <bpws:flow name="_BX_flow_UpHYABWKEeiHR83Su52TNA">
         <bpws:links>
             <bpws:link
                 name="_0JRqcPwgEeeupNwu8S8N4Q to _BX_scope_SendTaskNotificati" tibex:xpdlId="_09No0PwgEeeupNwu8S8N4Q"/>
@@ -110,11 +114,13 @@
                     <bpws:source linkName="StartEvent to _0JRqcPwgEeeupNwu8S8N4Q"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="Provision"/>
-                    <parameterDescription mode="InOut" name="EscalationToEmail"/>
-                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
+                    <parameterDescription mode="InOut" name="GateKeeperTask"/>
                     <parameterDescription mode="InOut" name="Task"/>
+                    <parameterDescription mode="InOut" name="selectPM"/>
+                    <parameterDescription mode="InOut" name="Provision"/>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mode="InOut" name="EscalationToEmail"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>
@@ -293,6 +299,8 @@ else if(SLAFlagCheck=="3"){
                     tibex:xpdlId="_QM3zoP84Eee4BtDH5WlQLQ" type="xsd:string"/>
                 <bpws:variable name="CustomerID"
                     tibex:xpdlId="_SPqx0f84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                <bpws:variable name="GateKeeperTaskFlag"
+                    tibex:xpdlId="_AMjpsBWJEeiHR83Su52TNA" type="xsd:boolean"/>
             </bpws:variables>
             <bpws:faultHandlers>
                 <bpws:catchAll tibex:faultDetailsVar="var_errorDetail" tibex:faultNameVar="var_errorCode">
@@ -313,6 +321,7 @@ ClientName=Provision.clientName;
 CustomerID=Provision.siebelCircuitID;
 //var group=Process.getOrgModel().groupByName("PM").get(0).getGuid();
 Log.write("[SFC] DeactivationProcess Start Recipient:");
+if(GateKeeperTask==false){
 for(var index=0; index<Process.getOrgModel().groupByName("PM").get(0).getResources().size(); index++) {
 	var name=Process.getOrgModel().groupByName("PM").get(0).getResources().get(index).getName();
 	Log.write("[SFC] DeactivationProcess PM Name:"+name+" "+index);
@@ -322,8 +331,14 @@ for(var index=0; index<Process.getOrgModel().groupByName("PM").get(0).getResourc
 	EmailTo=EmailTo+mail+";";
 	Log.write("[SFC] DeactivationProcess MailInput:"+EmailTo+" "+index);
 }
+EmailTo=EmailTo.slice(0,EmailTo.length-1);
+}
+else{
+	var mail=Process.getOrgModel().resourceByName(selectPM).get(0).getAttributeValue("Email").get(0);
+	EmailTo=mail;
+}
 Log.write("[SFC] DeactivationProcess MailThread:"+EmailTo);
-EmailTo=EmailTo.slice(0,EmailTo.length-1);]]></tibex:initiatedScript>
+]]></tibex:initiatedScript>
                 <bpws:targets/>
                 <bpws:sources>
                     <bpws:source linkName="_hjxu8PwgEeeupNwu8S8N4Q to _BX_normalFlow_2">
@@ -339,6 +354,8 @@ EmailTo=EmailTo.slice(0,EmailTo.length-1);]]></tibex:initiatedScript>
                         tibex:xpdlId="_QM3zoP84Eee4BtDH5WlQLQ" type="xsd:string"/>
                     <bpws:variable name="CustomerID"
                         tibex:xpdlId="_SPqx0f84Eee4BtDH5WlQLQ" type="xsd:string"/>
+                    <bpws:variable name="GateKeeperTaskFlag"
+                        tibex:xpdlId="_AMjpsBWJEeiHR83Su52TNA" type="xsd:boolean"/>
                 </bpws:variables>
                 <bpws:extensionActivity>
                     <tibex:extActivity name="SendTaskNotification"

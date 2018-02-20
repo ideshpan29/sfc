@@ -145,7 +145,7 @@
         </xpdl2:Lane>
         <xpdl2:Lane Id="_Gl0XAN_BEee7mPhVBav8gw" xpdExt:DisplayName="Contractor" Name="Contractor">
           <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="269.0" IsVisible="true"/>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="128,155,183" Height="294.0" IsVisible="true"/>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Lane>
         <xpdl2:Lane Id="_HE7U4N_BEee7mPhVBav8gw" xpdExt:DisplayName="TES OSG" Name="TESOSG">
@@ -700,7 +700,7 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_p3E2cN_HEeec4K-r6PSjHg" Name="Manual_Installation" xpdExt:Visibility="Private" xpdExt:ActivityDeadlineEventId="_GFDmoOZAEeeJAIDoV1ZLpQ" xpdExt:DisplayName="Manual Installation">
+        <xpdl2:Activity Id="_p3E2cN_HEeec4K-r6PSjHg" Name="Manual_Installation" xpdExt:Visibility="Private" xpdExt:DisplayName="Manual Installation" xpdExt:ActivityDeadlineEventId="_GFDmoOZAEeeJAIDoV1ZLpQ">
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskUser Implementation="Unspecified">
@@ -1049,8 +1049,10 @@ TaskName=&quot;PM_Track_Installation&quot;;</xpdExt:Information>
 		toSendEmail = EscalationEmail;&#xD;
 	}&#xD;
 */&#xD;
+&#xD;
 	if(FetchSLA1.readSLA_Configuration().emailTo!=&quot;SPECIFIC&quot;){&#xD;
-		toSendEmail=EscalationEmail;&#xD;
+		var mail=Process.getOrgModel().resourceByName(SelectedPM).get(0).getAttributeValue(&quot;Email&quot;).get(0);&#xD;
+		toSendEmail=mail;&#xD;
 		&#xD;
 	}&#xD;
 return toSendEmail;	&#xD;
@@ -2440,7 +2442,7 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_hg5ioBShEeiI4LtXlpi0-g" Name="VerificationOfCustomerAcknowledgement" xpdExt:Visibility="Private" xpdExt:DisplayName="Verification Of Customer Acknowledgement">
+        <xpdl2:Activity Id="_hg5ioBShEeiI4LtXlpi0-g" Name="VerificationOfCustomerAcknowledgement" xpdExt:Visibility="Private" xpdExt:DisplayName="Verification Of Customer Acknowledgement" xpdExt:ActivityDeadlineEventId="_BpUYoRX3EeiWxPHIEGwM2w">
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskUser Implementation="Unspecified">
@@ -2496,6 +2498,287 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
               <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Verification_Customer_Acknowledgement&quot;;&#xD;
 CommentText=&quot;&quot;;&#xD;
 Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_QTPr4BX2EeiHR83Su52TNA" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_3hvE8BSTEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Configure_IPs','Provisioning');&#xD;
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="42.8125" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;1&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_RQNDYBX2EeiHR83Su52TNA" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_3hvE8BSTEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate/>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Configure_IPs','Provisioning');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="28.125" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">fetchSLAFlag=1;&#xD;
+SLAFLAGGlobal=&quot;2&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_99XEQBX2EeiWxPHIEGwM2w" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_CCa1cBSUEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate></xpdl2:TimeDate>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Confirmation','Provisioning');&#xD;
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="41.25" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;1&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_-sQKkBX2EeiWxPHIEGwM2w" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_CCa1cBSUEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate></xpdl2:TimeDate>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Confirmation','Provisioning');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));&#xD;
+</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="26.5625" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">fetchSLAFlag=1;&#xD;
+SLAFLAGGlobal=&quot;2&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_BpUYoRX3EeiWxPHIEGwM2w" Name="TimerEvent" xpdExt:Visibility="Private" xpdExt:DisplayName="Timer Event">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_hg5ioBShEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate></xpdl2:TimeDate>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Acknowledgement','Provisioning');&#xD;
+DateTimeUtil.createDuration(60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="96.5625" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">fetchSLAFlag=1;&#xD;
+SLAFLAGGlobal=&quot;2&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_CkmVIBX3EeiWxPHIEGwM2w" Name="" xpdExt:Visibility="Private" xpdExt:DisplayName="">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Target="_hg5ioBShEeiI4LtXlpi0-g" Trigger="Timer">
+              <xpdl2:TriggerTimer xpdExt:ContinueOnTimeout="true">
+                <xpdl2:TimeDate></xpdl2:TimeDate>
+              </xpdl2:TriggerTimer>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:Deadline>
+            <xpdl2:DeadlineDuration ScriptGrammar="JavaScript">FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Acknowledgement','Provisioning');&#xD;
+DateTimeUtil.createDuration((parseInt(TimerLimit.readSystemParameters().propertyValue)/100)*60*1000*parseInt(FetchSLA1.readSLA_Configuration().SLA_Deadline));</xpdl2:DeadlineDuration>
+          </xpdl2:Deadline>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+            <xpdl2:NodeGraphicsInfo ToolId="XPD.BorderEventPosition">
+              <xpdl2:Coordinates XCoordinate="47.1875" YCoordinate="0.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">SLAFLAGGlobal=&quot;1&quot;;</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_TFgisBX3EeiWxPHIEGwM2w" Name="TL19" xpdExt:Visibility="Private" xpdExt:DisplayName="TL19">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="27.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="1577.0" YCoordinate="173.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Configure_IPs&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Configure_IPs','Provisioning');</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_UAoHIBX3EeiWxPHIEGwM2w" Name="TL20" xpdExt:Visibility="Private" xpdExt:DisplayName="TL20">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="39.0">
+              <xpdl2:Coordinates XCoordinate="1624.0" YCoordinate="171.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Configure_IPs&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Configure_IPs','Provisioning');</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_U_lpwBX3EeiWxPHIEGwM2w" Name="TL15" xpdExt:Visibility="Private" xpdExt:DisplayName="TL15">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="39.0">
+              <xpdl2:Coordinates XCoordinate="1727.0" YCoordinate="173.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Customer_Confirmation&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Confirmation','Provisioning');</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_V9mxMBX3EeiWxPHIEGwM2w" Name="TL16" xpdExt:Visibility="Private" xpdExt:DisplayName="TL16">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="39.0">
+              <xpdl2:Coordinates XCoordinate="1774.0" YCoordinate="173.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Customer_Confirmation&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Confirmation','Provisioning');</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_o7_GwBX3EeiWxPHIEGwM2w" Name="TL17" xpdExt:Visibility="Private" xpdExt:DisplayName="TL17">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="39.0">
+              <xpdl2:Coordinates XCoordinate="1708.0" YCoordinate="255.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Customer_Acknowledgement&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Acknowledgement','Provisioning');</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_sK550BX3EeiWxPHIEGwM2w" Name="TL18" xpdExt:Visibility="Private" xpdExt:DisplayName="TL18">
+          <xpdl2:Event>
+            <xpdl2:IntermediateEvent Trigger="Link">
+              <xpdl2:TriggerResultLink CatchThrow="THROW" Name="_-vsZAOSGEee4r8nNLd6bUg"/>
+            </xpdl2:IntermediateEvent>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="57.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="39.0">
+              <xpdl2:Coordinates XCoordinate="1784.0" YCoordinate="87.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">TaskName=&quot;Customer_Acknowledgement&quot;;&#xD;
+FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentifier(1,'Customer_Acknowledgement','Provisioning');</xpdExt:Information>
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
@@ -2907,6 +3190,36 @@ Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
+        <xpdl2:Transition Id="_mF5DYBX3EeiWxPHIEGwM2w" Name="" From="_QTPr4BX2EeiHR83Su52TNA" To="_TFgisBX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_m0tRMBX3EeiWxPHIEGwM2w" Name="" From="_RQNDYBX2EeiHR83Su52TNA" To="_UAoHIBX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_nas6MBX3EeiWxPHIEGwM2w" Name="" From="_99XEQBX2EeiWxPHIEGwM2w" To="_U_lpwBX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_n5sjUBX3EeiWxPHIEGwM2w" Name="" From="_-sQKkBX2EeiWxPHIEGwM2w" To="_V9mxMBX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_ve1vwBX3EeiWxPHIEGwM2w" Name="" From="_CkmVIBX3EeiWxPHIEGwM2w" To="_o7_GwBX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_wFTS0BX3EeiWxPHIEGwM2w" Name="" From="_BpUYoRX3EeiWxPHIEGwM2w" To="_sK550BX3EeiWxPHIEGwM2w">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
       </xpdl2:Transitions>
       <xpdl2:ExtendedAttributes>
         <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
@@ -3243,7 +3556,7 @@ Safaricom Team</email:Body>
               <xpdl2:DataType>
                 <xpdl2:BasicType Type="BOOLEAN"/>
               </xpdl2:DataType>
-              <xpdl2:InitialValue></xpdl2:InitialValue>
+              <xpdl2:InitialValue/>
             </xpdl2:DataField>
           </xpdl2:DataFields>
           <xpdl2:NodeGraphicsInfos>

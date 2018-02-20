@@ -9,40 +9,40 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="AdminErrorTask">
             <startingVariables>
-                <variable>ErrorCode</variable>
                 <variable>ErrorDetail</variable>
+                <variable>ErrorCode</variable>
             </startingVariables>
         </task>
         <task name="DecomissioningInitiateMail">
             <startingVariables>
                 <variable>ClientName</variable>
-                <variable>RegisteredMail</variable>
                 <variable>CustomerID</variable>
-                <variable>EmailTo</variable>
                 <variable>ClientID</variable>
+                <variable>EmailTo</variable>
+                <variable>RegisteredMail</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>ClientName</variable>
-                <variable>Provision</variable>
-                <variable>RegisteredMail</variable>
                 <variable>CustomerID</variable>
-                <variable>EmailTo</variable>
                 <variable>ClientID</variable>
+                <variable>Provision</variable>
+                <variable>EmailTo</variable>
+                <variable>RegisteredMail</variable>
             </ProcessManagerScript>
         </task>
         <task name="DecomissioningCompleteMail">
             <startingVariables>
-                <variable>ClientID</variable>
-                <variable>CircuitID</variable>
-                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
+                <variable>ClientID</variable>
+                <variable>ClientName</variable>
+                <variable>CircuitID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientID</variable>
-                <variable>CircuitID</variable>
-                <variable>ClientName</variable>
                 <variable>EmailTo</variable>
+                <variable>ClientID</variable>
                 <variable>Provision</variable>
+                <variable>ClientName</variable>
+                <variable>CircuitID</variable>
             </ProcessManagerScript>
         </task>
         <task name="StartEvent">
@@ -83,7 +83,7 @@
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_UqjicBWKEeiHR83Su52TNA">
+    <bpws:flow name="_BX_flow_ClDKoBYDEeiU0buANAV9_Q">
         <bpws:links>
             <bpws:link name="CatchError to AdminErrorTask" tibex:xpdlId="_5Eb8EP7BEeeuGbQVt6VBIQ"/>
             <bpws:link name="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_By_AkP7CEeeuGbQVt6VBIQ"/>
@@ -119,8 +119,8 @@
 
 ]]></tibex:completedScript>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="Provision"/>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                 </tibex:parameters>
                 <tibex:completedScript
                     expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SystemParamRef = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("DISABLE_EMAIL_FLAG");

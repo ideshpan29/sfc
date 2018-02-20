@@ -65,7 +65,7 @@ else {&#xD;
     <form:rule name="rule.initrule1" label="initrule1">
       <form:event source="#//@form" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
+        <form:script>data.setTaskName(&quot;Initiate_Activation_Process&quot;);&#xD;
 if(data.getTaskName()==&quot;Initiate_Activation_Process&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
@@ -74,7 +74,8 @@ pane.pane8.setEnabled(true);&#xD;
 pane.Pane03.setEnabled(true);&#xD;
 pane.clientDetails.setEnabled(true);&#xD;
 pane.pne01.setEnabled(true);&#xD;
-	pane.TechnicalInfo.setEnabled(true);&#xD;
+pane.TechnicalInfo.setEnabled(true);&#xD;
+pane.TechnicalInfo.setVisible(false);&#xD;
 	&#xD;
 }&#xD;
 else {&#xD;
@@ -118,7 +119,8 @@ pane.MarginPaneTechnicalInfo.setVisible(true);&#xD;
 //pane.pane13.setVisible(false);&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Activation_Process_Initiate&quot;){&#xD;
-control.addEquipment.setVisible(true);&#xD;
+control.addEquipment.setVisible(false);&#xD;
+pane.TechnicalInfo.setVisible(false);&#xD;
 }&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Select_Contractor&quot;){&#xD;
@@ -469,7 +471,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
       <form:defaults>
         <form:labelProperties position="top"/>
       </form:defaults>
-      <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_lj7GkN_EEeec4K-r6PSjHg?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3acomsfcfosImplremoval_tobe_pageflowProcess%26n=Provisioning_Data?" syncFlags="7274496" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_K9HKcM3FEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=ProvisioningDataModel?" name="pane.ProvisioningData" paneType="com.tibco.forms.panes.vertical">
+      <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_lj7GkN_EEeec4K-r6PSjHg?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=Provisioning_Data?" syncFlags="7274496" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_K9HKcM3FEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=ProvisioningDataModel?" name="pane.ProvisioningData" paneType="com.tibco.forms.panes.vertical">
         <form:label>ProvisioningData</form:label>
         <form:hint></form:hint>
         <form:visible>true</form:visible>
@@ -1450,7 +1452,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
             <form:defaults>
               <form:labelProperties position="top"/>
             </form:defaults>
-            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3acomsfcfosImplremoval_tobe_pageflowProcess%26n=CommentHistory?" syncFlags="2621440" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=CommentHistory?" syncFlags="2621440" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
                 <et:editable>true</et:editable>
@@ -1512,7 +1514,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
           </form:pane>
         </form:pane>
       </form:pane>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_8EQNMPENEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3acomsfcfosImplremoval_tobe_pageflowProcess%26n=SelectedGroup?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SelectedGroup">
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_8EQNMPENEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=SelectedContractorGroup?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.SelectedGroup">
         <form:propertySet xsi:type="et:TextPropertySet">
           <et:displayLength>40</et:displayLength>
           <et:maxLength>50</et:maxLength>
@@ -1535,7 +1537,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_SZDIIPESEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3aActivation%26n=MasterContractor?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.MasterContractor">
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_SZDIIPESEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3aActivation%26n=MasterContractor_Performer?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.MasterContractor">
         <form:propertySet xsi:type="et:TextAreaPropertySet">
           <et:rows>10</et:rows>
           <et:cols>25</et:cols>
@@ -1557,7 +1559,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_oC8T0PE1EeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3acomsfcfosImplremoval_tobe_pageflowProcess%26n=ContractorNames?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.ContractorNames">
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_oC8T0PE1EeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=ContractorNames?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.ContractorNames">
         <form:propertySet xsi:type="et:TextPropertySet">
           <form:list>true</form:list>
           <et:displayLength>40</et:displayLength>

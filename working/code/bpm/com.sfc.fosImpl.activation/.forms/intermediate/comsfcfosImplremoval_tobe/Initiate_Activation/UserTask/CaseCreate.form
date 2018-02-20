@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_Tf0NoBWKEeiHR83Su52TNA" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" generated="true" id="_qS_JYBYMEeiU0buANAV9_Q" formatVersion="4.0.0">
   <form:runtimeDependencies>
     <form:package>com.sfc.fosImpl.dataModel.DataModelPackage</form:package>
     <form:factory>com.sfc.fosImpl.dataModel.DataModelFactory</form:factory>
-    <form:class>com.sfc.fosImpl.dataModel.CommentData</form:class>
     <form:class>com.sfc.fosImpl.dataModel.ProvisioningDataModel</form:class>
-    <form:class>com.sfc.fosImpl.dataModel.UserDefinedFields</form:class>
-    <form:class>com.sfc.fosImpl.dataModel.TechnicalInformation</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.CommentData</form:class>
     <form:class>com.sfc.fosImpl.dataModel.planItem</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.TechnicalInformation</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.UserDefinedFields</form:class>
     <form:class>com.sfc.fosImpl.dataModel.ActivationExecutionRequest</form:class>
-    <form:class>com.sfc.fosImpl.dataModel.Header</form:class>
     <form:class>com.sfc.fosImpl.dataModel.EquipmentDetails</form:class>
+    <form:class>com.sfc.fosImpl.dataModel.Header</form:class>
   </form:runtimeDependencies>
   <form:externalResources>
     <form:externalResource name="resource.common" uri="../../../.common/properties/common.properties" internal="true" localized="true"/>
@@ -75,9 +75,9 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.initrule1" label="initrule1">
-      <form:event source="#_Tf0NoBWKEeiHR83Su52TNA" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_qS_JYBYMEeiU0buANAV9_Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule1" label="rule1">
-        <form:script>//data.setTaskName(&quot;Deactivation_Process_Initiate&quot;);&#xD;
+        <form:script>data.setTaskName(&quot;Initiate_Activation_Process&quot;);&#xD;
 if(data.getTaskName()==&quot;Initiate_Activation_Process&quot;) {&#xD;
 pane.serviceDates.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
@@ -86,7 +86,8 @@ pane.pane8.setEnabled(true);&#xD;
 pane.Pane03.setEnabled(true);&#xD;
 pane.clientDetails.setEnabled(true);&#xD;
 pane.pne01.setEnabled(true);&#xD;
-	pane.TechnicalInfo.setEnabled(true);&#xD;
+pane.TechnicalInfo.setEnabled(true);&#xD;
+pane.TechnicalInfo.setVisible(false);&#xD;
 	&#xD;
 }&#xD;
 else {&#xD;
@@ -103,7 +104,7 @@ else {&#xD;
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
-      <form:event source="#_Tf0NoBWKEeiHR83Su52TNA" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
+      <form:event source="#_qS_JYBYMEeiU0buANAV9_Q" eventType="pathmap://FORMS_LIBRARIES/Standard.library.elemtypes#open" subject="form.open"/>
       <form:action xsi:type="form:ScriptAction" name="action.rule11" label="rule1 1">
         <form:script>//data.setTaskName(&quot;PM_Track_Installation&quot;);&#xD;
 logger.info(data.getTaskName().length);&#xD;
@@ -130,7 +131,8 @@ pane.MarginPaneTechnicalInfo.setVisible(true);&#xD;
 //pane.pane13.setVisible(false);&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Activation_Process_Initiate&quot;){&#xD;
-control.addEquipment.setVisible(true);&#xD;
+control.addEquipment.setVisible(false);&#xD;
+pane.TechnicalInfo.setVisible(false);&#xD;
 }&#xD;
 &#xD;
 if(data.getTaskName()==&quot;Select_Contractor&quot;){&#xD;

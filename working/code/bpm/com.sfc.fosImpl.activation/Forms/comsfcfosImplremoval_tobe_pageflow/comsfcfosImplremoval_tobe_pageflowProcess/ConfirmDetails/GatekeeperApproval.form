@@ -87,7 +87,7 @@ pane.pneSelectProjectManager.setVisible(false);&#xD;
 pane.pneMarginPaneSelectContractor.setVisible(false);&#xD;
 pane.selectContractor.setVisible(false);&#xD;
 if(data.getTaskName()==&quot;Initiate_Activation_Process&quot;) {&#xD;
-pane.serviceDates.setEnabled(true);&#xD;
+pane.pneSrvcDt.setEnabled(true);&#xD;
 pane.contactDetails.setEnabled(true);&#xD;
 pane.serviceRequest.setEnabled(true);&#xD;
 pane.pane8.setEnabled(true);&#xD;
@@ -98,7 +98,7 @@ pane.TechnicalInfo.setEnabled(true);&#xD;
 	&#xD;
 }&#xD;
 else if(data.getTaskName()==&quot;Select_Contractor&quot;||data.getTaskName()==&quot;TES_OSG_Verification&quot;||data.getTaskName()==&quot;Provision_Management_IP&quot;||data.getTaskName()==&quot;Manual_Installation&quot;){&#xD;
-	pane.serviceDates.setEnabled(false);&#xD;
+	pane.pneSrvcDt.setEnabled(false);&#xD;
 	pane.contactDetails.setEnabled(false);&#xD;
 	pane.serviceRequest.setEnabled(false);&#xD;
 	pane.pane8.setEnabled(false);&#xD;
@@ -111,7 +111,7 @@ else if(data.getTaskName()==&quot;Select_Contractor&quot;||data.getTaskName()==&
 	control.addEquipment.setVisible(true);&#xD;
 }&#xD;
 else {&#xD;
-	pane.serviceDates.setEnabled(false);&#xD;
+	pane.pneSrvcDt.setEnabled(false);&#xD;
 	pane.contactDetails.setEnabled(false);&#xD;
 	pane.serviceRequest.setEnabled(false);&#xD;
 	pane.pane8.setEnabled(false);&#xD;
@@ -206,6 +206,9 @@ setupFontColor('[id$=lblTechInfo]');&#xD;
 setupFontColor('[id$=lblContractorAgency]');&#xD;
 setupFontColor('[id$=lblSelectContractor]');&#xD;
 setupFontColor('[id$=commentHistory]');&#xD;
+setupFontColor('[id$=lblUploadDocuments01]');&#xD;
+setupFontColor('[id$=lblSelectProjectManager01]');&#xD;
+&#xD;
 &#xD;
 </form:script>
       </form:action>
@@ -510,6 +513,10 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
       <form:source target="pane.CommentHistory" feature="http://www.tibco.com/forms/model/elemtypes#//CollectionPanePropertySet/value com.sfc.fosImpl.dataModel.bom#_nDo8RPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=comments?" data="form.pane.CommentHistory.value.comments"></form:source>
       <form:destination target="control.CommentHistory_comments" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.CommentHistory_comments.value"></form:destination>
     </form:binding>
+    <form:binding generated="true" direction="bothways" name="_kqbjMBbBEei_483sJGVYzg">
+      <form:source target="data.Provisioning_Data" feature="http://www.tibco.com/forms/model/form#//Datum/value com.sfc.fosImpl.dataModel.bom#_Xm04cM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceType?" data="form.data.Provisioning_Data.value.serviceType"/>
+      <form:destination target="control.Provisioning_Data_serviceType" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.Provisioning_Data_serviceType.value"/>
+    </form:binding>
   </form:bindings>
   <form:targets>
     <form:target ref="iProcessWorkspace_10.7"/>
@@ -593,7 +600,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             </form:control>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_6u98UM3OEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=projectManager?" syncFlags="16384" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_projectManager">
               <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>40</et:displayLength>
+                <et:displayLength>30</et:displayLength>
                 <et:maxLength>50</et:maxLength>
               </form:propertySet>
               <form:label>ProjectManager</form:label>
@@ -668,7 +675,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             </form:control>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_9KEFwM3OEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=clientName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_clientName">
               <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>40</et:displayLength>
+                <et:displayLength>30</et:displayLength>
                 <et:maxLength>50</et:maxLength>
               </form:propertySet>
               <form:label>ClientName</form:label>
@@ -709,7 +716,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           </form:control>
           <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_LzX4gM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=contractor?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_contractor">
             <form:propertySet xsi:type="et:TextPropertySet">
-              <et:displayLength>40</et:displayLength>
+              <et:displayLength>30</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Contractor</form:label>
@@ -761,7 +768,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             </form:control>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_P37TEM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=floor?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_floor">
               <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>40</et:displayLength>
+                <et:displayLength>30</et:displayLength>
                 <et:maxLength>50</et:maxLength>
               </form:propertySet>
               <form:label>Floor</form:label>
@@ -772,7 +779,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             </form:control>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_2qLbwM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=GPSCoordinates?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_GPSCoordinates">
               <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>40</et:displayLength>
+                <et:displayLength>30</et:displayLength>
                 <et:maxLength>50</et:maxLength>
               </form:propertySet>
               <form:label>GPSCoordinates</form:label>
@@ -908,7 +915,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           </form:control>
           <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_eyHlAM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=mobile?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_mobile">
             <form:propertySet xsi:type="et:TextPropertySet">
-              <et:displayLength>40</et:displayLength>
+              <et:displayLength>30</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Mobile</form:label>
@@ -919,7 +926,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           </form:control>
           <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_e5djIM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=email?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_email">
             <form:propertySet xsi:type="et:TextPropertySet">
-              <et:displayLength>40</et:displayLength>
+              <et:displayLength>30</et:displayLength>
               <et:maxLength>50</et:maxLength>
             </form:propertySet>
             <form:label>Email</form:label>
@@ -942,74 +949,93 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
           <form:enabled>true</form:enabled>
           <form:required>false</form:required>
         </form:control>
-        <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.serviceDates" paneType="com.tibco.forms.panes.horizontal">
-          <form:label>Service Dates</form:label>
+        <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneSrvcDt" paneType="com.tibco.forms.panes.vertical">
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
-          <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.label7">
-            <form:label>Label 7</form:label>
+          <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneSrvcDtPane01" paneType="com.tibco.forms.panes.horizontal">
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
-            <form:visual width="10"/>
             <form:labelProperties visible="false"/>
-            <form:required>false</form:required>
-          </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_e84qkM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceStart?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceStart">
-            <form:propertySet xsi:type="et:DateTimePropertySet">
-              <et:minRelative>true</et:minRelative>
-              <et:maxRelative>true</et:maxRelative>
-              <et:year min="-20" max="20"/>
-              <et:minute increment="15"/>
-            </form:propertySet>
-            <form:label>ServiceStart</form:label>
-            <form:hint></form:hint>
+            <form:defaults>
+              <form:labelProperties position="top"/>
+            </form:defaults>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_e84qkM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceStart?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceStart">
+              <form:propertySet xsi:type="et:DateTimePropertySet">
+                <et:minRelative>true</et:minRelative>
+                <et:maxRelative>true</et:maxRelative>
+                <et:year min="-20" max="20"/>
+                <et:minute increment="15"/>
+              </form:propertySet>
+              <form:label>ServiceStart</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_qbCv8M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceEnd?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceEnd">
+              <form:propertySet xsi:type="et:DateTimePropertySet">
+                <et:minRelative>true</et:minRelative>
+                <et:maxRelative>true</et:maxRelative>
+                <et:year min="-20" max="20"/>
+                <et:minute increment="15"/>
+              </form:propertySet>
+              <form:label>ServiceEnd</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_Xm04cM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceType?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_serviceType">
+              <form:propertySet xsi:type="et:TextPropertySet">
+                <et:displayLength>30</et:displayLength>
+                <et:maxLength>50</et:maxLength>
+              </form:propertySet>
+              <form:label>ServiceType</form:label>
+              <form:hint/>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+          </form:pane>
+          <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneSrvcDtPane02" paneType="com.tibco.forms.panes.horizontal">
+            <form:label></form:label>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_1UWb0M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=installDate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_installDate">
-            <form:propertySet xsi:type="et:DateTimePropertySet">
-              <et:minRelative>true</et:minRelative>
-              <et:maxRelative>true</et:maxRelative>
-              <et:year min="-20" max="20"/>
-              <et:minute increment="15"/>
-            </form:propertySet>
-            <form:label>InstallDate</form:label>
-            <form:hint></form:hint>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_qbCv8M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceEnd?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_serviceEnd">
-            <form:propertySet xsi:type="et:DateTimePropertySet">
-              <et:minRelative>true</et:minRelative>
-              <et:maxRelative>true</et:maxRelative>
-              <et:year min="-20" max="20"/>
-              <et:minute increment="15"/>
-            </form:propertySet>
-            <form:label>ServiceEnd</form:label>
-            <form:hint></form:hint>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_qeiv4M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=requestDate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_requestDate">
-            <form:propertySet xsi:type="et:DateTimePropertySet">
-              <et:minRelative>true</et:minRelative>
-              <et:maxRelative>true</et:maxRelative>
-              <et:year min="-20" max="20"/>
-              <et:minute increment="15"/>
-            </form:propertySet>
-            <form:label>RequestDate</form:label>
-            <form:hint></form:hint>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
+            <form:labelProperties visible="false"/>
+            <form:defaults>
+              <form:labelProperties position="top"/>
+            </form:defaults>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_1UWb0M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=installDate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_installDate">
+              <form:propertySet xsi:type="et:DateTimePropertySet">
+                <et:minRelative>true</et:minRelative>
+                <et:maxRelative>true</et:maxRelative>
+                <et:year min="-20" max="20"/>
+                <et:minute increment="15"/>
+              </form:propertySet>
+              <form:label>InstallDate</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_qeiv4M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=requestDate?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.datetime" controlType="com.tibco.forms.controls.datetime" name="control.Provisioning_Data_requestDate">
+              <form:propertySet xsi:type="et:DateTimePropertySet">
+                <et:minRelative>true</et:minRelative>
+                <et:maxRelative>true</et:maxRelative>
+                <et:year min="-20" max="20"/>
+                <et:minute increment="15"/>
+              </form:propertySet>
+              <form:label>RequestDate</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+          </form:pane>
         </form:pane>
         <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pane9" paneType="com.tibco.forms.panes.vertical">
           <form:label>Pane 9</form:label>
@@ -1314,7 +1340,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:enabled>true</form:enabled>
             <form:visual height="10"/>
           </form:pane>
-          <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblSelectProjectManager">
+          <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblSelectProjectManager01">
             <form:label>Select PM</form:label>
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -1425,21 +1451,37 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:visible>true</form:visible>
               <form:enabled>true</form:enabled>
             </form:control>
+            <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneMarginPane02" paneType="com.tibco.forms.panes.horizontal">
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:visual width="10"/>
+              <form:defaults>
+                <form:labelProperties position="top"/>
+              </form:defaults>
+            </form:pane>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_7_cSEBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=mgmtIPFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.mgmtIPFlag">
+              <form:label>Provision Management IPs</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
+            <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneMarginPane03" paneType="com.tibco.forms.panes.horizontal">
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:visual width="10"/>
+              <form:defaults>
+                <form:labelProperties position="top"/>
+              </form:defaults>
+            </form:pane>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_9WKNYBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=equipmentFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.equipmentFlag">
+              <form:label>Provision Equipments</form:label>
+              <form:hint></form:hint>
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+              <form:required>false</form:required>
+            </form:control>
           </form:pane>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_7_cSEBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=mgmtIPFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.mgmtIPFlag">
-            <form:label>Provision Management IPs</form:label>
-            <form:hint></form:hint>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_9WKNYBRhEeiI4LtXlpi0-g?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=equipmentFlag?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.checkbox" controlType="com.tibco.forms.controls.checkbox" name="control.equipmentFlag">
-            <form:label>Provision Equipments</form:label>
-            <form:hint></form:hint>
-            <form:visible>true</form:visible>
-            <form:enabled>true</form:enabled>
-            <form:required>false</form:required>
-          </form:control>
         </form:pane>
         <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.pneMarginCommentPane" paneType="com.tibco.forms.panes.horizontal">
           <form:visible>true</form:visible>
@@ -1450,7 +1492,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:labelProperties position="top"/>
           </form:defaults>
         </form:pane>
-        <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblUploadDocuments">
+        <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblUploadDocuments01">
           <form:label>Upload Documents</form:label>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
@@ -1459,6 +1501,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneUploadDocument" paneType="com.tibco.forms.panes.vertical">
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
           <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.passthrough" controlType="com.tibco.forms.controls.passthrough" name="control.fileattachments">
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
@@ -1494,11 +1537,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:defaults>
               <form:labelProperties position="top"/>
             </form:defaults>
-            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=CommentHistory?" syncFlags="2621440" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" generatorSource="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_-MbHoPRPEeeMCZGsP3rsrw?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aFormalParameter%26q=comsfcfosImplremoval_tobe_pageflow%3a%3aUserTaskPageFlow%26n=CommentHistory?" syncFlags="2899968" styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_nDo8QPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=CommentData?" name="pane.CommentHistory" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
-                <et:supportAddOperation>true</et:supportAddOperation>
-                <et:supportDeleteOperation>true</et:supportDeleteOperation>
                 <et:editable>true</et:editable>
                 <et:sortable>true</et:sortable>
                 <et:rowLabel>{0}</et:rowLabel>
@@ -1506,19 +1547,21 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:label>CommentHistory</form:label>
               <form:hint></form:hint>
               <form:visible>true</form:visible>
-              <form:enabled>true</form:enabled>
+              <form:enabled>false</form:enabled>
+              <form:labelProperties visible="false"/>
               <form:defaults>
                 <form:labelProperties position="top" visible="true"/>
               </form:defaults>
-              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8QfRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=addedby?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_addedby">
+              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8QfRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=addedby?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_addedby">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
                 </form:propertySet>
-                <form:label>Addedby</form:label>
+                <form:label>Added By</form:label>
                 <form:hint></form:hint>
                 <form:visible>true</form:visible>
                 <form:enabled>true</form:enabled>
+                <form:visual width="250"/>
                 <form:required>false</form:required>
               </form:control>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8RPRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=comments?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_comments">
@@ -1529,17 +1572,19 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
                 <form:hint></form:hint>
                 <form:visible>true</form:visible>
                 <form:enabled>true</form:enabled>
+                <form:visual width="400"/>
                 <form:required>false</form:required>
               </form:control>
-              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8R_RREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=stepName?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_stepName">
+              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8R_RREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=stepName?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_stepName">
                 <form:propertySet xsi:type="et:TextPropertySet">
                   <et:displayLength>40</et:displayLength>
                   <et:maxLength>50</et:maxLength>
                 </form:propertySet>
-                <form:label>stepName</form:label>
+                <form:label>Step Name</form:label>
                 <form:hint></form:hint>
                 <form:visible>true</form:visible>
                 <form:enabled>true</form:enabled>
+                <form:visual width="250"/>
                 <form:required>false</form:required>
               </form:control>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_nDo8SvRREee7y7M2_IZS-A?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aCommentData%26n=time?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.CommentHistory_time">
@@ -1551,6 +1596,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
                 <form:hint></form:hint>
                 <form:visible>true</form:visible>
                 <form:enabled>true</form:enabled>
+                <form:visual width="250"/>
                 <form:required>false</form:required>
               </form:control>
             </form:pane>

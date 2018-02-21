@@ -43,6 +43,15 @@
         <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="223,179,0" IsVisible="true"/>
       </xpdl2:NodeGraphicsInfos>
     </xpdl2:Pool>
+    <xpdl2:Pool Id="_9CTQgBbCEei_483sJGVYzg" xpdExt:DisplayName="Pool" Name="Pool" BoundaryVisible="true" Process="_9BfYMBbCEei_483sJGVYzg">
+      <xpdl2:Lanes>
+        <xpdl2:Lane Id="_9CT3kBbCEei_483sJGVYzg" xpdExt:DisplayName="Lane" Name="Lane">
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo Height="300.0"/>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Lane>
+      </xpdl2:Lanes>
+    </xpdl2:Pool>
   </xpdl2:Pools>
   <xpdl2:WorkflowProcesses>
     <xpdl2:WorkflowProcess Id="_p7fOoN_CEeec4K-r6PSjHg" xpdExt:XpdModelType="PageFlow" xpdExt:DisplayName="UserTaskPageFlow" Name="UserTaskPageFlow">
@@ -326,24 +335,6 @@ if(CommentDataSet.size()>0){&#xD;
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_tHTqY9_CEeec4K-r6PSjHg" Name="EndEvent" xpdExt:DisplayName="End Event" xpdExt:Visibility="Private">
-          <xpdl2:Event>
-            <xpdl2:EndEvent Result="None"/>
-          </xpdl2:Event>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="47.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="54.0">
-              <xpdl2:Coordinates XCoordinate="1060.0" YCoordinate="155.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:Audit>
-            <xpdExt:AuditEvent Type="Initiated">
-              <xpdExt:Information ScriptGrammar="JavaScript">if(infoLoggerFlag==true) {&#xD;
-	Log.write(&quot;[SFC_FOSIMPL_BPM] UserTaskPageFlow_Initiate_Script_End_Event&quot;);&#xD;
-}	</xpdExt:Information>
-            </xpdExt:AuditEvent>
-          </xpdExt:Audit>
-        </xpdl2:Activity>
         <xpdl2:Activity Id="_7fQnYN_CEeec4K-r6PSjHg" Name="ConfirmDetails" xpdExt:Visibility="Private" xpdExt:DisplayName="Confirm Details">
           <xpdl2:Implementation>
             <xpdl2:Task>
@@ -363,7 +354,7 @@ if(CommentDataSet.size()>0){&#xD;
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="123.0">
-              <xpdl2:Coordinates XCoordinate="544.0" YCoordinate="155.0"/>
+              <xpdl2:Coordinates XCoordinate="517.0" YCoordinate="155.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -420,60 +411,6 @@ else if( (infoLoggerFlag==true) &amp;&amp; (TaskName==&quot;GateKeeper&quot;)) {
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
-        <xpdl2:Activity Id="_GAOiUPaZEee_OvMSeNQu6A" Name="ServiceTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Service Task">
-          <xpdl2:Implementation>
-            <xpdl2:Task>
-              <xpdl2:TaskService xpdExt:ImplementationType="GlobalData" Implementation="Other">
-                <xpdl2:MessageIn Id="_HgKrEPaZEee_OvMSeNQu6A"/>
-                <xpdl2:MessageOut Id="_HgLSIPaZEee_OvMSeNQu6A"/>
-                <xpdExt:GlobalDataOperation>
-                  <xpdExt:CaseAccessOperations>
-                    <xpdExt:CaseClassExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_DeEdsPaQEeeyW8gonFLB3A"/>
-                    <xpdExt:Create FromFieldPath="commentDataCase" ToCaseRefField="commentDataCaseRef"/>
-                  </xpdExt:CaseAccessOperations>
-                </xpdExt:GlobalDataOperation>
-              </xpdl2:TaskService>
-            </xpdl2:Task>
-          </xpdl2:Implementation>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
-          <xpdl2:NodeGraphicsInfos>
-            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="903.0" YCoordinate="155.0"/>
-            </xpdl2:NodeGraphicsInfo>
-          </xpdl2:NodeGraphicsInfos>
-          <xpdl2:Extensions/>
-          <xpdExt:ActivityResourcePatterns>
-            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
-          </xpdExt:ActivityResourcePatterns>
-          <xpdExt:Audit>
-            <xpdExt:AuditEvent Type="Initiated">
-              <xpdExt:Information ScriptGrammar="JavaScript">/*var size=CommentHistory.size();&#xD;
-commentDataCase.addedby=CommentHistory.get(size).addedby;&#xD;
-commentDataCase.comments=CommentHistory.get(size).comments;&#xD;
-commentDataCase.taskName=CommentHistory.get(size).stepName;&#xD;
-commentDataCase.time=CommentHistory.get(size).time;&#xD;
-*/&#xD;
-commentDataCase=com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();&#xD;
-commentDataCase.addedby=Process.getOriginatorName();&#xD;
-commentDataCase.comments=CommentText;&#xD;
-for(var index=0; index&lt;TaskName.length; index++) {
-	var name=TaskName.replace(&quot;_&quot;,&quot; &quot;);
-}&#xD;
-commentDataCase.taskName=name;&#xD;
-commentDataCase.time=DateTimeUtil.createDatetime();&#xD;
-commentDataCase.siebelCircuitID=Provisioning_Data.siebelCircuitID;&#xD;
-&#xD;
-Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.addedby);&#xD;
-Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.comments);&#xD;
-Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.siebelCircuitID);&#xD;
-Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName);</xpdExt:Information>
-            </xpdExt:AuditEvent>
-          </xpdExt:Audit>
-        </xpdl2:Activity>
         <xpdl2:Activity Id="_gfp8oAlfEeiPXa3e9UY2HA" Name="ContractorMobileTask" xpdExt:Visibility="Private" xpdExt:DisplayName="Contractor Mobile Task">
           <xpdl2:Implementation>
             <xpdl2:Task>
@@ -492,7 +429,7 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
           </xpdl2:ExtendedAttributes>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="64.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="96.0">
-              <xpdl2:Coordinates XCoordinate="531.0" YCoordinate="302.0"/>
+              <xpdl2:Coordinates XCoordinate="510.0" YCoordinate="302.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
           <xpdl2:Extensions/>
@@ -530,6 +467,53 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
+        <xpdl2:Activity Id="_MsobYBbDEei_483sJGVYzg" Name="InsertComment" FinishMode="Automatic" StartMode="Automatic" xpdExt:Visibility="Private" xpdExt:DisplayName="Insert Comment">
+          <xpdl2:Implementation>
+            <xpdl2:SubFlow Execution="ASYNCHR" Id="_9BfYMBbCEei_483sJGVYzg" xpdExt:AsyncExecutionMode="Detached" xpdExt:StartStrategy="ScheduleStart" xpdExt:SuspendResumeWithParent="false">
+              <xpdExt:InputMappings MapperContext="ProcessToSubProcess" MappingDirection="IN">
+                <xpdExt:DataMappings>
+                  <xpdExt:DataMapping xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="CommentDataCase.addedby">
+                    <xpdExt:ScriptInformation Id="_fQ9SMBbDEei_483sJGVYzg" Name="Added By.">
+                      <xpdExt:Expression ScriptGrammar="JavaScript">return String((Process.getOriginatorName()));&#xD;
+</xpdExt:Expression>
+                    </xpdExt:ScriptInformation>
+                    <xpdl2:Actual ScriptGrammar="JavaScript">__SCRIPT__</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="CommentDataCase.comments">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">CommentText</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="CommentDataCase.siebelCircuitID">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">Provisioning_Data.siebelCircuitID</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="CommentDataCase.taskName">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">TaskName</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                </xpdExt:DataMappings>
+              </xpdExt:InputMappings>
+            </xpdl2:SubFlow>
+          </xpdl2:Implementation>
+          <xpdl2:Priority></xpdl2:Priority>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="80.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="128.0">
+              <xpdl2:Coordinates XCoordinate="801.0" YCoordinate="163.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_YzqeoBbDEei_483sJGVYzg" Name="EndEvent2" xpdExt:Visibility="Private" xpdExt:DisplayName="End Event 2">
+          <xpdl2:Event>
+            <xpdl2:EndEvent Result="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="143,191,251" Height="27.0" LaneId="_tHTqYd_CEeec4K-r6PSjHg" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="1021.0" YCoordinate="155.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
         <xpdl2:Transition Id="_5nGy8N_CEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_iwMb4AlfEeiPXa3e9UY2HA" To="_7fQnYN_CEeec4K-r6PSjHg">
@@ -537,17 +521,6 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_Cpfco9_HEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_GAOiUPaZEee_OvMSeNQu6A" To="_tHTqY9_CEeec4K-r6PSjHg">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
-          </xpdl2:ConnectorGraphicsInfos>
-        </xpdl2:Transition>
-        <xpdl2:Transition Id="_GAPJYPaZEee_OvMSeNQu6A" xpdExt:DisplayName="" Name="" From="_7fQnYN_CEeec4K-r6PSjHg" To="_GAOiUPaZEee_OvMSeNQu6A">
-          <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_iwMb4QlfEeiPXa3e9UY2HA" xpdExt:DisplayName="" Name="" From="_tHTqYt_CEeec4K-r6PSjHg" To="_iwMb4AlfEeiPXa3e9UY2HA">
@@ -570,17 +543,33 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_7p1uoAliEeiPXa3e9UY2HA" Name="" From="_gfp8oAlfEeiPXa3e9UY2HA" To="_GAOiUPaZEee_OvMSeNQu6A">
+        <xpdl2:Transition Id="_UzhqABbDEei_483sJGVYzg" Name="" From="_7fQnYN_CEeec4K-r6PSjHg" To="_MsobYBbDEei_483sJGVYzg">
           <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
-              <xpdl2:Coordinates XCoordinate="84.0" YCoordinate="-1.0"/>
-              <xpdl2:Coordinates XCoordinate="-192.0" YCoordinate="145.0"/>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="61.53846153846154" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_XXteABbDEei_483sJGVYzg" Name="" From="_gfp8oAlfEeiPXa3e9UY2HA" To="_MsobYBbDEei_483sJGVYzg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="10.0" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="9.6875" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="59.68750000000001" YCoordinate="0.0"/>
+              <xpdl2:Coordinates XCoordinate="61.29807692307693" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_ZbU7kBbDEei_483sJGVYzg" Name="" From="_MsobYBbDEei_483sJGVYzg" To="_YzqeoBbDEei_483sJGVYzg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="8.173076923076923" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="48.020828791971724" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
@@ -610,6 +599,152 @@ Log.write(&quot;[SFC FOS IMPL] The comments are:&quot;+commentDataCase.taskName)
             <simulation:ParameterDistribution ParameterId="xDMSURL"/>
           </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
       </xpdl2:ExtendedAttributes>
+    </xpdl2:WorkflowProcess>
+    <xpdl2:WorkflowProcess Id="_9BfYMBbCEei_483sJGVYzg" xpdExt:XpdModelType="ServiceProcess" xpdExt:DisplayName="Insert Comment Data" Name="InsertCommentData">
+      <xpdl2:ProcessHeader/>
+      <xpdl2:FormalParameters>
+        <xpdl2:FormalParameter Id="_-lFR4BbCEei_483sJGVYzg" Name="CommentDataCase" Mode="INOUT" Required="false" xpdExt:DisplayName="CommentDataCase">
+          <xpdl2:DataType>
+            <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_DeEdsPaQEeeyW8gonFLB3A"/>
+          </xpdl2:DataType>
+        </xpdl2:FormalParameter>
+      </xpdl2:FormalParameters>
+      <xpdl2:DataFields>
+        <xpdl2:DataField Id="_DUqmcBbDEei_483sJGVYzg" xpdExt:DisplayName="CommentDataCaseRef" Name="CommentDataCaseRef">
+          <xpdl2:DataType>
+            <xpdl2:RecordType>
+              <xpdl2:Member>
+                <xpdl2:ExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_DeEdsPaQEeeyW8gonFLB3A"/>
+              </xpdl2:Member>
+            </xpdl2:RecordType>
+          </xpdl2:DataType>
+        </xpdl2:DataField>
+      </xpdl2:DataFields>
+      <xpdl2:Activities>
+        <xpdl2:Activity Id="_9CvVYBbCEei_483sJGVYzg" Name="Start" xpdExt:Visibility="Private" xpdExt:DisplayName="Start">
+          <xpdl2:Event>
+            <xpdl2:StartEvent Trigger="None"/>
+          </xpdl2:Event>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="168,186,200" Height="27.0" LaneId="_9CT3kBbCEei_483sJGVYzg" Width="27.0">
+              <xpdl2:Coordinates XCoordinate="53.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_9CvVYRbCEei_483sJGVYzg" Name="End" xpdExt:Visibility="Private" xpdExt:DisplayName="End">
+          <xpdl2:Event>
+            <xpdl2:EndEvent Result="None"/>
+          </xpdl2:Event>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="168,186,200" Height="30.0" LaneId="_9CT3kBbCEei_483sJGVYzg" Width="30.0">
+              <xpdl2:Coordinates XCoordinate="515.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_zAJZoBbDEei_483sJGVYzg">
+          <xpdl2:Route GatewayType="Exclusive" MarkerVisible="true" ExclusiveType="Data"/>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Split Type="Exclusive" ExclusiveType="Data">
+                <xpdl2:TransitionRefs>
+                  <xpdl2:TransitionRef Id="_8kA8kBbDEei_483sJGVYzg"/>
+                  <xpdl2:TransitionRef Id="_K2s_EBbEEei_483sJGVYzg"/>
+                </xpdl2:TransitionRefs>
+              </xpdl2:Split>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="168,186,200" Height="43.0" LaneId="_9CT3kBbCEei_483sJGVYzg" Width="41.0">
+              <xpdl2:Coordinates XCoordinate="150.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
+        <xpdl2:Activity Id="_8kAVgBbDEei_483sJGVYzg" Name="InsertComment" xpdExt:Visibility="Private" xpdExt:DisplayName="Insert Comment">
+          <xpdl2:Implementation>
+            <xpdl2:Task>
+              <xpdl2:TaskService xpdExt:ImplementationType="GlobalData" Implementation="Other">
+                <xpdl2:MessageIn Id="_-KAqABbDEei_483sJGVYzg"/>
+                <xpdl2:MessageOut Id="_-KAqARbDEei_483sJGVYzg"/>
+                <xpdExt:GlobalDataOperation>
+                  <xpdExt:CaseAccessOperations>
+                    <xpdExt:CaseClassExternalReference location="com.sfc.fosImpl.dataModel.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="_DeEdsPaQEeeyW8gonFLB3A"/>
+                    <xpdExt:Create FromFieldPath="CommentDataCase" ToCaseRefField="CommentDataCaseRef"/>
+                  </xpdExt:CaseAccessOperations>
+                </xpdExt:GlobalDataOperation>
+              </xpdl2:TaskService>
+            </xpdl2:Task>
+          </xpdl2:Implementation>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="168,186,200" Height="64.0" LaneId="_9CT3kBbCEei_483sJGVYzg" Width="96.0">
+              <xpdl2:Coordinates XCoordinate="288.0" YCoordinate="132.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+          <xpdl2:Extensions/>
+          <xpdExt:ActivityResourcePatterns>
+            <xpdExt:AllocationStrategy xpdExt:Strategy="SYSTEM_DETERMINED"/>
+          </xpdExt:ActivityResourcePatterns>
+          <xpdExt:Audit>
+            <xpdExt:AuditEvent Type="Initiated">
+              <xpdExt:Information ScriptGrammar="JavaScript">var tskName = CommentDataCase.taskName;&#xD;
+var tmpName;&#xD;
+for(var i=0; i&lt;tskName.length; i++) {&#xD;
+	tmpName=tskName.replace(&quot;_&quot;,&quot; &quot;);&#xD;
+}&#xD;
+CommentDataCase.taskName=tmpName;&#xD;
+CommentDataCase.time=DateTimeUtil.createDatetime();</xpdExt:Information>
+            </xpdExt:AuditEvent>
+          </xpdExt:Audit>
+        </xpdl2:Activity>
+      </xpdl2:Activities>
+      <xpdl2:Transitions>
+        <xpdl2:Transition Id="_9CvVZBbCEei_483sJGVYzg" xpdExt:DisplayName="" Name="" From="_8kAVgBbDEei_483sJGVYzg" To="_9CvVYRbCEei_483sJGVYzg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_zAKnwBbDEei_483sJGVYzg" xpdExt:DisplayName="" Name="" From="_9CvVYBbCEei_483sJGVYzg" To="_zAJZoBbDEei_483sJGVYzg">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_8kA8kBbDEei_483sJGVYzg" xpdExt:DisplayName="" Name="" From="_zAJZoBbDEei_483sJGVYzg" To="_8kAVgBbDEei_483sJGVYzg">
+          <xpdl2:Condition Type="CONDITION"><xpdl2:Expression ScriptGrammar="JavaScript">((CommentDataCase.comments!=null) &amp;&amp; (CommentDataCase.comments.toString().length > 0))</xpdl2:Expression></xpdl2:Condition>
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_K2s_EBbEEei_483sJGVYzg" Name="" From="_zAJZoBbDEei_483sJGVYzg" To="_9CvVYRbCEei_483sJGVYzg">
+          <xpdl2:Condition Type="OTHERWISE"/>
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="58.0"/>
+              <xpdl2:Coordinates XCoordinate="-352.0" YCoordinate="78.0"/>
+              <xpdl2:Coordinates XCoordinate="246.0" YCoordinate="69.0"/>
+              <xpdl2:Coordinates XCoordinate="-105.0" YCoordinate="89.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="50.0" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="49.33723776933645" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+      </xpdl2:Transitions>
+      <xpdl2:ExtendedAttributes>
+        <xpdl2:ExtendedAttribute Name="Destination" Value="BPM"/>
+        <xpdl2:ExtendedAttribute Name="WorkflowProcessSimulationData"><simulation:WorkflowProcessSimulationData>
+            <simulation:ParameterDistribution ParameterId="CommentDataCase"/>
+          </simulation:WorkflowProcessSimulationData></xpdl2:ExtendedAttribute>
+      </xpdl2:ExtendedAttributes>
+      <xpdl2:Extensions/>
+      <xpdExt:ServiceProcessConfiguration xpdExt:DeployToProcessRuntime="true" xpdExt:DeployToPageflowRuntime="true"/>
     </xpdl2:WorkflowProcess>
   </xpdl2:WorkflowProcesses>
   <xpdl2:ExtendedAttributes>

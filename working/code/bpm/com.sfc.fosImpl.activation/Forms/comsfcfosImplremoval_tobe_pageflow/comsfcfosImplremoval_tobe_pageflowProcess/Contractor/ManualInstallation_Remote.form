@@ -18,6 +18,7 @@
     <form:parameter generated="true" name="data.CommentText" label="CommentText" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="500" inout="INOUT"/>
     <form:parameter generated="true" name="data.ContractorNames" label="ContractorNames" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="50" inout="INOUT"/>
     <form:parameter generated="true" name="data.SelectedContractorGroup" label="SelectedContractorGroup" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="50" inout="INOUT"/>
+    <form:parameter generated="true" name="data.xDMSURL" label="xDMSURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="300" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -94,7 +95,15 @@ control.btnaddressDetails.setLabel(&quot;Address Details &lt;&quot;);&#xD;
 &#xD;
 &#xD;
 pane.pane10.setVisible(true);&#xD;
-control.btncomments.setLabel(&quot;Comments >>&quot;);</form:script>
+control.btncomments.setLabel(&quot;Comments >>&quot;);&#xD;
+&#xD;
+&#xD;
+disableServiceIPFields();&#xD;
+disableMgmtIPFields();&#xD;
+chngeBkGrndColorProvData();&#xD;
+&#xD;
+&#xD;
+control.fileAttachments.setValue(&quot;&lt;iframe SCROLLING='yes' frameborder=0 width=1000 height=250 src='&quot;+data.getXDMSURL().toString()+&quot;/archiv?xfunc=list&amp;folderid=&quot;+data.getProvisioning_Data().getSiebelCircuitID()+&quot;&amp;xupload=true&amp;target=_blank'>&lt;/iframe>&quot;);</form:script>
       </form:action>
     </form:rule>
     <form:rule name="rule.setHeaderName" label="setHeaderName">
@@ -616,7 +625,7 @@ else {&#xD;
     <form:label>Pane 15</form:label>
     <form:visible>true</form:visible>
     <form:enabled>true</form:enabled>
-    <form:visual bgColor="#ffffff"/>
+    <form:visual width="510"/>
     <form:labelProperties visible="false"/>
     <form:defaults>
       <form:labelProperties position="top" visible="true" width="120"/>
@@ -640,11 +649,12 @@ else {&#xD;
         </form:defaults>
         <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.image" controlType="com.tibco.forms.controls.image" name="control.image1">
           <form:propertySet xsi:type="et:ImagePropertySet" sfRelative="true">
-            <et:url>SFC.png</et:url>
+            <et:url>SFC_Mobile.png</et:url>
           </form:propertySet>
           <form:label>Image 1</form:label>
           <form:visible>true</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual/>
           <form:labelProperties visible="false"/>
           <form:required>false</form:required>
         </form:control>
@@ -669,6 +679,7 @@ else {&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pne01" paneType="com.tibco.forms.panes.vertical">
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top" visible="true" width="120"/>
@@ -737,6 +748,7 @@ else {&#xD;
           <form:label>Client Details</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
@@ -805,6 +817,7 @@ else {&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.horizontal" name="pane.Pane03" paneType="com.tibco.forms.panes.horizontal">
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
@@ -852,6 +865,7 @@ else {&#xD;
           <form:label>Pane 8</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top"/>
@@ -975,6 +989,7 @@ else {&#xD;
           <form:label>Service Request</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="left"/>
@@ -1035,6 +1050,7 @@ else {&#xD;
           <form:label>Contact Details</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="left"/>
@@ -1095,6 +1111,7 @@ else {&#xD;
           <form:label>Service Dates</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="left"/>
@@ -1195,22 +1212,21 @@ else {&#xD;
           <form:label>Pane 10</form:label>
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
-          <form:visual padding="10"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
-            <form:labelProperties position="left" visible="true" width="30"/>
+            <form:labelProperties position="top" visible="true" width="30"/>
           </form:defaults>
           <form:pane styleClass="vPaneMargin" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneCommentPane" paneType="com.tibco.forms.panes.vertical">
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:labelProperties visible="false"/>
             <form:defaults>
-              <form:labelProperties position="left" visible="true" width="30"/>
+              <form:labelProperties position="top" visible="true" width="30"/>
             </form:defaults>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_QrJToPR6Eeez78ayMGlX3w?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3aActivation%26n=CommentText?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.CommentText">
               <form:propertySet xsi:type="et:TextAreaPropertySet">
-                <et:rows>8</et:rows>
-                <et:cols>70</et:cols>
+                <et:rows>5</et:rows>
+                <et:cols>50</et:cols>
                 <et:maxLength>500</et:maxLength>
               </form:propertySet>
               <form:label>CommentText</form:label>
@@ -1267,6 +1283,7 @@ else {&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneTechInfoParent" paneType="com.tibco.forms.panes.vertical">
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top" visible="true" width="120"/>
@@ -1283,7 +1300,7 @@ else {&#xD;
               <form:enabled>true</form:enabled>
               <form:labelProperties visible="false"/>
               <form:defaults>
-                <form:labelProperties position="left"/>
+                <form:labelProperties position="top"/>
               </form:defaults>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_uwjMIOCeEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=carrierVLAN?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_carrierVLAN">
                 <form:propertySet xsi:type="et:TextPropertySet">
@@ -1314,7 +1331,7 @@ else {&#xD;
               <form:enabled>true</form:enabled>
               <form:labelProperties visible="false"/>
               <form:defaults>
-                <form:labelProperties position="left"/>
+                <form:labelProperties position="top"/>
               </form:defaults>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_yTqtkOCeEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=carrierIP?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_carrierIP">
                 <form:propertySet xsi:type="et:TextPropertySet">
@@ -1344,7 +1361,7 @@ else {&#xD;
               <form:enabled>true</form:enabled>
               <form:labelProperties visible="false"/>
               <form:defaults>
-                <form:labelProperties position="left"/>
+                <form:labelProperties position="top"/>
               </form:defaults>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_2KtQkOCeEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=aggPoint?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_aggPoint">
                 <form:propertySet xsi:type="et:TextPropertySet">
@@ -1374,7 +1391,7 @@ else {&#xD;
               <form:enabled>true</form:enabled>
               <form:labelProperties visible="false"/>
               <form:defaults>
-                <form:labelProperties position="left"/>
+                <form:labelProperties position="top"/>
               </form:defaults>
               <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_6_UPEOCeEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=port?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_port">
                 <form:propertySet xsi:type="et:TextPropertySet">
@@ -1505,6 +1522,7 @@ else {&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.selectContractorAgency" paneType="com.tibco.forms.panes.vertical">
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top" visible="true" width="120"/>
@@ -1545,6 +1563,7 @@ else {&#xD;
         <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.selectContractor" paneType="com.tibco.forms.panes.vertical">
           <form:visible>false</form:visible>
           <form:enabled>true</form:enabled>
+          <form:visual width="500"/>
           <form:labelProperties visible="false"/>
           <form:defaults>
             <form:labelProperties position="top" visible="true" width="120"/>
@@ -1574,6 +1593,32 @@ else {&#xD;
           <form:defaults>
             <form:labelProperties position="top"/>
           </form:defaults>
+        </form:pane>
+        <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneUploadDocuments" paneType="com.tibco.forms.panes.vertical">
+          <form:visible>true</form:visible>
+          <form:enabled>true</form:enabled>
+          <form:labelProperties visible="false"/>
+          <form:defaults>
+            <form:labelProperties position="top" visible="true" width="120"/>
+          </form:defaults>
+          <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblUploadDocuments01">
+            <form:label>Upload Documents</form:label>
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:required>false</form:required>
+          </form:control>
+          <form:pane styleClass="vPaneBorderMain" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pneUploadDocument" paneType="com.tibco.forms.panes.vertical">
+            <form:visible>true</form:visible>
+            <form:enabled>true</form:enabled>
+            <form:labelProperties visible="false"/>
+            <form:defaults>
+              <form:labelProperties position="top" visible="true" width="120"/>
+            </form:defaults>
+            <form:control elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.passthrough" controlType="com.tibco.forms.controls.passthrough" name="control.fileAttachments">
+              <form:visible>true</form:visible>
+              <form:enabled>true</form:enabled>
+            </form:control>
+          </form:pane>
         </form:pane>
         <form:pane elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.vertical" name="pane.pnecommenthistory" paneType="com.tibco.forms.panes.vertical">
           <form:label></form:label>
@@ -1714,7 +1759,7 @@ else {&#xD;
         <form:enabled>true</form:enabled>
         <form:required>false</form:required>
       </form:control>
-      <form:control generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_SZDIIPESEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3aActivation%26n=MasterContractor?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.MasterContractor">
+      <form:control generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_SZDIIPESEeeJiLkPq4yokA?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aDataField%26q=comsfcfosImplremoval_tobe%3a%3aActivation%26n=MasterContractor_Performer?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textarea" controlType="com.tibco.forms.controls.textarea" name="control.MasterContractor">
         <form:propertySet xsi:type="et:TextAreaPropertySet">
           <et:rows>10</et:rows>
           <et:cols>25</et:cols>

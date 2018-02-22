@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmlns:xpdl2="http://www.wfmc.org/2008/XPDL2.1" generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_eJlDwRF7Eei-p-L5yAjJ1Q?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aActivity%26q=comsfcfosImplremoval_tobe%3a%3aActivationInitiateActivation%26n=UserTask?" formatVersion="4.0.0">
+<form:form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:et="http://www.tibco.com/forms/model/elemtypes" xmlns:form="http://www.tibco.com/forms/model/form" xmlns:gwt="http://www.tibco.com/forms/model/gwt" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmlns:xpdl2="http://www.wfmc.org/2008/XPDL2.1" generated="true" generatorSource="com.sfc.fosImpl.activation.xpdl#_eJlDwRF7Eei-p-L5yAjJ1Q?p=com.sfc.fosImpl.activation%26s=Process%20Packages%26t=xpdl2%3aActivity%26q=comsfcfosImplremoval_tobe%3a%3aActivationInitiateActivation%26n=InitiateActivationProcess?" formatVersion="4.0.0">
   <form:externalResources>
     <form:externalResource name="resource.common" uri="pathmap://FORMS_RESOURCES/common.properties" internal="true" localized="true"/>
     <form:externalResource name="resource.form" uri="comsfcfosImplremoval_tobe/Initiate_Activation/UserTask/CaseCreate.properties" sfRelative="true" internal="true" localized="true"/>
@@ -76,7 +76,9 @@ pane.clientDetails.setEnabled(true);&#xD;
 pane.pne01.setEnabled(true);&#xD;
 pane.TechnicalInfo.setEnabled(true);&#xD;
 pane.TechnicalInfo.setVisible(false);&#xD;
-	&#xD;
+control.lblTechInfo.setVisible(false);&#xD;
+pane.pneTechInfoParent.setVisible(false);&#xD;
+&#xD;
 }&#xD;
 else {&#xD;
 	pane.serviceDates.setEnabled(false);&#xD;
@@ -161,6 +163,8 @@ setupFontColor('[id$=lblTechInfo]');&#xD;
 setupFontColor('[id$=lblContractorAgency]');&#xD;
 setupFontColor('[id$=lblSelectContractor]');&#xD;
 setupFontColor('[id$=commentHistory]');&#xD;
+setupFontColor('[id$=lblSelectProjectManager]');&#xD;
+&#xD;
 &#xD;
 </form:script>
       </form:action>
@@ -211,12 +215,13 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
     data.getProvisioning_Data().setGPSCoordinates(&quot;23&quot;);&#xD;
     data.getProvisioning_Data().setMobile(&quot;9879786767&quot;);&#xD;
     data.getProvisioning_Data().setBandwidthupdown(&quot;FFB5&quot;);&#xD;
-    data.getProvisioning_Data().setServiceType(&quot;INTERNET&quot;);&#xD;
+    data.getProvisioning_Data().setServiceType(&quot;WIMAX&quot;);&#xD;
     data.getProvisioning_Data().setTechnology(&quot;FIBER&quot;);&#xD;
     data.getProvisioning_Data().setEmail(&quot;alan@demogmail.com&quot;);&#xD;
 	&#xD;
 	control.Provisioning_Data_serviceStatus.setValue(&quot;Registered&quot;);&#xD;
 	&#xD;
+	/*&#xD;
 	control.TechnicalInfo_SFCPOPPE.setValue(&quot;Gospel&quot;);&#xD;
 	control.TechnicalInfo_aggPoint.setValue(&quot;Gospel&quot;);&#xD;
 	control.TechnicalInfo_carrierIP.setValue(&quot;10.163.184.212&quot;);&#xD;
@@ -229,7 +234,8 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
 		record.setType(&quot;AR169F&quot;);&#xD;
 		record.setVLAN(&quot;3341&quot;);&#xD;
 	pane.TechnicalInfo_equipment.getValue().add(record);&#xD;
-	control.TechnicalInfo_modifiedDate.setValue(new Date());&#xD;
+	control.TechnicalInfo_modifiedDate.setValue(new Date()); */&#xD;
+	&#xD;
 } </form:script>
       </form:action>
     </form:rule>
@@ -1307,6 +1313,7 @@ data.setSelectedPM(context.control.getValue());&#xD;
             <form:visible>true</form:visible>
             <form:enabled>true</form:enabled>
             <form:visual height="10"/>
+            <form:labelProperties visible="false"/>
           </form:pane>
           <form:control styleClass="lblBackground" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.label" controlType="com.tibco.forms.controls.label" name="control.lblSelectProjectManager">
             <form:label>Select PM</form:label>

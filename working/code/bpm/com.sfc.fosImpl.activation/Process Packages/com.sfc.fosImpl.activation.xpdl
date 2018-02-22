@@ -675,6 +675,19 @@ WorkManagerFactory.getWorkItem().workItemAttributes.attribute9=Provisioning_Data
 CommentText=&quot;&quot;;&#xD;
 Log.write(&quot;[SFC] DeactivationProcess: Comment Text is: &quot;+CommentText+&quot; at Task &quot;+TaskName+&quot; Initiate Script&quot;);</xpdExt:Information>
             </xpdExt:AuditEvent>
+            <xpdExt:AuditEvent Type="Completed">
+              <xpdExt:Information ScriptGrammar="JavaScript">var a;&#xD;
+var h=ActivationExecutionRequest.header;&#xD;
+var msg = &quot;businessTransactionID:&quot;+h.businessTransactionID;&#xD;
+msg=msg+&quot;,correlationID:&quot;+h.correlationID;&#xD;
+msg=msg+&quot;,orderID:&quot;+h.orderID;&#xD;
+msg=msg+&quot;,orderRefNum:&quot;+h.orderRefNum;&#xD;
+msg=msg+&quot;,planID:&quot;+h.planID;&#xD;
+&#xD;
+&#xD;
+Log.write(&quot;[SFC_FOSIMPL_BPM_NOTIFY_PROCESS_COMPONENTS]&quot;+msg);&#xD;
+</xpdExt:Information>
+            </xpdExt:AuditEvent>
           </xpdExt:Audit>
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ContractorNames" Mode="INOUT" Mandatory="false"/>
@@ -1229,6 +1242,7 @@ if((ActivationExecutionRequest!=null) &amp;&amp; (ActivationExecutionRequest.pla
 			if(udfList.get(i).name==&quot;PM_FROM_MANUAL_CASE_START&quot;) {&#xD;
 				GateKeeperTaskFlag=false;&#xD;
 				PM_Performer=&quot;resource(name='&quot;+udfList.get(i).value+&quot;')&quot;;&#xD;
+				SelectedPM=udfList.get(i).value;&#xD;
 				if(infoLoggerFlag==true) {&#xD;
 					Log.write(&quot;[SFC_FOSIMPL_BPM] Process_Script_Task_PM_Performer : &quot;+PM_Performer);&#xD;
 				}&#xD;
@@ -1915,7 +1929,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
         </xpdl2:Activity>
         <xpdl2:Activity Id="_HeLnYPzWEeeupNwu8S8N4Q" Name="SendCompletionofDecommissioningEmailToCustomer" FinishMode="Automatic" IsATransaction="false" StartMode="Automatic" xpdExt:Visibility="Private" xpdExt:RequireNewTransaction="false" xpdExt:DisplayName="Send Completion of Decommissioning  Email To Customer">
           <xpdl2:Implementation>
-            <xpdl2:SubFlow Id="_Z0G8MPzeEeehkqoKISnbpw" xpdExt:StartStrategy="StartImmediately" xpdExt:SuspendResumeWithParent="true">
+            <xpdl2:SubFlow Execution="ASYNCHR" Id="_Z0G8MPzeEeehkqoKISnbpw" xpdExt:AsyncExecutionMode="Detached" xpdExt:StartStrategy="ScheduleStart" xpdExt:SuspendResumeWithParent="false">
               <xpdExt:InputMappings MapperContext="ProcessToSubProcess" MappingDirection="IN">
                 <xpdExt:DataMappings>
                   <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="Provision">
@@ -1928,6 +1942,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
               </xpdExt:InputMappings>
             </xpdl2:SubFlow>
           </xpdl2:Implementation>
+          <xpdl2:Priority></xpdl2:Priority>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="80.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="128.0">
               <xpdl2:Coordinates XCoordinate="1929.0" YCoordinate="175.0"/>
@@ -1958,7 +1973,7 @@ Log.write(&quot;[SFC_FOS_IMPL] SIEBEL_CIRCUIT_ID=&quot;+Provisioning_Data.siebel
           </xpdl2:Event>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="62.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="88.0">
-              <xpdl2:Coordinates XCoordinate="2070.0" YCoordinate="175.0"/>
+              <xpdl2:Coordinates XCoordinate="2232.0" YCoordinate="175.0"/>
             </xpdl2:NodeGraphicsInfo>
           </xpdl2:NodeGraphicsInfos>
         </xpdl2:Activity>
@@ -2260,11 +2275,6 @@ Log.write(&quot;[SFC_FOSIMPL_BPM_NOTIFY_PROCESS_COMPONENTS]&quot;+msg);&#xD;
               </xpdl2:TaskScript>
             </xpdl2:Task>
           </xpdl2:Implementation>
-          <xpdl2:TransitionRestrictions>
-            <xpdl2:TransitionRestriction>
-              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
-            </xpdl2:TransitionRestriction>
-          </xpdl2:TransitionRestrictions>
           <xpdl2:NodeGraphicsInfos>
             <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="64.0" LaneId="_Gl0XAN_BEee7mPhVBav8gw" Width="96.0">
               <xpdl2:Coordinates XCoordinate="1328.0" YCoordinate="89.0"/>
@@ -2347,6 +2357,11 @@ Log.write(&quot;[SFC_FOSIMPL_BPM_NOTIFY_PROCESS_COMPONENTS]&quot;+msg);&#xD;
           <xpdl2:Performers>
             <xpdl2:Performer>_sP3KQBSiEeiI4LtXlpi0-g</xpdl2:Performer>
           </xpdl2:Performers>
+          <xpdl2:TransitionRestrictions>
+            <xpdl2:TransitionRestriction>
+              <xpdl2:Join Type="Exclusive" ExclusiveType="Data"/>
+            </xpdl2:TransitionRestriction>
+          </xpdl2:TransitionRestrictions>
           <xpdl2:ExtendedAttributes>
             <xpdl2:ExtendedAttribute Name="bpmJspTask" Value="com.sfc.fosImpl.removal_tobe_pageflow.xpdl#_p7fOoN_CEeec4K-r6PSjHg"/>
           </xpdl2:ExtendedAttributes>
@@ -2789,6 +2804,25 @@ FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentif
             </xpdExt:AuditEvent>
           </xpdExt:Audit>
         </xpdl2:Activity>
+        <xpdl2:Activity Id="_p2BwYReoEeijHuyXyGFPog" Name="SendBillingEmail" xpdExt:Visibility="Private" xpdExt:DisplayName="Send Billing Email">
+          <xpdl2:Implementation>
+            <xpdl2:SubFlow Execution="ASYNCHR" Id="_Z9iqMBenEeijHuyXyGFPog" PackageRef="com.sfc.fosImpl.removal_tobe_pageflow" xpdExt:StartStrategy="ScheduleStart" xpdExt:AsyncExecutionMode="Detached" xpdExt:SuspendResumeWithParent="false">
+              <xpdExt:InputMappings MapperContext="ProcessToSubProcess" MappingDirection="IN">
+                <xpdExt:DataMappings>
+                  <xpdExt:DataMapping xpdExt:SourceContributorId="ActivityInterface.DataMapperContent" xpdExt:TargetContributorId="ProcessToSubProcess.DataMapperContent" Direction="IN" Formal="ProvisioningData">
+                    <xpdl2:Actual ScriptGrammar="JavaScript">Provisioning_Data</xpdl2:Actual>
+                  </xpdExt:DataMapping>
+                </xpdExt:DataMappings>
+              </xpdExt:InputMappings>
+            </xpdl2:SubFlow>
+          </xpdl2:Implementation>
+          <xpdl2:Priority></xpdl2:Priority>
+          <xpdl2:NodeGraphicsInfos>
+            <xpdl2:NodeGraphicsInfo BorderColor="0,0,128" FillColor="255,219,74" Height="80.0" LaneId="_F8yBEN_BEee7mPhVBav8gw" Width="128.0">
+              <xpdl2:Coordinates XCoordinate="2092.0" YCoordinate="175.0"/>
+            </xpdl2:NodeGraphicsInfo>
+          </xpdl2:NodeGraphicsInfos>
+        </xpdl2:Activity>
       </xpdl2:Activities>
       <xpdl2:Transitions>
         <xpdl2:Transition Id="_9bZKoN_HEeec4K-r6PSjHg" xpdExt:DisplayName="" Name="" From="_IFuNUBACEeieQt_q3pywiQ" To="_p3E2cN_HEeec4K-r6PSjHg">
@@ -2920,12 +2954,10 @@ FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentif
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_ieNYEP6rEeepa55WkE_o-g" Name="" From="_HeLnYPzWEeeupNwu8S8N4Q" To="_hG8DIP6rEeepa55WkE_o-g">
+        <xpdl2:Transition Id="_ieNYEP6rEeepa55WkE_o-g" Name="" From="_p2BwYReoEeijHuyXyGFPog" To="_hG8DIP6rEeepa55WkE_o-g">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="9.85576923076923" YCoordinate="0.0"/>
-            </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition"/>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
               <xpdl2:Coordinates XCoordinate="48.94053476825268" YCoordinate="0.0"/>
             </xpdl2:ConnectorGraphicsInfo>
@@ -2981,12 +3013,15 @@ FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentif
             </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
-        <xpdl2:Transition Id="_S-3PMBAEEeieQt_q3pywiQ" Name="" From="_aMel0N_HEeec4K-r6PSjHg" To="_Z5nJgBSTEeiI4LtXlpi0-g">
+        <xpdl2:Transition Id="_S-3PMBAEEeieQt_q3pywiQ" Name="" From="_aMel0N_HEeec4K-r6PSjHg" To="_3hvE8BSTEeiI4LtXlpi0-g">
           <xpdl2:ConnectorGraphicsInfos>
-            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
-            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition">
-              <xpdl2:Coordinates XCoordinate="34.375" YCoordinate="0.0"/>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="255.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="-151.0" YCoordinate="505.0"/>
+              <xpdl2:Coordinates XCoordinate="302.0" YCoordinate="-196.0"/>
+              <xpdl2:Coordinates XCoordinate="-104.0" YCoordinate="310.0"/>
             </xpdl2:ConnectorGraphicsInfo>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.EndAnchorPosition"/>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
         <xpdl2:Transition Id="_dTNJMBB6EeiZiLgDoQc00Q" xpdExt:DisplayName="" Name="" From="_RR3PgBCAEeiTfu82n897bg" To="_dTMiIBB6EeiZiLgDoQc00Q">
@@ -3085,8 +3120,10 @@ FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentif
 </xpdl2:Expression></xpdl2:Condition>
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo">
+              <xpdl2:Coordinates XCoordinate="115.0" YCoordinate="-1.0"/>
+              <xpdl2:Coordinates XCoordinate="-39.0" YCoordinate="-156.0"/>
               <xpdl2:Coordinates XCoordinate="153.0" YCoordinate="-1.0"/>
-              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="-131.0"/>
+              <xpdl2:Coordinates XCoordinate="-1.0" YCoordinate="-156.0"/>
             </xpdl2:ConnectorGraphicsInfo>
             <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
               <xpdl2:Coordinates XCoordinate="25.0" YCoordinate="0.0"/>
@@ -3225,6 +3262,14 @@ FetchSLA1=cac_com_sfc_fosImpl_dataModel_SLA_Configuration.findByCompositeIdentif
         <xpdl2:Transition Id="_wFTS0BX3EeiWxPHIEGwM2w" Name="" From="_BpUYoRX3EeiWxPHIEGwM2w" To="_sK550BX3EeiWxPHIEGwM2w">
           <xpdl2:ConnectorGraphicsInfos>
             <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+          </xpdl2:ConnectorGraphicsInfos>
+        </xpdl2:Transition>
+        <xpdl2:Transition Id="_p2FawBeoEeijHuyXyGFPog" xpdExt:DisplayName="" Name="" From="_HeLnYPzWEeeupNwu8S8N4Q" To="_p2BwYReoEeijHuyXyGFPog">
+          <xpdl2:ConnectorGraphicsInfos>
+            <xpdl2:ConnectorGraphicsInfo BorderColor="0,0,128" ToolId="XPD.ConnectionInfo"/>
+            <xpdl2:ConnectorGraphicsInfo ToolId="XPD.StartAnchorPosition">
+              <xpdl2:Coordinates XCoordinate="9.85576923076923" YCoordinate="0.0"/>
+            </xpdl2:ConnectorGraphicsInfo>
           </xpdl2:ConnectorGraphicsInfos>
         </xpdl2:Transition>
       </xpdl2:Transitions>
@@ -3843,7 +3888,7 @@ Log.write(&quot;[SFC] DeactivationProcess MailThread:&quot;+EmailTo);
                   <email:Definition>
                     <email:From email:Configuration="Custom">donot-reply@SafaricomCorp.com</email:From>
                     <email:To> %EmailTo%</email:To>
-                    <email:Subject>Provisioning Service Inititated</email:Subject>
+                    <email:Subject>Provisioning Process Inititated</email:Subject>
                   </email:Definition>
                   <email:Body>Dear Customer,&#xD;
 We have inititated the installation procedure as per your registered request.&#xD;
@@ -3937,7 +3982,7 @@ ClientName=Provision.clientName;</xpdExt:Information>
                   <email:Definition>
                     <email:From email:Configuration="Custom">donot-reply@SafaricomCorp.com</email:From>
                     <email:To>%EmailTo%</email:To>
-                    <email:Subject>Decomissioning Process Completed</email:Subject>
+                    <email:Subject>Provisioning Process Completed</email:Subject>
                   </email:Definition>
                   <email:Body>Dear Customer,&#xD;
 We have sucessfully completed your installation procedure. We thank you for using our service. &#xD;

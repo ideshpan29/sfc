@@ -557,8 +557,8 @@
         <pd:activity name="MapResourceToGroup">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>2185</pd:x>
-            <pd:y>361</pd:y>
+            <pd:x>2178</pd:x>
+            <pd:y>353</pd:y>
             <config>
                 <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -622,7 +622,7 @@
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>xpath</pd:conditionType>
-                <pd:xpath>$groups/group/@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname</pd:xpath>
+                <pd:xpath>$groups/group/@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname</pd:xpath>
             </pd:transition>
             <pd:transition>
                 <pd:from>AssignGuid</pd:from>
@@ -647,18 +647,9 @@
                     <variableName>groupGuid</variableName>
                 </config>
                 <pd:inputBindings>
-                    <xsl:choose>
-                        <xsl:when test="$groups/group/@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname">
-                            <guid>
-                                <xsl:value-of select="$groups/group/@guid"/>
-                            </guid>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <guid>
-                                <xsl:value-of select="''"/>
-                            </guid>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <guid>
+                        <xsl:value-of select="$groups/group/@guid"/>
+                    </guid>
                 </pd:inputBindings>
             </pd:activity>
             <pd:activity name="Null1">

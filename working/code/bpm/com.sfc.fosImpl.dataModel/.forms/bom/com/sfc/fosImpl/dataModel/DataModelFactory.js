@@ -20,7 +20,7 @@ var theClass = function(form) {
 
 com.tibco.data.Loader.currentLoader.registerClass(theClass, "com.sfc.fosImpl.dataModel.DataModelFactory");
 
-theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.dataModel.ProvisioningDataModel", "com.sfc.fosImpl.dataModel.SystemParameters", "com.sfc.fosImpl.dataModel.SLA_Configuration", "com.sfc.fosImpl.dataModel.TechnicalInformation", "com.sfc.fosImpl.dataModel.EquipmentDetails", "com.sfc.fosImpl.dataModel.ContractorGroups", "com.sfc.fosImpl.dataModel.CommentData", "com.sfc.fosImpl.dataModel.CommentDataCase", "com.sfc.fosImpl.dataModel.LookupTable", "com.sfc.fosImpl.dataModel.ProcessNameAndSteps", "com.sfc.fosImpl.dataModel.DecommissionExecutionRequest", "com.sfc.fosImpl.dataModel.Header", "com.sfc.fosImpl.dataModel.planItem", "com.sfc.fosImpl.dataModel.UserDefinedFields", "com.sfc.fosImpl.dataModel.BussinessUsers", "com.sfc.fosImpl.dataModel.ActivationExecutionRequest", "com.sfc.fosImpl.dataModel.Process_Logging"];
+theClass.prototype.SUPPORTED_CLASSES = ["com.sfc.fosImpl.dataModel.ProvisioningDataModel", "com.sfc.fosImpl.dataModel.SystemParameters", "com.sfc.fosImpl.dataModel.SLA_Configuration", "com.sfc.fosImpl.dataModel.TechnicalInformation", "com.sfc.fosImpl.dataModel.EquipmentDetails", "com.sfc.fosImpl.dataModel.ContractorGroups", "com.sfc.fosImpl.dataModel.CommentData", "com.sfc.fosImpl.dataModel.CommentDataCase", "com.sfc.fosImpl.dataModel.LookupTable", "com.sfc.fosImpl.dataModel.ProcessNameAndSteps", "com.sfc.fosImpl.dataModel.DecommissionExecutionRequest", "com.sfc.fosImpl.dataModel.Header", "com.sfc.fosImpl.dataModel.planItem", "com.sfc.fosImpl.dataModel.UserDefinedFields", "com.sfc.fosImpl.dataModel.BussinessUsers", "com.sfc.fosImpl.dataModel.ActivationExecutionRequest", "com.sfc.fosImpl.dataModel.Process_Logging", "com.sfc.fosImpl.dataModel.MaterialBreakdown"];
 
 theClass.prototype.checkClassName = function(className) {
     for(i = 0; i < this.SUPPORTED_CLASSES.length; i++) {
@@ -270,6 +270,20 @@ theClass.prototype.createProcess_Logging = function(jsonData) {
 
 theClass.prototype.listCreateProcess_Logging = function(jsonData) {
     var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.Process_Logging", this.context);
+    var classList;
+    classList = classObject._setValueList(classObject, jsonData);
+    return classList;
+};
+    
+theClass.prototype.createMaterialBreakdown = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.MaterialBreakdown", this.context);
+    if(jsonData != undefined)
+        classObject = classObject._setValue(classObject, jsonData);
+    return classObject;
+};
+
+theClass.prototype.listCreateMaterialBreakdown = function(jsonData) {
+    var classObject = this.loader.newInstance("com.sfc.fosImpl.dataModel.MaterialBreakdown", this.context);
     var classList;
     classList = classObject._setValueList(classObject, jsonData);
     return classList;

@@ -26,6 +26,14 @@
     <form:parameter generated="true" name="data.FolderID" label="FolderID" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
     <form:parameter generated="true" name="data.xDMSURL" label="xDMSURL" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="300" inout="INOUT"/>
     <form:parameter generated="true" name="data.UID" label="UID" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.TechnologyArray" label="TechnologyArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.ServiceTypeArray" label="ServiceTypeArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.EquipmentArray" label="EquipmentArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.ServiceStatusArray" label="ServiceStatusArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.BandwidthArray" label="BandwidthArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.AccountTypeArray" label="AccountTypeArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="50" inout="INOUT"/>
+    <form:parameter generated="true" name="data.BuildingFloorArray" label="BuildingFloorArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
+    <form:parameter generated="true" name="data.BuildingIDArray" label="BuildingIDArray" dataType="uml:PrimitiveType pathmap://BOM_TYPES/BomPrimitiveTypes.library.uml#_AGoC4HcNEdytQ9AWEvOuug" type="BomPrimitiveTypes::Text" isArray="true" length="100" inout="INOUT"/>
   </form:dataModel>
   <form:services/>
   <form:actions/>
@@ -539,6 +547,54 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
       <form:source target="data.Provisioning_Data" feature="http://www.tibco.com/forms/model/form#//Datum/value com.sfc.fosImpl.dataModel.bom#_Xm04cM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceType?" data="form.data.Provisioning_Data.value.serviceType"></form:source>
       <form:destination target="control.Provisioning_Data_serviceType" feature="http://www.tibco.com/forms/model/form#//Control/value" data="form.control.Provisioning_Data_serviceType.value"></form:destination>
     </form:binding>
+    <form:binding direction="sourceToDest" name="_qbw5ICN5EeiHXsndwsqKDg">
+      <form:source target="data.AccountTypeArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.AccountTypeArray.value"/>
+      <form:destination target="control.Provisioning_Data_account" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.Provisioning_Data_account.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_tH1d0CN5EeiHXsndwsqKDg">
+      <form:source target="data.AccountTypeArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.AccountTypeArray.value"/>
+      <form:destination target="control.Provisioning_Data_account" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.Provisioning_Data_account.choiceValues"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_0gK9UCN5EeiHXsndwsqKDg">
+      <form:source target="data.ServiceTypeArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ServiceTypeArray.value"/>
+      <form:destination target="control.Provisioning_Data_serviceType" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.Provisioning_Data_serviceType.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_3OwqgCN5EeiHXsndwsqKDg">
+      <form:source target="data.ServiceTypeArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ServiceTypeArray.value"/>
+      <form:destination target="control.Provisioning_Data_serviceType" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.Provisioning_Data_serviceType.choiceValues"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_9qKAoCN5EeiHXsndwsqKDg">
+      <form:source target="data.EquipmentArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.EquipmentArray.value"/>
+      <form:destination target="control.TechnicalInfo_equipment_type" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.TechnicalInfo_equipment_type.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="__RVZ0CN5EeiHXsndwsqKDg">
+      <form:source target="data.EquipmentArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.EquipmentArray.value"/>
+      <form:destination target="control.TechnicalInfo_equipment_type" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.TechnicalInfo_equipment_type.choiceValues"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_LHfIcCN6EeiHXsndwsqKDg">
+      <form:source target="data.ServiceStatusArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ServiceStatusArray.value"/>
+      <form:destination target="control.Provisioning_Data_serviceStatus" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.Provisioning_Data_serviceStatus.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_N1F-MCN6EeiHXsndwsqKDg">
+      <form:source target="data.ServiceStatusArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.ServiceStatusArray.value"/>
+      <form:destination target="control.Provisioning_Data_serviceStatus" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.Provisioning_Data_serviceStatus.choiceValues"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_C-XvcCN-EeiHXsndwsqKDg">
+      <form:source target="data.BuildingFloorArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.BuildingFloorArray.value"/>
+      <form:destination target="control.Provisioning_Data_floor" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.Provisioning_Data_floor.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_EmIXcCN-EeiHXsndwsqKDg">
+      <form:source target="data.BuildingFloorArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.BuildingFloorArray.value"/>
+      <form:destination target="control.Provisioning_Data_floor" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.Provisioning_Data_floor.choiceValues"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_Ivic0CN-EeiHXsndwsqKDg">
+      <form:source target="data.BuildingIDArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.BuildingIDArray.value"/>
+      <form:destination target="control.Provisioning_Data_buildingID" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceLabels" data="form.control.Provisioning_Data_buildingID.choiceLabels"/>
+    </form:binding>
+    <form:binding direction="sourceToDest" name="_KlRPYCN-EeiHXsndwsqKDg">
+      <form:source target="data.BuildingIDArray" feature="http://www.tibco.com/forms/model/form#//Datum/value" data="form.data.BuildingIDArray.value"/>
+      <form:destination target="control.Provisioning_Data_buildingID" feature="http://www.tibco.com/forms/model/elemtypes#//ChoicePropertySet/choiceValues" data="form.control.Provisioning_Data_buildingID.choiceValues"/>
+    </form:binding>
   </form:bindings>
   <form:targets>
     <form:target ref="iProcessWorkspace_10.7"/>
@@ -633,8 +689,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             </form:control>
             <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_BHmSUM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=account?" syncFlags="524288" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_account">
               <form:propertySet xsi:type="et:MultiChoicePropertySet">
-                <et:choiceType>enumeration</et:choiceType>
-                <et:choiceEnumeration>com.sfc.fosImpl.dataModel.bom#_D3iDUM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aEnumeration%26q=com.sfc.fosImpl.dataModel%26n=AccountType?</et:choiceEnumeration>
+                <et:choiceType>bindings</et:choiceType>
               </form:propertySet>
               <form:label>Account</form:label>
               <form:hint></form:hint>
@@ -788,10 +843,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:enabled>true</form:enabled>
               <form:required>false</form:required>
             </form:control>
-            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_P37TEM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=floor?" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_floor">
-              <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>30</et:displayLength>
-                <et:maxLength>50</et:maxLength>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_P37TEM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=floor?" syncFlags="524288" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_floor">
+              <form:propertySet xsi:type="et:MultiChoicePropertySet">
+                <et:choiceType>bindings</et:choiceType>
               </form:propertySet>
               <form:label>Floor</form:label>
               <form:hint></form:hint>
@@ -841,10 +895,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:enabled>true</form:enabled>
               <form:required>false</form:required>
             </form:control>
-            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_BQSe0M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=buildingID?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_buildingID">
-              <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>30</et:displayLength>
-                <et:maxLength>50</et:maxLength>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_BQSe0M3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=buildingID?" syncFlags="589824" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_buildingID">
+              <form:propertySet xsi:type="et:MultiChoicePropertySet">
+                <et:choiceType>bindings</et:choiceType>
               </form:propertySet>
               <form:label>Building ID</form:label>
               <form:hint></form:hint>
@@ -883,10 +936,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
             <form:labelProperties visible="false"/>
             <form:required>false</form:required>
           </form:control>
-          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_BBjfQM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceStatus?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_serviceStatus">
-            <form:propertySet xsi:type="et:TextPropertySet">
-              <et:displayLength>30</et:displayLength>
-              <et:maxLength>50</et:maxLength>
+          <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_BBjfQM3QEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceStatus?" syncFlags="589824" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_serviceStatus">
+            <form:propertySet xsi:type="et:MultiChoicePropertySet">
+              <et:choiceType>bindings</et:choiceType>
             </form:propertySet>
             <form:label>Service Status</form:label>
             <form:hint></form:hint>
@@ -1011,10 +1063,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:enabled>true</form:enabled>
               <form:required>false</form:required>
             </form:control>
-            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_Xm04cM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceType?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.Provisioning_Data_serviceType">
-              <form:propertySet xsi:type="et:TextPropertySet">
-                <et:displayLength>30</et:displayLength>
-                <et:maxLength>50</et:maxLength>
+            <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_Xm04cM3PEeeozIUd784NFw?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aProvisioningDataModel%26n=serviceType?" syncFlags="589824" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.Provisioning_Data_serviceType">
+              <form:propertySet xsi:type="et:MultiChoicePropertySet">
+                <et:choiceType>bindings</et:choiceType>
               </form:propertySet>
               <form:label>Service Type</form:label>
               <form:hint></form:hint>
@@ -1245,7 +1296,7 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
                 <form:required>false</form:required>
               </form:control>
             </form:pane>
-            <form:pane generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_ldgeAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=equipment?" syncFlags="802816" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_XJJnkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=EquipmentDetails?" name="pane.TechnicalInfo_equipment" paneType="com.tibco.forms.panes.grid">
+            <form:pane generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_ldgeAOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aTechnicalInformation%26n=equipment?" syncFlags="2899968" elementType="form:PaneType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.panes.grid" dataType="uml:Class com.sfc.fosImpl.dataModel.bom#_XJJnkOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aClass%26q=com.sfc.fosImpl.dataModel%26n=EquipmentDetails?" name="pane.TechnicalInfo_equipment" paneType="com.tibco.forms.panes.grid">
               <form:propertySet xsi:type="et:GridPanePropertySet">
                 <et:showNavigator>false</et:showNavigator>
                 <et:editable>true</et:editable>
@@ -1259,10 +1310,9 @@ if(data.getProvisioning_Data().getSiebelCircuitID()=='90981'){&#xD;
               <form:defaults>
                 <form:labelProperties position="top"/>
               </form:defaults>
-              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_ceetgOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aEquipmentDetails%26n=type?" syncFlags="65536" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.textinput" controlType="com.tibco.forms.controls.textinput" name="control.TechnicalInfo_equipment_type">
-                <form:propertySet xsi:type="et:TextPropertySet">
-                  <et:displayLength>40</et:displayLength>
-                  <et:maxLength>50</et:maxLength>
+              <form:control generated="true" generatorSource="com.sfc.fosImpl.dataModel.bom#_ceetgOCfEeeeKsD8kq9l7g?p=com.sfc.fosImpl.dataModel%26s=Business%20Objects%26t=uml%3aProperty%26q=com.sfc.fosImpl.dataModel%3a%3aEquipmentDetails%26n=type?" syncFlags="589824" elementType="form:ControlType pathmap://FORMS_UI_ELEMENT_TYPES/UIElementTypes.library.elemtypes#com.tibco.forms.controls.optionlist" controlType="com.tibco.forms.controls.optionlist" name="control.TechnicalInfo_equipment_type">
+                <form:propertySet xsi:type="et:MultiChoicePropertySet">
+                  <et:choiceType>bindings</et:choiceType>
                 </form:propertySet>
                 <form:label>Equipment Type</form:label>
                 <form:hint></form:hint>

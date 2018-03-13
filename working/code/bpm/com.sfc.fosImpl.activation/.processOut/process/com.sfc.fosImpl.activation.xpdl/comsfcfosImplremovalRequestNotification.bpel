@@ -9,40 +9,40 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="AdminErrorTask">
             <startingVariables>
-                <variable>ErrorDetail</variable>
                 <variable>ErrorCode</variable>
+                <variable>ErrorDetail</variable>
             </startingVariables>
         </task>
         <task name="DecomissioningInitiateMail">
             <startingVariables>
-                <variable>ClientName</variable>
-                <variable>CustomerID</variable>
-                <variable>ClientID</variable>
-                <variable>EmailTo</variable>
                 <variable>RegisteredMail</variable>
+                <variable>ClientName</variable>
+                <variable>EmailTo</variable>
+                <variable>ClientID</variable>
+                <variable>CustomerID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>ClientName</variable>
-                <variable>CustomerID</variable>
-                <variable>ClientID</variable>
-                <variable>Provision</variable>
-                <variable>EmailTo</variable>
                 <variable>RegisteredMail</variable>
+                <variable>ClientName</variable>
+                <variable>EmailTo</variable>
+                <variable>Provision</variable>
+                <variable>ClientID</variable>
+                <variable>CustomerID</variable>
             </ProcessManagerScript>
         </task>
         <task name="DecomissioningCompleteMail">
             <startingVariables>
-                <variable>EmailTo</variable>
-                <variable>ClientID</variable>
                 <variable>ClientName</variable>
+                <variable>EmailTo</variable>
                 <variable>CircuitID</variable>
+                <variable>ClientID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>EmailTo</variable>
-                <variable>ClientID</variable>
-                <variable>Provision</variable>
                 <variable>ClientName</variable>
+                <variable>EmailTo</variable>
                 <variable>CircuitID</variable>
+                <variable>Provision</variable>
+                <variable>ClientID</variable>
             </ProcessManagerScript>
         </task>
         <task name="StartEvent">
@@ -78,12 +78,46 @@
             tibex:xpdlId="_h3uyoPUCEeeywP4RjejZPQ" type="xsd:string"/>
         <bpws:variable name="SLAFLAGGlobal"
             tibex:xpdlId="_lO9NIPUCEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="ServiceStatusArray" tibex:array="yes"
+            tibex:xpdlId="_bcIywiXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="BuildingIDArray" tibex:array="yes"
+            tibex:xpdlId="_bcIywyXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataTechnologyRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyxCXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataAccountTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyxSXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="BandwidthArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyxiXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="ServiceTypeArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyxyXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="BuildingFloorArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyyCXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="TechnologyArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyySXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataFloorRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyyiXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataBandwidthRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyyyXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="AccountTypeArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyzCXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="EquipmentArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyzSXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataServiceTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyziXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataServiceStatusRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyzyXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataBuildingIDRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIy0CXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataEquipmentTypeRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIy0SXXEeiVIr-c0HRmlw"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_ClDKoBYDEeiU0buANAV9_Q">
+    <bpws:flow name="_BX_flow_SfOH0CXnEeiVIr-c0HRmlw">
         <bpws:links>
             <bpws:link name="CatchError to AdminErrorTask" tibex:xpdlId="_5Eb8EP7BEeeuGbQVt6VBIQ"/>
             <bpws:link name="AdminErrorTask to _sErL8P6_EeeuGbQVt6VBIQ" tibex:xpdlId="_By_AkP7CEeeuGbQVt6VBIQ"/>
@@ -119,8 +153,8 @@
 
 ]]></tibex:completedScript>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="Provision"/>
                     <parameterDescription mode="InOut" name="SLAFlagCheck"/>
+                    <parameterDescription mode="InOut" name="Provision"/>
                 </tibex:parameters>
                 <tibex:completedScript
                     expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[SystemParamRef = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("DISABLE_EMAIL_FLAG");
@@ -325,7 +359,7 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
                             </correspondents>
                             <headers/>
                             <priority/>
-                            <subject value="Provisioning Service Inititated"/>
+                            <subject value="Provisioning Process Inititated"/>
                             <body>
                                 <body value="Dear Customer,&#xd;&#xa;We have inititated the installation procedure as per your registered request.&#xd;&#xa;&#xd;&#xa;Given below are the details-&#xd;&#xa;&#xd;&#xa;Client ID: %ClientID%&#xd;&#xa;Customer ID: %CustomerID%&#xd;&#xa;Client Name: %ClientName%&#xd;&#xa;Registered Mail ID: %RegisteredMail%&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;Best Regards,&#xd;&#xa;Safaricom Team  ">
                                     <variables index="140" name="%ClientID%"/>
@@ -435,7 +469,7 @@ ClientName=Provision.clientName;]]></tibex:initiatedScript>
                             </correspondents>
                             <headers/>
                             <priority/>
-                            <subject value="Decomissioning Process Completed"/>
+                            <subject value="Provisioning Process Completed"/>
                             <body>
                                 <body value="Dear Customer,&#xd;&#xa;We have sucessfully completed your installation procedure. We thank you for using our service. &#xd;&#xa;&#xd;&#xa;Given below are the details:-&#xd;&#xa;&#xd;&#xa;Client ID: %ClientID%&#xd;&#xa;Customer ID: %CircuitID%&#xd;&#xa;Registered Mail: %EmailTo%&#xd;&#xa;Client Name: %ClientName%&#xd;&#xa;&#xd;&#xa;Best Regards,&#xd;&#xa;Safaricom Team">
                                     <variables index="159" name="%ClientID%"/>

@@ -53,7 +53,7 @@ theClass.TYPE_ARRAY[theClass.ATTR_CLIENTVLAN] = {type:"BomPrimitiveTypes.Text", 
 theClass.TYPE_ARRAY[theClass.ATTR_CLIENTIP] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_SFCPOPPE] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_PORTTYPE] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
-theClass.TYPE_ARRAY[theClass.ATTR_EQUIPMENT] = {type:"com.sfc.fosImpl.dataModel.EquipmentDetails", baseType:"com.sfc.fosImpl.dataModel.EquipmentDetails", primitive:false, multivalued:true, required:true, defaultValue:""};
+theClass.TYPE_ARRAY[theClass.ATTR_EQUIPMENT] = {type:"com.sfc.fosImpl.dataModel.EquipmentDetails", baseType:"com.sfc.fosImpl.dataModel.EquipmentDetails", primitive:false, multivalued:true, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_MODIFIEDBY] = {type:"BomPrimitiveTypes.Text", baseType:"BomPrimitiveTypes.Text", primitive:true, multivalued:false, required:false, defaultValue:""};
 theClass.TYPE_ARRAY[theClass.ATTR_MODIFIEDDATE] = {type:"BomPrimitiveTypes.Date", baseType:"BomPrimitiveTypes.Date", primitive:true, multivalued:false, required:false, defaultValue:""};
 

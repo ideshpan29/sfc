@@ -90,6 +90,7 @@ com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.UserDefinedF
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.BussinessUsers");
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.ActivationExecutionRequest");
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.Process_Logging");
+com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.MaterialBreakdown");
 
 // Load the associated factory.
 com.tibco.data.Loader.currentLoader.load("com.sfc.fosImpl.dataModel.DataModelFactory");

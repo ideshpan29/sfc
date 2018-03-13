@@ -8,40 +8,40 @@
     <tibex:VariableDescriptor type="PersistentBatching">
         <task name="SendTaskNotification">
             <startingVariables>
+                <variable>ClientID</variable>
                 <variable>CustomerID</variable>
                 <variable>ClientName</variable>
                 <variable>EmailTo</variable>
-                <variable>ClientID</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
                 <variable>Provision</variable>
+                <variable>ClientID</variable>
                 <variable>selectPM</variable>
+                <variable>GateKeeperTask</variable>
                 <variable>CustomerID</variable>
                 <variable>ClientName</variable>
                 <variable>EmailTo</variable>
-                <variable>GateKeeperTask</variable>
-                <variable>ClientID</variable>
             </ProcessManagerScript>
         </task>
         <task name="SendMailTask">
             <startingVariables>
-                <variable>SubjectLineEmail</variable>
-                <variable>Task</variable>
                 <variable>EmailTo</variable>
-                <variable>SiebelCircuitID</variable>
                 <variable>SLALevel</variable>
+                <variable>Task</variable>
+                <variable>SiebelCircuitID</variable>
+                <variable>SubjectLineEmail</variable>
             </startingVariables>
             <ProcessManagerScript type="Initiate">
-                <variable>SubjectLineEmail</variable>
-                <variable>Task</variable>
-                <variable>Provision</variable>
-                <variable>EmailTo</variable>
-                <variable>SLAFlagCheck</variable>
                 <variable>PendingAt</variable>
-                <variable>SiebelCircuitID</variable>
-                <variable>EscalationToEmail</variable>
-                <variable>SLALevel</variable>
+                <variable>SLAFlagCheck</variable>
+                <variable>Provision</variable>
                 <variable>SLAFLAGGlobal</variable>
+                <variable>EmailTo</variable>
+                <variable>SLALevel</variable>
+                <variable>EscalationToEmail</variable>
+                <variable>Task</variable>
+                <variable>SiebelCircuitID</variable>
+                <variable>SubjectLineEmail</variable>
             </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
@@ -83,12 +83,46 @@
             tibex:xpdlId="_h3uyoPUCEeeywP4RjejZPQ" type="xsd:string"/>
         <bpws:variable name="SLAFLAGGlobal"
             tibex:xpdlId="_lO9NIPUCEeeywP4RjejZPQ" type="xsd:string"/>
+        <bpws:variable name="ServiceStatusArray" tibex:array="yes"
+            tibex:xpdlId="_bcIywiXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="BuildingIDArray" tibex:array="yes"
+            tibex:xpdlId="_bcIywyXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataTechnologyRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyxCXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataAccountTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyxSXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="BandwidthArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyxiXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="ServiceTypeArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyxyXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="BuildingFloorArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyyCXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="TechnologyArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyySXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataFloorRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyyiXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataBandwidthRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyyyXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="AccountTypeArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyzCXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="EquipmentArray" tibex:array="yes"
+            tibex:xpdlId="_bcIyzSXXEeiVIr-c0HRmlw" type="xsd:string"/>
+        <bpws:variable name="LookupDataServiceTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyziXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataServiceStatusRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIyzyXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataBuildingIDRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIy0CXXEeiVIr-c0HRmlw"/>
+        <bpws:variable name="LookupDataEquipmentTypeRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_bcIy0SXXEeiVIr-c0HRmlw"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_CiQVUBYDEeiU0buANAV9_Q">
+    <bpws:flow name="_BX_flow_SdN8sCXnEeiVIr-c0HRmlw">
         <bpws:links>
             <bpws:link
                 name="_0JRqcPwgEeeupNwu8S8N4Q to _BX_scope_SendTaskNotificati" tibex:xpdlId="_09No0PwgEeeupNwu8S8N4Q"/>
@@ -116,13 +150,13 @@
                     <bpws:source linkName="StartEvent to _0JRqcPwgEeeupNwu8S8N4Q"/>
                 </bpws:sources>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="Provision"/>
+                    <parameterDescription mode="InOut" name="SLA"/>
+                    <parameterDescription mode="InOut" name="EscalationToEmail"/>
                     <parameterDescription mode="InOut" name="Task"/>
                     <parameterDescription mode="InOut" name="selectPM"/>
-                    <parameterDescription mode="InOut" name="SLAFlagCheck"/>
                     <parameterDescription mode="InOut" name="GateKeeperTask"/>
-                    <parameterDescription mode="InOut" name="EscalationToEmail"/>
                 </tibex:parameters>
                 <tibex:eventSource>
                     <tibex:startEvent eventType="Default"/>

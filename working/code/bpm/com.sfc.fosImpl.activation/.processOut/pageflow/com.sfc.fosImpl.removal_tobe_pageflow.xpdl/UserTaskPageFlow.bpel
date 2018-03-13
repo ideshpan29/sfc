@@ -6,80 +6,116 @@
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <tibex:VariableDescriptor type="PersistentBatching">
+        <task name="_BX_SPInput_InsertComment">
+            <startingVariables>
+                <variable>TaskName</variable>
+                <variable>CommentText</variable>
+                <variable>Provisioning_Data</variable>
+            </startingVariables>
+        </task>
+        <task name="InsertBusinessData">
+            <ProcessManagerScript type="Initiate">
+                <variable>TaskName</variable>
+                <variable>TechnicalInfo</variable>
+            </ProcessManagerScript>
+        </task>
         <task name="ContractorMobileTask">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>SelectedContractor</variable>
                 <variable>TaskName</variable>
-                <variable>CommentHistory</variable>
-                <variable>CommentText</variable>
                 <variable>SelectedContractorGroup</variable>
-                <variable>GroupNames</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>CommentText</variable>
+                <variable>SelectedContractor</variable>
                 <variable>ContractorNames</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>CommentHistory</variable>
+                <variable>xDMSURL</variable>
+                <variable>GroupNames</variable>
+            </startingVariables>
+        </task>
+        <task name="_BX_SPInput_InsertBusinessData">
+            <startingVariables>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
+            </startingVariables>
+        </task>
+        <task name="LookupData">
+            <startingVariables>
+                <variable>Provisioning_Data</variable>
+                <variable>TechnicalInfo</variable>
             </startingVariables>
         </task>
         <task name="StartEvent">
             <ProcessManagerScript type="Complete">
-                <variable>infoLoggerFlag</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>TaskName</variable>
-                <variable>CommentHistory</variable>
-                <variable>CommentDataSet</variable>
                 <variable>GrpNames</variable>
-                <variable>PM_List</variable>
+                <variable>infoLoggerFlag</variable>
+                <variable>TaskName</variable>
+                <variable>Provisioning_Data</variable>
                 <variable>CtrMobileTaskDecision</variable>
+                <variable>CommentDataSet</variable>
+                <variable>CommentHistory</variable>
+                <variable>PM_List</variable>
             </ProcessManagerScript>
         </task>
         <task name="ConfirmDetails">
             <startingVariables>
-                <variable>TechnicalInfo</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>TaskName</variable>
-                <variable>CommentText</variable>
-                <variable>ContractorNames</variable>
-                <variable>PM_List</variable>
-                <variable>GrpNames</variable>
-                <variable>mgmtIPFlag</variable>
-                <variable>equipmentFlag</variable>
-                <variable>UID</variable>
-                <variable>SelectedContractor</variable>
-                <variable>CommentHistory</variable>
                 <variable>SelectedPM</variable>
-                <variable>xDMSURL</variable>
-                <variable>SelectedContractorGroup</variable>
-                <variable>GroupNames</variable>
+                <variable>mgmtIPFlag</variable>
+                <variable>Provisioning_Data</variable>
+                <variable>SelectedContractor</variable>
+                <variable>ContractorNames</variable>
                 <variable>FolderID</variable>
+                <variable>TechnicalInfo</variable>
+                <variable>UID</variable>
+                <variable>xDMSURL</variable>
+                <variable>PM_List</variable>
+                <variable>EquipmentArray</variable>
+                <variable>GrpNames</variable>
+                <variable>TechnologyArray</variable>
+                <variable>TaskName</variable>
+                <variable>AccountTypeArray</variable>
+                <variable>BuildingIDArray</variable>
+                <variable>SelectedContractorGroup</variable>
+                <variable>CommentText</variable>
+                <variable>equipmentFlag</variable>
+                <variable>ServiceTypeArray</variable>
+                <variable>CommentHistory</variable>
+                <variable>ServiceStatusArray</variable>
+                <variable>BandwidthArray</variable>
+                <variable>GroupNames</variable>
+                <variable>BuildingFloorArray</variable>
             </startingVariables>
             <ProcessManagerScript type="Complete">
-                <variable>infoLoggerFlag</variable>
                 <variable>SelectedPM</variable>
+                <variable>infoLoggerFlag</variable>
                 <variable>TaskName</variable>
                 <variable>SelectedContractorGroup</variable>
             </ProcessManagerScript>
             <ProcessManagerScript type="Initiate">
                 <variable>infoLoggerFlag</variable>
                 <variable>TaskName</variable>
-                <variable>PM_List</variable>
                 <variable>CtrGroups_List</variable>
+                <variable>PM_List</variable>
             </ProcessManagerScript>
         </task>
-        <task name="ServiceTask">
+        <task name="ScriptTask">
             <startingVariables>
-                <variable>commentDataCase</variable>
-                <variable>commentDataCaseRef</variable>
+                <variable>LookupDataServiceStatusRef</variable>
+                <variable>LookupDataAccountTypeRef</variable>
+                <variable>LookupDataBandwidthRef</variable>
+                <variable>LookupDataBuildingIDRef</variable>
+                <variable>EquipmentArray</variable>
+                <variable>TechnologyArray</variable>
+                <variable>LookupDataServiceTypeRef</variable>
+                <variable>LookupDataEquipmentTypeRef</variable>
+                <variable>AccountTypeArray</variable>
+                <variable>BuildingIDArray</variable>
+                <variable>LookupDataTechnologyRef</variable>
+                <variable>ServiceTypeArray</variable>
+                <variable>ServiceStatusArray</variable>
+                <variable>BandwidthArray</variable>
+                <variable>LookupDataFloorRef</variable>
             </startingVariables>
-            <ProcessManagerScript type="Initiate">
-                <variable>commentDataCase</variable>
-                <variable>Provisioning_Data</variable>
-                <variable>CommentText</variable>
-                <variable>TaskName</variable>
-            </ProcessManagerScript>
-        </task>
-        <task name="EndEvent">
-            <ProcessManagerScript type="Initiate">
-                <variable>infoLoggerFlag</variable>
-            </ProcessManagerScript>
         </task>
     </tibex:VariableDescriptor>
     <bpws:documentation>*** Generated by TIBCO Business Studio.</bpws:documentation>
@@ -149,27 +185,66 @@
             tibex:xpdlId="_cY6fUBRYEeiI4LtXlpi0-g" type="xsd:string"/>
         <bpws:variable name="GrpNames" tibex:array="yes"
             tibex:xpdlId="_HiVqUBReEeiI4LtXlpi0-g" type="xsd:string"/>
+        <bpws:variable name="Technical_InformationRef"
+            tibex:classRef="com.sfc.fosImpl.bizData.dataModel.Technical_Information" tibex:xpdlId="_fVRekBbQEei5zJcabt9kCg"/>
+        <bpws:variable name="LookupDataAccountTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_V04-wCNYEeiHXsndwsqKDg"/>
+        <bpws:variable name="AccountTypeArray" tibex:array="yes"
+            tibex:xpdlId="_W0ygESNZEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataServiceTypeRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_pxT_ACNaEeiHXsndwsqKDg"/>
+        <bpws:variable name="ServiceTypeArray" tibex:array="yes"
+            tibex:xpdlId="_uxbC4CNaEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataBandwidthRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_lKVdwCNjEeiHXsndwsqKDg"/>
+        <bpws:variable name="BandwidthArray" tibex:array="yes"
+            tibex:xpdlId="_ojr_MCNjEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataServiceStatusRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_NG2aICNkEeiHXsndwsqKDg"/>
+        <bpws:variable name="ServiceStatusArray" tibex:array="yes"
+            tibex:xpdlId="_RhR-ECNkEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataTechnologyRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_ZWY5ICNkEeiHXsndwsqKDg"/>
+        <bpws:variable name="TechnologyArray" tibex:array="yes"
+            tibex:xpdlId="_dZjMkCNkEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataEquipmentTypeRef"
+            tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_3nnb8CNkEeiHXsndwsqKDg"/>
+        <bpws:variable name="EquipmentArray" tibex:array="yes"
+            tibex:xpdlId="_CDrLICNlEeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataBuildingIDRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_UtMMgCN8EeiHXsndwsqKDg"/>
+        <bpws:variable name="BuildingIDArray" tibex:array="yes"
+            tibex:xpdlId="_a7fh0SN8EeiHXsndwsqKDg" type="xsd:string"/>
+        <bpws:variable name="LookupDataFloorRef" tibex:array="yes"
+            tibex:classRef="com.sfc.fosImpl.dataModel.LookupTable" tibex:xpdlId="_nC3jUSN8EeiHXsndwsqKDg"/>
+        <bpws:variable name="BuildingFloorArray" tibex:array="yes"
+            tibex:xpdlId="_BcZb0CN9EeiHXsndwsqKDg" type="xsd:string"/>
     </bpws:variables>
     <bpws:extensions>
         <bpws:extension mustUnderstand="yes" namespace="http://www.tibco.com/bpel/2007/extensions"/>
     </bpws:extensions>
     <bpws:eventHandlers/>
-    <bpws:flow name="_BX_flow_C6t4oBYDEeiU0buANAV9_Q">
+    <bpws:flow name="_BX_flow_SpZXgCXnEeiVIr-c0HRmlw">
         <bpws:links>
-            <bpws:link name="ConfirmDetails to ServiceTask" tibex:xpdlId="_GAPJYPaZEee_OvMSeNQu6A"/>
-            <bpws:link name="ServiceTask to EndEvent" tibex:xpdlId="_Cpfco9_HEeec4K-r6PSjHg"/>
-            <bpws:link name="ContractorMobileTask to ServiceTask" tibex:xpdlId="_7p1uoAliEeiPXa3e9UY2HA"/>
+            <bpws:link name="ConfirmDetails to InsertBusinessData" tibex:xpdlId="_aAvNYBbREei5zJcabt9kCg"/>
+            <bpws:link name="ScriptTask to _iwMb4AlfEeiPXa3e9UY2HA" tibex:xpdlId="_iwMb4QlfEeiPXa3e9UY2HA"/>
+            <bpws:link name="InsertComment to EndEvent2" tibex:xpdlId="_ZbU7kBbDEei_483sJGVYzg"/>
+            <bpws:link name="InsertBusinessData to InsertComment" tibex:xpdlId="_eybawBbREei5zJcabt9kCg"/>
+            <bpws:link name="LookupData to ScriptTask" tibex:xpdlId="_BKrZgCNYEeiHXsndwsqKDg"/>
+            <bpws:link name="ContractorMobileTask to InsertBusinessData" tibex:xpdlId="_bUD2cBbREei5zJcabt9kCg"/>
             <bpws:link name="_iwMb4AlfEeiPXa3e9UY2HA to ConfirmDetails" tibex:xpdlId="_5nGy8N_CEeec4K-r6PSjHg"/>
             <bpws:link
                 name="_iwMb4AlfEeiPXa3e9UY2HA to ContractorMobileTask" tibex:xpdlId="_joofwAlfEeiPXa3e9UY2HA"/>
-            <bpws:link name="StartEvent to _iwMb4AlfEeiPXa3e9UY2HA" tibex:xpdlId="_iwMb4QlfEeiPXa3e9UY2HA"/>
+            <bpws:link name="StartEvent to LookupData" tibex:xpdlId="_XtaVUBbQEei5zJcabt9kCg"/>
         </bpws:links>
         <bpws:extensionActivity>
             <tibex:receiveEvent createInstance="yes" eventTimeout="0"
                 name="StartEvent" tibex:type="startEvent"
                 tibex:xpdlId="_tHTqYt_CEeec4K-r6PSjHg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
                 <bpws:sources>
-                    <bpws:source linkName="StartEvent to _iwMb4AlfEeiPXa3e9UY2HA"/>
+                    <bpws:source linkName="StartEvent to LookupData"/>
                 </bpws:sources>
                 <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var  provInfoLogging = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("PROVISIONING_INFO_LOGGING");
 if((provInfoLogging !=null) && (provInfoLogging.readSystemParameters() !=null)){
@@ -202,25 +277,6 @@ else if(TaskName == "PM_Track_Installation") {
 }
 
 
-/*
-
-if(TaskName=="PM_Review"){
-var a=Process.getOriginatorName();
-EscalationEmail=Process.getOrgModel().resourceByName(a).get(0).getAttributeValue("Email").get(0);
-
-}
-
-if(TaskName=="Manual_Installation_Removal") {
-	SystemParamRef= cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("Contractor_Mobile_Task_Flag");
-	if(SystemParamRef.readSystemParameters().propertyValue=="Enable") {
-		CtrMobileTaskDecision = true;
-	}
-	else {
-		CtrMobileTaskDecision=false;
-	}
-}
-*/
-
 CtrMobileTaskDecision=false;
 
 var criteria = "siebelCircuitID='"+Provisioning_Data.siebelCircuitID+"'";
@@ -239,26 +295,26 @@ if(CommentDataSet.size()>0){
 }
 ]]></tibex:completedScript>
                 <tibex:parameters>
-                    <parameterDescription mode="InOut" name="TechnicalInfo"/>
-                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
-                    <parameterDescription mode="InOut" name="CommentText"/>
-                    <parameterDescription mode="InOut" name="TaskName"/>
-                    <parameterDescription mode="InOut" name="ContractorNames"/>
-                    <parameterDescription mode="InOut" name="EscalationEmail"/>
-                    <parameterDescription mode="InOut" name="mgmtIPFlag"/>
-                    <parameterDescription mode="InOut" name="equipmentFlag"/>
-                    <parameterDescription mode="InOut" name="commentDataCase"/>
-                    <parameterDescription mode="InOut" name="UID"/>
                     <parameterDescription mode="InOut" name="SelectedPM"/>
+                    <parameterDescription mode="InOut" name="mgmtIPFlag"/>
+                    <parameterDescription mode="InOut" name="Provisioning_Data"/>
                     <parameterDescription mode="InOut" name="SelectedContractor"/>
-                    <parameterDescription mode="InOut" name="CommentHistory"/>
-                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
-                    <parameterDescription mode="InOut" name="xDMSURL"/>
-                    <parameterDescription mode="InOut" name="SelectedContractorGroup"/>
+                    <parameterDescription mode="InOut" name="ContractorNames"/>
+                    <parameterDescription mode="InOut" name="TechnicalInfo"/>
                     <parameterDescription mode="InOut" name="Mail"/>
-                    <parameterDescription mode="InOut" name="GroupNames"/>
-                    <parameterDescription mode="InOut" name="CommentDataSet"/>
                     <parameterDescription mode="InOut" name="FolderID"/>
+                    <parameterDescription mode="InOut" name="UID"/>
+                    <parameterDescription mode="InOut" name="CommentDataSet"/>
+                    <parameterDescription mode="InOut" name="xDMSURL"/>
+                    <parameterDescription mode="InOut" name="EscalationEmail"/>
+                    <parameterDescription mode="InOut" name="commentDataCase"/>
+                    <parameterDescription mode="InOut" name="TaskName"/>
+                    <parameterDescription mode="InOut" name="SelectedContractorGroup"/>
+                    <parameterDescription mode="InOut" name="equipmentFlag"/>
+                    <parameterDescription mode="InOut" name="CommentText"/>
+                    <parameterDescription mode="InOut" name="CommentHistory"/>
+                    <parameterDescription mode="InOut" name="GroupNames"/>
+                    <parameterDescription mode="InOut" name="commentDataCaseRef"/>
                 </tibex:parameters>
                 <tibex:completedScript
                     expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"><![CDATA[var  provInfoLogging = cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("PROVISIONING_INFO_LOGGING");
@@ -292,25 +348,6 @@ else if(TaskName == "PM_Track_Installation") {
 }
 
 
-/*
-
-if(TaskName=="PM_Review"){
-var a=Process.getOriginatorName();
-EscalationEmail=Process.getOrgModel().resourceByName(a).get(0).getAttributeValue("Email").get(0);
-
-}
-
-if(TaskName=="Manual_Installation_Removal") {
-	SystemParamRef= cac_com_sfc_fosImpl_dataModel_SystemParameters.findByPropertyName("Contractor_Mobile_Task_Flag");
-	if(SystemParamRef.readSystemParameters().propertyValue=="Enable") {
-		CtrMobileTaskDecision = true;
-	}
-	else {
-		CtrMobileTaskDecision=false;
-	}
-}
-*/
-
 CtrMobileTaskDecision=false;
 
 var criteria = "siebelCircuitID='"+Provisioning_Data.siebelCircuitID+"'";
@@ -333,14 +370,6 @@ if(CommentDataSet.size()>0){
                 </tibex:eventSource>
             </tibex:receiveEvent>
         </bpws:extensionActivity>
-        <bpws:empty name="EndEvent" tibex:type="endEvent" tibex:xpdlId="_tHTqY9_CEeec4K-r6PSjHg">
-            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[if(infoLoggerFlag==true) {
-	Log.write("[SFC_FOSIMPL_BPM] UserTaskPageFlow_Initiate_Script_End_Event");
-}	]]></tibex:initiatedScript>
-            <bpws:targets>
-                <bpws:target linkName="ServiceTask to EndEvent"/>
-            </bpws:targets>
-        </bpws:empty>
         <bpws:extensionActivity>
             <tibex:extActivity name="ConfirmDetails"
                 tibex:extendedAttributes="bpmJspTask=form\://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/ConfirmDetails/GatekeeperApproval.form&#xd;&#xa;"
@@ -350,7 +379,7 @@ if(CommentDataSet.size()>0){
                     <bpws:target linkName="_iwMb4AlfEeiPXa3e9UY2HA to ConfirmDetails"/>
                 </bpws:targets>
                 <bpws:sources>
-                    <bpws:source linkName="ConfirmDetails to ServiceTask"/>
+                    <bpws:source linkName="ConfirmDetails to InsertBusinessData"/>
                 </bpws:sources>
                 <model:PageActivityDataModelType xmi:version="2.0"
                     xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
@@ -389,6 +418,22 @@ if(CommentDataSet.size()>0){
                             mode="INOUT" name="xDMSURL"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="UID"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="TechnologyArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="ServiceTypeArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="EquipmentArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="ServiceStatusArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="BandwidthArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="AccountTypeArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="BuildingFloorArray"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="BuildingIDArray"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
                 <tibex:completedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var Log_Activity_Name=TaskName;
@@ -413,40 +458,6 @@ else if( (infoLoggerFlag==true) && (TaskName=="GateKeeper")) {
             </tibex:extActivity>
         </bpws:extensionActivity>
         <bpws:extensionActivity>
-            <tibex:extActivity name="ServiceTask"
-                tibex:type="serviceTask"
-                tibex:xpdlId="_GAOiUPaZEee_OvMSeNQu6A" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
-                <bpws:targets>
-                    <bpws:target linkName="ConfirmDetails to ServiceTask"/>
-                    <bpws:target linkName="ContractorMobileTask to ServiceTask"/>
-                </bpws:targets>
-                <bpws:sources>
-                    <bpws:source linkName="ServiceTask to EndEvent"/>
-                </bpws:sources>
-                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[commentDataCaseRef = cac_com_sfc_fosImpl_dataModel_CommentDataCase.create(commentDataCase);]]></tibex:script>
-                <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[/*var size=CommentHistory.size();
-commentDataCase.addedby=CommentHistory.get(size).addedby;
-commentDataCase.comments=CommentHistory.get(size).comments;
-commentDataCase.taskName=CommentHistory.get(size).stepName;
-commentDataCase.time=CommentHistory.get(size).time;
-*/
-commentDataCase=com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();
-commentDataCase.addedby=Process.getOriginatorName();
-commentDataCase.comments=CommentText;
-for(var index=0; index<TaskName.length; index++) {
-	var name=TaskName.replace("_"," ");
-}
-commentDataCase.taskName=name;
-commentDataCase.time=DateTimeUtil.createDatetime();
-commentDataCase.siebelCircuitID=Provisioning_Data.siebelCircuitID;
-
-Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.addedby);
-Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.comments);
-Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.siebelCircuitID);
-Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.taskName);]]></tibex:initiatedScript>
-            </tibex:extActivity>
-        </bpws:extensionActivity>
-        <bpws:extensionActivity>
             <tibex:extActivity name="ContractorMobileTask"
                 tibex:extendedAttributes="bpmJspTask=form\://comsfcfosImplremoval_tobe_pageflow/comsfcfosImplremoval_tobe_pageflowProcess/Contractor/ManualInstallation_Remote.form&#xd;&#xa;"
                 tibex:type="userTask"
@@ -455,7 +466,7 @@ Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.taskName);]]></tibe
                     <bpws:target linkName="_iwMb4AlfEeiPXa3e9UY2HA to ContractorMobileTask"/>
                 </bpws:targets>
                 <bpws:sources>
-                    <bpws:source linkName="ContractorMobileTask to ServiceTask"/>
+                    <bpws:source linkName="ContractorMobileTask to InsertBusinessData"/>
                 </bpws:sources>
                 <model:PageActivityDataModelType xmi:version="2.0"
                     xmlns:model="http://model.pageactivity.n2.tibco.com" xmlns:xmi="http://www.omg.org/XMI">
@@ -478,6 +489,8 @@ Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.taskName);]]></tibe
                             mode="INOUT" name="ContractorNames"/>
                         <pageActivityParameter mandatory="false"
                             mode="INOUT" name="CommentText"/>
+                        <pageActivityParameter mandatory="false"
+                            mode="INOUT" name="xDMSURL"/>
                     </pageActivityParameters>
                 </model:PageActivityDataModelType>
             </tibex:extActivity>
@@ -485,16 +498,247 @@ Log.write("[SFC FOS IMPL] The comments are:"+commentDataCase.taskName);]]></tibe
         <bpws:empty name="_BX_gateway__iwMb4AlfEeiPXa3e9UY2HA"
             tibex:type="exclusiveGateway" tibex:xpdlId="_iwMb4AlfEeiPXa3e9UY2HA">
             <bpws:targets>
-                <bpws:target linkName="StartEvent to _iwMb4AlfEeiPXa3e9UY2HA"/>
+                <bpws:target linkName="ScriptTask to _iwMb4AlfEeiPXa3e9UY2HA"/>
             </bpws:targets>
             <bpws:sources tibex:maxTrue="1">
                 <bpws:source linkName="_iwMb4AlfEeiPXa3e9UY2HA to ConfirmDetails">
                     <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[##otherwise##]]></bpws:transitionCondition>
                 </bpws:source>
                 <bpws:source linkName="_iwMb4AlfEeiPXa3e9UY2HA to ContractorMobileTask">
-                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[(CtrMobileTaskDecision==true);]]></bpws:transitionCondition>
+                    <bpws:transitionCondition expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[((CtrMobileTaskDecision==true) && (TaskName=="Obtain_Customer_Confirmation"));]]></bpws:transitionCondition>
                 </bpws:source>
             </bpws:sources>
         </bpws:empty>
+        <bpws:scope name="InsertComment" tibex:type="reusableSubProcess" tibex:xpdlId="_MsobYBbDEei_483sJGVYzg">
+            <bpws:targets>
+                <bpws:target linkName="InsertBusinessData to InsertComment"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="InsertComment to EndEvent2"/>
+            </bpws:sources>
+            <bpws:variables>
+                <bpws:variable name="_BX_CommentDataCase" tibex:class="com.sfc.fosImpl.dataModel.CommentDataCase"/>
+            </bpws:variables>
+            <bpws:sequence name="_BX_sequence">
+                <bpws:extensionActivity>
+                    <tibex:extActivity name="_BX_SPInput_InsertComment" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                        <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Create target 'CommentDataCase' if it doesn't exist.
+if (_BX_CommentDataCase == null) {
+    _BX_CommentDataCase = com_sfc_fosImpl_dataModel_Factory.createCommentDataCase();
+}
+
+// Map from 'Added By.' to 'CommentDataCase.addedby'
+
+// Function for user defined mapping script: Added By.
+function _f1_() { 
+    return String((Process.getOriginatorName()));
+    
+}
+_BX_CommentDataCase.addedby = _f1_();
+
+// Map from 'CommentText' to 'CommentDataCase.comments'
+_BX_CommentDataCase.comments = CommentText;
+
+// Map from 'Provisioning_Data.siebelCircuitID' to 'CommentDataCase.siebelCircuitID'
+if (Provisioning_Data != null) {
+    _BX_CommentDataCase.siebelCircuitID = Provisioning_Data.siebelCircuitID;
+} else {
+    _BX_CommentDataCase.siebelCircuitID = null;
+}
+
+// Map from 'TaskName' to 'CommentDataCase.taskName'
+_BX_CommentDataCase.taskName = TaskName;
+
+
+]]></tibex:script>
+                    </tibex:extActivity>
+                </bpws:extensionActivity>
+                <bpws:extensionActivity>
+                    <tibex:extActivity name="InsertComment" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                        <tibex:callProcess asynch="yes" attached="no"
+                            packageRef="/com.sfc.fosImpl.activation/Process Packages/com.sfc.fosImpl.removal_tobe_pageflow.xpdl"
+                            remoteEngine="yes"
+                            subProcessId="_9BfYMBbCEei_483sJGVYzg" version="[2.0.0,3.0.0)">
+                            <tibex:subProcessInput>
+                                <tibex:mapping
+                                    field="_BX_CommentDataCase" formalParameter="CommentDataCase"/>
+                            </tibex:subProcessInput>
+                        </tibex:callProcess>
+                    </tibex:extActivity>
+                </bpws:extensionActivity>
+            </bpws:sequence>
+        </bpws:scope>
+        <bpws:empty name="EndEvent2" tibex:type="endEvent" tibex:xpdlId="_YzqeoBbDEei_483sJGVYzg">
+            <bpws:targets>
+                <bpws:target linkName="InsertComment to EndEvent2"/>
+            </bpws:targets>
+        </bpws:empty>
+        <bpws:extensionActivity>
+            <tibex:extActivity name="LookupData" tibex:type="scriptTask"
+                tibex:xpdlId="_XtZuQBbQEei5zJcabt9kCg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                <bpws:targets>
+                    <bpws:target linkName="StartEvent to LookupData"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="LookupData to ScriptTask"/>
+                </bpws:sources>
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var a;
+var tmpTechnicalInfo = cac_com_sfc_fosImpl_bizData_dataModel_Technical_Information.findBySiebelCircuitID(Provisioning_Data.siebelCircuitID);
+
+var copyTo = com_sfc_fosImpl_dataModel_Factory.createTechnicalInformation();
+if(tmpTechnicalInfo!=null) {
+
+var copyFrom = tmpTechnicalInfo;
+
+copyTo.SFCPOPPE	       = 	copyFrom.readTechnical_Information().SFCPOPPE;
+copyTo.aggPoint		   = 	copyFrom.readTechnical_Information().aggPoint;	
+copyTo.carrierIP	   = 	copyFrom.readTechnical_Information().carrierIP;
+copyTo.carrierVLAN     = 	copyFrom.readTechnical_Information().carrierVLAN;
+copyTo.clientIP        = 	copyFrom.readTechnical_Information().clientIP;
+copyTo.clientVLAN	   = 	copyFrom.readTechnical_Information().clientVLAN;
+copyTo.modifiedBy	   = 	copyFrom.readTechnical_Information().modifiedBy; 
+copyTo.modifiedDate	   = 	copyFrom.readTechnical_Information().modifiedDate;
+copyTo.port			   = 	copyFrom.readTechnical_Information().port;		
+copyTo.portType		   = 	copyFrom.readTechnical_Information().portType;	
+//copyTo.siebelCircuitID = 	copyFrom.readTechnical_Information().siebelCircuitID;
+
+
+for(var i=0;i<copyFrom.readTechnical_Information().equipment.size();i++) {
+	var equipments  = com_sfc_fosImpl_dataModel_Factory.createEquipmentDetails();
+	
+	equipments.VLAN	= copyFrom.readTechnical_Information().equipment.get(i).VLAN;
+	equipments.address	= copyFrom.readTechnical_Information().equipment.get(i).address;
+	equipments.type	= copyFrom.readTechnical_Information().equipment.get(i).type;
+	copyTo.equipment.add(equipments);	
+}
+
+
+TechnicalInfo = ScriptUtil.copy(copyTo);
+}
+else {
+
+}
+
+
+
+
+]]></tibex:script>
+            </tibex:extActivity>
+        </bpws:extensionActivity>
+        <bpws:scope name="InsertBusinessData"
+            tibex:type="reusableSubProcess" tibex:xpdlId="_UWEwoRbREei5zJcabt9kCg">
+            <tibex:initiatedScript expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[if((TaskName=="TES_OSG_Verification") || (TaskName=="Provision_Management_IP") || (TaskName=="Provision_IPs")) {
+	
+	TechnicalInfo.modifiedDate = DateTimeUtil.createDate();
+	TechnicalInfo.modifiedBy   = Process.getOriginatorName();
+	
+}
+
+
+
+
+
+
+
+]]></tibex:initiatedScript>
+            <bpws:targets>
+                <bpws:target linkName="ConfirmDetails to InsertBusinessData"/>
+                <bpws:target linkName="ContractorMobileTask to InsertBusinessData"/>
+            </bpws:targets>
+            <bpws:sources>
+                <bpws:source linkName="InsertBusinessData to InsertComment"/>
+            </bpws:sources>
+            <bpws:variables>
+                <bpws:variable name="_BX_TechnicalInfomation" tibex:class="com.sfc.fosImpl.dataModel.TechnicalInformation"/>
+                <bpws:variable name="_BX_ProvisoningData" tibex:class="com.sfc.fosImpl.dataModel.ProvisioningDataModel"/>
+            </bpws:variables>
+            <bpws:sequence name="_BX_sequence_2">
+                <bpws:extensionActivity>
+                    <tibex:extActivity
+                        name="_BX_SPInput_InsertBusinessData" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                        <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[// Map from 'Provisioning_Data' to 'ProvisoningData'
+_BX_ProvisoningData = ScriptUtil.copy(Provisioning_Data);
+
+// Map from 'TechnicalInfo' to 'TechnicalInfomation'
+_BX_TechnicalInfomation = ScriptUtil.copy(TechnicalInfo);
+
+
+]]></tibex:script>
+                    </tibex:extActivity>
+                </bpws:extensionActivity>
+                <bpws:extensionActivity>
+                    <tibex:extActivity name="InsertBusinessData" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                        <tibex:callProcess followParentLifecycle="yes"
+                            priority="inline" subProcessId="_F34bABbMEei5zJcabt9kCg">
+                            <tibex:subProcessInput>
+                                <tibex:mapping
+                                    field="_BX_TechnicalInfomation" formalParameter="TechnicalInfomation"/>
+                                <tibex:mapping
+                                    field="_BX_ProvisoningData" formalParameter="ProvisoningData"/>
+                            </tibex:subProcessInput>
+                        </tibex:callProcess>
+                    </tibex:extActivity>
+                </bpws:extensionActivity>
+            </bpws:sequence>
+        </bpws:scope>
+        <bpws:extensionActivity>
+            <tibex:extActivity name="ScriptTask" tibex:type="scriptTask"
+                tibex:xpdlId="_BKqycCNYEeiHXsndwsqKDg" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                <bpws:targets>
+                    <bpws:target linkName="LookupData to ScriptTask"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="ScriptTask to _iwMb4AlfEeiPXa3e9UY2HA"/>
+                </bpws:sources>
+                <tibex:script expressionLanguage="urn:tibco:wsbpel:2.0:sublang:javascript"><![CDATA[var criteria = "enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'";
+
+LookupDataAccountTypeRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataAccountTypeRef.size(); index++) {
+AccountTypeArray.add(LookupDataAccountTypeRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='SERVICE_TYPE'";
+
+LookupDataServiceTypeRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataServiceTypeRef.size(); index++) {
+ServiceTypeArray.add(LookupDataServiceTypeRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='BANDWIDTH_TYPE'";
+
+LookupDataBandwidthRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataBandwidthRef.size(); index++) {
+BandwidthArray.add(LookupDataBandwidthRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='SERVICE_STATUS'";
+
+LookupDataServiceStatusRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataServiceStatusRef.size(); index++) {
+ServiceStatusArray.add(LookupDataServiceStatusRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='TECHNOLOGY_TYPE'";
+
+LookupDataTechnologyRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataTechnologyRef.size(); index++) {
+TechnologyArray.add(LookupDataTechnologyRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='EQUIPMENT_TYPE'";
+
+LookupDataEquipmentTypeRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataEquipmentTypeRef.size(); index++) {
+EquipmentArray.add(LookupDataEquipmentTypeRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='BUILDING_ID_TYPE'";
+
+LookupDataBuildingIDRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataBuildingIDRef.size(); index++) {
+BuildingIDArray.add(LookupDataBuildingIDRef.get(index).readLookupTable().lookupValue);	
+}
+var criteria = "enableFlag='Y' AND lookupKey='BUILDING_FLOOR_TYPE'";
+
+LookupDataFloorRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);
+for(var index=0; index<LookupDataFloorRef.size(); index++) {
+BuildingFloorArray.add(LookupDataFloorRef.get(index).readLookupTable().lookupValue);	
+}]]></tibex:script>
+            </tibex:extActivity>
+        </bpws:extensionActivity>
     </bpws:flow>
 </bpws:process>

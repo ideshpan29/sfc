@@ -391,7 +391,7 @@
         </xsd:simpleType>
       </xsd:element>
       <xsd:element ecore:name="equipment" id="_ldgeAOCfEeeeKsD8kq9l7g" maxOccurs="unbounded"
-          minOccurs="1" name="equipment" type="tns1:EquipmentDetails"/>
+          minOccurs="0" name="equipment" type="tns1:EquipmentDetails"/>
       <xsd:element ecore:name="modifiedBy" id="_v19fkOCfEeeeKsD8kq9l7g" maxOccurs="1"
           minOccurs="0" name="modifiedBy">
         <xsd:simpleType>
@@ -912,6 +912,58 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
+  <xsd:complexType ecore:name="MaterialBreakdown" id="_V8GKoCFCEeibCrmB_EFeKA" name="MaterialBreakdown">
+    <xsd:sequence>
+      <xsd:element ecore:name="siebelCircuitID" id="_MfwEoCFFEeibCrmB_EFeKA" maxOccurs="1"
+          minOccurs="1" name="siebelCircuitID">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="100"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="materialDescription" id="_VXAZMCFFEeibCrmB_EFeKA" maxOccurs="1"
+          minOccurs="1" name="materialDescription">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="300"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="UDM" id="_fH_yICFFEeibCrmB_EFeKA" maxOccurs="1" minOccurs="0"
+          name="UDM">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="qty" id="_gmYbsCFFEeibCrmB_EFeKA" maxOccurs="1" minOccurs="0"
+          name="qty">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="amount" id="_heTiMCFFEeibCrmB_EFeKA" maxOccurs="1"
+          minOccurs="0" name="amount">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element ecore:name="unitPrice" id="_kMtpMCFFEeibCrmB_EFeKA" maxOccurs="1"
+          minOccurs="0" name="unitPrice">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
   <xsd:element name="AccountTypeElement">
     <xsd:simpleType>
       <xsd:restriction base="tns1:AccountType"/>
@@ -974,4 +1026,5 @@
   <xsd:element name="BussinessUsersElement" type="BussinessUsers"/>
   <xsd:element name="ActivationExecutionRequestElement" type="ActivationExecutionRequest"/>
   <xsd:element name="Process_LoggingElement" type="Process_Logging"/>
+  <xsd:element name="MaterialBreakdownElement" type="MaterialBreakdown"/>
 </xsd:schema>

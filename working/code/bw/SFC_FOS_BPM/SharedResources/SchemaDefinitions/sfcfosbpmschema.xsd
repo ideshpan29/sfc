@@ -13,6 +13,7 @@
 				<xs:element ref="reesourcecreationandmapping"/>
 				<xs:element ref="workitemcompletion"/>
 				<xs:element ref="fault"/>
+				<xs:element ref="notifyPlanItemExecuteReply"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -298,6 +299,42 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="notifyPlanItemExecuteReply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="notifyPlanItemExecuteReplyRequest"/>
+				<xs:element ref="notifyPlanItemExecuteReplyResponse"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="notifyPlanItemExecuteReplyRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="orderID" type="xs:string" minOccurs="0"/>
+				<xs:element name="orderRef" type="xs:string" minOccurs="0"/>
+				<xs:element name="planID" type="xs:string"/>
+				<xs:element name="planItemID" type="xs:string"/>
+				<xs:element name="resultCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="resultMessage" type="xs:string" minOccurs="0"/>
+				<xs:element name="isError" type="xs:boolean"/>
+				<xs:element name="UDF" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="value" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="notifyPlanItemExecuteReplyResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="responseMessage" type="xs:string"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

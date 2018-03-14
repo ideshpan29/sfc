@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<serviceResource xmlns:wsdl="http://xmlns.example.com/1509116125289">
-    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+<serviceResource>
     <config>
         <wsdl namespace="http://xmlns.example.com/1513751864707" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
         <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
@@ -11,6 +10,7 @@
             <row isDefault="true" groupName="Default"/>
         </groups>
         <partners/>
+        <serviceChange>Wed Mar 14 12:46:19 IST 2018</serviceChange>
         <interfaceImpl>
             <tab>
                 <tabName>PortType</tabName>
@@ -29,6 +29,7 @@
                                     <row opName="ResourceCreation" opImpl="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeResourceCreation.process"/>
                                     <row opName="seachProcessInstances" opImpl="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeseachProcessInstances.process"/>
                                     <row opName="getProcessInstances" opImpl="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypegetProcessInstances.process"/>
+                                    <row opName="notifyPlanItemExecuteReply" opImpl="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypenotifyPlanItemExecuteReply.process"/>
                                 </operations>
                             </config>
                         </tab>
@@ -135,6 +136,15 @@
                                                                         <outputNamespace/>
                                                                         <faultNamespace/>
                                                                         <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="notifyPlanItemExecuteReply">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Interface/FOSBPMInterface-service0.serviceagent//notifyPlanItemExecuteReply</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
                                                                     </config>
                                                                 </general>
                                                             </operation>

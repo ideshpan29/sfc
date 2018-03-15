@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1">
-    <wsdl:import namespace="http://www.tibco.com/ws/BS_CommercialOrderManagement" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/NotifyPlanItemExecuteReply/Wsdl/Orchestrator.wsdl"/>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <wsdl:import namespace="http://www.tibco.com/ws/BS_CommercialOrderManagement" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/NotifyPlanItemExecuteReply/Wsdl/Orchestrator.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/NotifyPlanItemExecuteReply/Processes/notifyPlanItemExecuteReplyProcess.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startType wsMsgRef="pfx2:notifyPlanItemExecuteReplyInput"/>
+    <pd:startType ref="ns:notifyPlanItemExecuteReplyRequest"/>
     <pd:startX>150</pd:startX>
     <pd:startY>64</pd:startY>
     <pd:returnBindings>
@@ -20,8 +21,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:notifyPlanItemExecuteReplyResponse"/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>64</pd:endY>
+    <pd:endX>457</pd:endX>
+    <pd:endY>67</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1521012104482</pd:targetNamespace>
@@ -60,36 +61,36 @@
         <pd:inputBindings>
             <inputMessage>
                 <ns2:NotifyPlanItemExecuteReplyRequest>
-                    <xsl:if test="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID">
+                    <xsl:if test="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:orderID">
                         <ns2:orderID>
-                            <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID"/>
+                            <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:orderID"/>
                         </ns2:orderID>
                     </xsl:if>
-                    <xsl:if test="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef">
+                    <xsl:if test="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef">
                         <ns2:orderRef>
-                            <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef"/>
+                            <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef"/>
                         </ns2:orderRef>
                     </xsl:if>
                     <ns2:planID>
-                        <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planID"/>
+                        <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:planID"/>
                     </ns2:planID>
                     <ns2:planItemID>
-                        <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planItemID"/>
+                        <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:planItemID"/>
                     </ns2:planItemID>
-                    <xsl:if test="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode">
+                    <xsl:if test="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode">
                         <ns2:resultCode>
-                            <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode"/>
+                            <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode"/>
                         </ns2:resultCode>
                     </xsl:if>
-                    <xsl:if test="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage">
+                    <xsl:if test="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage">
                         <ns2:resultMessage>
-                            <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage"/>
+                            <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage"/>
                         </ns2:resultMessage>
                     </xsl:if>
                     <ns2:isError>
-                        <xsl:value-of select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:isError"/>
+                        <xsl:value-of select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:isError"/>
                     </ns2:isError>
-                    <xsl:for-each select="$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:UDF">
+                    <xsl:for-each select="$Start/ns:notifyPlanItemExecuteReplyRequest/ns:UDF">
                         <ns2:UDF>
                             <ns2:name>
                                 <xsl:value-of select="ns:name"/>

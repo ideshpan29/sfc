@@ -323,8 +323,11 @@
 				<xs:element name="UDF" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
+							<xs:element name="evaluationPriority" type="xs:string"/>
+							<xs:element ref="flavour"/>
 							<xs:element name="name" type="xs:string"/>
-							<xs:element name="value" type="xs:string"/>
+							<xs:element name="type" type="xs:string"/>
+							<xs:element ref="value"/>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -338,4 +341,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="value" type="xs:string"/>
+	<xs:element name="flavour" type="xs:string"/>
 </xs:schema>

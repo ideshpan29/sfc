@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707" tibex:src="file:/D:/Safaricom/sourceCode/github/sfc/working/code/bpm/com.sfc.fosimpl.adminOps/Service%20Descriptors/SFC_FOS_BPM.wsdl">
+<!--Created by TIBCO WSDL--><wsdl:definitions xmlns:ns0="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tibex="http://www.tibco.com/bs3.2/extensions" xmlns:tns="http://xmlns.example.com/1513751864707" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Untitled" targetNamespace="http://xmlns.example.com/1513751864707" tibex:src="file:/D:/Project/Safaricom/Codebase/BPM/ConcreteWSDL/SFC_FOS_BPM.wsdl">
     <wsdl:types>
         <xs:schema xmlns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
             <xs:element name="createresource">
@@ -75,6 +75,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="flavour" type="xs:string"/>
             <xs:element name="getprocessinstances">
                 <xs:complexType>
                     <xs:sequence>
@@ -194,6 +195,45 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="ldapentryoutput" type="xs:string"/>
+            <xs:element name="notifyPlanItemExecuteReply">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:notifyPlanItemExecuteReplyRequest"/>
+                        <xs:element ref="ns0:notifyPlanItemExecuteReplyResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="notifyPlanItemExecuteReplyRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="orderID" type="xs:string"/>
+                        <xs:element minOccurs="0" name="orderRef" type="xs:string"/>
+                        <xs:element name="planID" type="xs:string"/>
+                        <xs:element name="planItemID" type="xs:string"/>
+                        <xs:element minOccurs="0" name="resultCode" type="xs:string"/>
+                        <xs:element minOccurs="0" name="resultMessage" type="xs:string"/>
+                        <xs:element name="isError" type="xs:boolean"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="UDF">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="evaluationPriority" type="xs:string"/>
+                                    <xs:element ref="ns0:flavour"/>
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="type" type="xs:string"/>
+                                    <xs:element ref="ns0:value"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="notifyPlanItemExecuteReplyResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="responseMessage" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="parsecsv">
                 <xs:complexType>
                     <xs:sequence>
@@ -238,6 +278,7 @@
                         <xs:element ref="ns0:reesourcecreationandmapping"/>
                         <xs:element ref="ns0:workitemcompletion"/>
                         <xs:element ref="ns0:fault"/>
+                        <xs:element ref="ns0:notifyPlanItemExecuteReply"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -276,6 +317,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="value" type="xs:string"/>
             <xs:element name="workitemcompletion">
                 <xs:complexType>
                     <xs:sequence>
@@ -306,6 +348,10 @@
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="PortType">
+        <wsdl:operation name="notifyPlanItemExecuteReply">
+            <wsdl:input message="tns:notifyPlanItemExecuteReplyInput"/>
+            <wsdl:output message="tns:notifyPlanItemExecuteReplyResponse"/>
+        </wsdl:operation>
         <wsdl:operation name="getResources">
             <wsdl:input message="tns:FetchResourceinput"/>
             <wsdl:output message="tns:FetchResourceoutput"/>
@@ -339,6 +385,15 @@
     </wsdl:portType>
     <wsdl:binding name="PortTypeEndpoint0Binding" type="tns:PortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="notifyPlanItemExecuteReply">
+            <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Interface/FOSBPMInterface-service0.serviceagent//notifyPlanItemExecuteReply" style="document"/>
+            <wsdl:input>
+                <soap:body parts="input" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="output" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="getResources">
             <soap:operation soapAction="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/FOSBPMInterface-service0.serviceagent/PortTypeEndpoint0/getResources" style="document"/>
             <wsdl:input>
@@ -412,6 +467,12 @@
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
+    <wsdl:message name="notifyPlanItemExecuteReplyInput">
+        <wsdl:part element="ns0:notifyPlanItemExecuteReplyRequest" name="input"/>
+    </wsdl:message>
+    <wsdl:message name="notifyPlanItemExecuteReplyResponse">
+        <wsdl:part element="ns0:notifyPlanItemExecuteReplyResponse" name="output"/>
+    </wsdl:message>
     <wsdl:message name="FetchResourceinput">
         <wsdl:part element="ns0:fetchresourceinput" name="fetchresourceinput"/>
     </wsdl:message>

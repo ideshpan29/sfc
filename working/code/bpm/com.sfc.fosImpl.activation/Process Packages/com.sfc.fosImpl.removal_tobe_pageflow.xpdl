@@ -793,7 +793,8 @@ else {&#xD;
           <xpdl2:Implementation>
             <xpdl2:Task>
               <xpdl2:TaskScript>
-                <xpdl2:Script ScriptGrammar="JavaScript">var criteria = &quot;enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'&quot;;&#xD;
+                <xpdl2:Script ScriptGrammar="JavaScript">if(TaskName==&quot;GateKeeper&quot;||TaskName==&quot;PM_Track_Installation&quot;){&#xD;
+var criteria = &quot;enableFlag='Y' AND lookupKey='ACCOUNT_TYPE'&quot;;&#xD;
 &#xD;
 LookupDataAccountTypeRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);&#xD;
 for(var index=0; index&lt;LookupDataAccountTypeRef.size(); index++) {&#xD;
@@ -840,6 +841,7 @@ var criteria = &quot;enableFlag='Y' AND lookupKey='BUILDING_FLOOR_TYPE'&quot;;&#
 LookupDataFloorRef=cac_com_sfc_fosImpl_dataModel_LookupTable.findByCriteria(criteria);&#xD;
 for(var index=0; index&lt;LookupDataFloorRef.size(); index++) {&#xD;
 BuildingFloorArray.add(LookupDataFloorRef.get(index).readLookupTable().lookupValue);	&#xD;
+}&#xD;
 }</xpdl2:Script>
               </xpdl2:TaskScript>
             </xpdl2:Task>

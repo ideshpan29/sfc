@@ -11,7 +11,7 @@
             <output>
                 <ns:notifyPlanItemExecuteReplyResponse>
                     <ns:responseMessage>
-                        <xsl:value-of select="$Call-Process/pfx:notifyPlanItemExecuteReplyResponse/output/ns:notifyPlanItemExecuteReplyResponse/ns:responseMessage"/>
+                        <xsl:value-of select="$Call-Notify-Plan-Item-Execution-Main-Process/pfx:notifyPlanItemExecuteReplyResponse/output/ns:notifyPlanItemExecuteReplyResponse/ns:responseMessage"/>
                     </ns:responseMessage>
                 </ns:notifyPlanItemExecuteReplyResponse>
             </output>
@@ -24,27 +24,62 @@
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1521011672991</pd:targetNamespace>
-    <pd:activity name="Call Process">
+    <pd:activity name="Call Notify Plan Item Execution Main Process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>321</pd:x>
-        <pd:y>104</pd:y>
+        <pd:x>297</pd:x>
+        <pd:y>80</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/NotifyPlanItemExecuteReply/Processes/notifyPlanItemExecuteReplyProcess.process</processName>
         </config>
         <pd:inputBindings>
-            <root/>
+            <pfx:notifyPlanItemExecuteReplyInput>
+                <input>
+                    <ns:notifyPlanItemExecuteReplyRequest>
+                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID">
+                            <ns:orderID>
+                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID"/>
+                            </ns:orderID>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef">
+                            <ns:orderRef>
+                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef"/>
+                            </ns:orderRef>
+                        </xsl:if>
+                        <ns:planID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planID"/>
+                        </ns:planID>
+                        <ns:planItemID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planItemID"/>
+                        </ns:planItemID>
+                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode">
+                            <ns:resultCode>
+                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode"/>
+                            </ns:resultCode>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage">
+                            <ns:resultMessage>
+                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage"/>
+                            </ns:resultMessage>
+                        </xsl:if>
+                        <ns:isError>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:isError"/>
+                        </ns:isError>
+                        <xsl:copy-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:UDF"/>
+                    </ns:notifyPlanItemExecuteReplyRequest>
+                </input>
+            </pfx:notifyPlanItemExecuteReplyInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Process</pd:to>
+        <pd:to>Call Notify Plan Item Execution Main Process</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Process</pd:from>
+        <pd:from>Call Notify Plan Item Execution Main Process</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

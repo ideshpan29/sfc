@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://api.bds.tibco.com" xmlns:pfx3="http://www.tibco.com/schemas/SFC_FOS_BPM/UnitTesting/WSDL/Schema1.xsd" xmlns:pfx4="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx5="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/UnitTesting/WSDL/Schema1.xsd"/>
-    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/BussinessUsersCaseCreation/Schemas/BPMDataBussinessUsers.xsd"/>
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/BPMUsersCaseCreation/Schemas/BPMDataBussinessUsers.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/BussinessUsersCaseCreation/WSDL/BusinessDataServices.wsdl"/>
-    <pd:name>UnitTesting/BussinessUsersCaseCreation/Processes/BussniessUsersCreateCase.process</pd:name>
+    <pd:name>UnitTesting/BPMUsersCaseCreation/Processes/ContractorUsersCreateCase.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType>
         <xsd:element name="input">
@@ -14,7 +14,7 @@
                     <xsd:element name="LastName" type="xsd:string"/>
                     <xsd:element name="Email" type="xsd:string"/>
                     <xsd:element name="GroupName" type="xsd:string"/>
-                    <xsd:element name="AddedBy" type="xsd:string"/>
+                    <xsd:element name="masterUser" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
@@ -59,10 +59,10 @@
             <inputMessage>
                 <ns:CreateCaseRequest>
                     <caseType>
-                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/BPM/JMSTaskLogging/CaseType"/>
+                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/BPM/UsersCaseCreation/ContractorUsers/caseType"/>
                     </caseType>
                     <caseModelVersion>
-                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/BPM/JMSTaskLogging/CaseVersion"/>
+                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/BPM/UsersCaseCreation/ContractorUsers/caseVersion"/>
                     </caseModelVersion>
                     <casePayload>
                         <xsl:value-of select="$Render-XML/xmlString"/>
@@ -176,12 +176,12 @@
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
             <cdataSections>
-                <row expandedName="{http://fosImpl.sfc.com/dataModel}BussinessUsersElement"/>
+                <row expandedName="{http://fosImpl.sfc.com/dataModel}ContractorGroupsElement"/>
             </cdataSections>
-            <term ref="pfx2:BussinessUsersElement"/>
+            <term ref="pfx2:ContractorGroupsElement"/>
         </config>
         <pd:inputBindings>
-            <pfx2:BussinessUsersElement>
+            <pfx2:ContractorGroupsElement>
                 <loginName>
                     <xsl:value-of select="$Start/input/LoginName"/>
                 </loginName>
@@ -191,19 +191,16 @@
                 <lastName>
                     <xsl:value-of select="$Start/input/LastName"/>
                 </lastName>
-                <groupName>
+                <contractorGroupName>
                     <xsl:value-of select="$Start/input/GroupName"/>
-                </groupName>
-                <email>
+                </contractorGroupName>
+                <masterUser>
+                    <xsl:value-of select="$Start/input/masterUser"/>
+                </masterUser>
+                <emailID>
                     <xsl:value-of select="$Start/input/Email"/>
-                </email>
-                <addedBy>
-                    <xsl:value-of select="$Start/input/AddedBy"/>
-                </addedBy>
-                <addedOn>
-                    <xsl:value-of select="current-dateTime()"/>
-                </addedOn>
-            </pfx2:BussinessUsersElement>
+                </emailID>
+            </pfx2:ContractorGroupsElement>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>

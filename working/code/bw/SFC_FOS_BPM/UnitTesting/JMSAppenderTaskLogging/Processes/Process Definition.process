@@ -18,7 +18,7 @@
                 <transacted>false</transacted>
                 <acknowledgeMode>1</acknowledgeMode>
                 <maxSessions>1</maxSessions>
-                <destination>sfc_queue</destination>
+                <destination>sfc_logging</destination>
             </SessionAttributes>
             <ConfigurableHeaders>
                 <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
@@ -39,8 +39,8 @@
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
-    <pd:endX>1231</pd:endX>
-    <pd:endY>253</pd:endY>
+    <pd:endX>1703</pd:endX>
+    <pd:endY>265</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1515734885943</pd:targetNamespace>
@@ -190,8 +190,8 @@ setFormatedTime(TimeInMinutes);
     <pd:activity name="CreateCaseProcessLogging">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>850</pd:x>
-        <pd:y>92</pd:y>
+        <pd:x>1227</pd:x>
+        <pd:y>97</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -207,13 +207,13 @@ setFormatedTime(TimeInMinutes);
             <inputMessage>
                 <ns4:CreateCaseRequest>
                     <caseType>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/BussinessUsersCaseCreation/CaseType"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/JMSTaskLogging/CaseType"/>
                     </caseType>
                     <caseModelVersion>
-                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/BussinessUsersCaseCreation/CaseVersion"/>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/JMSTaskLogging/CaseVersion"/>
                     </caseModelVersion>
                     <casePayload>
-                        <xsl:value-of select="$Render-XML/xmlString"/>
+                        <xsl:value-of select="$caseCreationPayLoad/xmlString"/>
                     </casePayload>
                 </ns4:CreateCaseRequest>
             </inputMessage>
@@ -222,8 +222,8 @@ setFormatedTime(TimeInMinutes);
     <pd:activity name="Log Task Logging Data">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>399</pd:x>
-        <pd:y>100</pd:y>
+        <pd:x>434</pd:x>
+        <pd:y>104</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -238,8 +238,8 @@ setFormatedTime(TimeInMinutes);
     <pd:activity name="Log Task Logging Data_">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>377</pd:x>
-        <pd:y>257</pd:y>
+        <pd:x>431</pd:x>
+        <pd:y>254</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -254,16 +254,16 @@ setFormatedTime(TimeInMinutes);
     <pd:activity name="Null">
         <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
         <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>598</pd:x>
-        <pd:y>493</pd:y>
+        <pd:x>905</pd:x>
+        <pd:y>544</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:activity>
     <pd:activity name="Parse Task Logging Data">
         <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
         <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-        <pd:x>574</pd:x>
-        <pd:y>100</pd:y>
+        <pd:x>789</pd:x>
+        <pd:y>99</pd:y>
         <config>
             <InputType>String</InputType>
             <Encoding>ASCII</Encoding>
@@ -301,10 +301,10 @@ setFormatedTime(TimeInMinutes);
             </Input>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Render XML">
+    <pd:activity name="caseCreationPayLoad">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>718</pd:x>
+        <pd:x>985</pd:x>
         <pd:y>92</pd:y>
         <config>
             <renderAsText>text</renderAsText>
@@ -352,86 +352,190 @@ setFormatedTime(TimeInMinutes);
             </pfx2:Process_LoggingElement>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Update Task Details Entry">
-        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
-        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
-        <pd:x>954</pd:x>
-        <pd:y>265</pd:y>
+    <pd:activity name="findCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1028</pd:x>
+        <pd:y>251</pd:y>
         <config>
-            <timeout>10</timeout>
-            <commit>false</commit>
-            <emptyStrAsNil>false</emptyStrAsNil>
-            <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
-            <statement>Update BDS_2_DATAMODEL_PROCESSLOGGING set PROJECTMANAGER=? ,TASKCOMPLETIONTIME=? ,TOTALTIMETAKEN=? , SLASTATUS=? where SIEBELCIRCUITID=? and Taskname=? and processtype=?</statement>
-            <Prepared_Param_DataType>
-                <parameter>
-                    <parameterName>PM</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>TaskCompletionTime</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>TotalTime</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>SLAStatus</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>SiebelCircuitID</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>TaskName</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-                <parameter>
-                    <parameterName>ProcessType</parameterName>
-                    <dataType>VARCHAR</dataType>
-                </parameter>
-            </Prepared_Param_DataType>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCID</operation>
+            <soapAction>findCaseByCID</soapAction>
+            <endpointURL>http://localhost:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
-            <jdbcUpdateActivityInput>
-                <PM>
+            <inputMessage>
+                <ns4:FindCaseByCIDRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/JMSTaskLogging/CaseVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/JMSTaskLogging/CaseType"/>
+                    </caseType>
+                    <casePayload>
+                        <xsl:value-of select="$FindCasePayLoad/xmlString"/>
+                    </casePayload>
+                </ns4:FindCaseByCIDRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindCasePayLoad">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>895</pd:x>
+        <pd:y>247</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://fosImpl.sfc.com/dataModel}Process_LoggingElement"/>
+            </cdataSections>
+            <term ref="pfx2:Process_LoggingElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:Process_LoggingElement>
+                <processType>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/ProcessType,':')"/>
+                </processType>
+                <siebelCircuitID>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/SiebelCircuitID,':')"/>
+                </siebelCircuitID>
+                <taskName>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TasKName,':')"/>
+                </taskName>
+            </pfx2:Process_LoggingElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UpdateCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1533</pd:x>
+        <pd:y>257</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>updateCase</operation>
+            <soapAction>updateCase</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:UpdateCaseRequest>
+                    <caseData>
+                        <caseReference>
+                            <xsl:value-of select="$findCase/outputMessage/ns4:FindCaseByCIDResponse/caseReference"/>
+                        </caseReference>
+                        <casePayload>
+                            <xsl:value-of select="$UpdateCasePayLoad/xmlString"/>
+                        </casePayload>
+                    </caseData>
+                </ns4:UpdateCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UpdateCasePayLoad">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>1408</pd:x>
+        <pd:y>260</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://fosImpl.sfc.com/dataModel}Process_LoggingElement"/>
+            </cdataSections>
+            <term ref="pfx2:Process_LoggingElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:Process_LoggingElement>
+                <processType>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/ProcessType,':')"/>
+                </processType>
+                <siebelCircuitID>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/SiebelCircuitID,':')"/>
+                </siebelCircuitID>
+                <taskName>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TasKName,':')"/>
+                </taskName>
+                <customerName>
+                    <xsl:value-of select="$ParseCaseData/pfx2:Process_LoggingElement/customerName"/>
+                </customerName>
+                <projectManager>
                     <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/PM,':')"/>
-                </PM>
-                <TaskCompletionTime>
-                    <xsl:choose>
-                        <xsl:when test="exists(substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TaskCompletionTime,':'))">
-                            <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TaskCompletionTime,':')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </TaskCompletionTime>
-                <TotalTime>
-                    <xsl:value-of select="$Convert-PDT-DateTime-to-Minutes_/javaCodeActivityOutput/FormatedTime"/>
-                </TotalTime>
+                </projectManager>
+                <accountManager>
+                    <xsl:value-of select="$ParseCaseData/pfx2:Process_LoggingElement/accountManager"/>
+                </accountManager>
+                <taskDefaultSLA>
+                    <xsl:value-of select="$ParseCaseData/pfx2:Process_LoggingElement/taskDefaultSLA"/>
+                </taskDefaultSLA>
+                <taskInitiationTime>
+                    <xsl:value-of select="$ParseCaseData/pfx2:Process_LoggingElement/taskInitiationTime"/>
+                </taskInitiationTime>
+                <taskCompletionTime>
+                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TaskCompletionTime,':')"/>
+                </taskCompletionTime>
+                <xsl:if test="$Convert-PDT-DateTime-to-Minutes_/javaCodeActivityOutput/FormatedTime">
+                    <totalTimeTaken>
+                        <xsl:value-of select="$Convert-PDT-DateTime-to-Minutes_/javaCodeActivityOutput/FormatedTime"/>
+                    </totalTimeTaken>
+                </xsl:if>
                 <SLAStatus>
                     <xsl:value-of select="if ($Convert-PDT-DateTime-to-Minutes_/javaCodeActivityOutput/FormatedTime > substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/DefaultSLA,':')) then 'OUT OF SLA' else 'IN SLA'"/>
                 </SLAStatus>
-                <SiebelCircuitID>
-                    <xsl:choose>
-                        <xsl:when test="exists(substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/SiebelCircuitID,':'))">
-                            <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/SiebelCircuitID,':')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </SiebelCircuitID>
-                <TaskName>
-                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/TasKName,':')"/>
-                </TaskName>
-                <ProcessType>
-                    <xsl:value-of select="substring-after($Parse-Task-Logging-Data_/Output/Rows/root[1]/ProcessType,':')"/>
-                </ProcessType>
-            </jdbcUpdateActivityInput>
+            </pfx2:Process_LoggingElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetCaseData">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1150</pd:x>
+        <pd:y>260</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:ReadCaseRequest>
+                    <caseReference>
+                        <xsl:value-of select="$findCase/outputMessage/ns4:FindCaseByCIDResponse/caseReference"/>
+                    </caseReference>
+                </ns4:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ParseCaseData">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>1272</pd:x>
+        <pd:y>262</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx2:Process_LoggingElement"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$GetCaseData/outputMessage/ns4:ReadCaseResponse/caseData[1]/casePayload"/>
+            </xmlString>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -471,13 +575,6 @@ setFormatedTime(TimeInMinutes);
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Update Task Details Entry</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>JMS Queue Receiver</pd:from>
         <pd:to>Log Task Logging Data_</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -493,21 +590,14 @@ setFormatedTime(TimeInMinutes);
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Convert PDT DateTime to Minutes_</pd:from>
-        <pd:to>Update Task Details Entry</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Parse Task Logging Data</pd:from>
-        <pd:to>Render XML</pd:to>
+        <pd:to>caseCreationPayLoad</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Render XML</pd:from>
+        <pd:from>caseCreationPayLoad</pd:from>
         <pd:to>CreateCaseProcessLogging</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -516,6 +606,55 @@ setFormatedTime(TimeInMinutes);
     <pd:transition>
         <pd:from>CreateCaseProcessLogging</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert PDT DateTime to Minutes_</pd:from>
+        <pd:to>FindCasePayLoad</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>findCase</pd:from>
+        <pd:to>GetCaseData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UpdateCase</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCasePayLoad</pd:from>
+        <pd:to>findCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UpdateCasePayLoad</pd:from>
+        <pd:to>UpdateCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCaseData</pd:from>
+        <pd:to>ParseCaseData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseCaseData</pd:from>
+        <pd:to>UpdateCasePayLoad</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

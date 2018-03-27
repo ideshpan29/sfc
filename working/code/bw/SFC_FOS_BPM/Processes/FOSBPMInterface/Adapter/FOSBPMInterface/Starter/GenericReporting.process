@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:pfx3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/GenericReporting.process</pd:name>
+    <pd:startName>HTTP Receiver</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="HTTP Receiver">
+        <pd:type>com.tibco.plugin.http.HTTPEventSource</pd:type>
+        <pd:resourceType>httppalette.httpEventSource</pd:resourceType>
+        <pd:x>54</pd:x>
+        <pd:y>331</pd:y>
+        <config>
+            <outputMode>String</outputMode>
+            <defaultEncoding>ISO8859_1</defaultEncoding>
+            <inputOutputVersion>5.3.0</inputOutputVersion>
+            <newMimeSupport>true</newMimeSupport>
+            <sharedChannel>/SharedResources/Connections/HTTP/HTTPStarterProcess.sharedhttp</sharedChannel>
+            <parsePostData>true</parsePostData>
+            <customField>
+                <row>
+                    <attribute>processname</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>modelname</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>processversion</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>instanceid</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>modelno</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>searchby</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>searchvalue</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>activitynameforpie</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>emailid</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>status</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+            </customField>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Accept" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Charset" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Encoding" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Length" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Connection" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1265</pd:endX>
+    <pd:endY>334</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1512639133195</pd:targetNamespace>
+    <pd:activity name="Send HTTP Response">
+        <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
+        <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
+        <pd:x>1016</pd:x>
+        <pd:y>330</pd:y>
+        <config>
+            <closeConnection>true</closeConnection>
+            <eventSource>HTTP Receiver</eventSource>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Access-Control-Allow-Origin" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Set-Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Location" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings>
+            <ResponseActivityInput>
+                <xsl:choose>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'">
+                        <xsl:if test="$RenderGetProcessNames/xmlString">
+                            <asciiContent>
+                                <xsl:value-of select="$RenderGetProcessNames/xmlString"/>
+                            </asciiContent>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'">
+                        <asciiContent>
+                            <xsl:value-of select="$RenderGetProcessInstances/xmlString"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'">
+                        <asciiContent>
+                            <xsl:value-of select="$RenderGetProcessCurrentActivity/xmlString"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'">
+                        <asciiContent>
+                            <xsl:value-of select="$RenderResourceWiseAnalysis/xmlString"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'">
+                        <xsl:if test="$RenderGetProcessInstances/xmlString">
+                            <asciiContent>
+                                <xsl:value-of select="$RenderGetProcessInstances/xmlString"/>
+                            </asciiContent>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstanceDetails'">
+                        <xsl:if test="$RenderGetProcessInstanceDetails/xmlString">
+                            <asciiContent>
+                                <xsl:value-of select="$RenderGetProcessInstanceDetails/xmlString"/>
+                            </asciiContent>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'">
+                        <xsl:if test="$RenderGetProcessTasks/xmlString">
+                            <asciiContent>
+                                <xsl:value-of select="$RenderGetProcessTasks/xmlString"/>
+                            </asciiContent>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <asciiContent>
+                            <xsl:value-of select="'so such resource'"/>
+                        </asciiContent>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <Headers>
+                    <Access-Control-Allow-Origin>
+                        <xsl:value-of select="'*'"/>
+                    </Access-Control-Allow-Origin>
+                </Headers>
+                <DynamicHeaders/>
+            </ResponseActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>339</pd:x>
+        <pd:y>341</pd:y>
+        <config>
+            <spawn>true</spawn>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;AJAXStarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1154</pd:x>
+        <pd:y>341</pd:y>
+        <config>
+            <spawn>true</spawn>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;AJAXStarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 2&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1272</pd:x>
+        <pd:y>799</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="LogAJAZRequest">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>197</pd:x>
+        <pd:y>333</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($HTTP-Receiver/ProcessStarterOutput)"/>
+                </message>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAJAXCallsFailure">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>1270</pd:x>
+        <pd:y>565</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($Catch-All-Exception/exceptiondata)"/>
+                </message>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FetchProcessNames">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>514</pd:x>
+        <pd:y>332</pd:y>
+        <config>
+            <timeout>%%BPM/ProcessAnalysis/JDBCTimeOut%%</timeout>
+            <commit>false</commit>
+            <maxRows>%%BPM/ProcessAnalysis/JDBCRecordLimit%%</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <xsl:choose>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'">
+                        <statement>
+                            <xsl:value-of select="&quot;select DISTINCT PROC_TPL_NAME from EC_PROC_TEMPLATE&quot;"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'">
+                        <statement>
+                            <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;'&quot;)"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'">
+                        <statement>
+                            <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE, start_time,attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where &quot;, $HTTP-Receiver/ProcessStarterOutput/parameters/searchby,&quot;='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/searchvalue,&quot;' and process_template= '&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;'&quot;)"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'">
+                        <statement>
+                            <xsl:value-of select="&quot;select activity_name,count(activity_name) ACTIVITYCOUNT, sum(WORK_TIME_DUR) TOTALWORKTIME,max(WORK_TIME_DUR) MAXWORKTIME,min(WORK_TIME_DUR) MINWORKTIME,FLOOR(AVG(WORK_TIME_DUR)) AVGWORKTIME, sum(CASE status when to_nchar('COMPLETED') then 1 else 0 end) COMPLETED , sum(CASE status when to_nchar('OPENED') then 1 else 0 end) OPENED, sum(CASE status when to_nchar('CANCELLED') then 1 else 0 end) Cancelled,sum(CASE status when to_nchar('OFFERED') then 1 else 0 end) Offered from EC_WI_STATUS GROUP by ACTIVITY_NAME&quot;"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'">
+                        <statement>
+                            <xsl:value-of select="concat(&quot;select ACTIVITY_NAME as activityName,count(ACTIVITY_NAME) as activitycount from EC_WI_STATUS where PROCESS_NAME='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;' and &quot;,&quot; (status= 'ALLOCATED' or status ='OFFERED') group by ACTIVITY_NAME&quot;)"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'">
+                        <statement>
+                            <xsl:value-of select="concat(&quot;SElect count(ATTRIBUTE2) AS CASECOUNT,COMP_USER_ID AS RESOURCENAME, case when TO_CHAR(ORG_ENT_NAMES) like 'resource%' then 'CONTRACTOR' else TO_CHAR(ORG_ENT_NAMES) end AS RESOURCEENTITY FROM ec_wi_status where PROCESS_NAME ='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;' AND status ='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/status,&quot;'  GROUP BY COMP_USER_ID,TO_CHAR(ORG_ENT_NAMES)&quot;)"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstanceDetails'">
+                        <statement>
+                            <xsl:value-of select="concat(&quot;select PROCESS_INSTANCE,first_offer_time, ACTIVITY_NAME,  ACTIVE_DUR, WAIT_DUR,WORK_TIME_DUR,status from EC_WI_STATUS where PROCESS_INSTANCE='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/instanceid,&quot;'&quot;)"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <statement>
+                            <xsl:value-of select="&quot;ERROR&quot;"/>
+                        </statement>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderGetProcessNames">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>745</pd:x>
+        <pd:y>113</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="process" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="name" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <process>
+                        <name>
+                            <xsl:value-of select="column[name=&quot;PROC_TPL_NAME&quot;]/value"/>
+                        </name>
+                    </process>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderGetProcessInstances">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>743</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_template" type="xsd:string"/>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="time" type="xsd:string"/>
+                                        <xsd:element name="SibelCircuitId" type="xsd:string"/>
+                                        <xsd:element name="ClientName" type="xsd:string"/>
+                                        <xsd:element name="ProjectManager" type="xsd:string"/>
+                                        <xsd:element name="start_time" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <Record>
+                        <process_template>
+                            <xsl:value-of select="column[name=&quot;PROCESS_TEMPLATE&quot;]/value"/>
+                        </process_template>
+                        <process_instance>
+                            <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                        </process_instance>
+                        <status>
+                            <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                        </status>
+                        <time>
+                            <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else tib:current-dateTime-timezone(0,0) - tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </time>
+                        <SibelCircuitId>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                        </SibelCircuitId>
+                        <ClientName>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                        </ClientName>
+                        <ProjectManager>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                        </ProjectManager>
+                        <start_time>
+                            <xsl:value-of select="tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </start_time>
+                    </Record>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderGetProcessInstanceDetails">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>751</pd:x>
+        <pd:y>332</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="param" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_instance" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="first_time_offer" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="activity_name" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="activity_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="wait_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="work_time_dur" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <param>
+                        <xsl:if test="column[name=&quot;PROCESS_INSTANCE&quot;]/value">
+                            <process_instance>
+                                <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </process_instance>
+                        </xsl:if>
+                        <first_time_offer>
+                            <xsl:value-of select="tib:add-to-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </first_time_offer>
+                        <xsl:if test="column[name=&quot;ACTIVITY_NAME&quot;]/value">
+                            <activity_name>
+                                <xsl:value-of select="column[name=&quot;ACTIVITY_NAME&quot;]/value"/>
+                            </activity_name>
+                        </xsl:if>
+                        <activity_dur>
+                            <xsl:value-of select="if(column[name=&quot;ACTIVE_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;ACTIVE_DUR&quot;]/value else  tib:current-dateTime-timezone(0,0) - tib:add-to-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;FIRST_OFFER_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </activity_dur>
+                        <wait_dur>
+                            <xsl:value-of select="if(column[name=&quot;WAIT_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;WAIT_DUR&quot;]/value else &quot;NA&quot;"/>
+                        </wait_dur>
+                        <work_time_dur>
+                            <xsl:value-of select="if(column[name=&quot;WORK_TIME_DUR&quot;]/value!=&quot;&quot;) then column[name=&quot;WORK_TIME_DUR&quot;]/value else &quot;NA&quot;"/>
+                        </work_time_dur>
+                        <xsl:if test="column[name=&quot;STATUS&quot;]/value">
+                            <status>
+                                <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                            </status>
+                        </xsl:if>
+                    </param>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderSerachResullts">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>741</pd:x>
+        <pd:y>446</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections/>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="process_template" type="xsd:string"/>
+                                        <xsd:element name="process_instance" type="xsd:string"/>
+                                        <xsd:element name="status" type="xsd:string"/>
+                                        <xsd:element name="time" type="xsd:string"/>
+                                        <xsd:element name="SibelCircuitId" type="xsd:string"/>
+                                        <xsd:element name="ClientName" type="xsd:string"/>
+                                        <xsd:element name="ProjectManager" type="xsd:string"/>
+                                        <xsd:element name="start_time" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <Record>
+                        <process_template>
+                            <xsl:value-of select="column[name=&quot;PROCESS_TEMPLATE&quot;]/value"/>
+                        </process_template>
+                        <process_instance>
+                            <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                        </process_instance>
+                        <status>
+                            <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
+                        </status>
+                        <time>
+                            <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else tib:current-dateTime-timezone(0,0) - tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </time>
+                        <SibelCircuitId>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
+                        </SibelCircuitId>
+                        <ClientName>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
+                        </ClientName>
+                        <ProjectManager>
+                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
+                        </ProjectManager>
+                        <start_time>
+                            <xsl:value-of select="tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
+                        </start_time>
+                    </Record>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderGetProcessTasks">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>743</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="ACTIVITY_NAME" type="xsd:string"/>
+                                        <xsd:element name="ACTIVITYCOUNT" type="xsd:string"/>
+                                        <xsd:element name="TOTALWORKTIME" type="xsd:string"/>
+                                        <xsd:element name="MAXWORKTIME" type="xsd:string"/>
+                                        <xsd:element name="MINWORKTIME" type="xsd:string"/>
+                                        <xsd:element name="AVGWORKTIME" type="xsd:string"/>
+                                        <xsd:element name="COMPLETED" type="xsd:string"/>
+                                        <xsd:element name="OPENED" type="xsd:string"/>
+                                        <xsd:element name="CANCELLED" type="xsd:string"/>
+                                        <xsd:element name="OFFERED" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <Record>
+                        <ACTIVITY_NAME>
+                            <xsl:value-of select="column[name=&quot;ACTIVITY_NAME&quot;]/value"/>
+                        </ACTIVITY_NAME>
+                        <ACTIVITYCOUNT>
+                            <xsl:value-of select="column[name=&quot;ACTIVITYCOUNT&quot;]/value"/>
+                        </ACTIVITYCOUNT>
+                        <TOTALWORKTIME>
+                            <xsl:value-of select="if(column[name=&quot;TOTALWORKTIME&quot;]/value!=&quot;&quot;) then column[name=&quot;TOTALWORKTIME&quot;]/value else &quot;NA&quot;"/>
+                        </TOTALWORKTIME>
+                        <MAXWORKTIME>
+                            <xsl:value-of select="if(column[name=&quot;MAXWORKTIME&quot;]/value!=&quot;&quot;) then column[name=&quot;MAXWORKTIME&quot;]/value else &quot;NA&quot;"/>
+                        </MAXWORKTIME>
+                        <MINWORKTIME>
+                            <xsl:value-of select="if(column[name=&quot;MINWORKTIME&quot;]/value!=&quot;&quot;) then column[name=&quot;MINWORKTIME&quot;]/value else &quot;NA&quot;"/>
+                        </MINWORKTIME>
+                        <AVGWORKTIME>
+                            <xsl:value-of select="if(column[name=&quot;AVGWORKTIME&quot;]/value!=&quot;&quot;) then column[name=&quot;AVGWORKTIME&quot;]/value else &quot;NA&quot;"/>
+                        </AVGWORKTIME>
+                        <COMPLETED>
+                            <xsl:value-of select="column[name=&quot;COMPLETED&quot;]/value"/>
+                        </COMPLETED>
+                        <OPENED>
+                            <xsl:value-of select="column[name=&quot;OPENED&quot;]/value"/>
+                        </OPENED>
+                        <CANCELLED>
+                            <xsl:value-of select="column[name=&quot;CANCELLED&quot;]/value"/>
+                        </CANCELLED>
+                        <OFFERED>
+                            <xsl:value-of select="column[name=&quot;OFFERED&quot;]/value"/>
+                        </OFFERED>
+                    </Record>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderGetProcessCurrentActivity">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>739</pd:x>
+        <pd:y>540</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="activityName" type="xsd:string"/>
+                                        <xsd:element name="activityCount" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <Record>
+                        <activityName>
+                            <xsl:value-of select="column[name=&quot;ACTIVITYNAME&quot;]/value"/>
+                        </activityName>
+                        <activityCount>
+                            <xsl:value-of select="column[name=&quot;ACTIVITYCOUNT&quot;]/value"/>
+                        </activityCount>
+                    </Record>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderResourceWiseAnalysis">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>739</pd:x>
+        <pd:y>676</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="count" type="xsd:string"/>
+                                        <xsd:element name="resourceEntity" type="xsd:string"/>
+                                        <xsd:element name="resourceName" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <Record>
+                        <count>
+                            <xsl:value-of select="column[name=&quot;CASECOUNT&quot;]/value"/>
+                        </count>
+                        <resourceEntity>
+                            <xsl:value-of select="column[name=&quot;RESOURCEENTITY&quot;]/value"/>
+                        </resourceEntity>
+                        <resourceName>
+                            <xsl:value-of select="column[name=&quot;RESOURCENAME&quot;]/value"/>
+                        </resourceName>
+                    </Record>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Send HTTP Response</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAJAZRequest</pd:from>
+        <pd:to>send Log Request AUDIT 1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>HTTP Receiver</pd:from>
+        <pd:to>LogAJAZRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Exception</pd:from>
+        <pd:to>LogAJAXCallsFailure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAJAXCallsFailure</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>FetchProcessNames</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderGetProcessNames</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderGetProcessNames</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderGetProcessInstances</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderGetProcessInstances</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderGetProcessInstanceDetails</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstanceDetails'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderGetProcessInstanceDetails</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderSerachResullts</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderSerachResullts</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderGetProcessTasks</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessTasks'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderGetProcessTasks</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderGetProcessCurrentActivity</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessCurrentStateActivityWise'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderGetProcessCurrentActivity</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FetchProcessNames</pd:from>
+        <pd:to>RenderResourceWiseAnalysis</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/ResourceWiseAnalysis'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderResourceWiseAnalysis</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

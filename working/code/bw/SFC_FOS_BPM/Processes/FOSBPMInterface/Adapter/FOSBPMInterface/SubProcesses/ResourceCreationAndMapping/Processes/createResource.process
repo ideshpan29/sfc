@@ -5,9 +5,9 @@
     <xsd:import namespace="http://www.tibco.com/schemas/ResourceCreationAndMapping/Schemas/Schema.xsd" schemaLocation="/ResourceCreationSchema/CreateresourceSchema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
-    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/OrgModelService.wsdl"/>
-    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/OrgResourceService.wsdl"/>
-    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Wsdl/DirectoryService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/SharedResources/WSDL/DirectoryService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/SharedResources/WSDL/OrgModelService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/SharedResources/WSDL/OrgResourceService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx17:createresourceinput"/>
@@ -137,7 +137,7 @@
                             <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                         </xsl:attribute>
                         <xsl:attribute name="name">
-                            <xsl:value-of select="$currentResource/pfx17:createresourcerequest/pfx17:name"/>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
                         </xsl:attribute>
                         <xsl:attribute name="container-id">
                             <xsl:value-of select="$LDAPContainerID/Container/Id"/>
@@ -170,14 +170,14 @@
                         <xsl:attribute name="guid">
                             <xsl:value-of select="$createResource/outputMessage/ns2:createResourceResponse/entity[1]/@guid"/>
                         </xsl:attribute>
-                        <xsl:if test="$currentResource/pfx17:createresourcerequest/pfx17:flag='P'">
+                        <xsl:if test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag='P'">
                             <add-position>
                                 <xsl:attribute name="guid">
                                     <xsl:value-of select="$GUID/GUID"/>
                                 </xsl:attribute>
                             </add-position>
                         </xsl:if>
-                        <xsl:if test="$currentResource/pfx17:createresourcerequest/pfx17:flag='G'">
+                        <xsl:if test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag='G'">
                             <add-group>
                                 <xsl:attribute name="guid">
                                     <xsl:value-of select="$GUID/GUID"/>
@@ -328,7 +328,7 @@
                             </content-type>
                         </mimeHeaders>
                         <textContent>
-                            <xsl:value-of select="if($currentResource/pfx17:createresourcerequest/pfx17:entityname='Contractor') then&#xA;concat(&quot;Dear &quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;,&lt;br>Following are the Login Details for  &lt;br> url: &quot;,$_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL ,&quot;&lt;br> Username : &quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;&lt;br> Password : &quot;,$currentResource/pfx17:createresourcerequest/pfx17:password,&quot;&lt;br>&lt;br> Best Regards, &lt;br>Safaricom Fixed Internet Solution&quot;)&#xA;else &#xA;concat(&quot;Dear &quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;,&lt;br>Following are the Login Details for  &lt;br> url: &quot;, $_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL,&quot;.&lt;br> Username : &quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;&lt;br>&lt;br> Best Regards, &lt;br>Safaricom Fixed Internet Solution&quot;)"/>
+                            <xsl:value-of select="if($Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor') then&#xA;concat(&quot;Dear &quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;,&lt;br>Following are the Login Details for  &lt;br> url: &quot;,$_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL ,&quot;&lt;br> Username : &quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;&lt;br> Password : &quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:password,&quot;&lt;br>&lt;br> Best Regards, &lt;br>Safaricom Fixed Internet Solution&quot;)&#xA;else &#xA;concat(&quot;Dear &quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;,&lt;br>Following are the Login Details for  &lt;br> url: &quot;, $_globalVariables/ns1:GlobalVariables/BPM/OpenspaceURL,&quot;.&lt;br> Username : &quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;&lt;br>&lt;br> Best Regards, &lt;br>Safaricom Fixed Internet Solution&quot;)"/>
                         </textContent>
                     </mimePart>
                 </ns42:mimeEnvelopeElement>
@@ -360,7 +360,7 @@
                                 <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-query">
-                                <xsl:value-of select="concat(&quot;(cn=&quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;)&quot;)"/>
+                                <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-alias">
                                 <xsl:value-of select="$LDAPContainerID/Container/alias"/>
@@ -375,7 +375,7 @@
                                 <xsl:value-of select="$LDAPContainerID/Container/alias"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-query">
-                                <xsl:value-of select="concat(&quot;(cn=&quot;,$currentResource/pfx17:createresourcerequest/pfx17:name,&quot;)&quot;)"/>
+                                <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                             </xsl:attribute>
                             <xsl:attribute name="base-dn">
                                 <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn"/>
@@ -411,7 +411,7 @@
         <pd:inputBindings>
             <input>
                 <LoginName>
-                    <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:name"/>
+                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
                 </LoginName>
                 <FirstName>
                     <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=&quot;givenname&quot;]/value"/>
@@ -423,10 +423,10 @@
                     <xsl:value-of select="$Attribute/Email"/>
                 </Email>
                 <GroupName>
-                    <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:entityname"/>
+                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname"/>
                 </GroupName>
                 <AddedBy>
-                    <xsl:value-of select="$ParseIndex1/pfx17:users/pfx17:addby"/>
+                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:addby"/>
                 </AddedBy>
             </input>
         </pd:inputBindings>
@@ -504,7 +504,7 @@
         </config>
         <pd:inputBindings>
             <GUID>
-                <xsl:value-of select="if($currentResource/pfx17:createresourcerequest/pfx17:flag='G') then&#xA;$GetOrgModel/outputMessage/pfx7:getOrgModelResponse/group[@name=$currentResource/pfx17:createresourcerequest/pfx17:entityname]/@guid&#xA;else &#xA;$GetOrgModel/outputMessage/pfx7:getOrgModelResponse/organization/org-unit/position[@name=$currentResource/pfx17:createresourcerequest/pfx17:entityname]/@guid"/>
+                <xsl:value-of select="if($Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:flag='G') then&#xA;$GetOrgModel/outputMessage/pfx7:getOrgModelResponse/group[@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname]/@guid&#xA;else &#xA;$GetOrgModel/outputMessage/pfx7:getOrgModelResponse/organization/org-unit/position[@name=$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname]/@guid"/>
             </GUID>
         </pd:inputBindings>
     </pd:activity>

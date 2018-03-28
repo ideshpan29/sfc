@@ -5,7 +5,7 @@
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeResourceCreation.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="wsdlPfx:ResourceCreationiput"/>
-    <pd:startX>177</pd:startX>
+    <pd:startX>203</pd:startX>
     <pd:startY>256</pd:startY>
     <pd:returnBindings>
         <wsdlPfx:ResourceCreationoutput>
@@ -66,8 +66,8 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:ResourceCreationoutput"/>
-    <pd:endX>1407</pd:endX>
-    <pd:endY>263</pd:endY>
+    <pd:endX>1261</pd:endX>
+    <pd:endY>254</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:ResourceCreationfault"/>
     </pd:errorSchemas>
@@ -116,8 +116,8 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>1107</pd:x>
-        <pd:y>273</pd:y>
+        <pd:x>1061</pd:x>
+        <pd:y>264</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -156,8 +156,8 @@
     <pd:activity name="send Exception Request">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>1399</pd:x>
-        <pd:y>445</pd:y>
+        <pd:x>1269</pd:x>
+        <pd:y>423</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
             <spawn>true</spawn>
@@ -202,8 +202,8 @@
     <pd:activity name="Catch All Exception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>1009</pd:x>
-        <pd:y>438</pd:y>
+        <pd:x>1049</pd:x>
+        <pd:y>419</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -236,7 +236,7 @@
         <pd:transition>
             <pd:from>start</pd:from>
             <pd:to>Call Process createResource</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>xpath</pd:conditionType>
             <pd:xpath>$entry/ns:createresourcerequest/ns:action='ADD'</pd:xpath>
@@ -252,7 +252,7 @@
         <pd:transition>
             <pd:from>start</pd:from>
             <pd:to>Call-ProcessGroupRemoval</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>xpath</pd:conditionType>
             <pd:xpath>$entry/ns:createresourcerequest/ns:action='REMOVE'</pd:xpath>
@@ -267,7 +267,7 @@
         <pd:transition>
             <pd:from>Call Process createResource</pd:from>
             <pd:to>Map Data</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
@@ -281,7 +281,7 @@
         <pd:transition>
             <pd:from>Call-ProcessGroupRemoval</pd:from>
             <pd:to>Map Data</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
@@ -344,7 +344,7 @@
         <pd:activity name="CallProcessDeleteResource">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>650</pd:x>
+            <pd:x>644</pd:x>
             <pd:y>259</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceDeletion.process</processName>
@@ -406,7 +406,7 @@
         <pd:activity name="Call-ProcessGroupRemoval">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>655</pd:x>
+            <pd:x>647</pd:x>
             <pd:y>362</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/ResourceRemoval.process</processName>
@@ -468,8 +468,8 @@
         <pd:activity name="Map Data">
             <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
             <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
-            <pd:x>806</pd:x>
-            <pd:y>260</pd:y>
+            <pd:x>817</pd:x>
+            <pd:y>259</pd:y>
             <config>
                 <element>
                     <xsd:element name="root">

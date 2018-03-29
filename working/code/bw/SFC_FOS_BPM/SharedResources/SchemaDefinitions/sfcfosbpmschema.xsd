@@ -313,21 +313,8 @@
 	<xs:element name="notifyPlanItemExecuteReplyRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="orderID" type="xs:string" minOccurs="0"/>
-				<xs:element name="orderRef" type="xs:string" minOccurs="0"/>
-				<xs:element name="planID" type="xs:string"/>
-				<xs:element name="planItemID" type="xs:string"/>
-				<xs:element name="resultCode" type="xs:string" minOccurs="0"/>
-				<xs:element name="resultMessage" type="xs:string" minOccurs="0"/>
-				<xs:element name="isError" type="xs:boolean"/>
-				<xs:element name="UDF" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="name" type="xs:string"/>
-							<xs:element name="value" type="xs:string"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="Header"/>
+				<xs:element ref="PlanItem"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -335,6 +322,38 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="responseMessage" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Header">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PlanId" type="xs:string" minOccurs="0"/>
+				<xs:element name="OrderId" type="xs:string" minOccurs="0"/>
+				<xs:element name="OrderRefNumber" type="xs:string" minOccurs="0"/>
+				<xs:element name="CoRelationId" type="xs:string" minOccurs="0"/>
+				<xs:element name="BussinessTransactionId" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlanItem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UDF" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EvaluationPriority" type="xs:string" minOccurs="0"/>
+							<xs:element name="Type" type="xs:string" minOccurs="0"/>
+							<xs:element name="Flavour" type="xs:string" minOccurs="0"/>
+							<xs:element name="Name" type="xs:string" minOccurs="0"/>
+							<xs:element name="Value" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PlanItemId" type="xs:string" minOccurs="0"/>
+				<xs:element name="resultCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="resultMessage" type="xs:string" minOccurs="0"/>
+				<xs:element name="isError" type="xs:string" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

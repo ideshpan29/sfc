@@ -7,9 +7,57 @@
   <xsd:annotation>
     <xsd:documentation>BOMORIGIN::/com.sfc.fosImpl.activation/Generated Business Objects/com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom</xsd:documentation>
   </xsd:annotation>
-  <xsd:element abstract="false" name="flavour" nillable="false" type="xsd:string"/>
   <xsd:element abstract="false" name="ldapentryoutput" nillable="false" type="xsd:string"/>
-  <xsd:element abstract="false" name="value" nillable="false" type="xsd:string"/>
+  <xsd:element abstract="false" name="Header" nillable="false">
+    <xsd:complexType ecore:name="HeaderType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaHeaderType"
+        mixed="false">
+      <xsd:sequence>
+        <xsd:element ecore:name="planId" form="qualified" maxOccurs="1" minOccurs="0"
+            name="PlanId" type="xsd:string"/>
+        <xsd:element ecore:name="orderId" form="qualified" maxOccurs="1" minOccurs="0"
+            name="OrderId" type="xsd:string"/>
+        <xsd:element ecore:name="orderRefNumber" form="qualified" maxOccurs="1" minOccurs="0"
+            name="OrderRefNumber" type="xsd:string"/>
+        <xsd:element ecore:name="coRelationId" form="qualified" maxOccurs="1" minOccurs="0"
+            name="CoRelationId" type="xsd:string"/>
+        <xsd:element ecore:name="bussinessTransactionId" form="qualified" maxOccurs="1"
+            minOccurs="0" name="BussinessTransactionId" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element abstract="false" name="PlanItem" nillable="false">
+    <xsd:complexType ecore:name="PlanItemType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaPlanItemType"
+        mixed="false">
+      <xsd:sequence>
+        <xsd:element ecore:name="UDF" form="qualified" maxOccurs="unbounded" minOccurs="0"
+            name="UDF">
+          <xsd:complexType ecore:name="UDFType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaUDFType"
+              mixed="false">
+            <xsd:sequence>
+              <xsd:element ecore:name="evaluationPriority" form="qualified" maxOccurs="1"
+                  minOccurs="0" name="EvaluationPriority" type="xsd:string"/>
+              <xsd:element ecore:name="type" form="qualified" maxOccurs="1" minOccurs="0"
+                  name="Type" type="xsd:string"/>
+              <xsd:element ecore:name="flavour" form="qualified" maxOccurs="1" minOccurs="0"
+                  name="Flavour" type="xsd:string"/>
+              <xsd:element ecore:name="name" form="qualified" maxOccurs="1" minOccurs="0"
+                  name="Name" type="xsd:string"/>
+              <xsd:element ecore:name="value" form="qualified" maxOccurs="1" minOccurs="0"
+                  name="Value" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ecore:name="planItemId" form="qualified" maxOccurs="1" minOccurs="0"
+            name="PlanItemId" type="xsd:string"/>
+        <xsd:element ecore:name="resultCode" form="qualified" maxOccurs="1" minOccurs="0"
+            name="resultCode" type="xsd:string"/>
+        <xsd:element ecore:name="resultMessage" form="qualified" maxOccurs="1" minOccurs="0"
+            name="resultMessage" type="xsd:string"/>
+        <xsd:element ecore:name="isError" form="qualified" maxOccurs="1" minOccurs="0"
+            name="isError" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
   <xsd:element abstract="false" name="createresourceinput" nillable="false">
     <xsd:complexType ecore:name="createresourceinputType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemacreateresourceinputType"
         mixed="false">
@@ -301,36 +349,8 @@
     <xsd:complexType ecore:name="notifyPlanItemExecuteReplyRequestType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemanotifyPlanItemExecuteReplyRequestType"
         mixed="false">
       <xsd:sequence>
-        <xsd:element ecore:name="orderID" form="qualified" maxOccurs="1" minOccurs="0"
-            name="orderID" type="xsd:string"/>
-        <xsd:element ecore:name="orderRef" form="qualified" maxOccurs="1" minOccurs="0"
-            name="orderRef" type="xsd:string"/>
-        <xsd:element ecore:name="planID" form="qualified" maxOccurs="1" minOccurs="1"
-            name="planID" type="xsd:string"/>
-        <xsd:element ecore:name="planItemID" form="qualified" maxOccurs="1" minOccurs="1"
-            name="planItemID" type="xsd:string"/>
-        <xsd:element ecore:name="resultCode" form="qualified" maxOccurs="1" minOccurs="0"
-            name="resultCode" type="xsd:string"/>
-        <xsd:element ecore:name="resultMessage" form="qualified" maxOccurs="1" minOccurs="0"
-            name="resultMessage" type="xsd:string"/>
-        <xsd:element ecore:name="isError" form="qualified" maxOccurs="1" minOccurs="1"
-            name="isError" type="xsd:boolean"/>
-        <xsd:element ecore:name="UDF" form="qualified" maxOccurs="unbounded" minOccurs="0"
-            name="UDF">
-          <xsd:complexType ecore:name="UDFType" id="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaUDFType"
-              mixed="false">
-            <xsd:sequence>
-              <xsd:element ecore:name="evaluationPriority" form="qualified" maxOccurs="1"
-                  minOccurs="1" name="evaluationPriority" type="xsd:string"/>
-              <xsd:element ecore:name="flavour" maxOccurs="1" minOccurs="1" ref="tns1:flavour"/>
-              <xsd:element ecore:name="name" form="qualified" maxOccurs="1" minOccurs="1"
-                  name="name" type="xsd:string"/>
-              <xsd:element ecore:name="type" form="qualified" maxOccurs="1" minOccurs="1"
-                  name="type" type="xsd:string"/>
-              <xsd:element ecore:name="value" maxOccurs="1" minOccurs="1" ref="tns1:value"/>
-            </xsd:sequence>
-          </xsd:complexType>
-        </xsd:element>
+        <xsd:element ecore:name="header" maxOccurs="1" minOccurs="1" ref="tns1:Header"/>
+        <xsd:element ecore:name="planItem" maxOccurs="1" minOccurs="1" ref="tns1:PlanItem"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

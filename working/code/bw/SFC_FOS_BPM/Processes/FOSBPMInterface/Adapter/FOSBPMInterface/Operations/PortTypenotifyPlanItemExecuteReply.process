@@ -36,36 +36,84 @@
             <pfx:notifyPlanItemExecuteReplyInput>
                 <input>
                     <ns:notifyPlanItemExecuteReplyRequest>
-                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID">
-                            <ns:orderID>
-                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderID"/>
-                            </ns:orderID>
-                        </xsl:if>
-                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef">
-                            <ns:orderRef>
-                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:orderRef"/>
-                            </ns:orderRef>
-                        </xsl:if>
-                        <ns:planID>
-                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planID"/>
-                        </ns:planID>
-                        <ns:planItemID>
-                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:planItemID"/>
-                        </ns:planItemID>
-                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode">
-                            <ns:resultCode>
-                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultCode"/>
-                            </ns:resultCode>
-                        </xsl:if>
-                        <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage">
-                            <ns:resultMessage>
-                                <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:resultMessage"/>
-                            </ns:resultMessage>
-                        </xsl:if>
-                        <ns:isError>
-                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:isError"/>
-                        </ns:isError>
-                        <xsl:copy-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:UDF"/>
+                        <ns:Header>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:PlanId">
+                                <ns:PlanId>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:PlanId"/>
+                                </ns:PlanId>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:OrderId">
+                                <ns:OrderId>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:OrderId"/>
+                                </ns:OrderId>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:OrderRefNumber">
+                                <ns:OrderRefNumber>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:OrderRefNumber"/>
+                                </ns:OrderRefNumber>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId">
+                                <ns:CoRelationId>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId"/>
+                                </ns:CoRelationId>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId">
+                                <ns:BussinessTransactionId>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId"/>
+                                </ns:BussinessTransactionId>
+                            </xsl:if>
+                        </ns:Header>
+                        <ns:PlanItem>
+                            <xsl:for-each select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:UDF">
+                                <ns:UDF>
+                                    <xsl:if test="ns:EvaluationPriority">
+                                        <ns:EvaluationPriority>
+                                            <xsl:value-of select="ns:EvaluationPriority"/>
+                                        </ns:EvaluationPriority>
+                                    </xsl:if>
+                                    <xsl:if test="ns:Type">
+                                        <ns:Type>
+                                            <xsl:value-of select="ns:Type"/>
+                                        </ns:Type>
+                                    </xsl:if>
+                                    <xsl:if test="ns:Flavour">
+                                        <ns:Flavour>
+                                            <xsl:value-of select="ns:Flavour"/>
+                                        </ns:Flavour>
+                                    </xsl:if>
+                                    <xsl:if test="ns:Name">
+                                        <ns:Name>
+                                            <xsl:value-of select="ns:Name"/>
+                                        </ns:Name>
+                                    </xsl:if>
+                                    <xsl:if test="ns:Value">
+                                        <ns:Value>
+                                            <xsl:value-of select="ns:Value"/>
+                                        </ns:Value>
+                                    </xsl:if>
+                                </ns:UDF>
+                            </xsl:for-each>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:PlanItemId">
+                                <ns:PlanItemId>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:PlanItemId"/>
+                                </ns:PlanItemId>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:resultCode">
+                                <ns:resultCode>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:resultCode"/>
+                                </ns:resultCode>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:resultMessage">
+                                <ns:resultMessage>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:resultMessage"/>
+                                </ns:resultMessage>
+                            </xsl:if>
+                            <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:isError">
+                                <ns:isError>
+                                    <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:PlanItem/ns:isError"/>
+                                </ns:isError>
+                            </xsl:if>
+                        </ns:PlanItem>
                     </ns:notifyPlanItemExecuteReplyRequest>
                 </input>
             </pfx:notifyPlanItemExecuteReplyInput>

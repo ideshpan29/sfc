@@ -515,63 +515,108 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
             </byteCode>
         </config>
         <pd:inputBindings>
-            <javaCodeActivityInput>
-                <Name>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
-                </Name>
-                <mail>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
-                </mail>
-                <password>
-                    <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
-                </password>
-                <LDapHostName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPHost"/>
-                </LDapHostName>
-                <LDapUserName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPUserName"/>
-                </LDapUserName>
-                <LDapPassword>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPassword"/>
-                </LDapPassword>
-                <LDapPartitionName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPartitionName"/>
-                </LDapPartitionName>
-                <resourceCreationDN>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
-                </resourceCreationDN>
-                <SucessoutputMessage>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SuccessOutputMessage"/>
-                </SucessoutputMessage>
-                <FailureOutputMessage>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/FailureOutputMessage"/>
-                </FailureOutputMessage>
-                <LDapPort>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/port"/>
-                </LDapPort>
-                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
-                    <FirstName>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
-                    </FirstName>
-                </xsl:if>
-                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
-                    <LastName>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
-                    </LastName>
-                </xsl:if>
-                <xsl:choose>
-                    <xsl:when test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:entity='Contractor'">
+            <xsl:choose>
+                <xsl:when test="$Start/pfx13:ldapentryinputrepeat/pfx13:input/pfx13:entity=&quot;Contractor&quot;">
+                    <javaCodeActivityInput>
+                        <Name>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
+                        </Name>
+                        <mail>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
+                        </mail>
+                        <password>
+                            <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
+                        </password>
+                        <LDapHostName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPHost"/>
+                        </LDapHostName>
+                        <LDapUserName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPUserName"/>
+                        </LDapUserName>
+                        <LDapPassword>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPassword"/>
+                        </LDapPassword>
+                        <LDapPartitionName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPartitionName"/>
+                        </LDapPartitionName>
+                        <resourceCreationDN>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
+                        </resourceCreationDN>
+                        <SucessoutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SuccessOutputMessage"/>
+                        </SucessoutputMessage>
+                        <FailureOutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/FailureOutputMessage"/>
+                        </FailureOutputMessage>
+                        <LDapPort>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/port"/>
+                        </LDapPort>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
+                            <FirstName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
+                            </FirstName>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
+                            <LastName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
+                            </LastName>
+                        </xsl:if>
                         <EmployeeType>
-                            <xsl:value-of select="'CONTRACTOR'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/EmployeeType"/>
                         </EmployeeType>
-                    </xsl:when>
-                    <xsl:otherwise>
+                    </javaCodeActivityInput>
+                </xsl:when>
+                <xsl:otherwise>
+                    <javaCodeActivityInput>
+                        <Name>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
+                        </Name>
+                        <mail>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
+                        </mail>
+                        <password>
+                            <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
+                        </password>
+                        <LDapHostName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/Ldaphost"/>
+                        </LDapHostName>
+                        <LDapUserName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapUserName"/>
+                        </LDapUserName>
+                        <LDapPassword>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPassword"/>
+                        </LDapPassword>
+                        <LDapPartitionName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPartitionName"/>
+                        </LDapPartitionName>
+                        <resourceCreationDN>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn"/>
+                        </resourceCreationDN>
+                        <SucessoutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/SuccessMsg"/>
+                        </SucessoutputMessage>
+                        <FailureOutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/FailureMsg"/>
+                        </FailureOutputMessage>
+                        <LDapPort>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPort"/>
+                        </LDapPort>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
+                            <FirstName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
+                            </FirstName>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
+                            <LastName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
+                            </LastName>
+                        </xsl:if>
                         <EmployeeType>
-                            <xsl:value-of select="'PERMENANT'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/EmployeeType"/>
                         </EmployeeType>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </javaCodeActivityInput>
+                    </javaCodeActivityInput>
+                </xsl:otherwise>
+            </xsl:choose>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Password Logs">

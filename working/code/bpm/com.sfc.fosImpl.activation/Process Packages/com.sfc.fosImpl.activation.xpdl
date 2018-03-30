@@ -645,7 +645,7 @@
           <xpdl2:DataType>
             <xpdl2:ExternalReference location="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.Schema.bom" namespace="http://www.eclipse.org/uml2/3.0.0/UML" xref="com.tibco.schemas.SFC_FOS_BPM.SharedResources.SchemaDefinitions.SchemaPlanItemType"/>
           </xpdl2:DataType>
-          <xpdl2:InitialValue></xpdl2:InitialValue>
+          <xpdl2:InitialValue/>
         </xpdl2:DataField>
       </xpdl2:DataFields>
       <xpdl2:Activities>
@@ -2447,17 +2447,25 @@ CommentText=&quot;&quot;;</xpdExt:Information>
           </xpdExt:ActivityResourcePatterns>
           <xpdExt:Audit>
             <xpdExt:AuditEvent Type="Initiated">
-              <xpdExt:Information ScriptGrammar="JavaScript">for (var i=0;i&lt;ActivationExecutionRequest.planItem.udf.size();i++)&#xD;
+              <xpdExt:Information ScriptGrammar="JavaScript">Log.write(&quot;ActivationLogCheck&quot;);&#xD;
+PlanItemData=com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createPlanItemType();&#xD;
+Log.write(&quot;UDFLength&quot;+ActivationExecutionRequest.planItem.udf.size());&#xD;
+for (var i=0;i&lt;ActivationExecutionRequest.planItem.udf.size();i++)&#xD;
 {&#xD;
-	PlanItemData.UDF.get(i).evaluationPriority=ActivationExecutionRequest.planItem.udf.get(i).evaluationPriority;&#xD;
-	PlanItemData.UDF.get(i).flavour=ActivationExecutionRequest.planItem.udf.get(i).flavour;&#xD;
-	PlanItemData.UDF.get(i).name=ActivationExecutionRequest.planItem.udf.get(i).name;&#xD;
-	PlanItemData.UDF.get(i).value=ActivationExecutionRequest.planItem.udf.get(i).value;&#xD;
-		PlanItemData.UDF.get(i).type=ActivationExecutionRequest.planItem.udf.get(i).type;&#xD;
-	&#xD;
+	var UDFData=com_tibco_schemas_SFC_FOS_BPM_SharedResources_SchemaDefinitions_Schema_Factory.createUDFType();&#xD;
+	UDFData.evaluationPriority=ActivationExecutionRequest.planItem.udf.get(i).evaluationPriority;&#xD;
+	UDFData.flavour=ActivationExecutionRequest.planItem.udf.get(i).flavour;&#xD;
+	UDFData.name=ActivationExecutionRequest.planItem.udf.get(i).name;&#xD;
+	UDFData.value=ActivationExecutionRequest.planItem.udf.get(i).value;&#xD;
+	UDFData.type=ActivationExecutionRequest.planItem.udf.get(i).type;&#xD;
+	PlanItemData.UDF.add(UDFData);&#xD;
+	Log.write(UDFData.evaluationPriority);&#xD;
 }&#xD;
+&#xD;
+&#xD;
+&#xD;
 PlanItemData.planItemId=ActivationExecutionRequest.planItem.planItemID;&#xD;
-PlanItemData.isError=&quot;FALSE&quot;;&#xD;
+PlanItemData.isError=&quot;0&quot;;&#xD;
 PlanItemData.resultCode=&quot;1&quot;;&#xD;
 PlanItemData.resultMessage=&quot;SUCCESS&quot;;&#xD;
 &#xD;
@@ -2467,7 +2475,7 @@ PlanItemData.resultMessage=&quot;SUCCESS&quot;;&#xD;
           <xpdExt:AssociatedParameters DisableImplicitAssociation="false">
             <xpdExt:AssociatedParameter FormalParam="ActivationExecutionRequest" Mode="IN" Mandatory="true"/>
             <xpdExt:AssociatedParameter FormalParam="PlanItemData" Mode="INOUT" Mandatory="false">
-              <xpdl2:Description/>
+              <xpdl2:Description></xpdl2:Description>
             </xpdExt:AssociatedParameter>
           </xpdExt:AssociatedParameters>
           <xpdExt:ScriptInformation Id="_R29wIDM8EeikWfQoT6A2pg">

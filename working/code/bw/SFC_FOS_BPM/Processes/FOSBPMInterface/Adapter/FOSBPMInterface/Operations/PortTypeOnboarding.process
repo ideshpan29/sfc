@@ -85,8 +85,8 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>355</pd:x>
-        <pd:y>1</pd:y>
+        <pd:x>351</pd:x>
+        <pd:y>10</pd:y>
         <pd:width>192</pd:width>
         <pd:height>156</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -121,10 +121,10 @@
         <pd:activity name="Call LdapEntry">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>457</pd:x>
-            <pd:y>88</pd:y>
+            <pd:x>453</pd:x>
+            <pd:y>97</pd:y>
             <config>
-                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/LdapEntry.process</processName>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/LdapEntry.process</processName>
             </config>
             <pd:inputBindings>
                 <pfx:ldapentryinputrepeat>
@@ -317,20 +317,6 @@
             </ns12:ExceptionRequest>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Assign Failure">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>444</pd:x>
-        <pd:y>252</pd:y>
-        <config>
-            <variableName>Onboarding</variableName>
-        </config>
-        <pd:inputBindings>
-            <status>
-                <xsl:value-of select="'FAILED'"/>
-            </status>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
@@ -369,20 +355,6 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group</pd:from>
-        <pd:to>send Log Request AUDIT 2</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Assign Failure</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Assign Failure</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

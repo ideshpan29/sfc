@@ -2,7 +2,7 @@
 <pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://api.bds.tibco.com" xmlns:pfx3="http://www.tibco.com/schemas/SFC_FOS_BPM/UnitTesting/WSDL/Schema1.xsd" xmlns:pfx4="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx5="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/UnitTesting/WSDL/Schema1.xsd"/>
     <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/BPMUsersCaseCreation/Schemas/BPMDataBussinessUsers.xsd"/>
-    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/BussinessUsersCaseCreation/WSDL/BusinessDataServices.wsdl"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/BPMUsersCaseCreation/WSDL/BusinessDataServices.wsdl"/>
     <pd:name>UnitTesting/BPMUsersCaseCreation/Processes/ContractorUsersCreateCase.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType>
@@ -42,8 +42,8 @@
     <pd:activity name="CreateCase">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>546</pd:x>
-        <pd:y>70</pd:y>
+        <pd:x>456</pd:x>
+        <pd:y>69</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -74,8 +74,8 @@
     <pd:activity name="send Log Request AUDIT 1">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>219</pd:x>
-        <pd:y>77</pd:y>
+        <pd:x>206</pd:x>
+        <pd:y>79</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -114,7 +114,7 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>706</pd:x>
+        <pd:x>602</pd:x>
         <pd:y>76</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
@@ -170,8 +170,8 @@
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>375</pd:x>
-        <pd:y>62</pd:y>
+        <pd:x>322</pd:x>
+        <pd:y>71</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>

@@ -11,7 +11,7 @@
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Schemas/Schema4.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
-    <pd:name>UnitTesting/TempUserCreation/Processes/CreateLdapEntry.process</pd:name>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/LdapEntry.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx13:ldapentryinputrepeat"/>
     <pd:startX>104</pd:startX>
@@ -112,7 +112,7 @@
         <pd:x>680</pd:x>
         <pd:y>146</pd:y>
         <config>
-            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreationAndMapping/Processes/createResource.process</processName>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/createResource.process</processName>
         </config>
         <pd:inputBindings>
             <pfx13:createresourceinput>
@@ -143,9 +143,9 @@
                                 <xsl:value-of select="pfx13:email"/>
                             </pfx13:email>
                         </xsl:if>
-                        <xsl:if test="pfx13:email">
+                        <xsl:if test="pfx13:password">
                             <pfx13:password>
-                                <xsl:value-of select="pfx13:password"/>
+                                <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
                             </pfx13:password>
                         </xsl:if>
                         <xsl:if test="pfx13:addby">
@@ -196,9 +196,9 @@
         <pd:y>138</pd:y>
         <config>
             <javaArchive>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/AliasLibrary.aliaslib</javaArchive>
-            <fileName>CreateLdapEntryLdapEntryCode</fileName>
-            <packageName>UnitTesting.TempUserCreation.Processes.CreateLdapEntry</packageName>
-            <fullsource>package UnitTesting.TempUserCreation.Processes.CreateLdapEntry;
+            <fileName>LdapEntryLdapEntryCode</fileName>
+            <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.LdapEntry</packageName>
+            <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.LdapEntry;
 import java.util.*;
 import java.io.*;
 import java.io.IOException;
@@ -226,7 +226,7 @@ import org.apache.directory.ldap.client.api.LdapNetworkConnection;
 import org.apache.directory.api.ldap.model.exception.*;
 import org.apache.log4j.*;
 
-public class CreateLdapEntryLdapEntryCode{
+public class LdapEntryLdapEntryCode{
 /****** START SET/GET METHOD, DO NOT MODIFY *****/
 	protected String Name = "";
 	protected String mail = "";
@@ -334,7 +334,7 @@ public class CreateLdapEntryLdapEntryCode{
 		outputMessage = val;
 	}
 /****** END SET/GET METHOD, DO NOT MODIFY *****/
-	public CreateLdapEntryLdapEntryCode() {
+	public LdapEntryLdapEntryCode() {
 	}
 	public void invoke() throws Exception {
 /* Available Variables: DO NOT MODIFY
@@ -509,71 +509,114 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
             </inputData>
             <byteCode>
                 <class>
-                    <name>CreateLdapEntryLdapEntryCode</name>
-                    <byteCode>yv66vgAAADQBCwkAUgCYCQBSAJkJAFIAmgkAUgCbCQBSAJwJAFIAnQkAUgCeCQBSAJ8JAFIAoAkAUgChCQBSAKIJAFIAowkAUgCkCQBSAKUJAFIApgoAQACnCACoBwCpCgBSAKoKAFIAqwoAEgCsCgBSAK0KAFIArgsArwCwBwCxCgAZALIHALMKABsApwkAtAC1CwC2ALcHALgIALkLALYAugsAtgC7BwC8CgBSAL0KACMAvgsAtgC/BwDACgAnALIHAMEKACkApwgAwgoAKQDDCgBSAMQIAMUKACkAxgsAtgDHBwDICgAxALILAK8AyQsAygDLCwDKAMwHAM0HAM4LADcAzwcA0AoAOQCyBwDRCADSCgBSANMIANQKAFIA1QcA1ggA1wgA2AgA2QgA2ggA2wgA3AgA3QoAUgDeCADfCgBSAOAKADsA4QsArwDiCgBSAOMKAFIA5AcA5QoATwCyCgBSAOYHAOcBAAROYW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQAEbWFpbAEACHBhc3N3b3JkAQAMTERhcEhvc3ROYW1lAQAMTERhcFVzZXJOYW1lAQAMTERhcFBhc3N3b3JkAQARTERhcFBhcnRpdGlvbk5hbWUBABJyZXNvdXJjZUNyZWF0aW9uRE4BABNTdWNlc3NvdXRwdXRNZXNzYWdlAQAURmFpbHVyZU91dHB1dE1lc3NhZ2UBAAhMRGFwUG9ydAEAAUkBAAlGaXJzdE5hbWUBAAhMYXN0TmFtZQEADEVtcGxveWVlVHlwZQEADW91dHB1dE1lc3NhZ2UBAAdnZXROYW1lAQAUKClMamF2YS9sYW5nL1N0cmluZzsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQAHc2V0TmFtZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAB2dldG1haWwBAAdzZXRtYWlsAQALZ2V0cGFzc3dvcmQBAAtzZXRwYXNzd29yZAEAD2dldExEYXBIb3N0TmFtZQEAD3NldExEYXBIb3N0TmFtZQEAD2dldExEYXBVc2VyTmFtZQEAD3NldExEYXBVc2VyTmFtZQEAD2dldExEYXBQYXNzd29yZAEAD3NldExEYXBQYXNzd29yZAEAFGdldExEYXBQYXJ0aXRpb25OYW1lAQAUc2V0TERhcFBhcnRpdGlvbk5hbWUBABVnZXRyZXNvdXJjZUNyZWF0aW9uRE4BABVzZXRyZXNvdXJjZUNyZWF0aW9uRE4BABZnZXRTdWNlc3NvdXRwdXRNZXNzYWdlAQAWc2V0U3VjZXNzb3V0cHV0TWVzc2FnZQEAF2dldEZhaWx1cmVPdXRwdXRNZXNzYWdlAQAXc2V0RmFpbHVyZU91dHB1dE1lc3NhZ2UBAAtnZXRMRGFwUG9ydAEAAygpSQEAC3NldExEYXBQb3J0AQAEKEkpVgEADGdldEZpcnN0TmFtZQEADHNldEZpcnN0TmFtZQEAC2dldExhc3ROYW1lAQALc2V0TGFzdE5hbWUBAA9nZXRFbXBsb3llZVR5cGUBAA9zZXRFbXBsb3llZVR5cGUBABBnZXRvdXRwdXRNZXNzYWdlAQAQc2V0b3V0cHV0TWVzc2FnZQEABjxpbml0PgEAAygpVgEABmludm9rZQEADVN0YWNrTWFwVGFibGUHAOcHAOgHALEHAOkHAMAHAMgHAOoHANAHAOUBAApFeGNlcHRpb25zAQAKU291cmNlRmlsZQEAIUNyZWF0ZUxkYXBFbnRyeUxkYXBFbnRyeUNvZGUuamF2YQwAUwBUDABVAFQMAFYAVAwAVwBUDABYAFQMAFkAVAwAWgBUDABbAFQMAFwAVAwAXQBUDABeAF8MAGAAVAwAYQBUDABiAFQMAGMAVAwAiACJAQAAAQA6b3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBOZXR3b3JrQ29ubmVjdGlvbgwAbgBlDAB8AH0MAIgA6wwAcABlDAByAGUHAOgMAOwA7QEAE2phdmEvbGFuZy9FeGNlcHRpb24MAO4AiQEAPW9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdEltcGwHAO8MAPAA8QcA6QwA8gDzAQAQamF2YS9sYW5nL1N0cmluZwEAASoMAPQA9QwA9gD3AQArb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbmFtZS9EbgwAdABlDACIAPgMAPkA+gEARG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2V4Y2VwdGlvbi9MZGFwSW52YWxpZERuRXhjZXB0aW9uAQAXamF2YS9sYW5nL1N0cmluZ0J1aWxkZXIBAAYobWFpbD0MAPsA/AwAagBlAQABKQwA/QBlDAD+AP8BADtvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEV4Y2VwdGlvbgwBAAEBBwDqDAECAQMMAQQBBQEANG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvUmVzcG9uc2UBAD1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlc3VsdEVudHJ5DAEGAQcBADpvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9jdXJzb3IvQ3Vyc29yRXhjZXB0aW9uAQA2b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZW50cnkvRGVmYXVsdEVudHJ5AQADT1U9DABkAGUBAAEsDAB2AGUBABBqYXZhL2xhbmcvT2JqZWN0AQAZT2JqZWN0Q2xhc3M6aW5ldE9yZ1BlcnNvbgEAE09iamVjdENsYXNzOnBlcnNvbiABABBPYmplY3RDbGFzczogdG9wAQAEY246IAEABHNuOiABAAZtYWlsOiABAA5lbXBsb3llZVR5cGU6IAwAhABlAQAOdXNlcnBhc3N3b3JkOiAMAGwAZQwAiAEIDAEJAQoMAHgAZQwAhwBpAQBNb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZXhjZXB0aW9uL0xkYXBFbnRyeUFscmVhZHlFeGlzdHNFeGNlcHRpb24MAHoAZQEAU1VuaXRUZXN0aW5nL1RlbXBVc2VyQ3JlYXRpb24vUHJvY2Vzc2VzL0NyZWF0ZUxkYXBFbnRyeS9DcmVhdGVMZGFwRW50cnlMZGFwRW50cnlDb2RlAQAzb3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBDb25uZWN0aW9uAQA5b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0AQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL1NlYXJjaEN1cnNvcgEAFihMamF2YS9sYW5nL1N0cmluZztJKVYBAARiaW5kAQAnKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOylWAQAPcHJpbnRTdGFja1RyYWNlAQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZQEAB1NVQlRSRUUBADlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTsBAAhzZXRTY29wZQEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAA1hZGRBdHRyaWJ1dGVzAQBQKFtMamF2YS9sYW5nL1N0cmluZzspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAxzZXRUaW1lTGltaXQBAD4oSSlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdzZXRCYXNlAQBqKExvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9uYW1lL0RuOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABmFwcGVuZAEALShMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmdCdWlsZGVyOwEACHRvU3RyaW5nAQAJc2V0RmlsdGVyAQBPKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABnNlYXJjaAEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xk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</byteCode>
+                    <name>LdapEntryLdapEntryCode</name>
+                    <byteCode>yv66vgAAADQBCwkAUgCYCQBSAJkJAFIAmgkAUgCbCQBSAJwJAFIAnQkAUgCeCQBSAJ8JAFIAoAkAUgChCQBSAKIJAFIAowkAUgCkCQBSAKUJAFIApgoAQACnCACoBwCpCgBSAKoKAFIAqwoAEgCsCgBSAK0KAFIArgsArwCwBwCxCgAZALIHALMKABsApwkAtAC1CwC2ALcHALgIALkLALYAugsAtgC7BwC8CgBSAL0KACMAvgsAtgC/BwDACgAnALIHAMEKACkApwgAwgoAKQDDCgBSAMQIAMUKACkAxgsAtgDHBwDICgAxALILAK8AyQsAygDLCwDKAMwHAM0HAM4LADcAzwcA0AoAOQCyBwDRCADSCgBSANMIANQKAFIA1QcA1ggA1wgA2AgA2QgA2ggA2wgA3AgA3QoAUgDeCADfCgBSAOAKADsA4QsArwDiCgBSAOMKAFIA5AcA5QoATwCyCgBSAOYHAOcBAAROYW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQAEbWFpbAEACHBhc3N3b3JkAQAMTERhcEhvc3ROYW1lAQAMTERhcFVzZXJOYW1lAQAMTERhcFBhc3N3b3JkAQARTERhcFBhcnRpdGlvbk5hbWUBABJyZXNvdXJjZUNyZWF0aW9uRE4BABNTdWNlc3NvdXRwdXRNZXNzYWdlAQAURmFpbHVyZU91dHB1dE1lc3NhZ2UBAAhMRGFwUG9ydAEAAUkBAAlGaXJzdE5hbWUBAAhMYXN0TmFtZQEADEVtcGxveWVlVHlwZQEADW91dHB1dE1lc3NhZ2UBAAdnZXROYW1lAQAUKClMamF2YS9sYW5nL1N0cmluZzsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQAHc2V0TmFtZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAB2dldG1haWwBAAdzZXRtYWlsAQALZ2V0cGFzc3dvcmQBAAtzZXRwYXNzd29yZAEAD2dldExEYXBIb3N0TmFtZQEAD3NldExEYXBIb3N0TmFtZQEAD2dldExEYXBVc2VyTmFtZQEAD3NldExEYXBVc2VyTmFtZQEAD2dldExEYXBQYXNzd29yZAEAD3NldExEYXBQYXNzd29yZAEAFGdldExEYXBQYXJ0aXRpb25OYW1lAQAUc2V0TERhcFBhcnRpdGlvbk5hbWUBABVnZXRyZXNvdXJjZUNyZWF0aW9uRE4BABVzZXRyZXNvdXJjZUNyZWF0aW9uRE4BABZnZXRTdWNlc3NvdXRwdXRNZXNzYWdlAQAWc2V0U3VjZXNzb3V0cHV0TWVzc2FnZQEAF2dldEZhaWx1cmVPdXRwdXRNZXNzYWdlAQAXc2V0RmFpbHVyZU91dHB1dE1lc3NhZ2UBAAtnZXRMRGFwUG9ydAEAAygpSQEAC3NldExEYXBQb3J0AQAEKEkpVgEADGdldEZpcnN0TmFtZQEADHNldEZpcnN0TmFtZQEAC2dldExhc3ROYW1lAQALc2V0TGFzdE5hbWUBAA9nZXRFbXBsb3llZVR5cGUBAA9zZXRFbXBsb3llZVR5cGUBABBnZXRvdXRwdXRNZXNzYWdlAQAQc2V0b3V0cHV0TWVzc2FnZQEABjxpbml0PgEAAygpVgEABmludm9rZQEADVN0YWNrTWFwVGFibGUHAOcHAOgHALEHAOkHAMAHAMgHAOoHANAHAOUBAApFeGNlcHRpb25zAQAKU291cmNlRmlsZQEAG0xkYXBFbnRyeUxkYXBFbnRyeUNvZGUuamF2YQwAUwBUDABVAFQMAFYAVAwAVwBUDABYAFQMAFkAVAwAWgBUDABbAFQMAFwAVAwAXQBUDABeAF8MAGAAVAwAYQBUDABiAFQMAGMAVAwAiACJAQAAAQA6b3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBOZXR3b3JrQ29ubmVjdGlvbgwAbgBlDAB8AH0MAIgA6wwAcABlDAByAGUHAOgMAOwA7QEAE2phdmEvbGFuZy9FeGNlcHRpb24MAO4AiQEAPW9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdEltcGwHAO8MAPAA8QcA6QwA8gDzAQAQamF2YS9sYW5nL1N0cmluZwEAASoMAPQA9QwA9gD3AQArb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbmFtZS9EbgwAdABlDACIAPgMAPkA+gEARG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL2V4Y2VwdGlvbi9MZGFwSW52YWxpZERuRXhjZXB0aW9uAQAXamF2YS9sYW5nL1N0cmluZ0J1aWxkZXIBAAYobWFpbD0MAPsA/AwAagBlAQABKQwA/QBlDAD+AP8BADtvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9leGNlcHRpb24vTGRhcEV4Y2VwdGlvbgwBAAEBBwDqDAECAQMMAQQBBQEANG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvUmVzcG9uc2UBAD1vcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9tZXNzYWdlL1NlYXJjaFJlc3VsdEVudHJ5DAEGAQcBADpvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9jdXJzb3IvQ3Vyc29yRXhjZXB0aW9uAQA2b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZW50cnkvRGVmYXVsdEVudHJ5AQADT1U9DABkAGUBAAEsDAB2AGUBABBqYXZhL2xhbmcvT2JqZWN0AQAZT2JqZWN0Q2xhc3M6aW5ldE9yZ1BlcnNvbgEAE09iamVjdENsYXNzOnBlcnNvbiABABBPYmplY3RDbGFzczogdG9wAQAEY246IAEABHNuOiABAAZtYWlsOiABAA5lbXBsb3llZVR5cGU6IAwAhABlAQAOdXNlcnBhc3N3b3JkOiAMAGwAZQwAiAEIDAEJAQoMAHgAZQwAhwBpAQBNb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvZXhjZXB0aW9uL0xkYXBFbnRyeUFscmVhZHlFeGlzdHNFeGNlcHRpb24MAHoAZQEAXFByb2Nlc3Nlcy9GT1NCUE1JbnRlcmZhY2UvQWRhcHRlci9GT1NCUE1JbnRlcmZhY2UvUHJvY2Vzc2VzL0xkYXBFbnRyeS9MZGFwRW50cnlMZGFwRW50cnlDb2RlAQAzb3JnL2FwYWNoZS9kaXJlY3RvcnkvbGRhcC9jbGllbnQvYXBpL0xkYXBDb25uZWN0aW9uAQA5b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0AQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvY3Vyc29yL1NlYXJjaEN1cnNvcgEAFihMamF2YS9sYW5nL1N0cmluZztJKVYBAARiaW5kAQAnKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOylWAQAPcHJpbnRTdGFja1RyYWNlAQA3b3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZQEAB1NVQlRSRUUBADlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTsBAAhzZXRTY29wZQEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hTY29wZTspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAA1hZGRBdHRyaWJ1dGVzAQBQKFtMamF2YS9sYW5nL1N0cmluZzspTG9yZy9hcGFjaGUvZGlyZWN0b3J5L2FwaS9sZGFwL21vZGVsL21lc3NhZ2UvU2VhcmNoUmVxdWVzdDsBAAxzZXRUaW1lTGltaXQBAD4oSSlMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdzZXRCYXNlAQBqKExvcmcvYXBhY2hlL2RpcmVjdG9yeS9hcGkvbGRhcC9tb2RlbC9uYW1lL0RuOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABmFwcGVuZAEALShMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmdCdWlsZGVyOwEACHRvU3RyaW5nAQAJc2V0RmlsdGVyAQBPKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBpL2xkYXAvbW9kZWwvbWVzc2FnZS9TZWFyY2hSZXF1ZXN0OwEABnNlYXJjaAEAdihMb3JnL2FwYWNoZS9kaXJlY3RvcnkvYXBp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</byteCode>
                 </class>
             </byteCode>
         </config>
         <pd:inputBindings>
-            <javaCodeActivityInput>
-                <Name>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
-                </Name>
-                <mail>
-                    <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
-                </mail>
-                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:password">
-                    <password>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:password"/>
-                    </password>
-                </xsl:if>
-                <LDapHostName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPHost"/>
-                </LDapHostName>
-                <LDapUserName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPUserName"/>
-                </LDapUserName>
-                <LDapPassword>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPassword"/>
-                </LDapPassword>
-                <LDapPartitionName>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPartitionName"/>
-                </LDapPartitionName>
-                <resourceCreationDN>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
-                </resourceCreationDN>
-                <SucessoutputMessage>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SuccessOutputMessage"/>
-                </SucessoutputMessage>
-                <FailureOutputMessage>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/FailureOutputMessage"/>
-                </FailureOutputMessage>
-                <LDapPort>
-                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/port"/>
-                </LDapPort>
-                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
-                    <FirstName>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
-                    </FirstName>
-                </xsl:if>
-                <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
-                    <LastName>
-                        <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
-                    </LastName>
-                </xsl:if>
-                <xsl:choose>
-                    <xsl:when test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:entity='Contractor'">
+            <xsl:choose>
+                <xsl:when test="$Start/pfx13:ldapentryinputrepeat/pfx13:input/pfx13:entity=&quot;Contractor&quot;">
+                    <javaCodeActivityInput>
+                        <Name>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
+                        </Name>
+                        <mail>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
+                        </mail>
+                        <password>
+                            <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
+                        </password>
+                        <LDapHostName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPHost"/>
+                        </LDapHostName>
+                        <LDapUserName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPUserName"/>
+                        </LDapUserName>
+                        <LDapPassword>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPassword"/>
+                        </LDapPassword>
+                        <LDapPartitionName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPPartitionName"/>
+                        </LDapPartitionName>
+                        <resourceCreationDN>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
+                        </resourceCreationDN>
+                        <SucessoutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SuccessOutputMessage"/>
+                        </SucessoutputMessage>
+                        <FailureOutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/FailureOutputMessage"/>
+                        </FailureOutputMessage>
+                        <LDapPort>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/port"/>
+                        </LDapPort>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
+                            <FirstName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
+                            </FirstName>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
+                            <LastName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
+                            </LastName>
+                        </xsl:if>
                         <EmployeeType>
-                            <xsl:value-of select="'CONTRACTOR'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/EmployeeType"/>
                         </EmployeeType>
-                    </xsl:when>
-                    <xsl:otherwise>
+                    </javaCodeActivityInput>
+                </xsl:when>
+                <xsl:otherwise>
+                    <javaCodeActivityInput>
+                        <Name>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:loginName"/>
+                        </Name>
+                        <mail>
+                            <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:email"/>
+                        </mail>
+                        <password>
+                            <xsl:value-of select="generate-id($Start/pfx13:ldapentryinputrepeat/pfx13:input)"/>
+                        </password>
+                        <LDapHostName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/Ldaphost"/>
+                        </LDapHostName>
+                        <LDapUserName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapUserName"/>
+                        </LDapUserName>
+                        <LDapPassword>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPassword"/>
+                        </LDapPassword>
+                        <LDapPartitionName>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPartitionName"/>
+                        </LDapPartitionName>
+                        <resourceCreationDN>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn"/>
+                        </resourceCreationDN>
+                        <SucessoutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/SuccessMsg"/>
+                        </SucessoutputMessage>
+                        <FailureOutputMessage>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/FailureMsg"/>
+                        </FailureOutputMessage>
+                        <LDapPort>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapPort"/>
+                        </LDapPort>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname">
+                            <FirstName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:firstname"/>
+                            </FirstName>
+                        </xsl:if>
+                        <xsl:if test="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname">
+                            <LastName>
+                                <xsl:value-of select="$Start/pfx13:ldapentryinputrepeat/pfx13:input[1]/pfx13:lastname"/>
+                            </LastName>
+                        </xsl:if>
                         <EmployeeType>
-                            <xsl:value-of select="'PERMENANT'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/EmployeeType"/>
                         </EmployeeType>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </javaCodeActivityInput>
+                    </javaCodeActivityInput>
+                </xsl:otherwise>
+            </xsl:choose>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Password Logs">

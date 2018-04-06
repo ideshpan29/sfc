@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime">
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/FetchDeleteCase.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Filename" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>108</pd:startX>
+    <pd:startY>68</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endType/>
+    <pd:endX>562</pd:endX>
+    <pd:endY>68</pd:endY>
+    <pd:errorSchemas>
+        <Schema0>
+            <xsd:element name="root" type="xsd:string"/>
+        </Schema0>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1522819579691</pd:targetNamespace>
+    <pd:activity name="Delete Lookup Data">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>406</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>deleteCaseByRef</operation>
+            <soapAction>deleteCaseByRef</soapAction>
+            <endpointURL>%%BPM/AutomatedCaseDataCreation/LookupData/SOAPEndpoint%%</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:DeleteCaseByRefRequest>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FindLookupData/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns2:DeleteCaseByRefRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindLookupData">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>207</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>%%BPM/AutomatedCaseDataCreation/LookupData/SOAPEndpoint%%</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/CaseModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/CaseType"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="concat(&quot;lookupKey='&quot;,substring-before($Start/root/Filename, '.'),&quot;'&quot;)"/>
+                        </queryString>
+                    </criteria>
+                </ns2:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>337</pd:x>
+        <pd:y>159</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>FindLookupData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindLookupData</pd:from>
+        <pd:to>Delete Lookup Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Delete Lookup Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindLookupData</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($FindLookupData/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference)=0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

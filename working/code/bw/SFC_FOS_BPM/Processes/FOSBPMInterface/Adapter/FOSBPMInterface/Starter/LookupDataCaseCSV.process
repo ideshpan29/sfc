@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/DataFormat/Look Up Case Creation Format.sharedparse" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://api.bds.tibco.com" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType">
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/Schema.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/LookupDataCaseCSV.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>20</pd:startX>
+    <pd:startY>195</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1018</pd:endX>
+    <pd:endY>194</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1521435350432</pd:targetNamespace>
+    <pd:activity name="List Files">
+        <pd:type>com.tibco.plugin.file.ListFilesActivity</pd:type>
+        <pd:resourceType>ae.activities.ListFilesActivity</pd:resourceType>
+        <pd:x>97</pd:x>
+        <pd:y>193</pd:y>
+        <config>
+            <mode>files-and-directories</mode>
+        </config>
+        <pd:inputBindings>
+            <ns:ListFilesActivityConfig>
+                <fileName>
+                    <xsl:value-of select="&quot;D:\Project\Texts\LookupData\*.csv&quot;"/>
+                </fileName>
+            </ns:ListFilesActivityConfig>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group (1)">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>166</pd:x>
+        <pd:y>17</pd:y>
+        <pd:width>768</pd:width>
+        <pd:height>336</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$List-Files/ns:ListFilesActivityOutput/files/fileInfo</pd:over>
+            <pd:iterationElementSlot>iter2</pd:iterationElementSlot>
+            <pd:indexSlot>index2</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>FetchDeleteCase</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Remove File</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Processed Files</pd:from>
+            <pd:to>Current File</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Current File</pd:from>
+            <pd:to>Remove File</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>FetchDeleteCase</pd:from>
+            <pd:to>Parse File</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse File</pd:from>
+            <pd:to>RenderCreateLookup</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>RenderCreateLookup</pd:from>
+            <pd:to>Processed Files</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>RenderCreateLookup</pd:from>
+            <pd:to>Call-Process-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>1=2</pd:xpath>
+        </pd:transition>
+        <pd:activity name="Remove File">
+            <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
+            <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
+            <pd:x>853</pd:x>
+            <pd:y>189</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns:RemoveActivityInputClass>
+                    <fileName>
+                        <xsl:value-of select="$iter2/fileInfo/fullName"/>
+                    </fileName>
+                </ns:RemoveActivityInputClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Processed Files">
+            <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
+            <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
+            <pd:x>646</pd:x>
+            <pd:y>189</pd:y>
+            <config>
+                <createMissingDirectories>true</createMissingDirectories>
+                <includeSubDirectories>true</includeSubDirectories>
+                <overwrite>true</overwrite>
+            </config>
+            <pd:inputBindings>
+                <ns:CopyActivityConfig>
+                    <fromFileName>
+                        <xsl:value-of select="$iter2/fileInfo/fullName"/>
+                    </fromFileName>
+                    <toFileName>
+                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/DestinationFilePath,'\',$iter2/fileInfo/fileName)"/>
+                    </toFileName>
+                </ns:CopyActivityConfig>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="FetchDeleteCase">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>244</pd:x>
+            <pd:y>191</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/FetchDeleteCase.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <Filename>
+                        <xsl:value-of select="$iter2/fileInfo/fileName"/>
+                    </Filename>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Current File">
+            <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
+            <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
+            <pd:x>751</pd:x>
+            <pd:y>187</pd:y>
+            <config>
+                <overwrite>true</overwrite>
+                <createMissingDirectories>true</createMissingDirectories>
+                <includeSubDirectories>true</includeSubDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns:CopyActivityConfig>
+                    <fromFileName>
+                        <xsl:value-of select="$iter2/fileInfo/fullName"/>
+                    </fromFileName>
+                    <toFileName>
+                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/CurrentFilePath,'\',$iter2/fileInfo/fileName)"/>
+                    </toFileName>
+                </ns:CopyActivityConfig>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Call-Process-1">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>493</pd:x>
+            <pd:y>286</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/Reload Case Data.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <FileName>
+                        <xsl:value-of select="$iter2/fileInfo/fileName"/>
+                    </FileName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Parse File">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>355</pd:x>
+            <pd:y>192</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ParseLookupCSV.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <FullName>
+                        <xsl:value-of select="$iter2/fileInfo/fullName"/>
+                    </FullName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="RenderCreateLookup">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>495</pd:x>
+            <pd:y>191</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/RenderCreateLookup.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:for-each select="$Parse-File/root/root">
+                        <RenderRoot>
+                            <LookupData>
+                                <xsl:value-of select="LookupData"/>
+                            </LookupData>
+                        </RenderRoot>
+                    </xsl:for-each>
+                    <FileNameRoot>
+                        <Filename>
+                            <xsl:value-of select="$iter2/fileInfo/fileName"/>
+                        </Filename>
+                    </FileNameRoot>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Reload Lookups on Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>455</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/Reload Case Data.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <FileName>
+                    <xsl:value-of select="$iter2/fileInfo/fileName"/>
+                </FileName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>List Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>List Files</pd:from>
+        <pd:to>Group (1)</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group (1)</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group (1)</pd:from>
+        <pd:to>Reload Lookups on Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

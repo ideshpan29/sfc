@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:pfx3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx4="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://api.bds.tibco.com" xmlns:ns5="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/SupportModule.process</pd:name>
+    <pd:startName>HTTP Receiver</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="HTTP Receiver">
+        <pd:type>com.tibco.plugin.http.HTTPEventSource</pd:type>
+        <pd:resourceType>httppalette.httpEventSource</pd:resourceType>
+        <pd:x>54</pd:x>
+        <pd:y>331</pd:y>
+        <config>
+            <outputMode>String</outputMode>
+            <defaultEncoding>ISO8859_1</defaultEncoding>
+            <inputOutputVersion>5.3.0</inputOutputVersion>
+            <newMimeSupport>true</newMimeSupport>
+            <sharedChannel>/SharedResources/Connections/HTTP/HTTPSupportModule.sharedhttp</sharedChannel>
+            <parsePostData>true</parsePostData>
+            <customField>
+                <row>
+                    <attribute>SiebelCircuitID</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>required</attributeCard>
+                </row>
+            </customField>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Accept" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Charset" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Accept-Encoding" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Length" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Connection" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1192</pd:endX>
+    <pd:endY>309</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1512639133195</pd:targetNamespace>
+    <pd:activity name="Send HTTP Response">
+        <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
+        <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
+        <pd:x>774</pd:x>
+        <pd:y>329</pd:y>
+        <config>
+            <closeConnection>true</closeConnection>
+            <eventSource>HTTP Receiver</eventSource>
+            <Headers>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Access-Control-Allow-Origin" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Set-Cookie" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Pragma" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Location" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </Headers>
+        </config>
+        <pd:inputBindings>
+            <ResponseActivityInput>
+                <xsl:choose>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getCustomerInformation&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$CallGetCustomerInfo/root/CustomerInfoXML"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getTechnicalInformation&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$CallGetTechnicalInformation/root/CustomerInfoXML"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>
+                <Headers>
+                    <Access-Control-Allow-Origin>
+                        <xsl:value-of select="'*'"/>
+                    </Access-Control-Allow-Origin>
+                </Headers>
+            </ResponseActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>339</pd:x>
+        <pd:y>341</pd:y>
+        <config>
+            <spawn>true</spawn>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;AJAXStarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 1&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="send Log Request AUDIT 2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>991</pd:x>
+        <pd:y>316</pd:y>
+        <config>
+            <spawn>true</spawn>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns1:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="&quot;StarterProcess&quot;"/>
+                    </ns22:ApplicationID>
+                    <ns22:SourceSystem>
+                        <xsl:value-of select="&quot;TESProvisioningCease&quot;"/>
+                    </ns22:SourceSystem>
+                    <ns22:TargetSystem>
+                        <xsl:value-of select="&quot;BPM&quot;"/>
+                    </ns22:TargetSystem>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="&quot;AJAXStarterProcess&quot;"/>
+                    </ns22:ComponentName>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:LogType>
+                        <xsl:value-of select="&quot;AUDIT 2&quot;"/>
+                    </ns22:LogType>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="&quot;INFO&quot;"/>
+                </Category>
+                <Audit>
+                    <xsl:value-of select="1"/>
+                </Audit>
+            </ns1:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1196</pd:x>
+        <pd:y>737</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="LogAJAZRequest">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>197</pd:x>
+        <pd:y>333</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($HTTP-Receiver/ProcessStarterOutput)"/>
+                </message>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAJAXCallsFailure">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>1192</pd:x>
+        <pd:y>486</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($Catch-All-Exception/exceptiondata)"/>
+                </message>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CallGetCustomerInfo">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>525</pd:x>
+        <pd:y>324</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCustomerInformation.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CallGetTechnicalInformation">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>523</pd:x>
+        <pd:y>404</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetTechnicalInfo.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Send HTTP Response</pd:from>
+        <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAJAZRequest</pd:from>
+        <pd:to>send Log Request AUDIT 1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>HTTP Receiver</pd:from>
+        <pd:to>LogAJAZRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All Exception</pd:from>
+        <pd:to>LogAJAXCallsFailure</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAJAXCallsFailure</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallGetCustomerInfo</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getCustomerInformation"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallGetCustomerInfo</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallGetTechnicalInformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getTechnicalInformation"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallGetTechnicalInformation</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

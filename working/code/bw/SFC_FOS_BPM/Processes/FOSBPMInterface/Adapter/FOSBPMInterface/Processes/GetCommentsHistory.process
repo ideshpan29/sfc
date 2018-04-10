@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx6="http://services.brm.n2.tibco.com/WorkListService_1.7.0" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:pfx3="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pfx5="http://fosImpl.sfc.com/dataModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModelSchema.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCommentsHistory.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <CommentsDataXML>
+                <xsl:value-of select="$Render-XML/xmlString"/>
+            </CommentsDataXML>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="CommentsDataXML" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>838</pd:endX>
+    <pd:endY>56</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1523005041492</pd:targetNamespace>
+    <pd:activity name="findCommentsDataCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>404</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/SupportModule/GetCommentsData/CaseModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/SupportModule/GetCommentsData/CaseType"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="concat(&quot;siebelCircuitID='&quot;,$Start/root/SiebelCircuitID,&quot;'&quot;)"/>
+                        </queryString>
+                    </criteria>
+                </ns2:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderRequestPayload">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>268</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://fosImpl.sfc.com/dataModel}CommentDataCaseElement"/>
+            </cdataSections>
+            <term ref="pfx5:CommentDataCaseElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx5:CommentDataCaseElement>
+                <siebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </siebelCircuitID>
+            </pfx5:CommentDataCaseElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ReadCaseCommentsData">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>538</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:ReadCaseRequest>
+                    <xsl:for-each select="$findCommentsDataCase/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns2:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>736</pd:x>
+        <pd:y>93</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="Data">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx5:CommentDataCaseElement"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <Data>
+                <xsl:for-each select="$CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement">
+                    <pfx5:CommentDataCaseElement>
+                        <xsl:if test="comment_Id">
+                            <comment_Id>
+                                <xsl:value-of select="comment_Id"/>
+                            </comment_Id>
+                        </xsl:if>
+                        <siebelCircuitID>
+                            <xsl:value-of select="siebelCircuitID"/>
+                        </siebelCircuitID>
+                        <xsl:if test="taskName">
+                            <taskName>
+                                <xsl:value-of select="taskName"/>
+                            </taskName>
+                        </xsl:if>
+                        <xsl:if test="addedby">
+                            <addedby>
+                                <xsl:value-of select="addedby"/>
+                            </addedby>
+                        </xsl:if>
+                        <xsl:if test="if(count($CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments)=0) then&#xA;&quot;NA&quot;&#xA;else $CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments">
+                            <comments>
+                                <xsl:value-of select="if(count($CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments)=0) then&#xA;&quot;NA&quot;&#xA;else $CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments"/>
+                            </comments>
+                        </xsl:if>
+                        <xsl:if test="time">
+                            <time>
+                                <xsl:value-of select="time"/>
+                            </time>
+                        </xsl:if>
+                    </pfx5:CommentDataCaseElement>
+                </xsl:for-each>
+            </Data>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>565</pd:x>
+        <pd:y>154</pd:y>
+        <pd:width>135</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>52</pd:collapsedWidth>
+        <pd:collapsedHeight>69</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$ReadCaseCommentsData/outputMessage/ns2:ReadCaseResponse/caseData</pd:over>
+            <pd:iterationElementSlot>CaseElement</pd:iterationElementSlot>
+            <pd:indexSlot>CaseIndex</pd:indexSlot>
+            <pd:outSlot>CommentData</pd:outSlot>
+            <pd:activityOutputName>Parse XML</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Parse XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse XML</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Parse XML">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>624</pd:x>
+            <pd:y>217</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>true</validateOutput>
+                <term ref="pfx5:CommentDataCaseElement"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$CaseElement/caseData/casePayload"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>RenderRequestPayload</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderRequestPayload</pd:from>
+        <pd:to>findCommentsDataCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>findCommentsDataCase</pd:from>
+        <pd:to>ReadCaseCommentsData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ReadCaseCommentsData</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

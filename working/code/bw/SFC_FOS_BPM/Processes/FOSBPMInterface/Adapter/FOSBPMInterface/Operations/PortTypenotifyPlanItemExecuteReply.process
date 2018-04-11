@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx3="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns3="http://www.tibco.com/pe/EngineTypes">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypenotifyPlanItemExecuteReply.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx:notifyPlanItemExecuteReplyInput"/>
-    <pd:startX>150</pd:startX>
-    <pd:startY>64</pd:startY>
+    <pd:startX>67</pd:startX>
+    <pd:startY>65</pd:startY>
     <pd:returnBindings>
         <pfx:notifyPlanItemExecuteReplyResponse>
             <output>
@@ -19,15 +19,72 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx:notifyPlanItemExecuteReplyResponse"/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>64</pd:endY>
+    <pd:endX>755</pd:endX>
+    <pd:endY>63</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1521011672991</pd:targetNamespace>
+    <pd:activity name="AuditStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>194</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx2:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="'COMComponent'"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="'BPM'"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="'AUDIT'"/>
+                    </ns2:LogType>
+                    <ns2:LogMessage>
+                        <xsl:value-of select="'Request to COM Component to close the planItem ID'"/>
+                    </ns2:LogMessage>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="'START_NOTIFY_PLANITEM'"/>
+                </Category>
+                <xsl:if test="$_globalVariables/ns1:GlobalVariables/BPM/Log/AuditFlag='true'">
+                    <TransactionMessage>
+                        <xsl:value-of select="tib:render-xml($Start/pfx:notifyPlanItemExecuteReplyInput)"/>
+                    </TransactionMessage>
+                </xsl:if>
+                <Audit>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/Log/AuditFlag"/>
+                </Audit>
+            </pfx2:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Call Notify Plan Item Execution Main Process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>297</pd:x>
+        <pd:x>365</pd:x>
         <pd:y>80</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/notifyPlanItemExecuteReplyProcess.process</processName>
@@ -119,15 +176,190 @@
             </pfx:notifyPlanItemExecuteReplyInput>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="sendExceptionRequest">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>548</pd:x>
+        <pd:y>188</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ExceptionRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="'COMComponent'"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="'ERROR'"/>
+                    </ns2:LogType>
+                    <xsl:if test="$_error/ns3:ErrorReport/Msg">
+                        <ns2:LogMessage>
+                            <xsl:value-of select="$_error/ns3:ErrorReport/Msg"/>
+                        </ns2:LogMessage>
+                    </xsl:if>
+                </ns2:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$_error/ns3:ErrorReport/MsgCode"/>
+                </ExceptionCode>
+                <xsl:if test="$_error/ns3:ErrorReport/StackTrace">
+                    <StackTrace>
+                        <xsl:value-of select="$_error/ns3:ErrorReport/StackTrace"/>
+                    </StackTrace>
+                </xsl:if>
+                <TransactionMessage>
+                    <xsl:value-of select="tib:render-xml($_error/ns3:ErrorReport)"/>
+                </TransactionMessage>
+            </pfx3:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="AuditEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>549</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx2:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:ApplicationID>
+                    <ns2:SourceSystem>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                    </ns2:SourceSystem>
+                    <ns2:TargetSystem>
+                        <xsl:value-of select="'COMComponent'"/>
+                    </ns2:TargetSystem>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId">
+                        <ns2:TransactionID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:BussinessTransactionId"/>
+                        </ns2:TransactionID>
+                    </xsl:if>
+                    <xsl:if test="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId">
+                        <ns2:CorrelationID>
+                            <xsl:value-of select="$Start/pfx:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId"/>
+                        </ns2:CorrelationID>
+                    </xsl:if>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="'BPM'"/>
+                    </ns2:ComponentName>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:LogType>
+                        <xsl:value-of select="'AUDIT'"/>
+                    </ns2:LogType>
+                    <ns2:LogMessage>
+                        <xsl:value-of select="'Response From COM Component to close the planItem ID'"/>
+                    </ns2:LogMessage>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="'END_NOTIFY_PLANITEM'"/>
+                </Category>
+                <xsl:if test="$_globalVariables/ns1:GlobalVariables/BPM/Log/AuditFlag='true'">
+                    <TransactionMessage>
+                        <xsl:value-of select="tib:render-xml($Start/pfx:notifyPlanItemExecuteReplyInput)"/>
+                    </TransactionMessage>
+                </xsl:if>
+                <Audit>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/Log/AuditFlag"/>
+                </Audit>
+            </pfx2:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>193</pd:x>
+        <pd:y>191</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>363</pd:x>
+        <pd:y>191</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns4:ActivityInput>
+                <message>
+                    <xsl:value-of select="tib:render-xml($_error/ns3:ErrorReport)"/>
+                </message>
+            </ns4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Call Notify Plan Item Execution Main Process</pd:to>
+        <pd:to>AuditStart</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Call Notify Plan Item Execution Main Process</pd:from>
+        <pd:to>AuditEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AuditStart</pd:from>
+        <pd:to>Call Notify Plan Item Execution Main Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AuditEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>sendExceptionRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>sendExceptionRequest</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

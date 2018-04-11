@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://www.tibco.com/SharedResources/SchemaDefinitions/Messaging/Header">
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx5="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://www.tibco.com/SharedResources/SchemaDefinitions/Messaging/Header" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <wsdl:import namespace="http://www.tibco.com/ws/BS_CommercialOrderManagement" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/Orchestrator.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/notifyPlanItemExecuteReplyProcess.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType wsMsgRef="pfx2:notifyPlanItemExecuteReplyInput"/>
-    <pd:startX>150</pd:startX>
-    <pd:startY>64</pd:startY>
+    <pd:startX>63</pd:startX>
+    <pd:startY>61</pd:startY>
     <pd:returnBindings>
         <pfx2:notifyPlanItemExecuteReplyResponse>
             <output>
@@ -20,18 +20,50 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:notifyPlanItemExecuteReplyResponse"/>
-    <pd:endX>450</pd:endX>
-    <pd:endY>64</pd:endY>
+    <pd:endX>779</pd:endX>
+    <pd:endY>61</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1521012104482</pd:targetNamespace>
+    <pd:activity name="LogRequest">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>183</pd:x>
+        <pd:y>155</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat('NotifyPlanItemInputRequest',tib:render-xml($Start/pfx2:notifyPlanItemExecuteReplyInput))"/>
+                </message>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>553</pd:x>
+        <pd:y>155</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat('NotifyPlanItemInputResponse',tib:render-xml($Notify-Plan-Item-Execution-Request))"/>
+                </message>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Notify Plan Item Execution Request">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>297</pd:x>
-        <pd:y>73</pd:y>
+        <pd:x>346</pd:x>
+        <pd:y>69</pd:y>
         <config>
-            <timeout>0</timeout>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
             <timeoutType>Seconds</timeoutType>
             <service>pfx:Orchestrator</service>
@@ -134,12 +166,42 @@
         <pd:to>Notify Plan Item Execution Request</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Notify Plan Item Execution Request</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>LogRequest</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx3:GlobalVariables/BPM/Log/AuditFlag='true'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogRequest</pd:from>
+        <pd:to>Notify Plan Item Execution Request</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Notify Plan Item Execution Request</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx3:GlobalVariables/BPM/Log/AuditFlag='true'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

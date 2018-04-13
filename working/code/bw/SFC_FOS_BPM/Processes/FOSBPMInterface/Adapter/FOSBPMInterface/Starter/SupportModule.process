@@ -56,8 +56,8 @@
     <pd:activity name="Send HTTP Response">
         <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
         <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
-        <pd:x>774</pd:x>
-        <pd:y>329</pd:y>
+        <pd:x>775</pd:x>
+        <pd:y>328</pd:y>
         <config>
             <closeConnection>true</closeConnection>
             <eventSource>HTTP Receiver</eventSource>
@@ -87,6 +87,16 @@
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getTechnicalInformation&quot;">
                         <asciiContent>
                             <xsl:value-of select="$CallGetTechnicalInformation/root/CustomerInfoXML"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getProcessData&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$CallGetProcessData/Data/ProcessData"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getCurrentTask&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$CallGetCurrentTask/Data/CurrentTask"/>
                         </asciiContent>
                     </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getCommentsHistory&quot;">
@@ -230,8 +240,8 @@
     <pd:activity name="CallGetCustomerInfo">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>528</pd:x>
-        <pd:y>324</pd:y>
+        <pd:x>499</pd:x>
+        <pd:y>204</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCustomerInformation.process</processName>
         </config>
@@ -246,8 +256,8 @@
     <pd:activity name="CallGetTechnicalInformation">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>523</pd:x>
-        <pd:y>404</pd:y>
+        <pd:x>513</pd:x>
+        <pd:y>300</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetTechnicalInfo.process</processName>
         </config>
@@ -262,10 +272,42 @@
     <pd:activity name="CallGetCommentsHistory">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>522</pd:x>
-        <pd:y>478</pd:y>
+        <pd:x>523</pd:x>
+        <pd:y>397</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCommentsHistory.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CallGetCurrentTask">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>528</pd:x>
+        <pd:y>499</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCurrentTask.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CallGetProcessData">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>530</pd:x>
+        <pd:y>602</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetProcessData.process</processName>
         </config>
         <pd:inputBindings>
             <root>
@@ -357,6 +399,36 @@
     </pd:transition>
     <pd:transition>
         <pd:from>CallGetCommentsHistory</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallGetCurrentTask</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getCurrentTask"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>CallGetProcessData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getProcessData"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallGetCurrentTask</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CallGetProcessData</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx5="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://www.tibco.com/SharedResources/SchemaDefinitions/Messaging/Header" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+<pd:ProcessDefinition xmlns:pfx6="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx="http://www.tibco.com/ws/BS_CommercialOrderManagement" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://www.tibco.com/bx/2009/management/process/BxProcessManagementService_1.10.0" xmlns:pfx5="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns2="http://www.tibco.com/schemas/BS_CommercialOrderManagement/Orchestrator/Service/OrchestratorManager_v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://www.tibco.com/SharedResources/SchemaDefinitions/Messaging/Header" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <wsdl:import namespace="http://www.tibco.com/ws/BS_CommercialOrderManagement" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/Orchestrator.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/notifyPlanItemExecuteReplyProcess.process</pd:name>
@@ -60,7 +60,7 @@
     <pd:activity name="Notify Plan Item Execution Request">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>346</pd:x>
+        <pd:x>347</pd:x>
         <pd:y>69</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
@@ -77,15 +77,16 @@
                     <JMSTimeToLive>0</JMSTimeToLive>
                     <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
                     <JMSMessageType>Text</JMSMessageType>
-                    <NamingURL>%%SharedResources/Connections/JMSBPM/ContextURL%%</NamingURL>
+                    <NamingURL>tibjmsnaming://localhost:7222</NamingURL>
                     <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
-                    <NamingPrincipal>%%SharedResources/Connections/JMSBPM/User%%</NamingPrincipal>
-                    <NamingCredential>%%SharedResources/Connections/JMSBPM/Password%%</NamingCredential>
-                    <ConnectionFactory>%%SharedResources/Connections/JMSBPM/ConnectionFactory%%</ConnectionFactory>
-                    <JMSTo>%%SharedResources/Connections/JMSBPM/QueueName%%</JMSTo>
-                    <JMSUserName>%%SharedResources/Connections/JMSBPM/User%%</JMSUserName>
-                    <JMSPassword>%%SharedResources/Connections/JMSBPM/Password%%</JMSPassword>
+                    <NamingPrincipal>admin</NamingPrincipal>
+                    <NamingCredential/>
+                    <ConnectionFactory>QueueConnectionFactory</ConnectionFactory>
+                    <JMSTo>SFC.UTIL.SERVICE.COMMON.SOAP</JMSTo>
+                    <JMSUserName>admin</JMSUserName>
+                    <JMSPassword/>
                     <NamingProperties/>
+                    <JMSNamingValidateSecurityContext>true</JMSNamingValidateSecurityContext>
                 </jmsChannel>
             </sharedChannels>
         </config>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx3="http://bizData.fosImpl.sfc.com/dataModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime">
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/FetchDeleteCase.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -16,8 +16,7 @@
     <pd:startY>68</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endType/>
-    <pd:endX>562</pd:endX>
+    <pd:endX>608</pd:endX>
     <pd:endY>68</pd:endY>
     <pd:errorSchemas>
         <Schema0>
@@ -91,8 +90,8 @@
     <pd:activity name="Null">
         <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
         <pd:resourceType>ae.activities.null</pd:resourceType>
-        <pd:x>337</pd:x>
-        <pd:y>159</pd:y>
+        <pd:x>393</pd:x>
+        <pd:y>161</pd:y>
         <config/>
         <pd:inputBindings/>
     </pd:activity>
@@ -120,7 +119,7 @@
     <pd:transition>
         <pd:from>FindLookupData</pd:from>
         <pd:to>Null</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>count($FindLookupData/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference)=0</pd:xpath>
@@ -128,7 +127,7 @@
     <pd:transition>
         <pd:from>Null</pd:from>
         <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

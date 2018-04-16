@@ -73,7 +73,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <pfx13:response>
-                                <xsl:value-of select="$Call-Resource-Mapping-Process/pfx13:createresourceinput/pfx13:createresourcerequest[1]/pfx13:result"/>
+                                <xsl:value-of select="$Call-CreateResource-Process/pfx13:createresourceinput/pfx13:createresourcerequest[1]/pfx13:result"/>
                             </pfx13:response>
                         </xsl:otherwise>
                     </xsl:choose>
@@ -106,7 +106,7 @@
             </Status>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Call Resource Mapping Process">
+    <pd:activity name="Call CreateResource Process">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
         <pd:x>680</pd:x>
@@ -711,7 +711,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
         <pd:xpath>$Ldap-Entry-Code/javaCodeActivityOutput/outputMessage="Failure"</pd:xpath>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call Resource Mapping Process</pd:from>
+        <pd:from>Call CreateResource Process</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -726,7 +726,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
     </pd:transition>
     <pd:transition>
         <pd:from>Successfull LDAP Entry Log</pd:from>
-        <pd:to>Call Resource Mapping Process</pd:to>
+        <pd:to>Call CreateResource Process</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

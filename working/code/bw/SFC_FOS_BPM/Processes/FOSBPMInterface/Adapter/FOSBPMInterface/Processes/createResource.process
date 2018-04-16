@@ -83,6 +83,16 @@
         <inputFile>
             <xsd:element name="fileName" type="xsd:string"/>
         </inputFile>
+        <LDAPContainerDetails>
+            <xsd:element name="Container">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Id" type="xsd:string"/>
+                        <xsd:element name="alias" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </LDAPContainerDetails>
         <Attribute>
             <xsd:element name="Email" type="xsd:string"/>
         </Attribute>
@@ -95,16 +105,6 @@
         <ADDStatus>
             <xsd:element name="status" type="xsd:string"/>
         </ADDStatus>
-        <LDAPContainerID>
-            <xsd:element name="Container">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="Id" type="xsd:string"/>
-                        <xsd:element name="alias" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </LDAPContainerID>
         <groupGuid>
             <xsd:element name="guid" type="xsd:string"/>
         </groupGuid>
@@ -144,7 +144,7 @@
         <pd:x>382</pd:x>
         <pd:y>293</pd:y>
         <config>
-            <variableName>LDAPContainerID</variableName>
+            <variableName>LDAPContainerDetails</variableName>
         </config>
         <pd:inputBindings>
             <Container>
@@ -171,7 +171,7 @@
             </status>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Call CreateCase Process">
+    <pd:activity name="CreateCase Process Call">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
         <pd:x>1875</pd:x>
@@ -234,16 +234,16 @@
                 <ns2:createResource>
                     <candidate>
                         <xsl:attribute name="ldap-alias">
-                            <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
+                            <xsl:value-of select="$ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
                         </xsl:attribute>
                         <xsl:attribute name="ldap-dn">
-                            <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
+                            <xsl:value-of select="$ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                         </xsl:attribute>
                         <xsl:attribute name="name">
                             <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
                         </xsl:attribute>
                         <xsl:attribute name="container-id">
-                            <xsl:value-of select="$LDAPContainerID/Container/Id"/>
+                            <xsl:value-of select="$LDAPContainerDetails/Container/Id"/>
                         </xsl:attribute>
                     </candidate>
                 </ns2:createResource>
@@ -270,10 +270,10 @@
             <inputMessage>
                 <ns:getLdapEntry>
                     <xsl:attribute name="ldap-alias">
-                        <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
+                        <xsl:value-of select="$ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/@ldap-alias"/>
                     </xsl:attribute>
                     <xsl:attribute name="ldap-dn">
-                        <xsl:value-of select="$GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
+                        <xsl:value-of select="$ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                     </xsl:attribute>
                     <attribute>
                         <xsl:attribute name="name">
@@ -316,7 +316,7 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="GetSpecificCandidate">
+    <pd:activity name="ExecuteLDAPQuery">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
         <pd:x>697</pd:x>
@@ -344,7 +344,7 @@
                                 <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-alias">
-                                <xsl:value-of select="$LDAPContainerID/Container/alias"/>
+                                <xsl:value-of select="$LDAPContainerDetails/Container/alias"/>
                             </xsl:attribute>
                         </ns:executeLdapQuery>
                     </inputMessage>
@@ -353,7 +353,7 @@
                     <inputMessage>
                         <ns:executeLdapQuery>
                             <xsl:attribute name="ldap-alias">
-                                <xsl:value-of select="$LDAPContainerID/Container/alias"/>
+                                <xsl:value-of select="$LDAPContainerDetails/Container/alias"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-query">
                                 <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
@@ -445,7 +445,7 @@
             </status>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Send Mail To Bussiness Users">
+    <pd:activity name="Send Mail">
         <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
         <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
         <pd:x>2022</pd:x>
@@ -555,12 +555,12 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>GetSpecificCandidate</pd:from>
+        <pd:from>ExecuteLDAPQuery</pd:from>
         <pd:to>createResource</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>count($GetSpecificCandidate/outputMessage/ns:executeLdapQueryResponse/ldap-entry)!=0</pd:xpath>
+        <pd:xpath>count($ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry)!=0</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>MapResourceToGroup</pd:from>
@@ -570,8 +570,8 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Call CreateCase Process</pd:from>
-        <pd:to>Send Mail To Bussiness Users</pd:to>
+        <pd:from>CreateCase Process Call</pd:from>
+        <pd:to>Send Mail</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -606,20 +606,20 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Process Status</pd:from>
-        <pd:to>Call CreateCase Process</pd:to>
+        <pd:to>CreateCase Process Call</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>GetOrgModel</pd:from>
-        <pd:to>GetSpecificCandidate</pd:to>
+        <pd:to>ExecuteLDAPQuery</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Send Mail To Bussiness Users</pd:from>
+        <pd:from>Send Mail</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

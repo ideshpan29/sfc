@@ -192,7 +192,7 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="GetResourceId">
+    <pd:activity name="GetResourceGUID">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
         <pd:x>600</pd:x>
@@ -267,7 +267,7 @@
                 <ns2:updateResource>
                     <resource>
                         <xsl:attribute name="guid">
-                            <xsl:value-of select="$GetResourceId/outputMessage/ns:getCandidateDetailResponse/@guid"/>
+                            <xsl:value-of select="$GetResourceGUID/outputMessage/ns:getCandidateDetailResponse/@guid"/>
                         </xsl:attribute>
                         <remove-group>
                             <xsl:attribute name="guid">
@@ -287,7 +287,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>GetResourceId</pd:from>
+        <pd:from>GetResourceGUID</pd:from>
         <pd:to>GetGroups</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -337,7 +337,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>AssignContainerDetails</pd:from>
-        <pd:to>GetResourceId</pd:to>
+        <pd:to>GetResourceGUID</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

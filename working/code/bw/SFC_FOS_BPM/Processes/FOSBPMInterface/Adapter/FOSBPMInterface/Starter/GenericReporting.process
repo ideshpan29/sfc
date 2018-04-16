@@ -304,7 +304,7 @@
             </pfx3:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="FetchProcessNames">
+    <pd:activity name="FetchData">
         <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
         <pd:x>514</pd:x>
@@ -388,7 +388,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <process>
                         <name>
                             <xsl:value-of select="column[name=&quot;PROC_TPL_NAME&quot;]/value"/>
@@ -431,7 +431,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <Record>
                         <process_template>
                             <xsl:value-of select="column[name=&quot;PROCESS_TEMPLATE&quot;]/value"/>
@@ -494,7 +494,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <param>
                         <xsl:if test="column[name=&quot;PROCESS_INSTANCE&quot;]/value">
                             <process_instance>
@@ -562,7 +562,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <Record>
                         <process_template>
                             <xsl:value-of select="column[name=&quot;PROCESS_TEMPLATE&quot;]/value"/>
@@ -628,7 +628,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <Record>
                         <ACTIVITY_NAME>
                             <xsl:value-of select="column[name=&quot;ACTIVITY_NAME&quot;]/value"/>
@@ -692,7 +692,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <Record>
                         <activityName>
                             <xsl:value-of select="column[name=&quot;ACTIVITYNAME&quot;]/value"/>
@@ -733,7 +733,7 @@
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchProcessNames/jdbcGeneralActivityOutput/unknownResultset/row">
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
                     <Record>
                         <count>
                             <xsl:value-of select="column[name=&quot;CASECOUNT&quot;]/value"/>
@@ -793,13 +793,13 @@
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>FetchProcessNames</pd:to>
+        <pd:to>FetchData</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderGetProcessNames</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -814,7 +814,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderGetProcessInstances</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -829,7 +829,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderGetProcessInstanceDetails</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -844,7 +844,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderSerachResullts</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -859,7 +859,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderGetProcessTasks</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -874,7 +874,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderGetProcessCurrentActivity</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -889,7 +889,7 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>FetchProcessNames</pd:from>
+        <pd:from>FetchData</pd:from>
         <pd:to>RenderResourceWiseAnalysis</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

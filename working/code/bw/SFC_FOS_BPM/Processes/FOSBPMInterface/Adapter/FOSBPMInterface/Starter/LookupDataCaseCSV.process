@@ -4,38 +4,22 @@
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/LookupDataCaseCSV.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startX>20</pd:startX>
-    <pd:startY>195</pd:startY>
+    <pd:startX>27</pd:startX>
+    <pd:startY>197</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>1018</pd:endX>
-    <pd:endY>194</pd:endY>
+    <pd:endX>1366</pd:endX>
+    <pd:endY>195</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1521435350432</pd:targetNamespace>
-    <pd:activity name="List Files">
-        <pd:type>com.tibco.plugin.file.ListFilesActivity</pd:type>
-        <pd:resourceType>ae.activities.ListFilesActivity</pd:resourceType>
-        <pd:x>97</pd:x>
-        <pd:y>193</pd:y>
-        <config>
-            <mode>files-and-directories</mode>
-        </config>
-        <pd:inputBindings>
-            <ns:ListFilesActivityConfig>
-                <fileName>
-                    <xsl:value-of select="&quot;D:\Project\Texts\LookupData\*.csv&quot;"/>
-                </fileName>
-            </ns:ListFilesActivityConfig>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:group name="Group (1)">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>166</pd:x>
+        <pd:x>175</pd:x>
         <pd:y>17</pd:y>
-        <pd:width>768</pd:width>
-        <pd:height>336</pd:height>
+        <pd:width>831</pd:width>
+        <pd:height>345</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -111,8 +95,8 @@
         <pd:activity name="Remove File">
             <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
             <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
-            <pd:x>853</pd:x>
-            <pd:y>189</pd:y>
+            <pd:x>836</pd:x>
+            <pd:y>204</pd:y>
             <config/>
             <pd:inputBindings>
                 <ns:RemoveActivityInputClass>
@@ -125,8 +109,8 @@
         <pd:activity name="Processed Files">
             <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
             <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
-            <pd:x>646</pd:x>
-            <pd:y>189</pd:y>
+            <pd:x>604</pd:x>
+            <pd:y>204</pd:y>
             <config>
                 <createMissingDirectories>true</createMissingDirectories>
                 <includeSubDirectories>true</includeSubDirectories>
@@ -146,8 +130,8 @@
         <pd:activity name="FetchDeleteCase">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>244</pd:x>
-            <pd:y>191</pd:y>
+            <pd:x>257</pd:x>
+            <pd:y>198</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/FetchDeleteCase.process</processName>
             </config>
@@ -162,8 +146,8 @@
         <pd:activity name="Current File">
             <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
             <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
-            <pd:x>751</pd:x>
-            <pd:y>187</pd:y>
+            <pd:x>723</pd:x>
+            <pd:y>203</pd:y>
             <config>
                 <overwrite>true</overwrite>
                 <createMissingDirectories>true</createMissingDirectories>
@@ -183,8 +167,8 @@
         <pd:activity name="Call-Process-1">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>493</pd:x>
-            <pd:y>286</pd:y>
+            <pd:x>483</pd:x>
+            <pd:y>308</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/Reload Case Data.process</processName>
             </config>
@@ -199,8 +183,8 @@
         <pd:activity name="Parse File">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>355</pd:x>
-            <pd:y>192</pd:y>
+            <pd:x>362</pd:x>
+            <pd:y>203</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ParseLookupCSV.process</processName>
             </config>
@@ -215,8 +199,8 @@
         <pd:activity name="RenderCreateLookup">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>495</pd:x>
-            <pd:y>191</pd:y>
+            <pd:x>479</pd:x>
+            <pd:y>204</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/RenderCreateLookup.process</processName>
             </config>
@@ -238,6 +222,22 @@
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
+    <pd:activity name="List Files">
+        <pd:type>com.tibco.plugin.file.ListFilesActivity</pd:type>
+        <pd:resourceType>ae.activities.ListFilesActivity</pd:resourceType>
+        <pd:x>109</pd:x>
+        <pd:y>196</pd:y>
+        <config>
+            <mode>files-and-directories</mode>
+        </config>
+        <pd:inputBindings>
+            <ns:ListFilesActivityConfig>
+                <fileName>
+                    <xsl:value-of select="&quot;D:\Project\Texts\LookupData\*.csv&quot;"/>
+                </fileName>
+            </ns:ListFilesActivityConfig>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Reload Lookups on Error">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>

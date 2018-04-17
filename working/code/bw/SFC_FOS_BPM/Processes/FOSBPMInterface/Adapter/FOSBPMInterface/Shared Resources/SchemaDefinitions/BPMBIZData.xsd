@@ -75,7 +75,7 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element ecore:name="modifiedDate" id="_sjDgxhbLEei5zJcabt9kCg" name="modifiedDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element ecore:name="modifiedDate" id="_sjDgxhbLEei5zJcabt9kCg" name="modifiedDate" type="xsd:dateTime" minOccurs="0"/>
 			<xsd:element ecore:name="siebelCircuitID" id="_uvKzABbLEei5zJcabt9kCg" name="siebelCircuitID">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
@@ -113,14 +113,14 @@
 	</xsd:complexType>
 	<xsd:complexType ecore:name="Customer_Information" id="_EtWckCgaEei5K6PV_O0G8g" name="Customer_Information">
 		<xsd:sequence>
-			<xsd:element ecore:name="siebelCircuitID" id="_A-_fACgbEei5K6PV_O0G8g" name="siebelCircuitID" minOccurs="0">
+			<xsd:element ecore:name="siebelCircuitID" id="_A-_fACgbEei5K6PV_O0G8g" name="siebelCircuitID">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
 						<xsd:maxLength value="200"/>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
-			<xsd:element ecore:name="projectManager" id="_C16kYCgbEei5K6PV_O0G8g" name="projectManager" minOccurs="0">
+			<xsd:element ecore:name="projectManager" id="_C16kYCgbEei5K6PV_O0G8g" name="projectManager">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
 						<xsd:maxLength value="200"/>
@@ -130,7 +130,7 @@
 			<xsd:element ecore:name="clientName" id="_DNMb8CgbEei5K6PV_O0G8g" name="clientName" minOccurs="0">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
-						<xsd:maxLength value="50"/>
+						<xsd:maxLength value="200"/>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
@@ -271,9 +271,70 @@
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
+			<xsd:element ecore:name="address" id="_i-sdoEFUEeiWSuWFK3Y-hg" name="address" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="400"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="engineer" id="_laDs0EFUEeiWSuWFK3Y-hg" name="engineer" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="lastNotificationBy" id="_t_dcYEFUEeiWSuWFK3Y-hg" name="lastNotificationBy" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="lastNotificationDate" id="_w1DJcEFUEeiWSuWFK3Y-hg" name="lastNotificationDate" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="recordStatus" id="_zzlXIEFUEeiWSuWFK3Y-hg" name="recordStatus" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="400"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType ecore:name="Building_Mapping" id="_1XGCMEFdEeih74BcCGeYZw" name="Building_Mapping">
+		<xsd:sequence>
+			<xsd:element ecore:name="buildingCaseIdentifier" id="_-PQ8wEFdEeih74BcCGeYZw" name="buildingCaseIdentifier" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="19"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="building_ID" id="_DaPM0EFeEeih74BcCGeYZw" name="building_ID" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="100"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element ecore:name="building_Name" id="_GRE3EEFeEeih74BcCGeYZw" name="building_Name" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="400"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="Technical_InformationElement" type="tns1:Technical_Information"/>
 	<xsd:element name="Equipment_DetailsElement" type="tns1:Equipment_Details"/>
 	<xsd:element name="Customer_InformationElement" type="tns1:Customer_Information"/>
+	<xsd:element name="Building_MappingElement" type="tns1:Building_Mapping"/>
 </xsd:schema>

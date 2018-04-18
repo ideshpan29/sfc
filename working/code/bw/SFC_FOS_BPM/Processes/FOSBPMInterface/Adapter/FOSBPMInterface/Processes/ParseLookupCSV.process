@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModelSchema.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ParseLookupCSV.process</pd:name>
@@ -66,7 +66,7 @@
                     <xsl:value-of select="$Start/root/FullName"/>
                 </fileName>
                 <noOfRecords>
-                    <xsl:value-of select="-1"/>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/NoofRecords"/>
                 </noOfRecords>
             </Input>
         </pd:inputBindings>

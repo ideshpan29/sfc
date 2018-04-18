@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://api.bds.tibco.com">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://api.bds.tibco.com">
     <xsd:import namespace="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd"/>
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/SiebelDataCreateCase.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startX>70</pd:startX>
-    <pd:startY>378</pd:startY>
+    <pd:startX>39</pd:startX>
+    <pd:startY>494</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>1508</pd:endX>
-    <pd:endY>373</pd:endY>
+    <pd:endX>1689</pd:endX>
+    <pd:endY>508</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Counter>
             <xsd:element name="count" type="xsd:int"/>
         </Counter>
+        <technicalInfoDateTime>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="LastModifiedDate" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </technicalInfoDateTime>
+        <CustomerInfoDateTime>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ServiceStartDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ServiceEndDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="RequestDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="InstallationDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="lastNotificationDate" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </CustomerInfoDateTime>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1521118604988</pd:targetNamespace>
-    <pd:activity name="Log">
+    <pd:activity name="StartTimeStampLog">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>184</pd:x>
-        <pd:y>378</pd:y>
+        <pd:x>172</pd:x>
+        <pd:y>494</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -34,11 +56,11 @@
             </ns2:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Log-2">
+    <pd:activity name="endTimeStampLog">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>1396</pd:x>
-        <pd:y>375</pd:y>
+        <pd:x>1554</pd:x>
+        <pd:y>505</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -53,10 +75,10 @@
     <pd:group name="Group (2)">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>271</pd:x>
-        <pd:y>123</pd:y>
-        <pd:width>1020</pd:width>
-        <pd:height>485</pd:height>
+        <pd:x>292</pd:x>
+        <pd:y>155</pd:y>
+        <pd:width>1169</pd:width>
+        <pd:height>685</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -66,35 +88,28 @@
             <pd:serializable>false</pd:serializable>
             <pd:indexSlot>entryIndex</pd:indexSlot>
             <pd:activityOutputName/>
-            <pd:repeatCondition>$ParseSiebeldataFile/Output/EOF=0</pd:repeatCondition>
+            <pd:repeatCondition>$ParseSiebelDataFile/Output/EOF=0</pd:repeatCondition>
             <pd:accumulateOutput>false</pd:accumulateOutput>
         </config>
         <pd:inputBindings/>
         <pd:expanded>true</pd:expanded>
         <pd:transition>
             <pd:from>start</pd:from>
-            <pd:to>ParseSiebeldataFile</pd:to>
+            <pd:to>ParseSiebelDataFile</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Write File</pd:from>
+            <pd:from>WriteSucessfulRecords</pd:from>
             <pd:to>end</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Write-File-1</pd:from>
+            <pd:from>WriteFailedRecords</pd:from>
             <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>ParseSiebeldataFile</pd:from>
-            <pd:to>Log-1</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
@@ -114,75 +129,59 @@
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Log-1</pd:from>
-            <pd:to>Group (1)</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
-            <pd:from>Log-1</pd:from>
-            <pd:to>Group</pd:to>
-            <pd:lineType>Default</pd:lineType>
-            <pd:lineColor>-16777216</pd:lineColor>
-            <pd:conditionType>always</pd:conditionType>
-        </pd:transition>
-        <pd:transition>
             <pd:from>createCaseCustomerInfo</pd:from>
-            <pd:to>Render Data</pd:to>
+            <pd:to>RenderSucessSiebelRecords</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>createCaseTechnicalInfo</pd:from>
-            <pd:to>Render Data</pd:to>
+            <pd:to>RenderSucessSiebelRecords</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Render Data</pd:from>
-            <pd:to>Write File</pd:to>
+            <pd:from>RenderSucessSiebelRecords</pd:from>
+            <pd:to>WriteSucessfulRecords</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Catch</pd:from>
-            <pd:to>Render-Data-1</pd:to>
+            <pd:to>RenderFailedSiebelRecords</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
-            <pd:from>Render-Data-1</pd:from>
-            <pd:to>Write-File-1</pd:to>
+            <pd:from>RenderFailedSiebelRecords</pd:from>
+            <pd:to>WriteFailedRecords</pd:to>
             <pd:lineType>Default</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
-        <pd:activity name="Log-1">
-            <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
-            <pd:resourceType>ae.activities.log</pd:resourceType>
-            <pd:x>477</pd:x>
-            <pd:y>378</pd:y>
-            <config>
-                <role>User</role>
-            </config>
-            <pd:inputBindings>
-                <ns2:ActivityInput>
-                    <message>
-                        <xsl:value-of select="concat('Soap_Call_Start_Time',current-dateTime())"/>
-                    </message>
-                </ns2:ActivityInput>
-            </pd:inputBindings>
-        </pd:activity>
-        <pd:activity name="ParseSiebeldataFile">
+        <pd:transition>
+            <pd:from>ParseSiebelDataFile</pd:from>
+            <pd:to>Group (1)</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ParseSiebelDataFile</pd:from>
+            <pd:to>Group</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="ParseSiebelDataFile">
             <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
             <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-            <pd:x>366</pd:x>
-            <pd:y>374</pd:y>
+            <pd:x>384</pd:x>
+            <pd:y>509</pd:y>
             <config>
                 <InputType>File</InputType>
                 <Encoding>ASCII</Encoding>
@@ -207,10 +206,10 @@
         <pd:group name="Group (1)">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>626</pd:x>
-            <pd:y>356</pd:y>
-            <pd:width>178</pd:width>
-            <pd:height>140</pd:height>
+            <pd:x>515</pd:x>
+            <pd:y>516</pd:y>
+            <pd:width>508</pd:width>
+            <pd:height>241</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
             <pd:collapsedHeight>70</pd:collapsedHeight>
             <pd:groupVariables/>
@@ -218,7 +217,7 @@
             <config>
                 <pd:groupType>inputLoop</pd:groupType>
                 <pd:serializable>false</pd:serializable>
-                <pd:over>$ParseSiebeldataFile/Output/Rows/pfx:root</pd:over>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
                 <pd:iterationElementSlot>TechnicalEntry</pd:iterationElementSlot>
                 <pd:indexSlot>TechnicalInfoindex</pd:indexSlot>
                 <pd:outSlot>TechnicalInfoPayload</pd:outSlot>
@@ -229,7 +228,7 @@
             <pd:expanded>true</pd:expanded>
             <pd:transition>
                 <pd:from>start</pd:from>
-                <pd:to>RenderTechnicalInfoCaseData</pd:to>
+                <pd:to>MapTechnicalInfoDates</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>always</pd:conditionType>
@@ -241,11 +240,25 @@
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>always</pd:conditionType>
             </pd:transition>
+            <pd:transition>
+                <pd:from>MapTechnicalInfoDates</pd:from>
+                <pd:to>AssignTechnicalInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>AssignTechnicalInfoDates</pd:from>
+                <pd:to>RenderTechnicalInfoCaseData</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
             <pd:activity name="RenderTechnicalInfoCaseData">
                 <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
                 <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-                <pd:x>717</pd:x>
-                <pd:y>431</pd:y>
+                <pd:x>914</pd:x>
+                <pd:y>640</pd:y>
                 <config>
                     <renderAsText>text</renderAsText>
                     <validateInput>false</validateInput>
@@ -302,9 +315,9 @@
                                 <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:LastModifiedBy"/>
                             </modifiedBy>
                         </xsl:if>
-                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:LastModifiedDate">
+                        <xsl:if test="$technicalInfoDateTime/root/LastModifiedDate!=&quot;&quot;">
                             <modifiedDate>
-                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:LastModifiedDate"/>
+                                <xsl:value-of select="$technicalInfoDateTime/root/LastModifiedDate"/>
                             </modifiedDate>
                         </xsl:if>
                         <siebelCircuitID>
@@ -341,14 +354,74 @@
                     </pfx2:Technical_InformationElement>
                 </pd:inputBindings>
             </pd:activity>
+            <pd:activity name="MapTechnicalInfoDates">
+                <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+                <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+                <pd:x>620</pd:x>
+                <pd:y>643</pd:y>
+                <config>
+                    <element>
+                        <xsd:element name="root">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="year" type="xsd:string"/>
+                                    <xsd:element name="month" type="xsd:string"/>
+                                    <xsd:element name="day" type="xsd:string"/>
+                                    <xsd:element name="hours" type="xsd:string"/>
+                                    <xsd:element name="minutes" type="xsd:string"/>
+                                    <xsd:element name="seconds" type="xsd:string"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </element>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <year>
+                            <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </year>
+                        <month>
+                            <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </month>
+                        <day>
+                            <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </day>
+                        <hours>
+                            <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </hours>
+                        <minutes>
+                            <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </minutes>
+                        <seconds>
+                            <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </seconds>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="AssignTechnicalInfoDates">
+                <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+                <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+                <pd:x>766</pd:x>
+                <pd:y>643</pd:y>
+                <config>
+                    <variableName>technicalInfoDateTime</variableName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <LastModifiedDate>
+                            <xsl:value-of select="if ($MapTechnicalInfoDates/root/year=0 or $MapTechnicalInfoDates/root/month=0 or $MapTechnicalInfoDates/root/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapTechnicalInfoDates/root/year, $MapTechnicalInfoDates/root/month, $MapTechnicalInfoDates/root/day, $MapTechnicalInfoDates/root/hours, $MapTechnicalInfoDates/root/minutes, $MapTechnicalInfoDates/root/seconds)"/>
+                        </LastModifiedDate>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
         </pd:group>
         <pd:group name="Group">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>619</pd:x>
-            <pd:y>159</pd:y>
-            <pd:width>182</pd:width>
-            <pd:height>140</pd:height>
+            <pd:x>510</pd:x>
+            <pd:y>251</pd:y>
+            <pd:width>502</pd:width>
+            <pd:height>191</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
             <pd:collapsedHeight>70</pd:collapsedHeight>
             <pd:groupVariables/>
@@ -356,7 +429,7 @@
             <config>
                 <pd:groupType>inputLoop</pd:groupType>
                 <pd:serializable>false</pd:serializable>
-                <pd:over>$ParseSiebeldataFile/Output/Rows/pfx:root</pd:over>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
                 <pd:iterationElementSlot>CustomerInfoentry</pd:iterationElementSlot>
                 <pd:indexSlot>index</pd:indexSlot>
                 <pd:outSlot>CustomerInfoPayload</pd:outSlot>
@@ -367,7 +440,7 @@
             <pd:expanded>true</pd:expanded>
             <pd:transition>
                 <pd:from>start</pd:from>
-                <pd:to>RenderCustomerInfoCaseData</pd:to>
+                <pd:to>MapCustomerInfoDates</pd:to>
                 <pd:lineType>Default</pd:lineType>
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>always</pd:conditionType>
@@ -379,11 +452,25 @@
                 <pd:lineColor>-16777216</pd:lineColor>
                 <pd:conditionType>always</pd:conditionType>
             </pd:transition>
+            <pd:transition>
+                <pd:from>MapCustomerInfoDates</pd:from>
+                <pd:to>AssignCustomerInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>AssignCustomerInfoDates</pd:from>
+                <pd:to>RenderCustomerInfoCaseData</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
             <pd:activity name="RenderCustomerInfoCaseData">
                 <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
                 <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-                <pd:x>706</pd:x>
-                <pd:y>230</pd:y>
+                <pd:x>899</pd:x>
+                <pd:y>352</pd:y>
                 <config>
                     <renderAsText>text</renderAsText>
                     <validateInput>false</validateInput>
@@ -485,40 +572,259 @@
                                 <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Email"/>
                             </email>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceStartDate">
+                        <xsl:if test="$CustomerInfoDateTime/root/ServiceStartDate!=&quot;&quot;">
                             <serviceStart>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceStartDate"/>
+                                <xsl:value-of select="$CustomerInfoDateTime/root/ServiceStartDate"/>
                             </serviceStart>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceEndDate">
-                            <serviceEnd>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceEndDate"/>
-                            </serviceEnd>
+                        <xsl:if test="$CustomerInfoDateTime/root/ServiceEndDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/ServiceEndDate">
+                                <serviceEnd>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/ServiceEndDate"/>
+                                </serviceEnd>
+                            </xsl:if>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:RequestDate">
-                            <requestDate>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:RequestDate"/>
-                            </requestDate>
+                        <xsl:if test="$CustomerInfoDateTime/root/RequestDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/RequestDate">
+                                <requestDate>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/RequestDate"/>
+                                </requestDate>
+                            </xsl:if>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:InstalledDate">
-                            <installDate>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:InstalledDate"/>
-                            </installDate>
+                        <xsl:if test="$CustomerInfoDateTime/root/InstallationDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/InstallationDate">
+                                <installDate>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/InstallationDate"/>
+                                </installDate>
+                            </xsl:if>
                         </xsl:if>
                         <xsl:if test="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission">
                             <notesComments>
                                 <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission"/>
                             </notesComments>
                         </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/lastNotificationDate">
+                            <lastNotificationDate>
+                                <xsl:value-of select="$CustomerInfoDateTime/root/lastNotificationDate"/>
+                            </lastNotificationDate>
+                        </xsl:if>
                     </pfx2:Customer_InformationElement>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="MapCustomerInfoDates">
+                <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+                <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+                <pd:x>612</pd:x>
+                <pd:y>351</pd:y>
+                <config>
+                    <element>
+                        <xsd:element name="Date">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="ServiceStartDate">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="ServiceEndDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="InstallDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="LastNotificationDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="RequestDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </element>
+                </config>
+                <pd:inputBindings>
+                    <Date>
+                        <ServiceStartDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </ServiceStartDate>
+                        <ServiceEndDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </ServiceEndDate>
+                        <InstallDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </InstallDate>
+                        <LastNotificationDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </LastNotificationDate>
+                        <RequestDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </RequestDate>
+                    </Date>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="AssignCustomerInfoDates">
+                <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+                <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+                <pd:x>763</pd:x>
+                <pd:y>354</pd:y>
+                <config>
+                    <variableName>CustomerInfoDateTime</variableName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <ServiceStartDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/ServiceStartDate/year=0 or $MapCustomerInfoDates/Date/ServiceStartDate/month=0 or $MapCustomerInfoDates/Date/ServiceStartDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/ServiceStartDate/year, $MapCustomerInfoDates/Date/ServiceStartDate/month, $MapCustomerInfoDates/Date/ServiceStartDate/day, $MapCustomerInfoDates/Date/ServiceStartDate/hours, $MapCustomerInfoDates/Date/ServiceStartDate/minutes, $MapCustomerInfoDates/Date/ServiceStartDate/seconds)"/>
+                        </ServiceStartDate>
+                        <ServiceEndDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/ServiceEndDate/year=0 or $MapCustomerInfoDates/Date/ServiceEndDate/month=0 or $MapCustomerInfoDates/Date/ServiceEndDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/ServiceEndDate/year, $MapCustomerInfoDates/Date/ServiceEndDate/month, $MapCustomerInfoDates/Date/ServiceEndDate/day, $MapCustomerInfoDates/Date/ServiceEndDate/hours, $MapCustomerInfoDates/Date/ServiceEndDate/minutes, $MapCustomerInfoDates/Date/ServiceEndDate/seconds)"/>
+                        </ServiceEndDate>
+                        <RequestDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/RequestDate/year=0 or $MapCustomerInfoDates/Date/RequestDate/month=0 or $MapCustomerInfoDates/Date/RequestDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/RequestDate/year, $MapCustomerInfoDates/Date/RequestDate/month, $MapCustomerInfoDates/Date/RequestDate/day, $MapCustomerInfoDates/Date/RequestDate/hours, $MapCustomerInfoDates/Date/RequestDate/minutes, $MapCustomerInfoDates/Date/RequestDate/seconds)"/>
+                        </RequestDate>
+                        <InstallationDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/InstallDate/year=0 or $MapCustomerInfoDates/Date/InstallDate/month=0 or $MapCustomerInfoDates/Date/InstallDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/InstallDate/year, $MapCustomerInfoDates/Date/InstallDate/month, $MapCustomerInfoDates/Date/InstallDate/day, $MapCustomerInfoDates/Date/InstallDate/hours, $MapCustomerInfoDates/Date/InstallDate/minutes, $MapCustomerInfoDates/Date/InstallDate/seconds)"/>
+                        </InstallationDate>
+                        <lastNotificationDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/LastNotificationDate/year=0 or $MapCustomerInfoDates/Date/LastNotificationDate/month=0 or $MapCustomerInfoDates/Date/LastNotificationDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/LastNotificationDate/year, $MapCustomerInfoDates/Date/LastNotificationDate/month, $MapCustomerInfoDates/Date/LastNotificationDate/day, $MapCustomerInfoDates/Date/LastNotificationDate/hours, $MapCustomerInfoDates/Date/LastNotificationDate/minutes, $MapCustomerInfoDates/Date/LastNotificationDate/seconds)"/>
+                        </lastNotificationDate>
+                    </root>
                 </pd:inputBindings>
             </pd:activity>
         </pd:group>
         <pd:activity name="createCaseCustomerInfo">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>920</pd:x>
-            <pd:y>235</pd:y>
+            <pd:x>1113</pd:x>
+            <pd:y>363</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -551,8 +857,8 @@
         <pd:activity name="createCaseTechnicalInfo">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>918</pd:x>
-            <pd:y>425</pd:y>
+            <pd:x>1120</pd:x>
+            <pd:y>634</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -582,11 +888,11 @@
                 </inputMessage>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Write File">
+        <pd:activity name="WriteSucessfulRecords">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1132</pd:x>
-            <pd:y>344</pd:y>
+            <pd:x>1365</pd:x>
+            <pd:y>502</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -599,22 +905,22 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/OutputFileName"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="$Render-Data/Text"/>
+                        <xsl:value-of select="$RenderSucessSiebelRecords/Text"/>
                     </textContent>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Render Data">
+        <pd:activity name="RenderSucessSiebelRecords">
             <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
             <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
-            <pd:x>1024</pd:x>
-            <pd:y>340</pd:y>
+            <pd:x>1220</pd:x>
+            <pd:y>508</pd:y>
             <config>
                 <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
             </config>
             <pd:inputBindings>
                 <Rows>
-                    <xsl:for-each select="$ParseSiebeldataFile/Output/Rows/pfx:root">
+                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">
                         <pfx:root>
                             <xsl:if test="pfx:BuildingID">
                                 <pfx:BuildingID>
@@ -927,25 +1233,25 @@
         <pd:activity name="Catch">
             <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
             <pd:resourceType>ae.activities.catch</pd:resourceType>
-            <pd:x>970</pd:x>
-            <pd:y>532</pd:y>
+            <pd:x>1109</pd:x>
+            <pd:y>760</pd:y>
             <pd:handler>true</pd:handler>
             <config>
                 <catchAll>true</catchAll>
             </config>
             <pd:inputBindings/>
         </pd:activity>
-        <pd:activity name="Render-Data-1">
+        <pd:activity name="RenderFailedSiebelRecords">
             <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
             <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
-            <pd:x>1087</pd:x>
-            <pd:y>527</pd:y>
+            <pd:x>1246</pd:x>
+            <pd:y>755</pd:y>
             <config>
                 <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
             </config>
             <pd:inputBindings>
                 <Rows>
-                    <xsl:for-each select="$ParseSiebeldataFile/Output/Rows/pfx:root">
+                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">
                         <pfx:root>
                             <xsl:if test="pfx:BuildingID">
                                 <pfx:BuildingID>
@@ -1255,11 +1561,11 @@
                 </Rows>
             </pd:inputBindings>
         </pd:activity>
-        <pd:activity name="Write-File-1">
+        <pd:activity name="WriteFailedRecords">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1195</pd:x>
-            <pd:y>524</pd:y>
+            <pd:x>1375</pd:x>
+            <pd:y>755</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -1272,7 +1578,7 @@
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/OutputFileName"/>
                     </fileName>
                     <textContent>
-                        <xsl:value-of select="$Render-Data-1/Text"/>
+                        <xsl:value-of select="$RenderFailedSiebelRecords/Text"/>
                     </textContent>
                 </ns0:WriteActivityInputTextClass>
             </pd:inputBindings>
@@ -1280,20 +1586,20 @@
     </pd:group>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Log</pd:to>
+        <pd:to>StartTimeStampLog</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Log-2</pd:from>
+        <pd:from>endTimeStampLog</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Log</pd:from>
+        <pd:from>StartTimeStampLog</pd:from>
         <pd:to>Group (2)</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
@@ -1301,7 +1607,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group (2)</pd:from>
-        <pd:to>Log-2</pd:to>
+        <pd:to>endTimeStampLog</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

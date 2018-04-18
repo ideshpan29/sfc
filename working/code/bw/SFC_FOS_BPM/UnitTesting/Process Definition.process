@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <pd:name>UnitTesting/Process Definition.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="param" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="param" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1523956086311</pd:targetNamespace>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>277</pd:x>
+        <pd:y>102</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="days" type="xsd:string"/>
+                            <xsd:element name="month" type="xsd:string"/>
+                            <xsd:element name="year" type="xsd:string"/>
+                            <xsd:element name="hr" type="xsd:string"/>
+                            <xsd:element name="sec" type="xsd:string"/>
+                            <xsd:element name="min" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <days>
+                    <xsl:value-of select="substring-before(substring-after(tib:substring-before-last(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)"/>
+                </days>
+                <month>
+                    <xsl:value-of select="substring-before(tib:substring-before-last(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;/&quot;)"/>
+                </month>
+                <year>
+                    <xsl:value-of select="tib:substring-after-last(tib:substring-before-last(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;/&quot;)"/>
+                </year>
+                <hr>
+                    <xsl:value-of select="substring-before(substring-after(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;:&quot;)"/>
+                </hr>
+                <sec>
+                    <xsl:value-of select="tib:substring-after-last(substring-after(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;:&quot;)"/>
+                </sec>
+                <min>
+                    <xsl:value-of select="substring-before(substring-after(substring-after(tib:substring-before-last(&quot;12/21/2016 12:00:90 AM&quot;,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)"/>
+                </min>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>315</pd:x>
+        <pd:y>193</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <param>
+                    <xsl:value-of select="tib:create-dateTime(0,0,0,0,0,0)"/>
+                </param>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>1=2</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

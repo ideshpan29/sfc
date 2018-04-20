@@ -25,7 +25,42 @@
                 <row>
                     <attribute>SiebelCircuitID</attribute>
                     <attributeType>string</attributeType>
-                    <attributeCard>required</attributeCard>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>BuildingName</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>ServiceType</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>Technology</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>ClientName</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>ServiceStatus</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>ProjectManager</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
+                </row>
+                <row>
+                    <attribute>AccountManager</attribute>
+                    <attributeType>string</attributeType>
+                    <attributeCard>optional</attributeCard>
                 </row>
             </customField>
             <Headers>
@@ -48,8 +83,8 @@
         <pd:inputBindings/>
     </pd:starter>
     <pd:endName>End</pd:endName>
-    <pd:endX>1192</pd:endX>
-    <pd:endY>309</pd:endY>
+    <pd:endX>1189</pd:endX>
+    <pd:endY>329</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1512639133195</pd:targetNamespace>
@@ -102,6 +137,11 @@
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/getCommentsHistory&quot;">
                         <asciiContent>
                             <xsl:value-of select="$CallGetCommentsHistory/root/CommentsDataXML"/>
+                        </asciiContent>
+                    </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/exportSiebelData&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$ExportSiebelData/SiebelData/data"/>
                         </asciiContent>
                     </xsl:when>
                     <xsl:otherwise/>
@@ -157,8 +197,8 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>991</pd:x>
-        <pd:y>316</pd:y>
+        <pd:x>971</pd:x>
+        <pd:y>333</pd:y>
         <config>
             <spawn>true</spawn>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
@@ -197,8 +237,8 @@
     <pd:activity name="Catch All Exception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>1196</pd:x>
-        <pd:y>737</pd:y>
+        <pd:x>1194</pd:x>
+        <pd:y>683</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -240,8 +280,8 @@
     <pd:activity name="CallGetCustomerInfo">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>499</pd:x>
-        <pd:y>204</pd:y>
+        <pd:x>550</pd:x>
+        <pd:y>92</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCustomerInformation.process</processName>
         </config>
@@ -256,8 +296,8 @@
     <pd:activity name="CallGetTechnicalInformation">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>513</pd:x>
-        <pd:y>300</pd:y>
+        <pd:x>550</pd:x>
+        <pd:y>180</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetTechnicalInfo.process</processName>
         </config>
@@ -272,8 +312,8 @@
     <pd:activity name="CallGetCommentsHistory">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>523</pd:x>
-        <pd:y>397</pd:y>
+        <pd:x>551</pd:x>
+        <pd:y>272</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCommentsHistory.process</processName>
         </config>
@@ -288,8 +328,8 @@
     <pd:activity name="CallGetCurrentTask">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>528</pd:x>
-        <pd:y>499</pd:y>
+        <pd:x>550</pd:x>
+        <pd:y>405</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCurrentTask.process</processName>
         </config>
@@ -304,8 +344,8 @@
     <pd:activity name="CallGetProcessData">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>530</pd:x>
-        <pd:y>602</pd:y>
+        <pd:x>549</pd:x>
+        <pd:y>513</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetProcessData.process</processName>
         </config>
@@ -314,6 +354,43 @@
                 <SiebelCircuitID>
                     <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
                 </SiebelCircuitID>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExportSiebelData">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>545</pd:x>
+        <pd:y>643</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportSiebelData.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+                <ClientName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ClientName"/>
+                </ClientName>
+                <ServiceType>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ServiceType"/>
+                </ServiceType>
+                <Technology>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Technology"/>
+                </Technology>
+                <ServiceStatus>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ServiceStatus"/>
+                </ServiceStatus>
+                <BuildingName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/BuildingName"/>
+                </BuildingName>
+                <AccountManager>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/AccountManager"/>
+                </AccountManager>
+                <ProjectManager>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager"/>
+                </ProjectManager>
             </root>
         </pd:inputBindings>
     </pd:activity>
@@ -362,7 +439,7 @@
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallGetCustomerInfo</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getCustomerInformation"</pd:xpath>
@@ -370,14 +447,14 @@
     <pd:transition>
         <pd:from>CallGetCustomerInfo</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallGetTechnicalInformation</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getTechnicalInformation"</pd:xpath>
@@ -385,14 +462,14 @@
     <pd:transition>
         <pd:from>CallGetTechnicalInformation</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallGetCommentsHistory</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getCommentsHistory"</pd:xpath>
@@ -400,14 +477,14 @@
     <pd:transition>
         <pd:from>CallGetCommentsHistory</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallGetCurrentTask</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getCurrentTask"</pd:xpath>
@@ -415,7 +492,7 @@
     <pd:transition>
         <pd:from>send Log Request AUDIT 1</pd:from>
         <pd:to>CallGetProcessData</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/getProcessData"</pd:xpath>
@@ -423,14 +500,29 @@
     <pd:transition>
         <pd:from>CallGetCurrentTask</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>CallGetProcessData</pd:from>
         <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>ExportSiebelData</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/exportSiebelData"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExportSiebelData</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

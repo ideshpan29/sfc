@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://api.bds.tibco.com" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://exception.api.bds.tibco.com" xmlns:ns3="http://api.bds.tibco.com" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd"/>
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/SiebelDataCreateCase.process</pd:name>
-    <pd:startName>Start</pd:startName>
-    <pd:startX>21</pd:startX>
-    <pd:startY>506</pd:startY>
+    <pd:startName>Timer</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
     <pd:returnBindings/>
+    <pd:starter name="Timer">
+        <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
+        <pd:resourceType>ae.activities.timer</pd:resourceType>
+        <pd:x>52</pd:x>
+        <pd:y>509</pd:y>
+        <config>
+            <StartTime>1524231766000</StartTime>
+            <Frequency>false</Frequency>
+            <TimeInterval>%%BPM/SiebelDataCaseCreation/StartTimerValue%%</TimeInterval>
+            <FrequencyIndex>Minute</FrequencyIndex>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
     <pd:endName>End</pd:endName>
     <pd:endX>1891</pd:endX>
     <pd:endY>505</pd:endY>
@@ -43,7 +56,7 @@
     <pd:activity name="StartTimeStampLog">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>102</pd:x>
+        <pd:x>161</pd:x>
         <pd:y>507</pd:y>
         <config>
             <role>User</role>
@@ -88,7 +101,7 @@
             <pd:serializable>false</pd:serializable>
             <pd:indexSlot>entryIndex</pd:indexSlot>
             <pd:activityOutputName/>
-            <pd:repeatCondition>$ParseSiebelDataFile/Output/EOF=0</pd:repeatCondition>
+            <pd:repeatCondition>$ParseSiebelDataFile/Output/EOF="true"</pd:repeatCondition>
             <pd:accumulateOutput>false</pd:accumulateOutput>
         </config>
         <pd:inputBindings/>
@@ -663,6 +676,9 @@
                                 <xsl:value-of select="$CustomerInfoDateTime/root/lastNotificationDate"/>
                             </lastNotificationDate>
                         </xsl:if>
+                        <recordStatus>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/RecordStatus"/>
+                        </recordStatus>
                     </pfx2:Customer_InformationElement>
                 </pd:inputBindings>
             </pd:activity>
@@ -1288,11 +1304,12 @@
         <pd:activity name="Catch">
             <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
             <pd:resourceType>ae.activities.catch</pd:resourceType>
-            <pd:x>1109</pd:x>
-            <pd:y>760</pd:y>
+            <pd:x>1108</pd:x>
+            <pd:y>754</pd:y>
             <pd:handler>true</pd:handler>
             <config>
                 <catchAll>true</catchAll>
+                <fault>localname=caseDataAccessFault</fault>
             </config>
             <pd:inputBindings/>
         </pd:activity>
@@ -1609,7 +1626,7 @@
                                 </pfx:CommentsDecommission>
                             </xsl:if>
                             <pfx:status>
-                                <xsl:value-of select="concat('FAILED','-',$Catch/exceptiondata/*)"/>
+                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;ERROR CODE&quot;,$_error/ns5:ErrorReport/MsgCode,&quot;ERROR MESSAGE&quot;,$_error/ns5:ErrorReport/Msg)"/>
                             </pfx:status>
                         </pfx:root>
                     </xsl:for-each>
@@ -1675,13 +1692,6 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
-        <pd:from>Start</pd:from>
-        <pd:to>StartTimeStampLog</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>endTimeStampLog</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -1712,6 +1722,13 @@
     <pd:transition>
         <pd:from>Copy File</pd:from>
         <pd:to>Remove File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Timer</pd:from>
+        <pd:to>StartTimeStampLog</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

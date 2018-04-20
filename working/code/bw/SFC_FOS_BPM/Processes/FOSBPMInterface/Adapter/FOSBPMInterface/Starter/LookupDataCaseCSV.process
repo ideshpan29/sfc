@@ -3,10 +3,23 @@
     <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModelSchema.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/LookupDataCaseCSV.process</pd:name>
-    <pd:startName>Start</pd:startName>
-    <pd:startX>27</pd:startX>
-    <pd:startY>197</pd:startY>
+    <pd:startName>Timer</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
     <pd:returnBindings/>
+    <pd:starter name="Timer">
+        <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
+        <pd:resourceType>ae.activities.timer</pd:resourceType>
+        <pd:x>34</pd:x>
+        <pd:y>196</pd:y>
+        <config>
+            <StartTime>1524208022000</StartTime>
+            <Frequency>false</Frequency>
+            <TimeInterval>%%BPM/AutomatedCaseDataCreation/LookupData/StartTimerValue%%</TimeInterval>
+            <FrequencyIndex>Millisecond</FrequencyIndex>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
     <pd:endName>End</pd:endName>
     <pd:endX>1160</pd:endX>
     <pd:endY>194</pd:endY>
@@ -121,7 +134,7 @@
                         <xsl:value-of select="$iter2/fileInfo/fullName"/>
                     </fromFileName>
                     <toFileName>
-                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/DestinationFilePath,'\',substring-before($iter2/fileInfo/fileName, '.'),substring-before(current-date(),&quot;+&quot;),&quot;.csv&quot;)"/>
+                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/DestinationFilePath,substring-before($iter2/fileInfo/fileName, '.'),substring-before(current-date(),&quot;+&quot;),&quot;.csv&quot;)"/>
                     </toFileName>
                 </ns:CopyActivityConfig>
             </pd:inputBindings>
@@ -158,7 +171,7 @@
                         <xsl:value-of select="$iter2/fileInfo/fullName"/>
                     </fromFileName>
                     <toFileName>
-                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/CurrentFilePath,'\',$iter2/fileInfo/fileName)"/>
+                        <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/CurrentFilePath,$iter2/fileInfo/fileName)"/>
                     </toFileName>
                 </ns:CopyActivityConfig>
             </pd:inputBindings>
@@ -240,8 +253,8 @@
     <pd:activity name="Reload Lookups on Error">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>587</pd:x>
-        <pd:y>453</pd:y>
+        <pd:x>588</pd:x>
+        <pd:y>454</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/Reload Case Data.process</processName>
         </config>
@@ -254,7 +267,7 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
-        <pd:from>Start</pd:from>
+        <pd:from>Timer</pd:from>
         <pd:to>List Files</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

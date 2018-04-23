@@ -91,8 +91,8 @@
     <pd:activity name="Send HTTP Response">
         <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
         <pd:resourceType>httppalette.httpWebResponse</pd:resourceType>
-        <pd:x>775</pd:x>
-        <pd:y>328</pd:y>
+        <pd:x>810</pd:x>
+        <pd:y>327</pd:y>
         <config>
             <closeConnection>true</closeConnection>
             <eventSource>HTTP Receiver</eventSource>
@@ -100,6 +100,7 @@
                 <xsd:element name="root">
                     <xsd:complexType>
                         <xsd:sequence>
+                            <xsd:element name="Content-disposition" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="Access-Control-Allow-Origin" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
@@ -144,12 +145,23 @@
                             <xsl:value-of select="$ExportSiebelData/SiebelData/data"/>
                         </asciiContent>
                     </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command=&quot;/exportCustomerInformationToCSV&quot;">
+                        <asciiContent>
+                            <xsl:value-of select="$ExportCustomerInfoToCSV/root/FileContents"/>
+                        </asciiContent>
+                    </xsl:when>
                     <xsl:otherwise/>
                 </xsl:choose>
                 <Headers>
+                    <Content-disposition>
+                        <xsl:value-of select="concat(&quot;attachment;filename=&quot;, $ExportCustomerInfoToCSV/root/FileName)"/>
+                    </Content-disposition>
                     <Access-Control-Allow-Origin>
                         <xsl:value-of select="'*'"/>
                     </Access-Control-Allow-Origin>
+                    <Content-Type>
+                        <xsl:value-of select="&quot;application/vnd.ms-excel&quot;"/>
+                    </Content-Type>
                 </Headers>
             </ResponseActivityInput>
         </pd:inputBindings>
@@ -280,8 +292,8 @@
     <pd:activity name="CallGetCustomerInfo">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>550</pd:x>
-        <pd:y>92</pd:y>
+        <pd:x>598</pd:x>
+        <pd:y>95</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCustomerInformation.process</processName>
         </config>
@@ -296,8 +308,8 @@
     <pd:activity name="CallGetTechnicalInformation">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>550</pd:x>
-        <pd:y>180</pd:y>
+        <pd:x>598</pd:x>
+        <pd:y>177</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetTechnicalInfo.process</processName>
         </config>
@@ -312,8 +324,8 @@
     <pd:activity name="CallGetCommentsHistory">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>551</pd:x>
-        <pd:y>272</pd:y>
+        <pd:x>599</pd:x>
+        <pd:y>268</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCommentsHistory.process</processName>
         </config>
@@ -328,8 +340,8 @@
     <pd:activity name="CallGetCurrentTask">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>550</pd:x>
-        <pd:y>405</pd:y>
+        <pd:x>598</pd:x>
+        <pd:y>407</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetCurrentTask.process</processName>
         </config>
@@ -344,8 +356,8 @@
     <pd:activity name="CallGetProcessData">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>549</pd:x>
-        <pd:y>513</pd:y>
+        <pd:x>598</pd:x>
+        <pd:y>507</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/GetProcessData.process</processName>
         </config>
@@ -360,10 +372,47 @@
     <pd:activity name="ExportSiebelData">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>545</pd:x>
-        <pd:y>643</pd:y>
+        <pd:x>598</pd:x>
+        <pd:y>609</pd:y>
         <config>
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportSiebelData.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                </SiebelCircuitID>
+                <ClientName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ClientName"/>
+                </ClientName>
+                <ServiceType>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ServiceType"/>
+                </ServiceType>
+                <Technology>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Technology"/>
+                </Technology>
+                <ServiceStatus>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ServiceStatus"/>
+                </ServiceStatus>
+                <BuildingName>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/BuildingName"/>
+                </BuildingName>
+                <AccountManager>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/AccountManager"/>
+                </AccountManager>
+                <ProjectManager>
+                    <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager"/>
+                </ProjectManager>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ExportCustomerInfoToCSV">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>598</pd:x>
+        <pd:y>680</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportCustomerInfoToCSV.process</processName>
         </config>
         <pd:inputBindings>
             <root>
@@ -521,6 +570,21 @@
     </pd:transition>
     <pd:transition>
         <pd:from>ExportSiebelData</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>ExportCustomerInfoToCSV</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command="/exportCustomerInformationToCSV"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExportCustomerInfoToCSV</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

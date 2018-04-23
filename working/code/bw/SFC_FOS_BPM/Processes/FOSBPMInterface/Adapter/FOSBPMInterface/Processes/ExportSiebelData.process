@@ -20,12 +20,12 @@
             </xsd:complexType>
         </xsd:element>
     </pd:startType>
-    <pd:startX>150</pd:startX>
-    <pd:startY>64</pd:startY>
+    <pd:startX>121</pd:startX>
+    <pd:startY>63</pd:startY>
     <pd:returnBindings>
         <SiebelData>
             <data>
-                <xsl:value-of select="$Render-XML/xmlString"/>
+                <xsl:value-of select="if ($ProcessStatus/status=&quot;success&quot;) then $Render-XML/xmlString&#xA;else &quot;null&quot;"/>
             </data>
         </SiebelData>
     </pd:returnBindings>
@@ -39,7 +39,7 @@
             </xsd:complexType>
         </xsd:element>
     </pd:endType>
-    <pd:endX>991</pd:endX>
+    <pd:endX>1129</pd:endX>
     <pd:endY>61</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
@@ -52,99 +52,16 @@
                 </xsd:complexType>
             </xsd:element>
         </Query>
+        <ProcessStatus>
+            <xsd:element name="status" type="xsd:string"/>
+        </ProcessStatus>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1524047435601</pd:targetNamespace>
-    <pd:activity name="Assign">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>356</pd:x>
-        <pd:y>62</pd:y>
-        <config>
-            <variableName>Query</variableName>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <xsl:variable name="ClientName" select="if($Start/root/ClientName!=&quot;&quot;)&#xA;then concat(&quot;and clientName='&quot;,$Start/root/ClientName,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="ProjectManager" select="if($Start/root/ProjectManager!=&quot;&quot;)&#xA;then concat(&quot;and projectManager='&quot;,$Start/root/ProjectManager,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="AccountManager" select="if($Start/root/AccountManager!=&quot;&quot;)&#xA;then concat(&quot; and accountManager='&quot;,$Start/root/AccountManager,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="BuildingName" select="if($Start/root/BuildingName!=&quot;&quot;)&#xA;then concat(&quot; and buildingName='&quot;,$Start/root/BuildingName,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="ServiceStatus" select="if($Start/root/ServiceStatus!=&quot;&quot;)&#xA;then concat(&quot; and serviceStatus='&quot;,$Start/root/ServiceStatus,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="Technology" select="if($Start/root/Technology!=&quot;&quot;)&#xA;then concat(&quot; and technology='&quot;,$Start/root/Technology,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="ServiceType" select="if($Start/root/ServiceType!=&quot;&quot;)&#xA;then concat(&quot; and serviceType='&quot;,$Start/root/ServiceType,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="SiebelCircuitiD" select="if($Start/root/SiebelCircuitID!=&quot;&quot;)&#xA;then concat(&quot; and siebelCircuitID='&quot;,$Start/root/SiebelCircuitID,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <queryString>
-                    <xsl:value-of select="substring-after(concat($ClientName,$SiebelCircuitiD,$ProjectManager,$AccountManager,$BuildingName,$ServiceStatus,$Technology,$ServiceType),&quot;and&quot;)"/>
-                </queryString>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="FindCases">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>511</pd:x>
-        <pd:y>58</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx:BusinessDataServices_1.2.0</service>
-            <servicePort>BusinessDataServices.soap</servicePort>
-            <operation>findCaseByCriteria</operation>
-            <soapAction>findCaseByCriteria</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns:FindCaseByCriteriaRequest>
-                    <caseModelVersion>
-                        <xsl:value-of select="2"/>
-                    </caseModelVersion>
-                    <caseType>
-                        <xsl:value-of select="&quot;com.sfc.fosImpl.bizData.dataModel.Customer_Information&quot;"/>
-                    </caseType>
-                    <criteria>
-                        <queryString>
-                            <xsl:value-of select="$Query/root/queryString"/>
-                        </queryString>
-                    </criteria>
-                </ns:FindCaseByCriteriaRequest>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="ReadCaseCustomerInformation">
-        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
-        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>645</pd:x>
-        <pd:y>60</pd:y>
-        <config>
-            <timeout>0</timeout>
-            <soapAttachmentStyle>SwA</soapAttachmentStyle>
-            <timeoutType>Seconds</timeoutType>
-            <service>pfx:BusinessDataServices_1.2.0</service>
-            <servicePort>BusinessDataServices.soap</servicePort>
-            <operation>readCase</operation>
-            <soapAction>readCase</soapAction>
-            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
-            <authScheme>NONE</authScheme>
-        </config>
-        <pd:inputBindings>
-            <inputMessage>
-                <ns:ReadCaseRequest>
-                    <xsl:for-each select="$FindCases/outputMessage/ns:FindCaseByCriteriaResponse/caseReference">
-                        <caseReference>
-                            <xsl:value-of select="."/>
-                        </caseReference>
-                    </xsl:for-each>
-                </ns:ReadCaseRequest>
-            </inputMessage>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>589</pd:x>
-        <pd:y>144</pd:y>
+        <pd:x>561</pd:x>
+        <pd:y>1</pd:y>
         <pd:width>270</pd:width>
         <pd:height>140</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -180,8 +97,8 @@
         <pd:activity name="Parse XML">
             <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
             <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
-            <pd:x>719</pd:x>
-            <pd:y>221</pd:y>
+            <pd:x>691</pd:x>
+            <pd:y>78</pd:y>
             <config>
                 <inputStyle>text</inputStyle>
                 <xsdVersion>default</xsdVersion>
@@ -195,11 +112,97 @@
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>241</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <variableName>Query</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="ClientName" select="if($Start/root/ClientName!=&quot;&quot;)&#xA;then concat(&quot;and clientName='&quot;,$Start/root/ClientName,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="ProjectManager" select="if($Start/root/ProjectManager!=&quot;&quot;)&#xA;then concat(&quot;and projectManager='&quot;,$Start/root/ProjectManager,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="AccountManager" select="if($Start/root/AccountManager!=&quot;&quot;)&#xA;then concat(&quot; and accountManager='&quot;,$Start/root/AccountManager,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="BuildingName" select="if($Start/root/BuildingName!=&quot;&quot;)&#xA;then concat(&quot; and buildingName='&quot;,$Start/root/BuildingName,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="ServiceStatus" select="if($Start/root/ServiceStatus!=&quot;&quot;)&#xA;then concat(&quot; and serviceStatus='&quot;,$Start/root/ServiceStatus,&quot;' &quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="Technology" select="if($Start/root/Technology!=&quot;&quot;)&#xA;then concat(&quot; and technology='&quot;,$Start/root/Technology,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="ServiceType" select="if($Start/root/ServiceType!=&quot;&quot;)&#xA;then concat(&quot; and serviceType='&quot;,$Start/root/ServiceType,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <xsl:variable name="SiebelCircuitiD" select="if($Start/root/SiebelCircuitID!=&quot;&quot;)&#xA;then concat(&quot; and siebelCircuitID='&quot;,$Start/root/SiebelCircuitID,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+                <queryString>
+                    <xsl:value-of select="substring-after(concat($ClientName,$SiebelCircuitiD,$ProjectManager,$AccountManager,$BuildingName,$ServiceStatus,$Technology,$ServiceType),&quot;and&quot;)"/>
+                </queryString>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindCases">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>341</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="2"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="&quot;com.sfc.fosImpl.bizData.dataModel.Customer_Information&quot;"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="$Query/root/queryString"/>
+                        </queryString>
+                    </criteria>
+                </ns:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ReadCaseCustomerInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>478</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:ReadCaseRequest>
+                    <xsl:for-each select="$FindCases/outputMessage/ns:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>810</pd:x>
-        <pd:y>49</pd:y>
+        <pd:x>913</pd:x>
+        <pd:y>63</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -377,6 +380,31 @@
             </root>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1131</pd:x>
+        <pd:y>173</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Assign-1">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>1026</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <variableName>ProcessStatus</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="&quot;success&quot;"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>Assign</pd:to>
@@ -400,7 +428,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Render XML</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>Assign-1</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -415,6 +443,20 @@
     <pd:transition>
         <pd:from>Group</pd:from>
         <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign-1</pd:from>
+        <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

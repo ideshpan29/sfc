@@ -20,7 +20,7 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="pfx2:notifyPlanItemExecuteReplyResponse"/>
-    <pd:endX>779</pd:endX>
+    <pd:endX>942</pd:endX>
     <pd:endY>61</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
@@ -28,8 +28,8 @@
     <pd:activity name="LogRequest">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>183</pd:x>
-        <pd:y>155</pd:y>
+        <pd:x>327</pd:x>
+        <pd:y>177</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -44,7 +44,7 @@
     <pd:activity name="LogResponse">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>553</pd:x>
+        <pd:x>716</pd:x>
         <pd:y>155</pd:y>
         <config>
             <role>User</role>
@@ -60,7 +60,7 @@
     <pd:activity name="Notify Plan Item Execution Request">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>347</pd:x>
+        <pd:x>510</pd:x>
         <pd:y>69</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
@@ -162,9 +162,25 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>191</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&quot;Plan ID&quot;,$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:PlanId,&quot;CorelationId&quot;,$Start/pfx2:notifyPlanItemExecuteReplyInput/input/ns:notifyPlanItemExecuteReplyRequest/ns:Header/ns:CoRelationId)"/>
+                </message>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Notify Plan Item Execution Request</pd:to>
+        <pd:to>Log</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
@@ -175,14 +191,6 @@
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>otherwise</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Start</pd:from>
-        <pd:to>LogRequest</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$_globalVariables/pfx3:GlobalVariables/BPM/Log/AuditFlag='true'</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>LogRequest</pd:from>
@@ -205,5 +213,20 @@
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>Notify Plan Item Execution Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>LogRequest</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx3:GlobalVariables/BPM/Log/AuditFlag='true'</pd:xpath>
     </pd:transition>
 </pd:ProcessDefinition>

@@ -18,7 +18,7 @@
     <pd:returnBindings>
         <root>
             <CustomerInfoXML>
-                <xsl:value-of select="$ReadCaseCustomerInformation/outputMessage/ns2:ReadCaseResponse/caseData[1]/casePayload"/>
+                <xsl:value-of select="if ($Process/status=&quot;success&quot;) then $ReadCaseCustomerInformation/outputMessage/ns2:ReadCaseResponse/caseData[1]/casePayload&#xA;else &quot;null&quot;"/>
             </CustomerInfoXML>
         </root>
     </pd:returnBindings>
@@ -35,13 +35,17 @@
     <pd:endX>758</pd:endX>
     <pd:endY>59</pd:endY>
     <pd:errorSchemas/>
-    <pd:processVariables/>
+    <pd:processVariables>
+        <Process>
+            <xsd:element name="status" type="xsd:string"/>
+        </Process>
+    </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1523005041492</pd:targetNamespace>
     <pd:activity name="findCustomerInformationCase">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
         <pd:x>404</pd:x>
-        <pd:y>61</pd:y>
+        <pd:y>62</pd:y>
         <config>
             <timeout>0</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -50,7 +54,7 @@
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>findCaseByCID</operation>
             <soapAction>findCaseByCID</soapAction>
-            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
@@ -101,7 +105,7 @@
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>readCase</operation>
             <soapAction>readCase</soapAction>
-            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
@@ -112,6 +116,31 @@
                     </caseReference>
                 </ns2:ReadCaseRequest>
             </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>753</pd:x>
+        <pd:y>164</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>659</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <variableName>Process</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of select="'success'"/>
+            </status>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -137,6 +166,20 @@
     </pd:transition>
     <pd:transition>
         <pd:from>ReadCaseCustomerInformation</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

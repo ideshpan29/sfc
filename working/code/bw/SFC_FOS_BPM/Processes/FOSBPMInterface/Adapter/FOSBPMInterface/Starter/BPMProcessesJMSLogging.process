@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/UnitTesting/JMSAppenderTaskLogging/Schemas/BPMDataProcessLogging.xsd"/>
+<pd:ProcessDefinition xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx3="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModel.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/UnitTesting/JMSAppenderTaskLogging/WSDL/BusinessDataServices.wsdl"/>
-    <pd:name>UnitTesting/JMSAppenderTaskLogging/Processes/Process Definition.process</pd:name>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/BPMProcessesJMSLogging.process</pd:name>
     <pd:startName>JMS Queue Receiver</pd:startName>
     <pd:startX>0</pd:startX>
     <pd:startY>0</pd:startY>
@@ -25,7 +25,7 @@
                 <JMSExpiration>0</JMSExpiration>
                 <JMSPriority>4</JMSPriority>
             </ConfigurableHeaders>
-            <ConnectionReference>/UnitTesting/JMSAppenderTaskLogging/Connections/JMS Connection.sharedjmscon</ConnectionReference>
+            <ConnectionReference>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/Connections/JMS Connection.sharedjmscon</ConnectionReference>
             <OutDataxsdString>
                 <xsd:element name="Body">
                     <xsd:complexType>
@@ -50,12 +50,12 @@
         <pd:x>747</pd:x>
         <pd:y>264</pd:y>
         <config>
-            <fileName>ProcessDefinitionConvertPDTDateTimetoMinutes_</fileName>
-            <packageName>UnitTesting.JMSAppenderTaskLogging.Processes.ProcessDefinition</packageName>
-            <fullsource>package UnitTesting.JMSAppenderTaskLogging.Processes.ProcessDefinition;
+            <fileName>BPMProcessesJMSLoggingConvertPDTDateTimetoMinutes_</fileName>
+            <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Starter.BPMProcessesJMSLogging</packageName>
+            <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Starter.BPMProcessesJMSLogging;
 import java.util.*;
 import java.io.*;
-public class ProcessDefinitionConvertPDTDateTimetoMinutes_{
+public class BPMProcessesJMSLoggingConvertPDTDateTimetoMinutes_{
 /****** START SET/GET METHOD, DO NOT MODIFY *****/
 	protected String InputTime = "";
 	protected float FormatedTime = 0.0f;
@@ -72,7 +72,7 @@ public class ProcessDefinitionConvertPDTDateTimetoMinutes_{
 		FormatedTime = val;
 	}
 /****** END SET/GET METHOD, DO NOT MODIFY *****/
-	public ProcessDefinitionConvertPDTDateTimetoMinutes_() {
+	public BPMProcessesJMSLoggingConvertPDTDateTimetoMinutes_() {
 	}
 	public void invoke() throws Exception {
 /* Available Variables: DO NOT MODIFY
@@ -174,8 +174,8 @@ setFormatedTime(TimeInMinutes);
             </outputData>
             <byteCode>
                 <class>
-                    <name>ProcessDefinitionConvertPDTDateTimetoMinutes_</name>
-                    <byteCode>yv66vgAAADQASAkAEgAsCQASAC0KABMALggALwoAEgAwCAAxCgAyADMIADQIADUIADYIADcIADgKADIAOQoAOgA7BES0AAAEQnAAAAoAEgA8BwA9BwA+AQAJSW5wdXRUaW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQAMRm9ybWF0ZWRUaW1lAQABRgEADGdldElucHV0VGltZQEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEADHNldElucHV0VGltZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAD2dldEZvcm1hdGVkVGltZQEAAygpRgEAD3NldEZvcm1hdGVkVGltZQEABChGKVYBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwA9BwA/AQAKRXhjZXB0aW9ucwcAQAEAClNvdXJjZUZpbGUBADJQcm9jZXNzRGVmaW5pdGlvbkNvbnZlcnRQRFREYXRlVGltZXRvTWludXRlc18uamF2YQwAFAAVDAAWABcMACIAIwEAAAwAGAAZAQABUAcAPwwAQQBCAQABRAEAAUgBAAFNAQABUwEAAVQMAEMARAcARQwARgBHDAAgACEBAGxVbml0VGVzdGluZy9KTVNBcHBlbmRlclRhc2tMb2dnaW5nL1Byb2Nlc3Nlcy9Qcm9jZXNzRGVmaW5pdGlvbi9Qcm9jZXNzRGVmaW5pdGlvbkNvbnZlcnRQRFREYXRlVGltZXRvTWludXRlc18BABBqYXZhL2xhbmcvT2JqZWN0AQAQamF2YS9sYW5nL1N0cmluZwEAE2phdmEvbGFuZy9FeGNlcHRpb24BAAdpbmRleE9mAQAVKExqYXZhL2xhbmcvU3RyaW5nOylJAQAJc3Vic3RyaW5nAQAWKElJKUxqYXZhL2xhbmcvU3RyaW5nOwEAD2phdmEvbGFuZy9GbG9hdAEACnBhcnNlRmxvYXQBABUoTGphdmEvbGFuZy9TdHJpbmc7KUYAIQASABMAAAACAAQAFAAVAAAABAAWABcAAAAGAAEAGAAZAAEAGgAAAB0AAQABAAAABSq0AAGwAAAAAQAbAAAABgABAAAACQABABwAHQABABoAAAAiAAIAAgAAAAYqK7UAAbEAAAABABsAAAAKAAIAAAAMAAUADQABAB4AHwABABoAAAAdAAEAAQAAAAUqtAACrgAAAAEAGwAAAAYAAQAAAA8AAQAgACEAAQAaAAAAIgACAAIAAAAGKiO1AAKxAAAAAQAbAAAACgACAAAAEgAFABMAAQAiACMAAQAaAAAANAACAAEAAAAQKrcAAyoSBLUAASoLtQACsQAAAAEAGwAAABIABAAAABUABAAGAAoABwAPABYAAQAkACMAAgAaAAABtwADAA0AAAEKKrYABUwrEga2AAc9KxIItgAHPisSCbYABzYEKxIKtgAHNgUrEgu2AAc2BisSDLYABzYHCzgICzgJCzgKCzgLHQKfABArHARgHbYADbgADjgIFQQCnwASKxUHBGAVBLYADbgADjgJFQUCnwAYFQQCnwASKxUEBGAVBbYADbgADjgKFQUCnwAYFQQCoAASKxUHBGAVBbYADbgADjgKFQYCnwBOFQUCnwASKxUFBGAVBrYADbgADjgLFQUCoAAYFQQCnwASKxUEBGAVBrYADbgADjgLFQUCoAAYFQQCoAASKxUHBGAVBrYADbgADjgLFwgSD2oXCRIQamIXCmIXCxIQbmI4DCoXDLYAEbEAAAACABsAAAB2AB0AAAAdAAUAIQAMACIAEwAjABsAJAAjACUAKwAmADMAKAA2ACkAOQAqADwAKwA/AC0ARAAvAFEANABXADYAZgA7AHIAPQCBAD8AjQBBAJwARQCiAEcAqABJALcATADDAE4A0gBRAN4AUwDtAF8BAwBhAQkAaAAlAAAAHwAH/wBRAAwHACYHACcBAQEBAQECAgICAAAUGhoaGhoAKAAAAAQAAQApAAEAKgAAAAIAKw==</byteCode>
+                    <name>BPMProcessesJMSLoggingConvertPDTDateTimetoMinutes_</name>
+                    <byteCode>yv66vgAAADQASAkAEgAsCQASAC0KABMALggALwoAEgAwCAAxCgAyADMIADQIADUIADYIADcIADgKADIAOQoAOgA7BES0AAAEQnAAAAoAEgA8BwA9BwA+AQAJSW5wdXRUaW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQAMRm9ybWF0ZWRUaW1lAQABRgEADGdldElucHV0VGltZQEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEADHNldElucHV0VGltZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAD2dldEZvcm1hdGVkVGltZQEAAygpRgEAD3NldEZvcm1hdGVkVGltZQEABChGKVYBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwA9BwA/AQAKRXhjZXB0aW9ucwcAQAEAClNvdXJjZUZpbGUBADdCUE1Qcm9jZXNzZXNKTVNMb2dnaW5nQ29udmVydFBEVERhdGVUaW1ldG9NaW51dGVzXy5qYXZhDAAUABUMABYAFwwAIgAjAQAADAAYABkBAAFQBwA/DABBAEIBAAFEAQABSAEAAU0BAAFTAQABVAwAQwBEBwBFDABGAEcMACAAIQEAg1Byb2Nlc3Nlcy9GT1NCUE1JbnRlcmZhY2UvQWRhcHRlci9GT1NCUE1JbnRlcmZhY2UvU3RhcnRlci9CUE1Qcm9jZXNzZXNKTVNMb2dnaW5nL0JQTVByb2Nlc3Nlc0pNU0xvZ2dpbmdDb252ZXJ0UERURGF0ZVRpbWV0b01pbnV0ZXNfAQAQamF2YS9sYW5nL09iamVjdAEAEGphdmEvbGFuZy9TdHJpbmcBABNqYXZhL2xhbmcvRXhjZXB0aW9uAQAHaW5kZXhPZgEAFShMamF2YS9sYW5nL1N0cmluZzspSQEACXN1YnN0cmluZwEAFihJSSlMamF2YS9sYW5nL1N0cmluZzsBAA9qYXZhL2xhbmcvRmxvYXQBAApwYXJzZUZsb2F0AQAVKExqYXZhL2xhbmcvU3RyaW5nOylGACEAEgATAAAAAgAEABQAFQAAAAQAFgAXAAAABgABABgAGQABABoAAAAdAAEAAQAAAAUqtAABsAAAAAEAGwAAAAYAAQAAAAkAAQAcAB0AAQAaAAAAIgACAAIAAAAGKiu1AAGxAAAAAQAbAAAACgACAAAADAAFAA0AAQAeAB8AAQAaAAAAHQABAAEAAAAFKrQAAq4AAAABABsAAAAGAAEAAAAPAAEAIAAhAAEAGgAAACIAAgACAAAABiojtQACsQAAAAEAGwAAAAoAAgAAABIABQATAAEAIgAjAAEAGgAAADQAAgABAAAAECq3AAMqEgS1AAEqC7UAArEAAAABABsAAAASAAQAAAAVAAQABgAKAAcADwAWAAEAJAAjAAIAGgAAAbcAAwANAAABCiq2AAVMKxIGtgAHPSsSCLYABz4rEgm2AAc2BCsSCrYABzYFKxILtgAHNgYrEgy2AAc2Bws4CAs4CQs4Cgs4Cx0CnwAQKxwEYB22AA24AA44CBUEAp8AEisVBwRgFQS2AA24AA44CRUFAp8AGBUEAp8AEisVBARgFQW2AA24AA44ChUFAp8AGBUEAqAAEisVBwRgFQW2AA24AA44ChUGAp8AThUFAp8AEisVBQRgFQa2AA24AA44CxUFAqAAGBUEAp8AEisVBARgFQa2AA24AA44CxUFAqAAGBUEAqAAEisVBwRgFQa2AA24AA44CxcIEg9qFwkSEGpiFwpiFwsSEG5iOAwqFwy2ABGxAAAAAgAbAAAAdgAdAAAAHQAFACEADAAiABMAIwAbACQAIwAlACsAJgAzACgANgApADkAKgA8ACsAPwAtAEQALwBRADQAVwA2AGYAOwByAD0AgQA/AI0AQQCcAEUAogBHAKgASQC3AEwAwwBOANIAUQDeAFMA7QBfAQMAYQEJAGgAJQAAAB8AB/8AUQAMBwAmBwAnAQEBAQEBAgICAgAAFBoaGhoaACgAAAAEAAEAKQABACoAAAACACs=</byteCode>
                 </class>
             </byteCode>
         </config>
@@ -267,7 +267,7 @@ setFormatedTime(TimeInMinutes);
         <config>
             <InputType>String</InputType>
             <Encoding>ASCII</Encoding>
-            <ParseSharedConfig>/UnitTesting/JMSAppenderTaskLogging/DataFormat/DataFormatCreateTaskEntry.sharedparse</ParseSharedConfig>
+            <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/DataFormatCreateTaskEntry.sharedparse</ParseSharedConfig>
         </config>
         <pd:inputBindings>
             <Input>
@@ -288,7 +288,7 @@ setFormatedTime(TimeInMinutes);
         <config>
             <InputType>String</InputType>
             <Encoding>ASCII</Encoding>
-            <ParseSharedConfig>/UnitTesting/JMSAppenderTaskLogging/DataFormat/DataFormatUpdateTaskEntry.sharedparse</ParseSharedConfig>
+            <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/DataFormatUpdateTaskEntry.sharedparse</ParseSharedConfig>
         </config>
         <pd:inputBindings>
             <Input>
@@ -358,14 +358,14 @@ setFormatedTime(TimeInMinutes);
         <pd:x>1028</pd:x>
         <pd:y>251</pd:y>
         <config>
-            <timeout>0</timeout>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
             <timeoutType>Seconds</timeoutType>
             <service>pfx:BusinessDataServices_1.2.0</service>
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>findCaseByCID</operation>
             <soapAction>findCaseByCID</soapAction>
-            <endpointURL>http://localhost:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
@@ -424,7 +424,7 @@ setFormatedTime(TimeInMinutes);
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>updateCase</operation>
             <soapAction>updateCase</soapAction>
-            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>

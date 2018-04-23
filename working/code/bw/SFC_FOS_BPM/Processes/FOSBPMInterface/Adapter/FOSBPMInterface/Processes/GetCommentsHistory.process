@@ -51,7 +51,7 @@
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>findCaseByCriteria</operation>
             <soapAction>findCaseByCriteria</soapAction>
-            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
@@ -106,7 +106,7 @@
             <servicePort>BusinessDataServices.soap</servicePort>
             <operation>readCase</operation>
             <soapAction>readCase</soapAction>
-            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
             <authScheme>NONE</authScheme>
         </config>
         <pd:inputBindings>
@@ -133,7 +133,7 @@
                 <xsd:element name="Data">
                     <xsd:complexType>
                         <xsd:sequence>
-                            <xsd:element ref="pfx5:CommentDataCaseElement"/>
+                            <xsd:element ref="pfx5:CommentDataCaseElement" minOccurs="0" maxOccurs="unbounded"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
@@ -161,9 +161,9 @@
                                 <xsl:value-of select="addedby"/>
                             </addedby>
                         </xsl:if>
-                        <xsl:if test="if(count($CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments)=0) then&#xA;&quot;NA&quot;&#xA;else $CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments">
+                        <xsl:if test="comments">
                             <comments>
-                                <xsl:value-of select="if(count($CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments)=0) then&#xA;&quot;NA&quot;&#xA;else $CommentData/AccumulatedOutput/pfx5:CommentDataCaseElement/comments"/>
+                                <xsl:value-of select="comments"/>
                             </comments>
                         </xsl:if>
                         <xsl:if test="time">

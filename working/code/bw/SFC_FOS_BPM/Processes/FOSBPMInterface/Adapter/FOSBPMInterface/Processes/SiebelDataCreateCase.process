@@ -1,0 +1,1640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://exception.api.bds.tibco.com" xmlns:ns3="http://api.bds.tibco.com" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd"/>
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/SiebelDataCreateCase.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="FileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>156</pd:startX>
+    <pd:startY>508</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1636</pd:endX>
+    <pd:endY>503</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Counter>
+            <xsd:element name="count" type="xsd:int"/>
+        </Counter>
+        <technicalInfoDateTime>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="LastModifiedDate" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </technicalInfoDateTime>
+        <FileFlag>
+            <xsd:element name="status" type="xsd:string"/>
+        </FileFlag>
+        <CustomerInfoDateTime>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ServiceStartDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ServiceEndDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="RequestDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="InstallationDate" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="lastNotificationDate" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </CustomerInfoDateTime>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1521118604988</pd:targetNamespace>
+    <pd:group name="Group (2)">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>292</pd:x>
+        <pd:y>155</pd:y>
+        <pd:width>1169</pd:width>
+        <pd:height>685</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>entryIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:repeatCondition>$ParseSiebelDataFile/Output/EOF="true"</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>ParseSiebelDataFile</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>WriteSucessfulRecords</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>WriteFailedRecords</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Group</pd:from>
+            <pd:to>createCaseCustomerInfo</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Group (1)</pd:from>
+            <pd:to>createCaseTechnicalInfo</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>createCaseCustomerInfo</pd:from>
+            <pd:to>RenderSucessSiebelRecords</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>createCaseTechnicalInfo</pd:from>
+            <pd:to>RenderSucessSiebelRecords</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>RenderSucessSiebelRecords</pd:from>
+            <pd:to>WriteSucessfulRecords</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Catch</pd:from>
+            <pd:to>RenderFailedSiebelRecords</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>RenderFailedSiebelRecords</pd:from>
+            <pd:to>WriteFailedRecords</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ParseSiebelDataFile</pd:from>
+            <pd:to>Group (1)</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ParseSiebelDataFile</pd:from>
+            <pd:to>Group</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="ParseSiebelDataFile">
+            <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+            <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+            <pd:x>384</pd:x>
+            <pd:y>509</pd:y>
+            <config>
+                <InputType>File</InputType>
+                <Encoding>ASCII</Encoding>
+                <SkipBlankLines>true</SkipBlankLines>
+                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
+                <SpecifyStartRecord>true</SpecifyStartRecord>
+            </config>
+            <pd:inputBindings>
+                <Input>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/FileName"/>
+                    </fileName>
+                    <startRecord>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/batchSize*(($entryIndex)-1)+1"/>
+                    </startRecord>
+                    <noOfRecords>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/batchSize"/>
+                    </noOfRecords>
+                </Input>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:group name="Group (1)">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>513</pd:x>
+            <pd:y>543</pd:y>
+            <pd:width>508</pd:width>
+            <pd:height>241</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
+                <pd:iterationElementSlot>TechnicalEntry</pd:iterationElementSlot>
+                <pd:indexSlot>TechnicalInfoindex</pd:indexSlot>
+                <pd:outSlot>TechnicalInfoPayload</pd:outSlot>
+                <pd:activityOutputName>RenderTechnicalInfoCaseData</pd:activityOutputName>
+                <pd:accumulateOutput>true</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>MapTechnicalInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>RenderTechnicalInfoCaseData</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>MapTechnicalInfoDates</pd:from>
+                <pd:to>AssignTechnicalInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>AssignTechnicalInfoDates</pd:from>
+                <pd:to>RenderTechnicalInfoCaseData</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="RenderTechnicalInfoCaseData">
+                <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+                <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+                <pd:x>912</pd:x>
+                <pd:y>666</pd:y>
+                <config>
+                    <renderAsText>text</renderAsText>
+                    <validateInput>false</validateInput>
+                    <cdataSections>
+                        <row expandedName="{http://fosImpl.sfc.com/dataModel}LookupTableElement"/>
+                        <row expandedName="{http://bizData.fosImpl.sfc.com/dataModel}Technical_InformationElement"/>
+                    </cdataSections>
+                    <term ref="pfx2:Technical_InformationElement"/>
+                </config>
+                <pd:inputBindings>
+                    <pfx2:Technical_InformationElement>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:ManagementVLAN">
+                            <carrierVLAN>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:ManagementVLAN"/>
+                            </carrierVLAN>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:ManagementIP">
+                            <carrierIP>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:ManagementIP"/>
+                            </carrierIP>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:AggPoint">
+                            <aggPoint>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:AggPoint"/>
+                            </aggPoint>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:Port">
+                            <port>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:Port"/>
+                            </port>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:ClientVLAN">
+                            <clientVLAN>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:ClientVLAN"/>
+                            </clientVLAN>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:ClientIP">
+                            <clientIP>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:ClientIP"/>
+                            </clientIP>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:SFCPOP">
+                            <SFCPOPPE>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:SFCPOP"/>
+                            </SFCPOPPE>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:PortType">
+                            <portType>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:PortType"/>
+                            </portType>
+                        </xsl:if>
+                        <xsl:if test="$TechnicalEntry/pfx:root/pfx:LastModifiedBy">
+                            <modifiedBy>
+                                <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:LastModifiedBy"/>
+                            </modifiedBy>
+                        </xsl:if>
+                        <xsl:if test="$technicalInfoDateTime/root/LastModifiedDate!=&quot;&quot;">
+                            <modifiedDate>
+                                <xsl:value-of select="$technicalInfoDateTime/root/LastModifiedDate"/>
+                            </modifiedDate>
+                        </xsl:if>
+                        <siebelCircuitID>
+                            <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:CircuitID"/>
+                        </siebelCircuitID>
+                        <equipment>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:EquipmentType1">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:EquipmentType1"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:MacAddress1">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:MacAddress1"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:Vlan">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:Vlan"/>
+                                </VLAN>
+                            </xsl:if>
+                        </equipment>
+                        <equipment>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:EquipmentType2">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:EquipmentType2"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:MacAddress2">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:MacAddress2"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:Vlan2">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:Vlan2"/>
+                                </VLAN>
+                            </xsl:if>
+                        </equipment>
+                        <equipment>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:EquipmentType3">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:EquipmentType3"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:MacAddress3">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:MacAddress3"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:Vlan3">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:Vlan3"/>
+                                </VLAN>
+                            </xsl:if>
+                        </equipment>
+                        <equipment>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:EquipmentType4">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:EquipmentType4"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:MacAddress4">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:MacAddress4"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/pfx:root/pfx:Vlan4">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/pfx:root/pfx:Vlan4"/>
+                                </VLAN>
+                            </xsl:if>
+                        </equipment>
+                    </pfx2:Technical_InformationElement>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="MapTechnicalInfoDates">
+                <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+                <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+                <pd:x>618</pd:x>
+                <pd:y>669</pd:y>
+                <config>
+                    <element>
+                        <xsd:element name="root">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="year" type="xsd:string"/>
+                                    <xsd:element name="month" type="xsd:string"/>
+                                    <xsd:element name="day" type="xsd:string"/>
+                                    <xsd:element name="hours" type="xsd:string"/>
+                                    <xsd:element name="minutes" type="xsd:string"/>
+                                    <xsd:element name="seconds" type="xsd:string"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </element>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <year>
+                            <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </year>
+                        <month>
+                            <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </month>
+                        <day>
+                            <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                        </day>
+                        <hours>
+                            <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </hours>
+                        <minutes>
+                            <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </minutes>
+                        <seconds>
+                            <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($TechnicalEntry/pfx:root/pfx:LastModifiedDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                        </seconds>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="AssignTechnicalInfoDates">
+                <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+                <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+                <pd:x>764</pd:x>
+                <pd:y>669</pd:y>
+                <config>
+                    <variableName>technicalInfoDateTime</variableName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <LastModifiedDate>
+                            <xsl:value-of select="if ($MapTechnicalInfoDates/root/year=0 or $MapTechnicalInfoDates/root/month=0 or $MapTechnicalInfoDates/root/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapTechnicalInfoDates/root/year, $MapTechnicalInfoDates/root/month, $MapTechnicalInfoDates/root/day, $MapTechnicalInfoDates/root/hours, $MapTechnicalInfoDates/root/minutes, $MapTechnicalInfoDates/root/seconds)"/>
+                        </LastModifiedDate>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:group name="Group">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>510</pd:x>
+            <pd:y>294</pd:y>
+            <pd:width>502</pd:width>
+            <pd:height>191</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
+                <pd:iterationElementSlot>CustomerInfoentry</pd:iterationElementSlot>
+                <pd:indexSlot>index</pd:indexSlot>
+                <pd:outSlot>CustomerInfoPayload</pd:outSlot>
+                <pd:activityOutputName>RenderCustomerInfoCaseData</pd:activityOutputName>
+                <pd:accumulateOutput>true</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>MapCustomerInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>RenderCustomerInfoCaseData</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>MapCustomerInfoDates</pd:from>
+                <pd:to>AssignCustomerInfoDates</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>AssignCustomerInfoDates</pd:from>
+                <pd:to>RenderCustomerInfoCaseData</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="RenderCustomerInfoCaseData">
+                <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+                <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+                <pd:x>899</pd:x>
+                <pd:y>394</pd:y>
+                <config>
+                    <renderAsText>text</renderAsText>
+                    <validateInput>false</validateInput>
+                    <cdataSections>
+                        <row expandedName="{http://fosImpl.sfc.com/dataModel}LookupTableElement"/>
+                    </cdataSections>
+                    <term ref="pfx2:Customer_InformationElement"/>
+                </config>
+                <pd:inputBindings>
+                    <pfx2:Customer_InformationElement>
+                        <siebelCircuitID>
+                            <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:CircuitID"/>
+                        </siebelCircuitID>
+                        <projectManager>
+                            <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:PM"/>
+                        </projectManager>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:BusinessName">
+                            <clientName>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:BusinessName"/>
+                            </clientName>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:AccountManager">
+                            <accountManager>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:AccountManager"/>
+                            </accountManager>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:AccountStats">
+                            <account>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:AccountStats"/>
+                            </account>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Contractor">
+                            <contractor>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Contractor"/>
+                            </contractor>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Location">
+                            <location>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Location"/>
+                            </location>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Floor">
+                            <floor>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Floor"/>
+                            </floor>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ClientID">
+                            <clientID>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ClientID"/>
+                            </clientID>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceType">
+                            <serviceType>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceType"/>
+                            </serviceType>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:GPSCoordinates">
+                            <GPSCoordinates>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:GPSCoordinates"/>
+                            </GPSCoordinates>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Bandwidth">
+                            <bandwidthupdown>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Bandwidth"/>
+                            </bandwidthupdown>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Technology">
+                            <technology>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Technology"/>
+                            </technology>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceStatus">
+                            <serviceStatus>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceStatus"/>
+                            </serviceStatus>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:BuildingID">
+                            <buildingID>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:BuildingID"/>
+                            </buildingID>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ContactPerson">
+                            <contactPerson>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ContactPerson"/>
+                            </contactPerson>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Mobile">
+                            <mobile>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Mobile"/>
+                            </mobile>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Sector">
+                            <sector>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Sector"/>
+                            </sector>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Email">
+                            <email>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Email"/>
+                            </email>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/ServiceStartDate!=&quot;&quot;">
+                            <serviceStart>
+                                <xsl:value-of select="$CustomerInfoDateTime/root/ServiceStartDate"/>
+                            </serviceStart>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/ServiceEndDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/ServiceEndDate">
+                                <serviceEnd>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/ServiceEndDate"/>
+                                </serviceEnd>
+                            </xsl:if>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/RequestDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/RequestDate">
+                                <requestDate>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/RequestDate"/>
+                                </requestDate>
+                            </xsl:if>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/InstallationDate!=&quot;&quot;">
+                            <xsl:if test="$CustomerInfoDateTime/root/InstallationDate">
+                                <installDate>
+                                    <xsl:value-of select="$CustomerInfoDateTime/root/InstallationDate"/>
+                                </installDate>
+                            </xsl:if>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission">
+                            <notesComments>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission"/>
+                            </notesComments>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Address">
+                            <address>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Address"/>
+                            </address>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Engineer">
+                            <engineer>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Engineer"/>
+                            </engineer>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:LastNotificationBy">
+                            <lastNotificationBy>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:LastNotificationBy"/>
+                            </lastNotificationBy>
+                        </xsl:if>
+                        <xsl:if test="$CustomerInfoDateTime/root/lastNotificationDate">
+                            <lastNotificationDate>
+                                <xsl:value-of select="$CustomerInfoDateTime/root/lastNotificationDate"/>
+                            </lastNotificationDate>
+                        </xsl:if>
+                        <recordStatus>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/RecordStatus"/>
+                        </recordStatus>
+                    </pfx2:Customer_InformationElement>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="MapCustomerInfoDates">
+                <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+                <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+                <pd:x>612</pd:x>
+                <pd:y>393</pd:y>
+                <config>
+                    <element>
+                        <xsd:element name="Date">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="ServiceStartDate">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="ServiceEndDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="InstallDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="LastNotificationDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                    <xsd:element name="RequestDate" minOccurs="0">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="year" type="xsd:int"/>
+                                                <xsd:element name="month" type="xsd:int"/>
+                                                <xsd:element name="day" type="xsd:int"/>
+                                                <xsd:element name="hours" type="xsd:int"/>
+                                                <xsd:element name="minutes" type="xsd:int"/>
+                                                <xsd:element name="seconds" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </element>
+                </config>
+                <pd:inputBindings>
+                    <Date>
+                        <ServiceStartDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </ServiceStartDate>
+                        <ServiceEndDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </ServiceEndDate>
+                        <InstallDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </InstallDate>
+                        <LastNotificationDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </LastNotificationDate>
+                        <RequestDate>
+                            <year>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </year>
+                            <month>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </month>
+                            <day>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                            </day>
+                            <hours>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </hours>
+                            <minutes>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </minutes>
+                            <seconds>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                            </seconds>
+                        </RequestDate>
+                    </Date>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="AssignCustomerInfoDates">
+                <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+                <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+                <pd:x>763</pd:x>
+                <pd:y>396</pd:y>
+                <config>
+                    <variableName>CustomerInfoDateTime</variableName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <ServiceStartDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/ServiceStartDate/year=0 or $MapCustomerInfoDates/Date/ServiceStartDate/month=0 or $MapCustomerInfoDates/Date/ServiceStartDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/ServiceStartDate/year, $MapCustomerInfoDates/Date/ServiceStartDate/month, $MapCustomerInfoDates/Date/ServiceStartDate/day, $MapCustomerInfoDates/Date/ServiceStartDate/hours, $MapCustomerInfoDates/Date/ServiceStartDate/minutes, $MapCustomerInfoDates/Date/ServiceStartDate/seconds)"/>
+                        </ServiceStartDate>
+                        <ServiceEndDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/ServiceEndDate/year=0 or $MapCustomerInfoDates/Date/ServiceEndDate/month=0 or $MapCustomerInfoDates/Date/ServiceEndDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/ServiceEndDate/year, $MapCustomerInfoDates/Date/ServiceEndDate/month, $MapCustomerInfoDates/Date/ServiceEndDate/day, $MapCustomerInfoDates/Date/ServiceEndDate/hours, $MapCustomerInfoDates/Date/ServiceEndDate/minutes, $MapCustomerInfoDates/Date/ServiceEndDate/seconds)"/>
+                        </ServiceEndDate>
+                        <RequestDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/RequestDate/year=0 or $MapCustomerInfoDates/Date/RequestDate/month=0 or $MapCustomerInfoDates/Date/RequestDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/RequestDate/year, $MapCustomerInfoDates/Date/RequestDate/month, $MapCustomerInfoDates/Date/RequestDate/day, $MapCustomerInfoDates/Date/RequestDate/hours, $MapCustomerInfoDates/Date/RequestDate/minutes, $MapCustomerInfoDates/Date/RequestDate/seconds)"/>
+                        </RequestDate>
+                        <InstallationDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/InstallDate/year=0 or $MapCustomerInfoDates/Date/InstallDate/month=0 or $MapCustomerInfoDates/Date/InstallDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/InstallDate/year, $MapCustomerInfoDates/Date/InstallDate/month, $MapCustomerInfoDates/Date/InstallDate/day, $MapCustomerInfoDates/Date/InstallDate/hours, $MapCustomerInfoDates/Date/InstallDate/minutes, $MapCustomerInfoDates/Date/InstallDate/seconds)"/>
+                        </InstallationDate>
+                        <lastNotificationDate>
+                            <xsl:value-of select="if ($MapCustomerInfoDates/Date/LastNotificationDate/year=0 or $MapCustomerInfoDates/Date/LastNotificationDate/month=0 or $MapCustomerInfoDates/Date/LastNotificationDate/day=0) then &quot;&quot; else&#xA;tib:create-dateTime($MapCustomerInfoDates/Date/LastNotificationDate/year, $MapCustomerInfoDates/Date/LastNotificationDate/month, $MapCustomerInfoDates/Date/LastNotificationDate/day, $MapCustomerInfoDates/Date/LastNotificationDate/hours, $MapCustomerInfoDates/Date/LastNotificationDate/minutes, $MapCustomerInfoDates/Date/LastNotificationDate/seconds)"/>
+                        </lastNotificationDate>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="createCaseCustomerInfo">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>1113</pd:x>
+            <pd:y>363</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx3:BusinessDataServices_1.2.0</service>
+                <servicePort>BusinessDataServices.soap</servicePort>
+                <operation>createCase</operation>
+                <soapAction>createCase</soapAction>
+                <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns3:CreateCaseRequest>
+                        <caseType>
+                            <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Customer_Information'"/>
+                        </caseType>
+                        <caseModelVersion>
+                            <xsl:value-of select="2"/>
+                        </caseModelVersion>
+                        <xsl:for-each select="$CustomerInfoPayload/AccumulatedOutput/xmlString">
+                            <casePayload>
+                                <xsl:value-of select="."/>
+                            </casePayload>
+                        </xsl:for-each>
+                    </ns3:CreateCaseRequest>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="createCaseTechnicalInfo">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>1121</pd:x>
+            <pd:y>642</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx3:BusinessDataServices_1.2.0</service>
+                <servicePort>BusinessDataServices.soap</servicePort>
+                <operation>createCase</operation>
+                <soapAction>createCase</soapAction>
+                <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns3:CreateCaseRequest>
+                        <caseType>
+                            <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Technical_Information'"/>
+                        </caseType>
+                        <caseModelVersion>
+                            <xsl:value-of select="2"/>
+                        </caseModelVersion>
+                        <xsl:for-each select="$TechnicalInfoPayload/AccumulatedOutput/xmlString">
+                            <casePayload>
+                                <xsl:value-of select="."/>
+                            </casePayload>
+                        </xsl:for-each>
+                    </ns3:CreateCaseRequest>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="WriteSucessfulRecords">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>1248</pd:x>
+            <pd:y>498</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <createMissingDirectories>true</createMissingDirectories>
+                <append>true</append>
+            </config>
+            <pd:inputBindings>
+                <ns0:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/OutputFileName"/>
+                    </fileName>
+                    <textContent>
+                        <xsl:value-of select="$RenderSucessSiebelRecords/Text"/>
+                    </textContent>
+                </ns0:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="RenderSucessSiebelRecords">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>1118</pd:x>
+            <pd:y>501</pd:y>
+            <config>
+                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">
+                        <pfx:root>
+                            <xsl:if test="pfx:BuildingID">
+                                <pfx:BuildingID>
+                                    <xsl:value-of select="pfx:BuildingID"/>
+                                </pfx:BuildingID>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientID">
+                                <pfx:ClientID>
+                                    <xsl:value-of select="pfx:ClientID"/>
+                                </pfx:ClientID>
+                            </xsl:if>
+                            <xsl:if test="pfx:BusinessName">
+                                <pfx:BusinessName>
+                                    <xsl:value-of select="pfx:BusinessName"/>
+                                </pfx:BusinessName>
+                            </xsl:if>
+                            <xsl:if test="pfx:Floor">
+                                <pfx:Floor>
+                                    <xsl:value-of select="pfx:Floor"/>
+                                </pfx:Floor>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceType">
+                                <pfx:ServiceType>
+                                    <xsl:value-of select="pfx:ServiceType"/>
+                                </pfx:ServiceType>
+                            </xsl:if>
+                            <xsl:if test="pfx:Technology">
+                                <pfx:Technology>
+                                    <xsl:value-of select="pfx:Technology"/>
+                                </pfx:Technology>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceStatus">
+                                <pfx:ServiceStatus>
+                                    <xsl:value-of select="pfx:ServiceStatus"/>
+                                </pfx:ServiceStatus>
+                            </xsl:if>
+                            <xsl:if test="pfx:ContactPerson">
+                                <pfx:ContactPerson>
+                                    <xsl:value-of select="pfx:ContactPerson"/>
+                                </pfx:ContactPerson>
+                            </xsl:if>
+                            <xsl:if test="pfx:Address">
+                                <pfx:Address>
+                                    <xsl:value-of select="pfx:Address"/>
+                                </pfx:Address>
+                            </xsl:if>
+                            <xsl:if test="pfx:Mobile">
+                                <pfx:Mobile>
+                                    <xsl:value-of select="pfx:Mobile"/>
+                                </pfx:Mobile>
+                            </xsl:if>
+                            <xsl:if test="pfx:Email">
+                                <pfx:Email>
+                                    <xsl:value-of select="pfx:Email"/>
+                                </pfx:Email>
+                            </xsl:if>
+                            <xsl:if test="pfx:RequestDate">
+                                <pfx:RequestDate>
+                                    <xsl:value-of select="pfx:RequestDate"/>
+                                </pfx:RequestDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:Bandwidth">
+                                <pfx:Bandwidth>
+                                    <xsl:value-of select="pfx:Bandwidth"/>
+                                </pfx:Bandwidth>
+                            </xsl:if>
+                            <xsl:if test="pfx:ManagementVLAN">
+                                <pfx:ManagementVLAN>
+                                    <xsl:value-of select="pfx:ManagementVLAN"/>
+                                </pfx:ManagementVLAN>
+                            </xsl:if>
+                            <xsl:if test="pfx:ManagementIP">
+                                <pfx:ManagementIP>
+                                    <xsl:value-of select="pfx:ManagementIP"/>
+                                </pfx:ManagementIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientVLAN">
+                                <pfx:ClientVLAN>
+                                    <xsl:value-of select="pfx:ClientVLAN"/>
+                                </pfx:ClientVLAN>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientIP">
+                                <pfx:ClientIP>
+                                    <xsl:value-of select="pfx:ClientIP"/>
+                                </pfx:ClientIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:Port">
+                                <pfx:Port>
+                                    <xsl:value-of select="pfx:Port"/>
+                                </pfx:Port>
+                            </xsl:if>
+                            <xsl:if test="pfx:RouterType">
+                                <pfx:RouterType>
+                                    <xsl:value-of select="pfx:RouterType"/>
+                                </pfx:RouterType>
+                            </xsl:if>
+                            <xsl:if test="pfx:AggPoint">
+                                <pfx:AggPoint>
+                                    <xsl:value-of select="pfx:AggPoint"/>
+                                </pfx:AggPoint>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceStartDate">
+                                <pfx:ServiceStartDate>
+                                    <xsl:value-of select="pfx:ServiceStartDate"/>
+                                </pfx:ServiceStartDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceEndDate">
+                                <pfx:ServiceEndDate>
+                                    <xsl:value-of select="pfx:ServiceEndDate"/>
+                                </pfx:ServiceEndDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:CircuitID">
+                                <pfx:CircuitID>
+                                    <xsl:value-of select="pfx:CircuitID"/>
+                                </pfx:CircuitID>
+                            </xsl:if>
+                            <xsl:if test="pfx:Comments">
+                                <pfx:Comments>
+                                    <xsl:value-of select="pfx:Comments"/>
+                                </pfx:Comments>
+                            </xsl:if>
+                            <xsl:if test="pfx:PendingComments">
+                                <pfx:PendingComments>
+                                    <xsl:value-of select="pfx:PendingComments"/>
+                                </pfx:PendingComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastNotificationDate">
+                                <pfx:LastNotificationDate>
+                                    <xsl:value-of select="pfx:LastNotificationDate"/>
+                                </pfx:LastNotificationDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastNotificationBy">
+                                <pfx:LastNotificationBy>
+                                    <xsl:value-of select="pfx:LastNotificationBy"/>
+                                </pfx:LastNotificationBy>
+                            </xsl:if>
+                            <xsl:if test="pfx:ActiveComments">
+                                <pfx:ActiveComments>
+                                    <xsl:value-of select="pfx:ActiveComments"/>
+                                </pfx:ActiveComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:SuspendedComments">
+                                <pfx:SuspendedComments>
+                                    <xsl:value-of select="pfx:SuspendedComments"/>
+                                </pfx:SuspendedComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:TerminatedComments">
+                                <pfx:TerminatedComments>
+                                    <xsl:value-of select="pfx:TerminatedComments"/>
+                                </pfx:TerminatedComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:Location">
+                                <pfx:Location>
+                                    <xsl:value-of select="pfx:Location"/>
+                                </pfx:Location>
+                            </xsl:if>
+                            <xsl:if test="pfx:AccountManager">
+                                <pfx:AccountManager>
+                                    <xsl:value-of select="pfx:AccountManager"/>
+                                </pfx:AccountManager>
+                            </xsl:if>
+                            <xsl:if test="pfx:InstalledComments">
+                                <pfx:InstalledComments>
+                                    <xsl:value-of select="pfx:InstalledComments"/>
+                                </pfx:InstalledComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:MigratedActiveComments">
+                                <pfx:MigratedActiveComments>
+                                    <xsl:value-of select="pfx:MigratedActiveComments"/>
+                                </pfx:MigratedActiveComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType1">
+                                <pfx:EquipmentType1>
+                                    <xsl:value-of select="pfx:EquipmentType1"/>
+                                </pfx:EquipmentType1>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType2">
+                                <pfx:EquipmentType2>
+                                    <xsl:value-of select="pfx:EquipmentType2"/>
+                                </pfx:EquipmentType2>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType3">
+                                <pfx:EquipmentType3>
+                                    <xsl:value-of select="pfx:EquipmentType3"/>
+                                </pfx:EquipmentType3>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType4">
+                                <pfx:EquipmentType4>
+                                    <xsl:value-of select="pfx:EquipmentType4"/>
+                                </pfx:EquipmentType4>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress1">
+                                <pfx:MacAddress1>
+                                    <xsl:value-of select="pfx:MacAddress1"/>
+                                </pfx:MacAddress1>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress2">
+                                <pfx:MacAddress2>
+                                    <xsl:value-of select="pfx:MacAddress2"/>
+                                </pfx:MacAddress2>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress3">
+                                <pfx:MacAddress3>
+                                    <xsl:value-of select="pfx:MacAddress3"/>
+                                </pfx:MacAddress3>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress4">
+                                <pfx:MacAddress4>
+                                    <xsl:value-of select="pfx:MacAddress4"/>
+                                </pfx:MacAddress4>
+                            </xsl:if>
+                            <xsl:if test="pfx:PortType">
+                                <pfx:PortType>
+                                    <xsl:value-of select="pfx:PortType"/>
+                                </pfx:PortType>
+                            </xsl:if>
+                            <xsl:if test="pfx:PortNo">
+                                <pfx:PortNo>
+                                    <xsl:value-of select="pfx:PortNo"/>
+                                </pfx:PortNo>
+                            </xsl:if>
+                            <xsl:if test="pfx:AccountStats">
+                                <pfx:AccountStats>
+                                    <xsl:value-of select="pfx:AccountStats"/>
+                                </pfx:AccountStats>
+                            </xsl:if>
+                            <xsl:if test="pfx:PM">
+                                <pfx:PM>
+                                    <xsl:value-of select="pfx:PM"/>
+                                </pfx:PM>
+                            </xsl:if>
+                            <xsl:if test="pfx:GPSCoordinates">
+                                <pfx:GPSCoordinates>
+                                    <xsl:value-of select="pfx:GPSCoordinates"/>
+                                </pfx:GPSCoordinates>
+                            </xsl:if>
+                            <xsl:if test="pfx:Sector">
+                                <pfx:Sector>
+                                    <xsl:value-of select="pfx:Sector"/>
+                                </pfx:Sector>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastModifiedBy">
+                                <pfx:LastModifiedBy>
+                                    <xsl:value-of select="pfx:LastModifiedBy"/>
+                                </pfx:LastModifiedBy>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastModifiedDate">
+                                <pfx:LastModifiedDate>
+                                    <xsl:value-of select="pfx:LastModifiedDate"/>
+                                </pfx:LastModifiedDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:SFCPOP">
+                                <pfx:SFCPOP>
+                                    <xsl:value-of select="pfx:SFCPOP"/>
+                                </pfx:SFCPOP>
+                            </xsl:if>
+                            <xsl:if test="pfx:ARIP">
+                                <pfx:ARIP>
+                                    <xsl:value-of select="pfx:ARIP"/>
+                                </pfx:ARIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:Contractor">
+                                <pfx:Contractor>
+                                    <xsl:value-of select="pfx:Contractor"/>
+                                </pfx:Contractor>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan">
+                                <pfx:Vlan>
+                                    <xsl:value-of select="pfx:Vlan"/>
+                                </pfx:Vlan>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan2">
+                                <pfx:Vlan2>
+                                    <xsl:value-of select="pfx:Vlan2"/>
+                                </pfx:Vlan2>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan3">
+                                <pfx:Vlan3>
+                                    <xsl:value-of select="pfx:Vlan3"/>
+                                </pfx:Vlan3>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan4">
+                                <pfx:Vlan4>
+                                    <xsl:value-of select="pfx:Vlan4"/>
+                                </pfx:Vlan4>
+                            </xsl:if>
+                            <xsl:if test="pfx:Engineer">
+                                <pfx:Engineer>
+                                    <xsl:value-of select="pfx:Engineer"/>
+                                </pfx:Engineer>
+                            </xsl:if>
+                            <xsl:if test="pfx:InstalledDate">
+                                <pfx:InstalledDate>
+                                    <xsl:value-of select="pfx:InstalledDate"/>
+                                </pfx:InstalledDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:CommentsDecommission">
+                                <pfx:CommentsDecommission>
+                                    <xsl:value-of select="pfx:CommentsDecommission"/>
+                                </pfx:CommentsDecommission>
+                            </xsl:if>
+                            <pfx:status>
+                                <xsl:value-of select="'SUCCESS'"/>
+                            </pfx:status>
+                        </pfx:root>
+                    </xsl:for-each>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Catch">
+            <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+            <pd:resourceType>ae.activities.catch</pd:resourceType>
+            <pd:x>1108</pd:x>
+            <pd:y>754</pd:y>
+            <pd:handler>true</pd:handler>
+            <config>
+                <catchAll>true</catchAll>
+                <fault>localname=caseDataAccessFault</fault>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="RenderFailedSiebelRecords">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>1246</pd:x>
+            <pd:y>755</pd:y>
+            <config>
+                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">
+                        <pfx:root>
+                            <xsl:if test="pfx:BuildingID">
+                                <pfx:BuildingID>
+                                    <xsl:value-of select="pfx:BuildingID"/>
+                                </pfx:BuildingID>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientID">
+                                <pfx:ClientID>
+                                    <xsl:value-of select="pfx:ClientID"/>
+                                </pfx:ClientID>
+                            </xsl:if>
+                            <xsl:if test="pfx:BusinessName">
+                                <pfx:BusinessName>
+                                    <xsl:value-of select="pfx:BusinessName"/>
+                                </pfx:BusinessName>
+                            </xsl:if>
+                            <xsl:if test="pfx:Floor">
+                                <pfx:Floor>
+                                    <xsl:value-of select="pfx:Floor"/>
+                                </pfx:Floor>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceType">
+                                <pfx:ServiceType>
+                                    <xsl:value-of select="pfx:ServiceType"/>
+                                </pfx:ServiceType>
+                            </xsl:if>
+                            <xsl:if test="pfx:Technology">
+                                <pfx:Technology>
+                                    <xsl:value-of select="pfx:Technology"/>
+                                </pfx:Technology>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceStatus">
+                                <pfx:ServiceStatus>
+                                    <xsl:value-of select="pfx:ServiceStatus"/>
+                                </pfx:ServiceStatus>
+                            </xsl:if>
+                            <xsl:if test="pfx:ContactPerson">
+                                <pfx:ContactPerson>
+                                    <xsl:value-of select="pfx:ContactPerson"/>
+                                </pfx:ContactPerson>
+                            </xsl:if>
+                            <xsl:if test="pfx:Address">
+                                <pfx:Address>
+                                    <xsl:value-of select="pfx:Address"/>
+                                </pfx:Address>
+                            </xsl:if>
+                            <xsl:if test="pfx:Mobile">
+                                <pfx:Mobile>
+                                    <xsl:value-of select="pfx:Mobile"/>
+                                </pfx:Mobile>
+                            </xsl:if>
+                            <xsl:if test="pfx:Email">
+                                <pfx:Email>
+                                    <xsl:value-of select="pfx:Email"/>
+                                </pfx:Email>
+                            </xsl:if>
+                            <xsl:if test="pfx:RequestDate">
+                                <pfx:RequestDate>
+                                    <xsl:value-of select="pfx:RequestDate"/>
+                                </pfx:RequestDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:Bandwidth">
+                                <pfx:Bandwidth>
+                                    <xsl:value-of select="pfx:Bandwidth"/>
+                                </pfx:Bandwidth>
+                            </xsl:if>
+                            <xsl:if test="pfx:ManagementVLAN">
+                                <pfx:ManagementVLAN>
+                                    <xsl:value-of select="pfx:ManagementVLAN"/>
+                                </pfx:ManagementVLAN>
+                            </xsl:if>
+                            <xsl:if test="pfx:ManagementIP">
+                                <pfx:ManagementIP>
+                                    <xsl:value-of select="pfx:ManagementIP"/>
+                                </pfx:ManagementIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientVLAN">
+                                <pfx:ClientVLAN>
+                                    <xsl:value-of select="pfx:ClientVLAN"/>
+                                </pfx:ClientVLAN>
+                            </xsl:if>
+                            <xsl:if test="pfx:ClientIP">
+                                <pfx:ClientIP>
+                                    <xsl:value-of select="pfx:ClientIP"/>
+                                </pfx:ClientIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:Port">
+                                <pfx:Port>
+                                    <xsl:value-of select="pfx:Port"/>
+                                </pfx:Port>
+                            </xsl:if>
+                            <xsl:if test="pfx:RouterType">
+                                <pfx:RouterType>
+                                    <xsl:value-of select="pfx:RouterType"/>
+                                </pfx:RouterType>
+                            </xsl:if>
+                            <xsl:if test="pfx:AggPoint">
+                                <pfx:AggPoint>
+                                    <xsl:value-of select="pfx:AggPoint"/>
+                                </pfx:AggPoint>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceStartDate">
+                                <pfx:ServiceStartDate>
+                                    <xsl:value-of select="pfx:ServiceStartDate"/>
+                                </pfx:ServiceStartDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:ServiceEndDate">
+                                <pfx:ServiceEndDate>
+                                    <xsl:value-of select="pfx:ServiceEndDate"/>
+                                </pfx:ServiceEndDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:CircuitID">
+                                <pfx:CircuitID>
+                                    <xsl:value-of select="pfx:CircuitID"/>
+                                </pfx:CircuitID>
+                            </xsl:if>
+                            <xsl:if test="pfx:Comments">
+                                <pfx:Comments>
+                                    <xsl:value-of select="pfx:Comments"/>
+                                </pfx:Comments>
+                            </xsl:if>
+                            <xsl:if test="pfx:PendingComments">
+                                <pfx:PendingComments>
+                                    <xsl:value-of select="pfx:PendingComments"/>
+                                </pfx:PendingComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastNotificationDate">
+                                <pfx:LastNotificationDate>
+                                    <xsl:value-of select="pfx:LastNotificationDate"/>
+                                </pfx:LastNotificationDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastNotificationBy">
+                                <pfx:LastNotificationBy>
+                                    <xsl:value-of select="pfx:LastNotificationBy"/>
+                                </pfx:LastNotificationBy>
+                            </xsl:if>
+                            <xsl:if test="pfx:ActiveComments">
+                                <pfx:ActiveComments>
+                                    <xsl:value-of select="pfx:ActiveComments"/>
+                                </pfx:ActiveComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:SuspendedComments">
+                                <pfx:SuspendedComments>
+                                    <xsl:value-of select="pfx:SuspendedComments"/>
+                                </pfx:SuspendedComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:TerminatedComments">
+                                <pfx:TerminatedComments>
+                                    <xsl:value-of select="pfx:TerminatedComments"/>
+                                </pfx:TerminatedComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:Location">
+                                <pfx:Location>
+                                    <xsl:value-of select="pfx:Location"/>
+                                </pfx:Location>
+                            </xsl:if>
+                            <xsl:if test="pfx:AccountManager">
+                                <pfx:AccountManager>
+                                    <xsl:value-of select="pfx:AccountManager"/>
+                                </pfx:AccountManager>
+                            </xsl:if>
+                            <xsl:if test="pfx:InstalledComments">
+                                <pfx:InstalledComments>
+                                    <xsl:value-of select="pfx:InstalledComments"/>
+                                </pfx:InstalledComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:MigratedActiveComments">
+                                <pfx:MigratedActiveComments>
+                                    <xsl:value-of select="pfx:MigratedActiveComments"/>
+                                </pfx:MigratedActiveComments>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType1">
+                                <pfx:EquipmentType1>
+                                    <xsl:value-of select="pfx:EquipmentType1"/>
+                                </pfx:EquipmentType1>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType2">
+                                <pfx:EquipmentType2>
+                                    <xsl:value-of select="pfx:EquipmentType2"/>
+                                </pfx:EquipmentType2>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType3">
+                                <pfx:EquipmentType3>
+                                    <xsl:value-of select="pfx:EquipmentType3"/>
+                                </pfx:EquipmentType3>
+                            </xsl:if>
+                            <xsl:if test="pfx:EquipmentType4">
+                                <pfx:EquipmentType4>
+                                    <xsl:value-of select="pfx:EquipmentType4"/>
+                                </pfx:EquipmentType4>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress1">
+                                <pfx:MacAddress1>
+                                    <xsl:value-of select="pfx:MacAddress1"/>
+                                </pfx:MacAddress1>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress2">
+                                <pfx:MacAddress2>
+                                    <xsl:value-of select="pfx:MacAddress2"/>
+                                </pfx:MacAddress2>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress3">
+                                <pfx:MacAddress3>
+                                    <xsl:value-of select="pfx:MacAddress3"/>
+                                </pfx:MacAddress3>
+                            </xsl:if>
+                            <xsl:if test="pfx:MacAddress4">
+                                <pfx:MacAddress4>
+                                    <xsl:value-of select="pfx:MacAddress4"/>
+                                </pfx:MacAddress4>
+                            </xsl:if>
+                            <xsl:if test="pfx:PortType">
+                                <pfx:PortType>
+                                    <xsl:value-of select="pfx:PortType"/>
+                                </pfx:PortType>
+                            </xsl:if>
+                            <xsl:if test="pfx:PortNo">
+                                <pfx:PortNo>
+                                    <xsl:value-of select="pfx:PortNo"/>
+                                </pfx:PortNo>
+                            </xsl:if>
+                            <xsl:if test="pfx:AccountStats">
+                                <pfx:AccountStats>
+                                    <xsl:value-of select="pfx:AccountStats"/>
+                                </pfx:AccountStats>
+                            </xsl:if>
+                            <xsl:if test="pfx:PM">
+                                <pfx:PM>
+                                    <xsl:value-of select="pfx:PM"/>
+                                </pfx:PM>
+                            </xsl:if>
+                            <xsl:if test="pfx:GPSCoordinates">
+                                <pfx:GPSCoordinates>
+                                    <xsl:value-of select="pfx:GPSCoordinates"/>
+                                </pfx:GPSCoordinates>
+                            </xsl:if>
+                            <xsl:if test="pfx:Sector">
+                                <pfx:Sector>
+                                    <xsl:value-of select="pfx:Sector"/>
+                                </pfx:Sector>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastModifiedBy">
+                                <pfx:LastModifiedBy>
+                                    <xsl:value-of select="pfx:LastModifiedBy"/>
+                                </pfx:LastModifiedBy>
+                            </xsl:if>
+                            <xsl:if test="pfx:LastModifiedDate">
+                                <pfx:LastModifiedDate>
+                                    <xsl:value-of select="pfx:LastModifiedDate"/>
+                                </pfx:LastModifiedDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:SFCPOP">
+                                <pfx:SFCPOP>
+                                    <xsl:value-of select="pfx:SFCPOP"/>
+                                </pfx:SFCPOP>
+                            </xsl:if>
+                            <xsl:if test="pfx:ARIP">
+                                <pfx:ARIP>
+                                    <xsl:value-of select="pfx:ARIP"/>
+                                </pfx:ARIP>
+                            </xsl:if>
+                            <xsl:if test="pfx:Contractor">
+                                <pfx:Contractor>
+                                    <xsl:value-of select="pfx:Contractor"/>
+                                </pfx:Contractor>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan">
+                                <pfx:Vlan>
+                                    <xsl:value-of select="pfx:Vlan"/>
+                                </pfx:Vlan>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan2">
+                                <pfx:Vlan2>
+                                    <xsl:value-of select="pfx:Vlan2"/>
+                                </pfx:Vlan2>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan3">
+                                <pfx:Vlan3>
+                                    <xsl:value-of select="pfx:Vlan3"/>
+                                </pfx:Vlan3>
+                            </xsl:if>
+                            <xsl:if test="pfx:Vlan4">
+                                <pfx:Vlan4>
+                                    <xsl:value-of select="pfx:Vlan4"/>
+                                </pfx:Vlan4>
+                            </xsl:if>
+                            <xsl:if test="pfx:Engineer">
+                                <pfx:Engineer>
+                                    <xsl:value-of select="pfx:Engineer"/>
+                                </pfx:Engineer>
+                            </xsl:if>
+                            <xsl:if test="pfx:InstalledDate">
+                                <pfx:InstalledDate>
+                                    <xsl:value-of select="pfx:InstalledDate"/>
+                                </pfx:InstalledDate>
+                            </xsl:if>
+                            <xsl:if test="pfx:CommentsDecommission">
+                                <pfx:CommentsDecommission>
+                                    <xsl:value-of select="pfx:CommentsDecommission"/>
+                                </pfx:CommentsDecommission>
+                            </xsl:if>
+                            <pfx:status>
+                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;ERROR CODE&quot;,$_error/ns5:ErrorReport/MsgCode,&quot;ERROR MESSAGE&quot;,$_error/ns5:ErrorReport/Msg)"/>
+                            </pfx:status>
+                        </pfx:root>
+                    </xsl:for-each>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="WriteFailedRecords">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>1375</pd:x>
+            <pd:y>755</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns0:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/OutputFileName"/>
+                    </fileName>
+                    <textContent>
+                        <xsl:value-of select="$RenderFailedSiebelRecords/Text"/>
+                    </textContent>
+                </ns0:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Group (2)</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group (2)</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

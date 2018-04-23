@@ -118,19 +118,19 @@
                 <xsd:element name="Output">
                     <xsd:complexType>
                         <xsd:sequence>
-                            <xsd:element name="ProcessData">
+                            <xsd:element name="ProcessData" minOccurs="0" maxOccurs="unbounded">
                                 <xsd:complexType>
                                     <xsd:sequence>
-                                        <xsd:element name="ProcessType" type="xsd:string"/>
-                                        <xsd:element name="CustomerName" type="xsd:string"/>
-                                        <xsd:element name="ProjectManager" type="xsd:string"/>
-                                        <xsd:element name="AccountManager" type="xsd:string"/>
-                                        <xsd:element name="TaskName" type="xsd:string"/>
-                                        <xsd:element name="TaskInitiationTime" type="xsd:string"/>
-                                        <xsd:element name="TaskCompletionTime" type="xsd:string"/>
-                                        <xsd:element name="TotalTimeTaken" type="xsd:string"/>
-                                        <xsd:element name="TaskSLA" type="xsd:string"/>
-                                        <xsd:element name="SLAStatus" type="xsd:string"/>
+                                        <xsd:element name="ProcessType" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CustomerName" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ProjectManager" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="AccountManager" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskInitiationTime" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskCompletionTime" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TotalTimeTaken" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskSLA" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SLAStatus" type="xsd:string" minOccurs="0"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -146,33 +146,49 @@
                         <ProcessType>
                             <xsl:value-of select="PROCESSTYPE"/>
                         </ProcessType>
-                        <CustomerName>
-                            <xsl:value-of select="CUSTOMERNAME"/>
-                        </CustomerName>
-                        <ProjectManager>
-                            <xsl:value-of select="PROJECTMANAGER"/>
-                        </ProjectManager>
-                        <AccountManager>
-                            <xsl:value-of select="ACCOUNTMANAGER"/>
-                        </AccountManager>
+                        <xsl:if test="CUSTOMERNAME">
+                            <CustomerName>
+                                <xsl:value-of select="CUSTOMERNAME"/>
+                            </CustomerName>
+                        </xsl:if>
+                        <xsl:if test="PROJECTMANAGER">
+                            <ProjectManager>
+                                <xsl:value-of select="PROJECTMANAGER"/>
+                            </ProjectManager>
+                        </xsl:if>
+                        <xsl:if test="ACCOUNTMANAGER">
+                            <AccountManager>
+                                <xsl:value-of select="ACCOUNTMANAGER"/>
+                            </AccountManager>
+                        </xsl:if>
                         <TaskName>
                             <xsl:value-of select="TASKNAME"/>
                         </TaskName>
-                        <TaskInitiationTime>
-                            <xsl:value-of select="TASKINITIATIONTIME"/>
-                        </TaskInitiationTime>
-                        <TaskCompletionTime>
-                            <xsl:value-of select="TASKCOMPLETIONTIME"/>
-                        </TaskCompletionTime>
-                        <TotalTimeTaken>
-                            <xsl:value-of select="TOTALTIMETAKEN"/>
-                        </TotalTimeTaken>
-                        <TaskSLA>
-                            <xsl:value-of select="TASKDEFAULTSLA"/>
-                        </TaskSLA>
-                        <SLAStatus>
-                            <xsl:value-of select="SLASTATUS"/>
-                        </SLAStatus>
+                        <xsl:if test="TASKINITIATIONTIME">
+                            <TaskInitiationTime>
+                                <xsl:value-of select="TASKINITIATIONTIME"/>
+                            </TaskInitiationTime>
+                        </xsl:if>
+                        <xsl:if test="TASKCOMPLETIONTIME">
+                            <TaskCompletionTime>
+                                <xsl:value-of select="TASKCOMPLETIONTIME"/>
+                            </TaskCompletionTime>
+                        </xsl:if>
+                        <xsl:if test="TOTALTIMETAKEN">
+                            <TotalTimeTaken>
+                                <xsl:value-of select="TOTALTIMETAKEN"/>
+                            </TotalTimeTaken>
+                        </xsl:if>
+                        <xsl:if test="TASKDEFAULTSLA">
+                            <TaskSLA>
+                                <xsl:value-of select="TASKDEFAULTSLA"/>
+                            </TaskSLA>
+                        </xsl:if>
+                        <xsl:if test="SLASTATUS">
+                            <SLAStatus>
+                                <xsl:value-of select="SLASTATUS"/>
+                            </SLAStatus>
+                        </xsl:if>
                     </ProcessData>
                 </xsl:for-each>
             </Output>

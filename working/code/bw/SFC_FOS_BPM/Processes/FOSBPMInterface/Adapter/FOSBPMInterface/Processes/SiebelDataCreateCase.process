@@ -14,12 +14,12 @@
             </xsd:complexType>
         </xsd:element>
     </pd:startType>
-    <pd:startX>156</pd:startX>
-    <pd:startY>508</pd:startY>
+    <pd:startX>167</pd:startX>
+    <pd:startY>557</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>1636</pd:endX>
-    <pd:endY>503</pd:endY>
+    <pd:endX>1568</pd:endX>
+    <pd:endY>557</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <Counter>
@@ -56,9 +56,9 @@
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
         <pd:x>292</pd:x>
-        <pd:y>155</pd:y>
+        <pd:y>270</pd:y>
         <pd:width>1169</pd:width>
-        <pd:height>685</pd:height>
+        <pd:height>561</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -90,7 +90,7 @@
         <pd:transition>
             <pd:from>WriteFailedRecords</pd:from>
             <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
@@ -111,14 +111,14 @@
         <pd:transition>
             <pd:from>createCaseCustomerInfo</pd:from>
             <pd:to>RenderSucessSiebelRecords</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>createCaseTechnicalInfo</pd:from>
             <pd:to>RenderSucessSiebelRecords</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
@@ -146,22 +146,22 @@
         <pd:transition>
             <pd:from>ParseSiebelDataFile</pd:from>
             <pd:to>Group (1)</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>ParseSiebelDataFile</pd:from>
             <pd:to>Group</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:activity name="ParseSiebelDataFile">
             <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
             <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
-            <pd:x>384</pd:x>
-            <pd:y>509</pd:y>
+            <pd:x>388</pd:x>
+            <pd:y>557</pd:y>
             <config>
                 <InputType>File</InputType>
                 <Encoding>ASCII</Encoding>
@@ -187,9 +187,9 @@
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
             <pd:x>513</pd:x>
-            <pd:y>543</pd:y>
+            <pd:y>529</pd:y>
             <pd:width>508</pd:width>
-            <pd:height>241</pd:height>
+            <pd:height>209</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
             <pd:collapsedHeight>70</pd:collapsedHeight>
             <pd:groupVariables/>
@@ -237,8 +237,8 @@
             <pd:activity name="RenderTechnicalInfoCaseData">
                 <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
                 <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-                <pd:x>912</pd:x>
-                <pd:y>666</pd:y>
+                <pd:x>911</pd:x>
+                <pd:y>642</pd:y>
                 <config>
                     <renderAsText>text</renderAsText>
                     <validateInput>false</validateInput>
@@ -371,14 +371,17 @@
                                 </VLAN>
                             </xsl:if>
                         </equipment>
+                        <recordStatus>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/RecordStatus"/>
+                        </recordStatus>
                     </pfx2:Technical_InformationElement>
                 </pd:inputBindings>
             </pd:activity>
             <pd:activity name="MapTechnicalInfoDates">
                 <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
                 <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
-                <pd:x>618</pd:x>
-                <pd:y>669</pd:y>
+                <pd:x>620</pd:x>
+                <pd:y>641</pd:y>
                 <config>
                     <element>
                         <xsd:element name="root">
@@ -422,7 +425,7 @@
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
                 <pd:x>764</pd:x>
-                <pd:y>669</pd:y>
+                <pd:y>640</pd:y>
                 <config>
                     <variableName>technicalInfoDateTime</variableName>
                 </config>
@@ -438,8 +441,8 @@
         <pd:group name="Group">
             <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
             <pd:resourceType>ae.process.group</pd:resourceType>
-            <pd:x>510</pd:x>
-            <pd:y>294</pd:y>
+            <pd:x>512</pd:x>
+            <pd:y>335</pd:y>
             <pd:width>502</pd:width>
             <pd:height>191</pd:height>
             <pd:collapsedWidth>57</pd:collapsedWidth>
@@ -489,8 +492,8 @@
             <pd:activity name="RenderCustomerInfoCaseData">
                 <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
                 <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-                <pd:x>899</pd:x>
-                <pd:y>394</pd:y>
+                <pd:x>901</pd:x>
+                <pd:y>433</pd:y>
                 <config>
                     <renderAsText>text</renderAsText>
                     <validateInput>false</validateInput>
@@ -652,8 +655,8 @@
             <pd:activity name="MapCustomerInfoDates">
                 <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
                 <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
-                <pd:x>612</pd:x>
-                <pd:y>393</pd:y>
+                <pd:x>614</pd:x>
+                <pd:y>432</pd:y>
                 <config>
                     <element>
                         <xsd:element name="Date">
@@ -832,8 +835,8 @@
             <pd:activity name="AssignCustomerInfoDates">
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-                <pd:x>763</pd:x>
-                <pd:y>396</pd:y>
+                <pd:x>765</pd:x>
+                <pd:y>435</pd:y>
                 <config>
                     <variableName>CustomerInfoDateTime</variableName>
                 </config>
@@ -861,8 +864,8 @@
         <pd:activity name="createCaseCustomerInfo">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1113</pd:x>
-            <pd:y>363</pd:y>
+            <pd:x>1107</pd:x>
+            <pd:y>440</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -878,10 +881,10 @@
                 <inputMessage>
                     <ns3:CreateCaseRequest>
                         <caseType>
-                            <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Customer_Information'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/CustomerInformation/CaseType"/>
                         </caseType>
                         <caseModelVersion>
-                            <xsl:value-of select="2"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/CustomerInformation/CaseModelVersion"/>
                         </caseModelVersion>
                         <xsl:for-each select="$CustomerInfoPayload/AccumulatedOutput/xmlString">
                             <casePayload>
@@ -895,8 +898,8 @@
         <pd:activity name="createCaseTechnicalInfo">
             <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
             <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-            <pd:x>1121</pd:x>
-            <pd:y>642</pd:y>
+            <pd:x>1107</pd:x>
+            <pd:y>643</pd:y>
             <config>
                 <timeout>0</timeout>
                 <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -912,10 +915,10 @@
                 <inputMessage>
                     <ns3:CreateCaseRequest>
                         <caseType>
-                            <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Technical_Information'"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/TechnicalInformation/CaseType"/>
                         </caseType>
                         <caseModelVersion>
-                            <xsl:value-of select="2"/>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/TechnicalInformation/CaseModelVersion"/>
                         </caseModelVersion>
                         <xsl:for-each select="$TechnicalInfoPayload/AccumulatedOutput/xmlString">
                             <casePayload>
@@ -929,8 +932,8 @@
         <pd:activity name="WriteSucessfulRecords">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1248</pd:x>
-            <pd:y>498</pd:y>
+            <pd:x>1359</pd:x>
+            <pd:y>559</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>
@@ -951,8 +954,8 @@
         <pd:activity name="RenderSucessSiebelRecords">
             <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
             <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
-            <pd:x>1118</pd:x>
-            <pd:y>501</pd:y>
+            <pd:x>1241</pd:x>
+            <pd:y>558</pd:y>
             <config>
                 <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
             </config>
@@ -1271,8 +1274,8 @@
         <pd:activity name="Catch">
             <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
             <pd:resourceType>ae.activities.catch</pd:resourceType>
-            <pd:x>1108</pd:x>
-            <pd:y>754</pd:y>
+            <pd:x>1093</pd:x>
+            <pd:y>753</pd:y>
             <pd:handler>true</pd:handler>
             <config>
                 <catchAll>true</catchAll>
@@ -1283,8 +1286,8 @@
         <pd:activity name="RenderFailedSiebelRecords">
             <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
             <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
-            <pd:x>1246</pd:x>
-            <pd:y>755</pd:y>
+            <pd:x>1221</pd:x>
+            <pd:y>749</pd:y>
             <config>
                 <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
             </config>
@@ -1603,8 +1606,8 @@
         <pd:activity name="WriteFailedRecords">
             <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
             <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-            <pd:x>1375</pd:x>
-            <pd:y>755</pd:y>
+            <pd:x>1351</pd:x>
+            <pd:y>747</pd:y>
             <config>
                 <encoding>text</encoding>
                 <compressFile>None</compressFile>

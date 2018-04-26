@@ -102,7 +102,7 @@
             <config>
                 <inputStyle>text</inputStyle>
                 <xsdVersion>default</xsdVersion>
-                <validateOutput>true</validateOutput>
+                <validateOutput>false</validateOutput>
                 <term ref="pfx2:Customer_InformationElement"/>
             </config>
             <pd:inputBindings>
@@ -220,161 +220,99 @@
             <root>
                 <xsl:for-each select="$SiebelData/AccumulatedOutput/pfx2:Customer_InformationElement">
                     <pfx2:Customer_InformationElement>
-                        <xsl:if test="siebelCircuitID">
-                            <siebelCircuitID>
-                                <xsl:value-of select="if (siebelCircuitID!=&quot;&quot; ) then siebelCircuitID else &quot;&quot;"/>
-                            </siebelCircuitID>
-                        </xsl:if>
-                        <xsl:if test="projectManager">
-                            <projectManager>
-                                <xsl:value-of select="projectManager"/>
-                            </projectManager>
-                        </xsl:if>
-                        <xsl:if test="clientName">
-                            <clientName>
-                                <xsl:value-of select="clientName"/>
-                            </clientName>
-                        </xsl:if>
-                        <xsl:if test="accountManager">
-                            <accountManager>
-                                <xsl:value-of select="accountManager"/>
-                            </accountManager>
-                        </xsl:if>
-                        <xsl:if test="account">
-                            <account>
-                                <xsl:value-of select="account"/>
-                            </account>
-                        </xsl:if>
-                        <xsl:if test="contractor">
-                            <contractor>
-                                <xsl:value-of select="contractor"/>
-                            </contractor>
-                        </xsl:if>
-                        <xsl:if test="location">
-                            <location>
-                                <xsl:value-of select="location"/>
-                            </location>
-                        </xsl:if>
-                        <xsl:if test="regionView">
-                            <regionView>
-                                <xsl:value-of select="regionView"/>
-                            </regionView>
-                        </xsl:if>
-                        <xsl:if test="floor">
-                            <floor>
-                                <xsl:value-of select="floor"/>
-                            </floor>
-                        </xsl:if>
-                        <xsl:if test="clientID">
-                            <clientID>
-                                <xsl:value-of select="clientID"/>
-                            </clientID>
-                        </xsl:if>
-                        <xsl:if test="serviceType">
-                            <serviceType>
-                                <xsl:value-of select="serviceType"/>
-                            </serviceType>
-                        </xsl:if>
-                        <xsl:if test="GPSCoordinates">
-                            <GPSCoordinates>
-                                <xsl:value-of select="GPSCoordinates"/>
-                            </GPSCoordinates>
-                        </xsl:if>
-                        <xsl:if test="bandwidthupdown">
-                            <bandwidthupdown>
-                                <xsl:value-of select="bandwidthupdown"/>
-                            </bandwidthupdown>
-                        </xsl:if>
-                        <xsl:if test="technology">
-                            <technology>
-                                <xsl:value-of select="technology"/>
-                            </technology>
-                        </xsl:if>
-                        <xsl:if test="serviceStatus">
-                            <serviceStatus>
-                                <xsl:value-of select="serviceStatus"/>
-                            </serviceStatus>
-                        </xsl:if>
-                        <xsl:if test="buildingName">
-                            <buildingName>
-                                <xsl:value-of select="buildingName"/>
-                            </buildingName>
-                        </xsl:if>
-                        <xsl:if test="buildingID">
-                            <buildingID>
-                                <xsl:value-of select="buildingID"/>
-                            </buildingID>
-                        </xsl:if>
-                        <xsl:if test="contactPerson">
-                            <contactPerson>
-                                <xsl:value-of select="contactPerson"/>
-                            </contactPerson>
-                        </xsl:if>
-                        <xsl:if test="mobile">
-                            <mobile>
-                                <xsl:value-of select="mobile"/>
-                            </mobile>
-                        </xsl:if>
-                        <xsl:if test="sector">
-                            <sector>
-                                <xsl:value-of select="sector"/>
-                            </sector>
-                        </xsl:if>
-                        <xsl:if test="email">
-                            <email>
-                                <xsl:value-of select="email"/>
-                            </email>
-                        </xsl:if>
-                        <xsl:if test="serviceStart">
-                            <serviceStart>
-                                <xsl:value-of select="serviceStart"/>
-                            </serviceStart>
-                        </xsl:if>
-                        <xsl:if test="serviceEnd">
-                            <serviceEnd>
-                                <xsl:value-of select="serviceEnd"/>
-                            </serviceEnd>
-                        </xsl:if>
-                        <xsl:if test="requestDate">
-                            <requestDate>
-                                <xsl:value-of select="requestDate"/>
-                            </requestDate>
-                        </xsl:if>
-                        <xsl:if test="installDate">
-                            <installDate>
-                                <xsl:value-of select="installDate"/>
-                            </installDate>
-                        </xsl:if>
-                        <xsl:if test="notesComments">
-                            <notesComments>
-                                <xsl:value-of select="notesComments"/>
-                            </notesComments>
-                        </xsl:if>
-                        <xsl:if test="address">
-                            <address>
-                                <xsl:value-of select="address"/>
-                            </address>
-                        </xsl:if>
-                        <xsl:if test="engineer">
-                            <engineer>
-                                <xsl:value-of select="engineer"/>
-                            </engineer>
-                        </xsl:if>
-                        <xsl:if test="lastNotificationBy">
-                            <lastNotificationBy>
-                                <xsl:value-of select="lastNotificationBy"/>
-                            </lastNotificationBy>
-                        </xsl:if>
-                        <xsl:if test="lastNotificationDate">
-                            <lastNotificationDate>
-                                <xsl:value-of select="lastNotificationDate"/>
-                            </lastNotificationDate>
-                        </xsl:if>
-                        <xsl:if test="recordStatus">
-                            <recordStatus>
-                                <xsl:value-of select="recordStatus"/>
-                            </recordStatus>
-                        </xsl:if>
+                        <siebelCircuitID>
+                            <xsl:value-of select="current()/siebelCircuitID"/>
+                        </siebelCircuitID>
+                        <projectManager>
+                            <xsl:value-of select="tib:if-absent(current()/projectManager,&quot;NA&quot;)"/>
+                        </projectManager>
+                        <clientName>
+                            <xsl:value-of select="tib:if-absent(current()/clientName,&quot;NA&quot;)"/>
+                        </clientName>
+                        <accountManager>
+                            <xsl:value-of select="tib:if-absent(current()/accountManager,&quot;NA&quot;)"/>
+                        </accountManager>
+                        <account>
+                            <xsl:value-of select="tib:if-absent(current()/account,&quot;NA&quot;)"/>
+                        </account>
+                        <contractor>
+                            <xsl:value-of select="tib:if-absent(current()/contractor,&quot;NA&quot;)"/>
+                        </contractor>
+                        <location>
+                            <xsl:value-of select="tib:if-absent(current()/location,&quot;NA&quot;)"/>
+                        </location>
+                        <regionView>
+                            <xsl:value-of select="tib:if-absent(current()/regionView, &quot;NA&quot;)"/>
+                        </regionView>
+                        <floor>
+                            <xsl:value-of select="tib:if-absent(current()/floor, &quot;NA&quot;)"/>
+                        </floor>
+                        <clientID>
+                            <xsl:value-of select="tib:if-absent(current()/clientID,&quot;NA&quot;)"/>
+                        </clientID>
+                        <serviceType>
+                            <xsl:value-of select="tib:if-absent(current()/serviceType,&quot;NA&quot;)"/>
+                        </serviceType>
+                        <GPSCoordinates>
+                            <xsl:value-of select="tib:if-absent(current()/GPSCoordinates, &quot;NA&quot;)"/>
+                        </GPSCoordinates>
+                        <bandwidthupdown>
+                            <xsl:value-of select="tib:if-absent(current()/bandwidthupdown,&quot;NA&quot;)"/>
+                        </bandwidthupdown>
+                        <technology>
+                            <xsl:value-of select="tib:if-absent(current()/technology,&quot;NA&quot;)"/>
+                        </technology>
+                        <serviceStatus>
+                            <xsl:value-of select="tib:if-absent(current()/serviceStatus,&quot;NA&quot;)"/>
+                        </serviceStatus>
+                        <buildingName>
+                            <xsl:value-of select="tib:if-absent(current()/buildingName, &quot;NA&quot;)"/>
+                        </buildingName>
+                        <buildingID>
+                            <xsl:value-of select="tib:if-absent(current()/buildingID,&quot;NA&quot;)"/>
+                        </buildingID>
+                        <contactPerson>
+                            <xsl:value-of select="tib:if-absent(current()/contactPerson,&quot;NA&quot;)"/>
+                        </contactPerson>
+                        <mobile>
+                            <xsl:value-of select="tib:if-absent(current()/mobile,&quot;NA&quot;)"/>
+                        </mobile>
+                        <sector>
+                            <xsl:value-of select="tib:if-absent(current()/sector, &quot;NA&quot;)"/>
+                        </sector>
+                        <email>
+                            <xsl:value-of select="tib:if-absent(current()/email,&quot;NA&quot;)"/>
+                        </email>
+                        <serviceStart>
+                            <xsl:value-of select="tib:if-absent(current()/serviceStart,&quot;NA&quot;)"/>
+                        </serviceStart>
+                        <serviceEnd>
+                            <xsl:value-of select="tib:if-absent(current()/serviceEnd,&quot;NA&quot;)"/>
+                        </serviceEnd>
+                        <requestDate>
+                            <xsl:value-of select="tib:if-absent(current()/requestDate,&quot;NA&quot;)"/>
+                        </requestDate>
+                        <installDate>
+                            <xsl:value-of select="tib:if-absent(current()/installDate,&quot;NA&quot;)"/>
+                        </installDate>
+                        <notesComments>
+                            <xsl:value-of select="tib:if-absent(current()/notesComments,&quot;NA&quot;)"/>
+                        </notesComments>
+                        <address>
+                            <xsl:value-of select="tib:if-absent(current()/address, &quot;NA&quot;)"/>
+                        </address>
+                        <engineer>
+                            <xsl:value-of select="tib:if-absent(current()/engineer,&quot;NA&quot;)"/>
+                        </engineer>
+                        <lastNotificationBy>
+                            <xsl:value-of select="tib:if-absent(current()/lastNotificationBy,&quot;NA&quot;)"/>
+                        </lastNotificationBy>
+                        <lastNotificationDate>
+                            <xsl:value-of select="tib:if-absent(current()/lastNotificationDate,&quot;NA&quot;)"/>
+                        </lastNotificationDate>
+                        <recordStatus>
+                            <xsl:value-of select="tib:if-absent(current()/recordStatus,&quot;NA&quot;)"/>
+                        </recordStatus>
                     </pfx2:Customer_InformationElement>
                 </xsl:for-each>
             </root>

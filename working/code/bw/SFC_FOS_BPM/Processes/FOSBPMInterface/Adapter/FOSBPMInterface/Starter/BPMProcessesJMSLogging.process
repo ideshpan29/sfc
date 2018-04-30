@@ -558,7 +558,7 @@ setFormatedTime(TimeInMinutes);
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM]')</pd:xpath>
+        <pd:xpath>starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM] DeactivationProcess:') or starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM] ActivationProcess:')</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>JMS Queue Receiver</pd:from>
@@ -580,7 +580,7 @@ setFormatedTime(TimeInMinutes);
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM_UPDATE]')</pd:xpath>
+        <pd:xpath>starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM_UPDATE] DeactivationProcess:') or starts-with($JMS-Queue-Receiver/ns:ActivityOutput/Body/_cl.msg,'[SFC_FOSIMPL_BPM_UPDATE] ActivationProcess:')</pd:xpath>
     </pd:transition>
     <pd:transition>
         <pd:from>Log Task Logging Data_</pd:from>

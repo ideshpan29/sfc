@@ -4,12 +4,12 @@
     <resourceType>ae.shared.JDBCSharedResource</resourceType>
     <config>
         <driver>oracle.jdbc.driver.OracleDriver (thin)</driver>
-        <maxConnections>10</maxConnections>
-        <loginTimeout>0</loginTimeout>
+        <maxConnections>%%SharedResources/Connections/JDBC/BuildingDataConnection/maxConnections%%</maxConnections>
+        <loginTimeout>%%SharedResources/Connections/JDBC/BuildingDataConnection/timeout%%</loginTimeout>
         <connectionType>JDBC</connectionType>
         <UseSharedJndiConfig>false</UseSharedJndiConfig>
-        <location>jdbc:oracle:thin:@%%SharedResources/Connections/JDBC/hostname%%:%%SharedResources/Connections/JDBC/port%%:%%SharedResources/Connections/JDBC/serviceendpoint%%</location>
-        <user>%%SharedResources/Connections/JDBC/BuildingData_username%%</user>
-        <password>%%SharedResources/Connections/JDBC/BuildingDataPassword%%</password>
+        <location>%%SharedResources/Connections/JDBC/BuildingDataConnection/connectionString%%</location>
+        <user>%%SharedResources/Connections/JDBC/BuildingDataConnection/userName%%</user>
+        <password>%%SharedResources/Connections/JDBC/BuildingDataConnection/password%%</password>
     </config>
 </BWSharedResource>

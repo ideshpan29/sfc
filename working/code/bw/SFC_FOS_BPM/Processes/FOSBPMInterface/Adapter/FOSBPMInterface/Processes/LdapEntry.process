@@ -95,8 +95,8 @@
     <pd:activity name="Assign Error">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>529</pd:x>
-        <pd:y>381</pd:y>
+        <pd:x>394</pd:x>
+        <pd:y>35</pd:y>
         <config>
             <variableName>LdapCreation</variableName>
         </config>
@@ -622,8 +622,8 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
     <pd:activity name="Password Logs">
         <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
         <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>392</pd:x>
-        <pd:y>138</pd:y>
+        <pd:x>411</pd:x>
+        <pd:y>140</pd:y>
         <config>
             <encoding>text</encoding>
             <compressFile>None</compressFile>
@@ -705,7 +705,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
         <pd:from>Ldap Entry Code</pd:from>
         <pd:to>Assign Error</pd:to>
         <pd:xpathDescription>Failure</pd:xpathDescription>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$Ldap-Entry-Code/javaCodeActivityOutput/outputMessage="Failure"</pd:xpath>
@@ -755,7 +755,7 @@ LdapConnection conn=new LdapNetworkConnection(getLDapHostName(),getLDapPort());
     <pd:transition>
         <pd:from>Assign Error</pd:from>
         <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>One Bend</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

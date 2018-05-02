@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx3="http://services.brm.n2.tibco.com/WorkItemManagementService_1.7.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com">
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/RenderCreateBuildingData.process</pd:name>
@@ -24,8 +24,8 @@
     <pd:startY>116</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>778</pd:endX>
-    <pd:endY>110</pd:endY>
+    <pd:endX>613</pd:endX>
+    <pd:endY>113</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1523948417529</pd:targetNamespace>
@@ -33,9 +33,9 @@
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
         <pd:x>139</pd:x>
-        <pd:y>30</pd:y>
+        <pd:y>20</pd:y>
         <pd:width>199</pd:width>
-        <pd:height>153</pd:height>
+        <pd:height>174</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -69,8 +69,8 @@
         <pd:activity name="Render Building Data">
             <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
             <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-            <pd:x>238</pd:x>
-            <pd:y>115</pd:y>
+            <pd:x>248</pd:x>
+            <pd:y>122</pd:y>
             <config>
                 <renderAsText>text</renderAsText>
                 <validateInput>false</validateInput>
@@ -97,7 +97,7 @@
         <pd:x>459</pd:x>
         <pd:y>115</pd:y>
         <config>
-            <timeout>0</timeout>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
             <timeoutType>Seconds</timeoutType>
             <service>pfx2:BusinessDataServices_1.2.0</service>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com">
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/FetchDeleteBuildingData.process</pd:name>
     <pd:startName>Start</pd:startName>
-    <pd:startType/>
     <pd:startX>67</pd:startX>
     <pd:startY>72</pd:startY>
     <pd:returnBindings/>
@@ -33,10 +32,10 @@
             <inputMessage>
                 <ns2:FindAllCasesRequest>
                     <caseModelVersion>
-                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/BuildingDataCreation/CaseModelVersion"/>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/BuildingDataCreation/CaseModelVersion"/>
                     </caseModelVersion>
                     <caseType>
-                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/BuildingDataCreation/CaseType"/>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/BuildingDataCreation/CaseType"/>
                     </caseType>
                 </ns2:FindAllCasesRequest>
             </inputMessage>
@@ -49,9 +48,10 @@
         <pd:y>1</pd:y>
         <pd:width>251</pd:width>
         <pd:height>128</pd:height>
-        <pd:collapsedWidth>44</pd:collapsedWidth>
-        <pd:collapsedHeight>51</pd:collapsedHeight>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
         <config>
             <pd:groupType>inputLoop</pd:groupType>
             <pd:serializable>false</pd:serializable>

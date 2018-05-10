@@ -325,7 +325,7 @@
                     </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessInstances'">
                         <statement>
-                            <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;'&quot;)"/>
+                            <xsl:value-of select="concat(&quot;select process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where PROCESS_TEMPLATE='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;' ORDER BY START_TIME desc&quot;)"/>
                         </statement>
                     </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/searchBy'">

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://bizData.fosImpl.sfc.com/dataModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime">
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModel.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>UnitTesting/BPMUsersCaseCreation/Processes/getRequestMetaData.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                    <xsd:element name="ProcessName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>130</pd:startX>
+    <pd:startY>109</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <RequestMetaData>
+                <xsl:value-of select="$Render-XML/xmlString"/>
+            </RequestMetaData>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestMetaData" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1051</pd:endX>
+    <pd:endY>110</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <ProcessStatus>
+            <xsd:element name="status" type="xsd:string"/>
+        </ProcessStatus>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1525866369603</pd:targetNamespace>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>950</pd:x>
+        <pd:y>110</pd:y>
+        <config>
+            <variableName>ProcessStatus</variableName>
+        </config>
+        <pd:inputBindings>
+            <status>
+                <xsl:value-of xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="'success'"/>
+            </status>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1049</pd:x>
+        <pd:y>215</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="ReadCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>534</pd:x>
+        <pd:y>109</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:ReadCaseRequest>
+                    <xsl:for-each select="$FindCase/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns2:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderRequestPayload">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>253</pd:x>
+        <pd:y>109</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections/>
+            <term ref="pfx2:RequestMetaDataElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:RequestMetaDataElement>
+                <siebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </siebelCircuitID>
+                <processName>
+                    <xsl:value-of select="$Start/root/ProcessName"/>
+                </processName>
+            </pfx2:RequestMetaDataElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>640</pd:x>
+        <pd:y>32</pd:y>
+        <pd:width>135</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$ReadCase/outputMessage/ns2:ReadCaseResponse/caseData</pd:over>
+            <pd:iterationElementSlot>Entry</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:outSlot>SiebelData</pd:outSlot>
+            <pd:activityOutputName>Parse XML</pd:activityOutputName>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Parse XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse XML</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Parse XML">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>706</pd:x>
+            <pd:y>107</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx2:RequestMetaDataElement"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$Entry/caseData/casePayload"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Render XML">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>853</pd:x>
+        <pd:y>107</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections/>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx2:RequestMetaDataElement" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Parse-XML/pfx2:RequestMetaDataElement">
+                    <pfx2:RequestMetaDataElement>
+                        <xsl:if test="bussinessTransactionID">
+                            <bussinessTransactionID>
+                                <xsl:value-of select="bussinessTransactionID"/>
+                            </bussinessTransactionID>
+                        </xsl:if>
+                        <xsl:if test="correlationID">
+                            <correlationID>
+                                <xsl:value-of select="correlationID"/>
+                            </correlationID>
+                        </xsl:if>
+                        <xsl:if test="orderID">
+                            <orderID>
+                                <xsl:value-of select="orderID"/>
+                            </orderID>
+                        </xsl:if>
+                        <xsl:if test="orderRefNumber">
+                            <orderRefNumber>
+                                <xsl:value-of select="orderRefNumber"/>
+                            </orderRefNumber>
+                        </xsl:if>
+                        <xsl:if test="planID">
+                            <planID>
+                                <xsl:value-of select="planID"/>
+                            </planID>
+                        </xsl:if>
+                        <xsl:if test="siebelCircuitID">
+                            <siebelCircuitID>
+                                <xsl:value-of select="siebelCircuitID"/>
+                            </siebelCircuitID>
+                        </xsl:if>
+                        <xsl:if test="manual">
+                            <manual>
+                                <xsl:value-of select="manual"/>
+                            </manual>
+                        </xsl:if>
+                        <xsl:if test="processName">
+                            <processName>
+                                <xsl:value-of select="processName"/>
+                            </processName>
+                        </xsl:if>
+                        <xsl:if test="PVMID">
+                            <PVMID>
+                                <xsl:value-of select="PVMID"/>
+                            </PVMID>
+                        </xsl:if>
+                        <xsl:if test="caseID">
+                            <caseID>
+                                <xsl:value-of select="caseID"/>
+                            </caseID>
+                        </xsl:if>
+                        <xsl:if test="planItemID">
+                            <planItemID>
+                                <xsl:value-of select="planItemID"/>
+                            </planItemID>
+                        </xsl:if>
+                    </pfx2:RequestMetaDataElement>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>392</pd:x>
+        <pd:y>112</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/SupportModule/getRequestMetaData/caseModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/SupportModule/getRequestMetaData/caseType"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="concat(&quot;siebelCircuitID= '&quot;,$Start/root/SiebelCircuitID,&quot;' and processName= '&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
+                        </queryString>
+                    </criteria>
+                </ns2:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>RenderRequestPayload</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderRequestPayload</pd:from>
+        <pd:to>FindCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Render XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render XML</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ReadCase</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCase</pd:from>
+        <pd:to>ReadCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

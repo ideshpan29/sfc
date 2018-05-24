@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeWorkItemAllocation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx2:WorkItemAllocationInput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx2:WorkItemAllocationOutput>
+            <Response>
+                <pfx:WorkItemAllocationResponse>
+                    <pfx:WorkItemLists>
+                        <xsl:for-each select="$Call-Process/pfx:WorkItemAllocationResponse/pfx:WorkItemLists/pfx:WorkItems">
+                            <pfx:WorkItems>
+                                <xsl:if test="pfx:ProcessName">
+                                    <pfx:ProcessName>
+                                        <xsl:value-of select="pfx:ProcessName"/>
+                                    </pfx:ProcessName>
+                                </xsl:if>
+                                <xsl:if test="pfx:CustomerName">
+                                    <pfx:CustomerName>
+                                        <xsl:value-of select="pfx:CustomerName"/>
+                                    </pfx:CustomerName>
+                                </xsl:if>
+                                <xsl:if test="pfx:SiebelCircuitID">
+                                    <pfx:SiebelCircuitID>
+                                        <xsl:value-of select="pfx:SiebelCircuitID"/>
+                                    </pfx:SiebelCircuitID>
+                                </xsl:if>
+                                <xsl:if test="pfx:TaskName">
+                                    <pfx:TaskName>
+                                        <xsl:value-of select="pfx:TaskName"/>
+                                    </pfx:TaskName>
+                                </xsl:if>
+                                <xsl:if test="pfx:CurrentlyAllocated">
+                                    <pfx:CurrentlyAllocated>
+                                        <xsl:value-of select="pfx:CurrentlyAllocated"/>
+                                    </pfx:CurrentlyAllocated>
+                                </xsl:if>
+                                <xsl:if test="pfx:WorkItemID">
+                                    <pfx:WorkItemID>
+                                        <xsl:value-of select="pfx:WorkItemID"/>
+                                    </pfx:WorkItemID>
+                                </xsl:if>
+                                <xsl:if test="pfx:AllocateTo">
+                                    <pfx:AllocateTo>
+                                        <xsl:value-of select="pfx:AllocateTo"/>
+                                    </pfx:AllocateTo>
+                                </xsl:if>
+                                <xsl:if test="pfx:Status">
+                                    <pfx:Status>
+                                        <xsl:value-of select="pfx:Status"/>
+                                    </pfx:Status>
+                                </xsl:if>
+                            </pfx:WorkItems>
+                        </xsl:for-each>
+                    </pfx:WorkItemLists>
+                </pfx:WorkItemAllocationResponse>
+            </Response>
+        </pfx2:WorkItemAllocationOutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx2:WorkItemAllocationOutput"/>
+    <pd:endX>542</pd:endX>
+    <pd:endY>59</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1527079779118</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>273</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>145</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/pfx2:WorkItemAllocationInput/Request/pfx:WorkItemAllocationRequest/pfx:WorkItemLists/pfx:WorkItems</pd:over>
+            <pd:iterationElementSlot>indexAllocate</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Call Process</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Call Process</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Call Process">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>340</pd:x>
+            <pd:y>71</pd:y>
+            <config>
+                <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/AllocateWorkItem.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:WorkItemAllocationRequest>
+                    <pfx:WorkItemLists>
+                        <pfx:WorkItems>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:ProcessName">
+                                <pfx:ProcessName>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:ProcessName"/>
+                                </pfx:ProcessName>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:CustomerName">
+                                <pfx:CustomerName>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:CustomerName"/>
+                                </pfx:CustomerName>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:SiebelCircuitID">
+                                <pfx:SiebelCircuitID>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:SiebelCircuitID"/>
+                                </pfx:SiebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:TaskName">
+                                <pfx:TaskName>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:TaskName"/>
+                                </pfx:TaskName>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:CurrentlyAllocated">
+                                <pfx:CurrentlyAllocated>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:CurrentlyAllocated"/>
+                                </pfx:CurrentlyAllocated>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:WorkItemID">
+                                <pfx:WorkItemID>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:WorkItemID"/>
+                                </pfx:WorkItemID>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:AllocateTo">
+                                <pfx:AllocateTo>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:AllocateTo"/>
+                                </pfx:AllocateTo>
+                            </xsl:if>
+                            <xsl:if test="$indexAllocate/pfx:WorkItems/pfx:Status">
+                                <pfx:Status>
+                                    <xsl:value-of select="$indexAllocate/pfx:WorkItems/pfx:Status"/>
+                                </pfx:Status>
+                            </xsl:if>
+                        </pfx:WorkItems>
+                    </pfx:WorkItemLists>
+                </pfx:WorkItemAllocationRequest>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

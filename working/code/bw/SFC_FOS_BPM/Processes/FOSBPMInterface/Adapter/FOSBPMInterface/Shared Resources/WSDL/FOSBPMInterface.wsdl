@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/FetchResource/Schemas/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/FetchResource/Schemas/Schema1.xsd" xmlns:ns4="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema.xsd" xmlns:ns3="http://www.tibco.com/schemas/FetchResource/Schemas/Schema2.xsd" xmlns:ns6="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema2.xsd" xmlns:ns5="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/WorkCompletion/Schemas/Schema1.xsd" xmlns:ns8="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema1.xsd" xmlns:ns7="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema.xsd" xmlns:ns13="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ResourceCreation/Schemas/Schema.xsd" xmlns:ns12="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/New folder/Schemas/Schema1.xsd" xmlns:ns9="http://www.tibco.com/schemas/SafariTemplate/Processes/Provisioning/Adapter/SFC_Provisioning/FetchResource/Schemas/Schema2.xsd" xmlns:ns11="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/New folder/Schemas/Schema4.xsd" xmlns:ns10="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/New folder/Schemas/Schema3.xsd" xmlns:ns17="http://xmlns.example.com/1509116125289" xmlns:ns25="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" targetNamespace="http://xmlns.example.com/1509116125289">
-  
-   
     <import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" location="../SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <message name="FetchResourceinput">
         <part name="fetchresourceinput" element="ns25:fetchresourceinput"/>
@@ -48,6 +46,21 @@
     <message name="notifyPlanItemExecuteReplyFault">
         <part name="Fault" element="ns25:fault"/>
     </message>
+    <message name="WorkItemAllocationInput">
+        <part name="Request" element="ns25:WorkItemAllocationRequest"/>
+    </message>
+    <message name="WorkItemAllocationOutput">
+        <part name="Response" element="ns25:WorkItemAllocationResponse"/>
+    </message>
+    <message name="WorkItemAllocationFault">
+        <part name="Fault" element="ns25:fault"/>
+    </message>
+    <message name="WorkItemFetchInput">
+        <part name="Request" element="ns25:WorkItemFetchRequest"/>
+    </message>
+    <message name="WorkItemFetchOutput">
+        <part name="Response" element="ns25:WorkItemFetchResponse"/>
+    </message>
     <portType name="PortType">
         <operation name="getResources">
             <input message="ns17:FetchResourceinput"/>
@@ -72,6 +85,14 @@
         <operation name="notifyPlanItemExecuteReply">
             <input message="ns17:notifyPlanItemExecuteReplyInput"/>
             <output message="ns17:notifyPlanItemExecuteReplyResponse"/>
+        </operation>
+        <operation name="WorkItemAllocation">
+            <input message="ns17:WorkItemAllocationInput"/>
+            <output message="ns17:WorkItemAllocationOutput"/>
+        </operation>
+        <operation name="WorkItemFetch">
+            <input message="ns17:WorkItemFetchInput"/>
+            <output message="ns17:WorkItemFetchOutput"/>
         </operation>
     </portType>
 </definitions>

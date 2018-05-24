@@ -14,6 +14,8 @@
 				<xs:element ref="workitemcompletion"/>
 				<xs:element ref="fault"/>
 				<xs:element ref="notifyPlanItemExecuteReply"/>
+				<xs:element ref="WorkItemFetch"/>
+				<xs:element ref="WorkItemAllocation"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -354,6 +356,80 @@
 				<xs:element name="resultCode" type="xs:string" minOccurs="0"/>
 				<xs:element name="resultMessage" type="xs:string" minOccurs="0"/>
 				<xs:element name="isError" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemFetch">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItemFetchRequest"/>
+				<xs:element ref="WorkItemFetchResponse"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemLists">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItems" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItems">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProcessName" type="xs:string" minOccurs="0"/>
+				<xs:element name="CustomerName" type="xs:string" minOccurs="0"/>
+				<xs:element name="SiebelCircuitID" type="xs:string" minOccurs="0"/>
+				<xs:element name="TaskName" type="xs:string" minOccurs="0"/>
+				<xs:element name="CurrentlyAllocated" type="xs:string" minOccurs="0"/>
+				<xs:element name="WorkItemID" type="xs:string" minOccurs="0"/>
+				<xs:element name="AllocateTo" type="xs:string" minOccurs="0"/>
+				<xs:element name="Status" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RequestList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResourceName" type="xs:string" minOccurs="0"/>
+				<xs:element name="ResourceGUID" type="xs:string" minOccurs="0"/>
+				<xs:element name="ProjectManager" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemFetchRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RequestList" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemFetchResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItemLists"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemAllocation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItemAllocationRequest"/>
+				<xs:element ref="WorkItemAllocationResponse"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemAllocationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItemLists"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WorkItemAllocationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="WorkItemLists"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

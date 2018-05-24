@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeFetchWorkItem.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:WorkItemFetchInput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx:WorkItemFetchOutput>
+            <Response>
+                <ns:WorkItemFetchResponse>
+                    <ns:WorkItemLists>
+                        <xsl:for-each select="$Call-Process/ns:WorkItemAllocationResponse/ns:WorkItemLists/ns:WorkItems">
+                            <ns:WorkItems>
+                                <xsl:if test="ns:ProcessName">
+                                    <ns:ProcessName>
+                                        <xsl:value-of select="ns:ProcessName"/>
+                                    </ns:ProcessName>
+                                </xsl:if>
+                                <xsl:if test="ns:CustomerName">
+                                    <ns:CustomerName>
+                                        <xsl:value-of select="ns:CustomerName"/>
+                                    </ns:CustomerName>
+                                </xsl:if>
+                                <xsl:if test="ns:SiebelCircuitID">
+                                    <ns:SiebelCircuitID>
+                                        <xsl:value-of select="ns:SiebelCircuitID"/>
+                                    </ns:SiebelCircuitID>
+                                </xsl:if>
+                                <xsl:if test="ns:TaskName">
+                                    <ns:TaskName>
+                                        <xsl:value-of select="ns:TaskName"/>
+                                    </ns:TaskName>
+                                </xsl:if>
+                                <xsl:if test="ns:CurrentlyAllocated">
+                                    <ns:CurrentlyAllocated>
+                                        <xsl:value-of select="ns:CurrentlyAllocated"/>
+                                    </ns:CurrentlyAllocated>
+                                </xsl:if>
+                                <xsl:if test="ns:WorkItemID">
+                                    <ns:WorkItemID>
+                                        <xsl:value-of select="ns:WorkItemID"/>
+                                    </ns:WorkItemID>
+                                </xsl:if>
+                                <xsl:if test="ns:AllocateTo">
+                                    <ns:AllocateTo>
+                                        <xsl:value-of select="ns:AllocateTo"/>
+                                    </ns:AllocateTo>
+                                </xsl:if>
+                                <xsl:if test="ns:Status">
+                                    <ns:Status>
+                                        <xsl:value-of select="ns:Status"/>
+                                    </ns:Status>
+                                </xsl:if>
+                            </ns:WorkItems>
+                        </xsl:for-each>
+                    </ns:WorkItemLists>
+                </ns:WorkItemFetchResponse>
+            </Response>
+        </pfx:WorkItemFetchOutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:WorkItemFetchOutput"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1527089855789</pd:targetNamespace>
+    <pd:activity name="Call Process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/Find and Reallocate Work Item.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns:WorkItemFetchRequest>
+                <xsl:for-each select="$Start/pfx:WorkItemFetchInput/Request/ns:WorkItemFetchRequest/ns:RequestList">
+                    <ns:RequestList>
+                        <xsl:if test="ns:ResourceName">
+                            <ns:ResourceName>
+                                <xsl:value-of select="ns:ResourceName"/>
+                            </ns:ResourceName>
+                        </xsl:if>
+                        <xsl:if test="ns:ResourceGUID">
+                            <ns:ResourceGUID>
+                                <xsl:value-of select="ns:ResourceGUID"/>
+                            </ns:ResourceGUID>
+                        </xsl:if>
+                        <xsl:if test="ns:ProjectManager">
+                            <ns:ProjectManager>
+                                <xsl:value-of select="ns:ProjectManager"/>
+                            </ns:ProjectManager>
+                        </xsl:if>
+                    </ns:RequestList>
+                </xsl:for-each>
+            </ns:WorkItemFetchRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Call Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Process</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

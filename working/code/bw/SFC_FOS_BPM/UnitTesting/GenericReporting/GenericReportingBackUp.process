@@ -3,7 +3,7 @@
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
-    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Starter/GenericReporting (1).process</pd:name>
+    <pd:name>UnitTesting/GenericReporting/GenericReportingBackUp.process</pd:name>
     <pd:startName>HTTP Receiver</pd:startName>
     <pd:startX>0</pd:startX>
     <pd:startY>0</pd:startY>
@@ -71,41 +71,6 @@
                     <attributeType>string</attributeType>
                     <attributeCard>optional</attributeCard>
                 </row>
-                <row>
-                    <attribute>StartDate</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>EndDate</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>SiebelCircuitID</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>ProjectManager</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>ClientName</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>ContractorMaster</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
-                <row>
-                    <attribute>Contractor</attribute>
-                    <attributeType>string</attributeType>
-                    <attributeCard>optional</attributeCard>
-                </row>
             </customField>
             <Headers>
                 <xsd:element name="root">
@@ -130,17 +95,7 @@
     <pd:endX>1265</pd:endX>
     <pd:endY>334</pd:endY>
     <pd:errorSchemas/>
-    <pd:processVariables>
-        <Query>
-            <xsd:element name="root">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="queryString" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </Query>
-    </pd:processVariables>
+    <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1512639133195</pd:targetNamespace>
     <pd:activity name="Send HTTP Response">
         <pd:type>com.tibco.plugin.http.HTTPResponseActivity</pd:type>
@@ -168,11 +123,6 @@
         <pd:inputBindings>
             <ResponseActivityInput>
                 <xsl:choose>
-                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getDetails'">
-                        <asciiContent>
-                            <xsl:value-of select="$RenderGetDetails/xmlString"/>
-                        </asciiContent>
-                    </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'">
                         <xsl:if test="$RenderGetProcessNames/xmlString">
                             <asciiContent>
@@ -368,11 +318,6 @@
         <pd:inputBindings>
             <jdbcGeneralActivityInput>
                 <xsl:choose>
-                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getDetails'">
-                        <statement>
-                            <xsl:value-of select="concat(&quot;select  process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where&quot; ,$Query/root/queryString)"/>
-                        </statement>
-                    </xsl:when>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getProcessnames'">
                         <statement>
                             <xsl:value-of select="&quot;select DISTINCT PROC_TPL_NAME from EC_PROC_TEMPLATE&quot;"/>
@@ -804,92 +749,6 @@
             </root>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Assign">
-        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
-        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>453</pd:x>
-        <pd:y>442</pd:y>
-        <config>
-            <variableName>Query</variableName>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <xsl:variable xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="ClientName" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/ClientName!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE12='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/ClientName,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="ProjectManager" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE9 ='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="ContractorMaster" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/ContractorMaster!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE36 ='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/ContractorMaster,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="ProcessName" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/processname!=&quot;&quot;)&#xA;then concat(&quot;and PROCESS_TEMPLATE ='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/processname,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable name="StartDate" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/StartDate!=&quot;&quot;)&#xA;then concat(&quot; and START_TIME between '&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/StartDate,&quot;' and '&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/EndDate,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <xsl:variable xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="SiebelCircuitiD" select="if($HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID!=&quot;&quot;)&#xA;then concat(&quot; and ATTRIBUTE2='&quot;,$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
-                <queryString>
-                    <xsl:value-of select="substring-after(concat($ClientName,$SiebelCircuitiD,$ProjectManager,$StartDate,$ContractorMaster,$ProcessName),&quot;and&quot;)"/>
-                </queryString>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="RenderGetDetails">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>744</pd:x>
-        <pd:y>721</pd:y>
-        <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term>
-                <xsd:element name="root">
-                    <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
-                                <xsd:complexType>
-                                    <xsd:sequence>
-                                        <xsd:element name="process_template" type="xsd:string"/>
-                                        <xsd:element name="process_instance" type="xsd:string"/>
-                                        <xsd:element name="status" type="xsd:string"/>
-                                        <xsd:element name="time" type="xsd:string"/>
-                                        <xsd:element name="SibelCircuitId" type="xsd:string"/>
-                                        <xsd:element name="ClientName" type="xsd:string"/>
-                                        <xsd:element name="ProjectManager" type="xsd:string"/>
-                                        <xsd:element name="start_time" type="xsd:string"/>
-                                    </xsd:sequence>
-                                </xsd:complexType>
-                            </xsd:element>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                </xsd:element>
-            </term>
-        </config>
-        <pd:inputBindings>
-            <root>
-                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$FetchData/jdbcGeneralActivityOutput/unknownResultset/row">
-                    <Record>
-                        <process_template>
-                            <xsl:value-of select="column[name=&quot;PROCESS_TEMPLATE&quot;]/value"/>
-                        </process_template>
-                        <process_instance>
-                            <xsl:value-of select="column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                        </process_instance>
-                        <status>
-                            <xsl:value-of select="column[name=&quot;STATUS&quot;]/value"/>
-                        </status>
-                        <time>
-                            <xsl:value-of select="if(column[name=&quot;EXEC_MILLIS&quot;]/value!=&quot;&quot;) then column[name=&quot;EXEC_MILLIS&quot;]/value else tib:current-dateTime-timezone(0,0) - tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
-                        </time>
-                        <SibelCircuitId>
-                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE2&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE2&quot;]/value else &quot;NA&quot;"/>
-                        </SibelCircuitId>
-                        <ClientName>
-                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE3&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE3&quot;]/value else &quot;NA&quot;"/>
-                        </ClientName>
-                        <ProjectManager>
-                            <xsl:value-of select="if(column[name=&quot;ATTRIBUTE9&quot;]/value!=&quot;&quot;) then column[name=&quot;ATTRIBUTE9&quot;]/value else &quot;NA&quot;"/>
-                        </ProjectManager>
-                        <start_time>
-                            <xsl:value-of select="tib:add-to-dateTime(column[name=&quot;START_TIME&quot;]/value,0,0,0,substring-before(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),substring-after(tib:get-timezone-from-dateTime(column[name=&quot;START_TIME&quot;]/value),&quot;:&quot;),0)"/>
-                        </start_time>
-                    </Record>
-                </xsl:for-each>
-            </root>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
@@ -937,7 +796,7 @@
         <pd:to>FetchData</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
+        <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>FetchData</pd:from>
@@ -1039,36 +898,6 @@
     </pd:transition>
     <pd:transition>
         <pd:from>RenderResourceWiseAnalysis</pd:from>
-        <pd:to>Send HTTP Response</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>send Log Request AUDIT 1</pd:from>
-        <pd:to>Assign</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getDetails'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Assign</pd:from>
-        <pd:to>FetchData</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>FetchData</pd:from>
-        <pd:to>RenderGetDetails</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/getDetails'</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>RenderGetDetails</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

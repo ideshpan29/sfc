@@ -16,6 +16,7 @@
 				<xs:element ref="notifyPlanItemExecuteReply"/>
 				<xs:element ref="WorkItemFetch"/>
 				<xs:element ref="WorkItemAllocation"/>
+				<xs:element ref="SendMail"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -430,6 +431,42 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="WorkItemLists"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SendMail">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SentMailRequest"/>
+				<xs:element ref="SendMailResponse"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SentMailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ToField" type="xs:string" minOccurs="0"/>
+				<xs:element name="Process" type="xs:string" minOccurs="0"/>
+				<xs:element name="EmailType" type="xs:string" minOccurs="0"/>
+				<xs:element name="SiebelCircuitID" type="xs:string" minOccurs="0"/>
+				<xs:element name="UDF" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" type="xs:string" minOccurs="0"/>
+							<xs:element name="Value" type="xs:string" minOccurs="0"/>
+							<xs:element name="Flavour" type="xs:string" minOccurs="0"/>
+							<xs:element name="Type" type="xs:string" minOccurs="0"/>
+							<xs:element name="EvaluationType" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SendMailResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Status" type="xs:string"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

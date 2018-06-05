@@ -30,6 +30,8 @@
                         <xsd:element minOccurs="0" name="trackingID" nillable="true" type="xsd:string"/>
                         <xsd:element minOccurs="0" name="correlationID" nillable="true" type="xsd:string"/>
                         <xsd:element minOccurs="0" name="processComponent" type="xsd:string"/>
+                        <xsd:element minOccurs="0" name="service" type="xsd:string"/>
+                        <xsd:element minOccurs="0" name="version" type="xsd:string"/>
                         <xsd:element minOccurs="0" name="keyName" type="xsd:string"/>
                         <xsd:element minOccurs="0" name="keyValue" type="xsd:string"/>
                         <xsd:element minOccurs="0" name="hostname" type="xsd:string"/>
@@ -88,7 +90,13 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="UDF">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="name" type="xs:string"/>
+                                <xs:element name="name">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
                                 <xs:element name="value" type="xs:string"/>
                             </xs:sequence>
                         </xs:complexType>
@@ -104,26 +112,26 @@
         <wsdl:port xmlns:ns0="http://www.tibco.com/ws/BS_CommercialOrderManagement" name="OrchestratorManager_v1PortTypeJMS" binding="ns0:OrchestratorManager_v1PortTypeJMSBinding">
             <soap:address location=""/>
             <jndi:context>
-                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://localhost:7222</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://172.29.127.99:11155</jndi:property>
                 <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
             </jndi:context>
             <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
             <jms:targetAddress destination="queue">SFC.UTIL.SERVICE.COMMON.SOAP</jms:targetAddress>
         </wsdl:port>
         <wsdl:port xmlns:ns0="http://www.tibco.com/ws/BS_CommercialOrderManagement" name="OrchestratorManager_v1PortTypeHTTP" binding="ns0:OrchestratorManager_v1PortTypeHTTPBinding">
-            <soap:address location="http://localhost:8282/ws/BS_CommercialOrderManagement"/>
+            <soap:address location="http://localhost:15052/ws/BS_CommercialOrderManagement"/>
         </wsdl:port>
         <wsdl:port xmlns:ns0="http://www.tibco.com/ws/BS_CommercialOrderManagement" name="OrchestratorManager_v1PortType1.1JMS" binding="ns0:OrchestratorManager_v1PortType1.1JMSBinding">
             <soap1:address location=""/>
             <jndi:context>
-                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://localhost:7222</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://172.29.127.99:11155</jndi:property>
                 <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
             </jndi:context>
             <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
             <jms:targetAddress destination="queue">SFC.UTIL.SERVICE.COMMON.SOAP</jms:targetAddress>
         </wsdl:port>
         <wsdl:port xmlns:ns0="http://www.tibco.com/ws/BS_CommercialOrderManagement" name="OrchestratorManager_v1PortType1.1HTTP" binding="ns0:OrchestratorManager_v1PortType1.1HTTPBinding">
-            <soap1:address location="http://localhost:8282/ws/BS_CommercialOrderManagement"/>
+            <soap1:address location="http://localhost:15052/ws/BS_CommercialOrderManagement"/>
         </wsdl:port>
     </wsdl:service>
     <wsdl:portType name="OrchestratorManager_v1PortType">

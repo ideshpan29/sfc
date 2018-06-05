@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <name>Look Up Case Creation Format</name>
+<BWSharedResource xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <import namespace="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/SiebelImportData.xsd"/>
+    <name>SiebelImportData</name>
     <resourceType>ae.shared.ParseSharedResource</resourceType>
     <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <FormatType>Delimiter separated</FormatType>
         <ColumnSeparator>,</ColumnSeparator>
         <ColSeparatorRule>Treat all characters as entered as a single column separator string</ColSeparatorRule>
-        <LineSeparator>
+        <LineSeparator>&#xD;
 </LineSeparator>
         <FillCharacter>Space</FillCharacter>
-        <LineLength>2</LineLength>
+        <LineLength>3</LineLength>
         <DataFormat>
-            <xsd:element name="LookUpDataCaseCreation">
+            <xsd:element name="root">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="LookupKey" type="xsd:string" minOccurs="0"/>
-                        <xsd:element name="LookupValue" type="xsd:string" minOccurs="0"/>
-                        <xsd:element name="ToggleValue" type="xsd:string" minOccurs="0"/>
+                        <xsd:element ref="pfx:SiebelData" minOccurs="0"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>

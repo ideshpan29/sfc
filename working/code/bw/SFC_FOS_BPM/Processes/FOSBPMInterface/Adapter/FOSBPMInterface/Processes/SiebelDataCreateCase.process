@@ -166,7 +166,7 @@
                 <InputType>File</InputType>
                 <Encoding>ASCII</Encoding>
                 <SkipBlankLines>true</SkipBlankLines>
-                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
+                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelImportData.sharedparse</ParseSharedConfig>
                 <SpecifyStartRecord>true</SpecifyStartRecord>
             </config>
             <pd:inputBindings>
@@ -197,7 +197,7 @@
             <config>
                 <pd:groupType>inputLoop</pd:groupType>
                 <pd:serializable>false</pd:serializable>
-                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/root</pd:over>
                 <pd:iterationElementSlot>TechnicalEntry</pd:iterationElementSlot>
                 <pd:indexSlot>TechnicalInfoindex</pd:indexSlot>
                 <pd:outSlot>TechnicalInfoPayload</pd:outSlot>
@@ -452,7 +452,7 @@
             <config>
                 <pd:groupType>inputLoop</pd:groupType>
                 <pd:serializable>false</pd:serializable>
-                <pd:over>$ParseSiebelDataFile/Output/Rows/pfx:root</pd:over>
+                <pd:over>$ParseSiebelDataFile/Output/Rows/root/pfx:SiebelData</pd:over>
                 <pd:iterationElementSlot>CustomerInfoentry</pd:iterationElementSlot>
                 <pd:indexSlot>index</pd:indexSlot>
                 <pd:outSlot>CustomerInfoPayload</pd:outSlot>
@@ -493,7 +493,7 @@
                 <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
                 <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
                 <pd:x>901</pd:x>
-                <pd:y>433</pd:y>
+                <pd:y>432</pd:y>
                 <config>
                     <renderAsText>text</renderAsText>
                     <validateInput>false</validateInput>
@@ -505,94 +505,94 @@
                 <pd:inputBindings>
                     <pfx2:Customer_InformationElement>
                         <siebelCircuitID>
-                            <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:CircuitID"/>
+                            <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:CircuitID"/>
                         </siebelCircuitID>
                         <projectManager>
-                            <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:PM"/>
+                            <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:PM"/>
                         </projectManager>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:BusinessName">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:BusinessName">
                             <clientName>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:BusinessName"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:BusinessName"/>
                             </clientName>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:AccountManager">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:AccountManager">
                             <accountManager>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:AccountManager"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:AccountManager"/>
                             </accountManager>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:AccountStats">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:AccountStats">
                             <account>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:AccountStats"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:AccountStats"/>
                             </account>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Contractor">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Contractor">
                             <contractor>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Contractor"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Contractor"/>
                             </contractor>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Location">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Location">
                             <location>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Location"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Location"/>
                             </location>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Floor">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Floor">
                             <floor>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Floor"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Floor"/>
                             </floor>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ClientID">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:ClientID">
                             <clientID>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ClientID"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:ClientID"/>
                             </clientID>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceType">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:ServiceType">
                             <serviceType>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceType"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:ServiceType"/>
                             </serviceType>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:GPSCoordinates">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:GPSCoordinates">
                             <GPSCoordinates>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:GPSCoordinates"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:GPSCoordinates"/>
                             </GPSCoordinates>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Bandwidth">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Bandwidth">
                             <bandwidthupdown>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Bandwidth"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Bandwidth"/>
                             </bandwidthupdown>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Technology">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Technology">
                             <technology>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Technology"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Technology"/>
                             </technology>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ServiceStatus">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:ServiceStatus">
                             <serviceStatus>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ServiceStatus"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:ServiceStatus"/>
                             </serviceStatus>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:BuildingID">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:BuildingID">
                             <buildingID>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:BuildingID"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:BuildingID"/>
                             </buildingID>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:ContactPerson">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:ContactPerson">
                             <contactPerson>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:ContactPerson"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:ContactPerson"/>
                             </contactPerson>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Mobile">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Mobile">
                             <mobile>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Mobile"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Mobile"/>
                             </mobile>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Sector">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Sector">
                             <sector>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Sector"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Sector"/>
                             </sector>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Email">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Email">
                             <email>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Email"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Email"/>
                             </email>
                         </xsl:if>
                         <xsl:if test="$CustomerInfoDateTime/root/ServiceStartDate!=&quot;&quot;">
@@ -621,24 +621,24 @@
                                 </installDate>
                             </xsl:if>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:CommentsDecommission">
                             <notesComments>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:CommentsDecommission"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:CommentsDecommission"/>
                             </notesComments>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Address">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Address">
                             <address>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Address"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Address"/>
                             </address>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:Engineer">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:Engineer">
                             <engineer>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:Engineer"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:Engineer"/>
                             </engineer>
                         </xsl:if>
-                        <xsl:if test="$CustomerInfoentry/pfx:root/pfx:LastNotificationBy">
+                        <xsl:if test="$CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationBy">
                             <lastNotificationBy>
-                                <xsl:value-of select="$CustomerInfoentry/pfx:root/pfx:LastNotificationBy"/>
+                                <xsl:value-of select="$CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationBy"/>
                             </lastNotificationBy>
                         </xsl:if>
                         <xsl:if test="$CustomerInfoDateTime/root/lastNotificationDate">
@@ -655,8 +655,8 @@
             <pd:activity name="MapCustomerInfoDates">
                 <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
                 <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
-                <pd:x>614</pd:x>
-                <pd:y>432</pd:y>
+                <pd:x>611</pd:x>
+                <pd:y>437</pd:y>
                 <config>
                     <element>
                         <xsd:element name="Date">
@@ -731,102 +731,102 @@
                     <Date>
                         <ServiceStartDate>
                             <year>
-                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </year>
                             <month>
-                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </month>
                             <day>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </day>
                             <hours>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </hours>
                             <minutes>
-                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </minutes>
                             <seconds>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceStartDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </seconds>
                         </ServiceStartDate>
                         <ServiceEndDate>
                             <year>
-                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </year>
                             <month>
-                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </month>
                             <day>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </day>
                             <hours>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </hours>
                             <minutes>
-                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </minutes>
                             <seconds>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:ServiceEndDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </seconds>
                         </ServiceEndDate>
                         <InstallDate>
                             <year>
-                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then tib:substring-after-last(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </year>
                             <month>
-                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </month>
                             <day>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </day>
                             <hours>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </hours>
                             <minutes>
-                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </minutes>
                             <seconds>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:InstalledDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </seconds>
                         </InstallDate>
                         <LastNotificationDate>
                             <year>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </year>
                             <month>
-                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </month>
                             <day>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </day>
                             <hours>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </hours>
                             <minutes>
-                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </minutes>
                             <seconds>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:LastNotificationDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </seconds>
                         </LastNotificationDate>
                         <RequestDate>
                             <year>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </year>
                             <month>
-                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </month>
                             <day>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;/&quot;),&quot;/&quot;) else &quot;0&quot;"/>
                             </day>
                             <hours>
-                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </hours>
                             <minutes>
-                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;)!=&quot;&quot;) then substring-before(substring-after(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </minutes>
                             <seconds>
-                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:root/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
+                                <xsl:value-of select="if (tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;)!=&quot;&quot;) then tib:substring-after-last(substring-after(tib:substring-before-last($CustomerInfoentry/pfx:SiebelData/pfx:RequestDate,&quot; &quot;),&quot; &quot;),&quot;:&quot;) else &quot;0&quot;"/>
                             </seconds>
                         </RequestDate>
                     </Date>
@@ -836,7 +836,7 @@
                 <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
                 <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
                 <pd:x>765</pd:x>
-                <pd:y>435</pd:y>
+                <pd:y>434</pd:y>
                 <config>
                     <variableName>CustomerInfoDateTime</variableName>
                 </config>
@@ -957,316 +957,316 @@
             <pd:x>1241</pd:x>
             <pd:y>558</pd:y>
             <config>
-                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
+                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelImportData.sharedparse</ParseSharedConfig>
             </config>
             <pd:inputBindings>
                 <Rows>
-                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">
-                        <pfx:root>
+                    <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/root/pfx:SiebelData">
+                        <root>
                             <xsl:if test="pfx:BuildingID">
                                 <pfx:BuildingID>
                                     <xsl:value-of select="pfx:BuildingID"/>
                                 </pfx:BuildingID>
                             </xsl:if>
-                            <xsl:if test="pfx:ClientID">
+                            <xsl:if test="pfx:SiebelData/pfx:ClientID">
                                 <pfx:ClientID>
-                                    <xsl:value-of select="pfx:ClientID"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ClientID"/>
                                 </pfx:ClientID>
                             </xsl:if>
-                            <xsl:if test="pfx:BusinessName">
+                            <xsl:if test="pfx:SiebelData/pfx:BusinessName">
                                 <pfx:BusinessName>
-                                    <xsl:value-of select="pfx:BusinessName"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:BusinessName"/>
                                 </pfx:BusinessName>
                             </xsl:if>
-                            <xsl:if test="pfx:Floor">
+                            <xsl:if test="pfx:SiebelData/pfx:Floor">
                                 <pfx:Floor>
-                                    <xsl:value-of select="pfx:Floor"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Floor"/>
                                 </pfx:Floor>
                             </xsl:if>
-                            <xsl:if test="pfx:ServiceType">
+                            <xsl:if test="pfx:SiebelData/pfx:ServiceType">
                                 <pfx:ServiceType>
-                                    <xsl:value-of select="pfx:ServiceType"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ServiceType"/>
                                 </pfx:ServiceType>
                             </xsl:if>
-                            <xsl:if test="pfx:Technology">
+                            <xsl:if test="pfx:SiebelData/pfx:Technology">
                                 <pfx:Technology>
-                                    <xsl:value-of select="pfx:Technology"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Technology"/>
                                 </pfx:Technology>
                             </xsl:if>
-                            <xsl:if test="pfx:ServiceStatus">
+                            <xsl:if test="pfx:SiebelData/pfx:ServiceStatus">
                                 <pfx:ServiceStatus>
-                                    <xsl:value-of select="pfx:ServiceStatus"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ServiceStatus"/>
                                 </pfx:ServiceStatus>
                             </xsl:if>
-                            <xsl:if test="pfx:ContactPerson">
+                            <xsl:if test="pfx:SiebelData/pfx:ContactPerson">
                                 <pfx:ContactPerson>
-                                    <xsl:value-of select="pfx:ContactPerson"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ContactPerson"/>
                                 </pfx:ContactPerson>
                             </xsl:if>
-                            <xsl:if test="pfx:Address">
+                            <xsl:if test="pfx:SiebelData/pfx:Address">
                                 <pfx:Address>
-                                    <xsl:value-of select="pfx:Address"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Address"/>
                                 </pfx:Address>
                             </xsl:if>
-                            <xsl:if test="pfx:Mobile">
+                            <xsl:if test="pfx:SiebelData/pfx:Mobile">
                                 <pfx:Mobile>
-                                    <xsl:value-of select="pfx:Mobile"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Mobile"/>
                                 </pfx:Mobile>
                             </xsl:if>
-                            <xsl:if test="pfx:Email">
+                            <xsl:if test="pfx:SiebelData/pfx:Email">
                                 <pfx:Email>
-                                    <xsl:value-of select="pfx:Email"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Email"/>
                                 </pfx:Email>
                             </xsl:if>
-                            <xsl:if test="pfx:RequestDate">
+                            <xsl:if test="pfx:SiebelData/pfx:RequestDate">
                                 <pfx:RequestDate>
-                                    <xsl:value-of select="pfx:RequestDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:RequestDate"/>
                                 </pfx:RequestDate>
                             </xsl:if>
-                            <xsl:if test="pfx:Bandwidth">
+                            <xsl:if test="pfx:SiebelData/pfx:Bandwidth">
                                 <pfx:Bandwidth>
-                                    <xsl:value-of select="pfx:Bandwidth"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Bandwidth"/>
                                 </pfx:Bandwidth>
                             </xsl:if>
-                            <xsl:if test="pfx:ManagementVLAN">
+                            <xsl:if test="pfx:SiebelData/pfx:ManagementVLAN">
                                 <pfx:ManagementVLAN>
-                                    <xsl:value-of select="pfx:ManagementVLAN"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ManagementVLAN"/>
                                 </pfx:ManagementVLAN>
                             </xsl:if>
-                            <xsl:if test="pfx:ManagementIP">
+                            <xsl:if test="pfx:SiebelData/pfx:ManagementIP">
                                 <pfx:ManagementIP>
-                                    <xsl:value-of select="pfx:ManagementIP"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ManagementIP"/>
                                 </pfx:ManagementIP>
                             </xsl:if>
-                            <xsl:if test="pfx:ClientVLAN">
+                            <xsl:if test="pfx:SiebelData/pfx:ClientVLAN">
                                 <pfx:ClientVLAN>
-                                    <xsl:value-of select="pfx:ClientVLAN"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ClientVLAN"/>
                                 </pfx:ClientVLAN>
                             </xsl:if>
-                            <xsl:if test="pfx:ClientIP">
+                            <xsl:if test="pfx:SiebelData/pfx:ClientIP">
                                 <pfx:ClientIP>
-                                    <xsl:value-of select="pfx:ClientIP"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ClientIP"/>
                                 </pfx:ClientIP>
                             </xsl:if>
-                            <xsl:if test="pfx:Port">
+                            <xsl:if test="pfx:SiebelData/pfx:Port">
                                 <pfx:Port>
-                                    <xsl:value-of select="pfx:Port"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Port"/>
                                 </pfx:Port>
                             </xsl:if>
-                            <xsl:if test="pfx:RouterType">
+                            <xsl:if test="pfx:SiebelData/pfx:RouterType">
                                 <pfx:RouterType>
-                                    <xsl:value-of select="pfx:RouterType"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:RouterType"/>
                                 </pfx:RouterType>
                             </xsl:if>
-                            <xsl:if test="pfx:AggPoint">
+                            <xsl:if test="pfx:SiebelData/pfx:AggPoint">
                                 <pfx:AggPoint>
-                                    <xsl:value-of select="pfx:AggPoint"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:AggPoint"/>
                                 </pfx:AggPoint>
                             </xsl:if>
-                            <xsl:if test="pfx:ServiceStartDate">
+                            <xsl:if test="pfx:SiebelData/pfx:ServiceStartDate">
                                 <pfx:ServiceStartDate>
-                                    <xsl:value-of select="pfx:ServiceStartDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ServiceStartDate"/>
                                 </pfx:ServiceStartDate>
                             </xsl:if>
-                            <xsl:if test="pfx:ServiceEndDate">
+                            <xsl:if test="pfx:SiebelData/pfx:ServiceEndDate">
                                 <pfx:ServiceEndDate>
-                                    <xsl:value-of select="pfx:ServiceEndDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ServiceEndDate"/>
                                 </pfx:ServiceEndDate>
                             </xsl:if>
-                            <xsl:if test="pfx:CircuitID">
+                            <xsl:if test="pfx:SiebelData/pfx:CircuitID">
                                 <pfx:CircuitID>
-                                    <xsl:value-of select="pfx:CircuitID"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:CircuitID"/>
                                 </pfx:CircuitID>
                             </xsl:if>
-                            <xsl:if test="pfx:Comments">
+                            <xsl:if test="pfx:SiebelData/pfx:Comments">
                                 <pfx:Comments>
-                                    <xsl:value-of select="pfx:Comments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Comments"/>
                                 </pfx:Comments>
                             </xsl:if>
-                            <xsl:if test="pfx:PendingComments">
+                            <xsl:if test="pfx:SiebelData/pfx:PendingComments">
                                 <pfx:PendingComments>
-                                    <xsl:value-of select="pfx:PendingComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:PendingComments"/>
                                 </pfx:PendingComments>
                             </xsl:if>
-                            <xsl:if test="pfx:LastNotificationDate">
+                            <xsl:if test="pfx:SiebelData/pfx:LastNotificationDate">
                                 <pfx:LastNotificationDate>
-                                    <xsl:value-of select="pfx:LastNotificationDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:LastNotificationDate"/>
                                 </pfx:LastNotificationDate>
                             </xsl:if>
-                            <xsl:if test="pfx:LastNotificationBy">
+                            <xsl:if test="pfx:SiebelData/pfx:LastNotificationBy">
                                 <pfx:LastNotificationBy>
-                                    <xsl:value-of select="pfx:LastNotificationBy"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:LastNotificationBy"/>
                                 </pfx:LastNotificationBy>
                             </xsl:if>
-                            <xsl:if test="pfx:ActiveComments">
+                            <xsl:if test="pfx:SiebelData/pfx:ActiveComments">
                                 <pfx:ActiveComments>
-                                    <xsl:value-of select="pfx:ActiveComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ActiveComments"/>
                                 </pfx:ActiveComments>
                             </xsl:if>
-                            <xsl:if test="pfx:SuspendedComments">
+                            <xsl:if test="pfx:SiebelData/pfx:SuspendedComments">
                                 <pfx:SuspendedComments>
-                                    <xsl:value-of select="pfx:SuspendedComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:SuspendedComments"/>
                                 </pfx:SuspendedComments>
                             </xsl:if>
-                            <xsl:if test="pfx:TerminatedComments">
+                            <xsl:if test="pfx:SiebelData/pfx:TerminatedComments">
                                 <pfx:TerminatedComments>
-                                    <xsl:value-of select="pfx:TerminatedComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:TerminatedComments"/>
                                 </pfx:TerminatedComments>
                             </xsl:if>
-                            <xsl:if test="pfx:Location">
+                            <xsl:if test="pfx:SiebelData/pfx:Location">
                                 <pfx:Location>
-                                    <xsl:value-of select="pfx:Location"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Location"/>
                                 </pfx:Location>
                             </xsl:if>
-                            <xsl:if test="pfx:AccountManager">
+                            <xsl:if test="pfx:SiebelData/pfx:AccountManager">
                                 <pfx:AccountManager>
-                                    <xsl:value-of select="pfx:AccountManager"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:AccountManager"/>
                                 </pfx:AccountManager>
                             </xsl:if>
-                            <xsl:if test="pfx:InstalledComments">
+                            <xsl:if test="pfx:SiebelData/pfx:InstalledComments">
                                 <pfx:InstalledComments>
-                                    <xsl:value-of select="pfx:InstalledComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:InstalledComments"/>
                                 </pfx:InstalledComments>
                             </xsl:if>
-                            <xsl:if test="pfx:MigratedActiveComments">
+                            <xsl:if test="pfx:SiebelData/pfx:MigratedActiveComments">
                                 <pfx:MigratedActiveComments>
-                                    <xsl:value-of select="pfx:MigratedActiveComments"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:MigratedActiveComments"/>
                                 </pfx:MigratedActiveComments>
                             </xsl:if>
-                            <xsl:if test="pfx:EquipmentType1">
+                            <xsl:if test="pfx:SiebelData/pfx:EquipmentType1">
                                 <pfx:EquipmentType1>
-                                    <xsl:value-of select="pfx:EquipmentType1"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:EquipmentType1"/>
                                 </pfx:EquipmentType1>
                             </xsl:if>
-                            <xsl:if test="pfx:EquipmentType2">
+                            <xsl:if test="pfx:SiebelData/pfx:EquipmentType2">
                                 <pfx:EquipmentType2>
-                                    <xsl:value-of select="pfx:EquipmentType2"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:EquipmentType2"/>
                                 </pfx:EquipmentType2>
                             </xsl:if>
-                            <xsl:if test="pfx:EquipmentType3">
+                            <xsl:if test="pfx:SiebelData/pfx:EquipmentType3">
                                 <pfx:EquipmentType3>
-                                    <xsl:value-of select="pfx:EquipmentType3"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:EquipmentType3"/>
                                 </pfx:EquipmentType3>
                             </xsl:if>
-                            <xsl:if test="pfx:EquipmentType4">
+                            <xsl:if test="pfx:SiebelData/pfx:EquipmentType4">
                                 <pfx:EquipmentType4>
-                                    <xsl:value-of select="pfx:EquipmentType4"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:EquipmentType4"/>
                                 </pfx:EquipmentType4>
                             </xsl:if>
-                            <xsl:if test="pfx:MacAddress1">
+                            <xsl:if test="pfx:SiebelData/pfx:MacAddress1">
                                 <pfx:MacAddress1>
-                                    <xsl:value-of select="pfx:MacAddress1"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:MacAddress1"/>
                                 </pfx:MacAddress1>
                             </xsl:if>
-                            <xsl:if test="pfx:MacAddress2">
+                            <xsl:if test="pfx:SiebelData/pfx:MacAddress2">
                                 <pfx:MacAddress2>
-                                    <xsl:value-of select="pfx:MacAddress2"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:MacAddress2"/>
                                 </pfx:MacAddress2>
                             </xsl:if>
-                            <xsl:if test="pfx:MacAddress3">
+                            <xsl:if test="pfx:SiebelData/pfx:MacAddress3">
                                 <pfx:MacAddress3>
-                                    <xsl:value-of select="pfx:MacAddress3"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:MacAddress3"/>
                                 </pfx:MacAddress3>
                             </xsl:if>
-                            <xsl:if test="pfx:MacAddress4">
+                            <xsl:if test="pfx:SiebelData/pfx:MacAddress4">
                                 <pfx:MacAddress4>
-                                    <xsl:value-of select="pfx:MacAddress4"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:MacAddress4"/>
                                 </pfx:MacAddress4>
                             </xsl:if>
-                            <xsl:if test="pfx:PortType">
+                            <xsl:if test="pfx:SiebelData/pfx:PortType">
                                 <pfx:PortType>
-                                    <xsl:value-of select="pfx:PortType"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:PortType"/>
                                 </pfx:PortType>
                             </xsl:if>
-                            <xsl:if test="pfx:PortNo">
+                            <xsl:if test="pfx:SiebelData/pfx:PortNo">
                                 <pfx:PortNo>
-                                    <xsl:value-of select="pfx:PortNo"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:PortNo"/>
                                 </pfx:PortNo>
                             </xsl:if>
-                            <xsl:if test="pfx:AccountStats">
+                            <xsl:if test="pfx:SiebelData/pfx:AccountStats">
                                 <pfx:AccountStats>
-                                    <xsl:value-of select="pfx:AccountStats"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:AccountStats"/>
                                 </pfx:AccountStats>
                             </xsl:if>
-                            <xsl:if test="pfx:PM">
+                            <xsl:if test="pfx:SiebelData/pfx:PM">
                                 <pfx:PM>
-                                    <xsl:value-of select="pfx:PM"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:PM"/>
                                 </pfx:PM>
                             </xsl:if>
-                            <xsl:if test="pfx:GPSCoordinates">
+                            <xsl:if test="pfx:SiebelData/pfx:GPSCoordinates">
                                 <pfx:GPSCoordinates>
-                                    <xsl:value-of select="pfx:GPSCoordinates"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:GPSCoordinates"/>
                                 </pfx:GPSCoordinates>
                             </xsl:if>
-                            <xsl:if test="pfx:Sector">
+                            <xsl:if test="pfx:SiebelData/pfx:Sector">
                                 <pfx:Sector>
-                                    <xsl:value-of select="pfx:Sector"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Sector"/>
                                 </pfx:Sector>
                             </xsl:if>
-                            <xsl:if test="pfx:LastModifiedBy">
+                            <xsl:if test="pfx:SiebelData/pfx:LastModifiedBy">
                                 <pfx:LastModifiedBy>
-                                    <xsl:value-of select="pfx:LastModifiedBy"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:LastModifiedBy"/>
                                 </pfx:LastModifiedBy>
                             </xsl:if>
-                            <xsl:if test="pfx:LastModifiedDate">
+                            <xsl:if test="pfx:SiebelData/pfx:LastModifiedDate">
                                 <pfx:LastModifiedDate>
-                                    <xsl:value-of select="pfx:LastModifiedDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:LastModifiedDate"/>
                                 </pfx:LastModifiedDate>
                             </xsl:if>
-                            <xsl:if test="pfx:SFCPOP">
+                            <xsl:if test="pfx:SiebelData/pfx:SFCPOP">
                                 <pfx:SFCPOP>
-                                    <xsl:value-of select="pfx:SFCPOP"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:SFCPOP"/>
                                 </pfx:SFCPOP>
                             </xsl:if>
-                            <xsl:if test="pfx:ARIP">
+                            <xsl:if test="pfx:SiebelData/pfx:ARIP">
                                 <pfx:ARIP>
-                                    <xsl:value-of select="pfx:ARIP"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:ARIP"/>
                                 </pfx:ARIP>
                             </xsl:if>
-                            <xsl:if test="pfx:Contractor">
+                            <xsl:if test="pfx:SiebelData/pfx:Contractor">
                                 <pfx:Contractor>
-                                    <xsl:value-of select="pfx:Contractor"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Contractor"/>
                                 </pfx:Contractor>
                             </xsl:if>
-                            <xsl:if test="pfx:Vlan">
+                            <xsl:if test="pfx:SiebelData/pfx:Vlan">
                                 <pfx:Vlan>
-                                    <xsl:value-of select="pfx:Vlan"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Vlan"/>
                                 </pfx:Vlan>
                             </xsl:if>
-                            <xsl:if test="pfx:Vlan2">
+                            <xsl:if test="pfx:SiebelData/pfx:Vlan2">
                                 <pfx:Vlan2>
-                                    <xsl:value-of select="pfx:Vlan2"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Vlan2"/>
                                 </pfx:Vlan2>
                             </xsl:if>
-                            <xsl:if test="pfx:Vlan3">
+                            <xsl:if test="pfx:SiebelData/pfx:Vlan3">
                                 <pfx:Vlan3>
-                                    <xsl:value-of select="pfx:Vlan3"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Vlan3"/>
                                 </pfx:Vlan3>
                             </xsl:if>
-                            <xsl:if test="pfx:Vlan4">
+                            <xsl:if test="pfx:SiebelData/pfx:Vlan4">
                                 <pfx:Vlan4>
-                                    <xsl:value-of select="pfx:Vlan4"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Vlan4"/>
                                 </pfx:Vlan4>
                             </xsl:if>
-                            <xsl:if test="pfx:Engineer">
+                            <xsl:if test="pfx:SiebelData/pfx:Engineer">
                                 <pfx:Engineer>
-                                    <xsl:value-of select="pfx:Engineer"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:Engineer"/>
                                 </pfx:Engineer>
                             </xsl:if>
-                            <xsl:if test="pfx:InstalledDate">
+                            <xsl:if test="pfx:SiebelData/pfx:InstalledDate">
                                 <pfx:InstalledDate>
-                                    <xsl:value-of select="pfx:InstalledDate"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:InstalledDate"/>
                                 </pfx:InstalledDate>
                             </xsl:if>
-                            <xsl:if test="pfx:CommentsDecommission">
+                            <xsl:if test="pfx:SiebelData/pfx:CommentsDecommission">
                                 <pfx:CommentsDecommission>
-                                    <xsl:value-of select="pfx:CommentsDecommission"/>
+                                    <xsl:value-of select="pfx:SiebelData/pfx:CommentsDecommission"/>
                                 </pfx:CommentsDecommission>
                             </xsl:if>
                             <pfx:status>
                                 <xsl:value-of select="'SUCCESS'"/>
                             </pfx:status>
-                        </pfx:root>
+                        </root>
                     </xsl:for-each>
                 </Rows>
             </pd:inputBindings>
@@ -1288,9 +1288,7 @@
             <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
             <pd:x>1221</pd:x>
             <pd:y>749</pd:y>
-            <config>
-                <ParseSharedConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/DataFormats/SiebelData.sharedparse</ParseSharedConfig>
-            </config>
+            <config/>
             <pd:inputBindings>
                 <Rows>
                     <xsl:for-each select="$ParseSiebelDataFile/Output/Rows/pfx:root">

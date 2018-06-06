@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1509116125289" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns2="http://api.bds.tibco.com">
+    <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeSendMail.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:SendMailInput"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx:SendMailOutput>
+            <part1>
+                <ns:SendMailResponse>
+                    <ns:Status>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </ns:Status>
+                </ns:SendMailResponse>
+            </part1>
+        </pfx:SendMailOutput>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:SendMailOutput"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1528187190906</pd:targetNamespace>
+    <pd:activity name="Call Process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>280</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/SendMail.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx:SendMailInput/part1/ns:SentMailRequest">
+                <ns:SentMailRequest>
+                    <xsl:if test="ns:ToField">
+                        <ns:ToField>
+                            <xsl:value-of select="ns:ToField"/>
+                        </ns:ToField>
+                    </xsl:if>
+                    <xsl:if test="ns:Process">
+                        <ns:Process>
+                            <xsl:value-of select="ns:Process"/>
+                        </ns:Process>
+                    </xsl:if>
+                    <xsl:if test="ns:EmailType">
+                        <ns:EmailType>
+                            <xsl:value-of select="ns:EmailType"/>
+                        </ns:EmailType>
+                    </xsl:if>
+                    <xsl:if test="ns:SiebelCircuitID">
+                        <ns:SiebelCircuitID>
+                            <xsl:value-of select="ns:SiebelCircuitID"/>
+                        </ns:SiebelCircuitID>
+                    </xsl:if>
+                    <xsl:for-each select="ns:UDF">
+                        <ns:UDF>
+                            <xsl:if test="ns:Name">
+                                <ns:Name>
+                                    <xsl:value-of select="ns:Name"/>
+                                </ns:Name>
+                            </xsl:if>
+                            <xsl:if test="ns:Value">
+                                <ns:Value>
+                                    <xsl:value-of select="ns:Value"/>
+                                </ns:Value>
+                            </xsl:if>
+                            <xsl:if test="ns:Flavour">
+                                <ns:Flavour>
+                                    <xsl:value-of select="ns:Flavour"/>
+                                </ns:Flavour>
+                            </xsl:if>
+                            <xsl:if test="ns:Type">
+                                <ns:Type>
+                                    <xsl:value-of select="ns:Type"/>
+                                </ns:Type>
+                            </xsl:if>
+                            <xsl:if test="ns:EvaluationType">
+                                <ns:EvaluationType>
+                                    <xsl:value-of select="ns:EvaluationType"/>
+                                </ns:EvaluationType>
+                            </xsl:if>
+                        </ns:UDF>
+                    </xsl:for-each>
+                </ns:SentMailRequest>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Call Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Process</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

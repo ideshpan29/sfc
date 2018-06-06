@@ -61,6 +61,12 @@
     <message name="WorkItemFetchOutput">
         <part name="Response" element="ns25:WorkItemFetchResponse"/>
     </message>
+    <message name="SendMailInput">
+        <part name="part1" element="ns25:SentMailRequest"/>
+    </message>
+    <message name="SendMailOutput">
+        <part name="part1" element="ns25:SendMailResponse"/>
+    </message>
     <portType name="PortType">
         <operation name="getResources">
             <input message="ns17:FetchResourceinput"/>
@@ -93,6 +99,10 @@
         <operation name="WorkItemFetch">
             <input message="ns17:WorkItemFetchInput"/>
             <output message="ns17:WorkItemFetchOutput"/>
+        </operation>
+        <operation name="SendMail">
+            <input message="ns17:SendMailInput"/>
+            <output message="ns17:SendMailOutput"/>
         </operation>
     </portType>
 </definitions>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
     <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModelSchema.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ParseLookupCSV.process</pd:name>
@@ -16,15 +16,30 @@
     <pd:startX>54</pd:startX>
     <pd:startY>123</pd:startY>
     <pd:returnBindings>
-        <root>
-            <xsl:for-each select="$Parse-Data/Output/Rows/root">
+        <xsl:choose>
+            <xsl:when test="$Start/root/FullName=&quot;BUILDING_FLOOR_TYPE.csv&quot; or $Start/root/FullName=&quot;PORT_NUMBER.csv&quot;">
                 <root>
-                    <LookupData>
-                        <xsl:value-of select="param"/>
-                    </LookupData>
+                    <xsl:for-each select="$Parse-Data/Output/Rows/root">
+                        <root>
+                            <LookupData>
+                                <xsl:value-of select="param"/>
+                            </LookupData>
+                        </root>
+                    </xsl:for-each>
                 </root>
-            </xsl:for-each>
-        </root>
+            </xsl:when>
+            <xsl:otherwise>
+                <root>
+                    <xsl:for-each select="$Java-Code/javaCodeActivityOutput/SortedLookup">
+                        <root>
+                            <LookupData>
+                                <xsl:value-of select="."/>
+                            </LookupData>
+                        </root>
+                    </xsl:for-each>
+                </root>
+            </xsl:otherwise>
+        </xsl:choose>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType>
@@ -42,8 +57,8 @@
             </xsd:complexType>
         </xsd:element>
     </pd:endType>
-    <pd:endX>262</pd:endX>
-    <pd:endY>124</pd:endY>
+    <pd:endX>642</pd:endX>
+    <pd:endY>122</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1522823116593</pd:targetNamespace>
@@ -63,12 +78,125 @@
         <pd:inputBindings>
             <Input>
                 <fileName>
-                    <xsl:value-of select="$Start/root/FullName"/>
+                    <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/FilePath,$Start/root/FullName)"/>
                 </fileName>
                 <noOfRecords>
                     <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/AutomatedCaseDataCreation/LookupData/NoofRecords"/>
                 </noOfRecords>
             </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>296</pd:x>
+        <pd:y>170</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="LookupData" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Parse-Data/Output/Rows/root/param">
+                    <LookupData>
+                        <xsl:value-of select="."/>
+                    </LookupData>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>503</pd:x>
+        <pd:y>169</pd:y>
+        <config>
+            <fileName>ParseLookupCSVJavaCode</fileName>
+            <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ParseLookupCSV</packageName>
+            <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ParseLookupCSV;
+import java.util.*;
+import java.io.*;
+import java.util.Arrays;
+public class ParseLookupCSVJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String[] LookupInput = null;
+	protected String[] SortedLookup = null;
+	public String[] getLookupInput() {
+		return LookupInput;
+	}
+	public void setLookupInput(String[] val) {
+		LookupInput = val;
+	}
+	public String[] getSortedLookup() {
+		return SortedLookup;
+	}
+	public void setSortedLookup(String[] val) {
+		SortedLookup = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public ParseLookupCSVJavaCode() {
+}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : String[] LookupInput
+	Out : String[] SortedLookup
+* Available Variables: DO NOT MODIFY *****/
+/*for (int i = 0; i &lt; LookupInput.length; i++) 
+        {
+            for (int j = i + 1; j &lt; LookupInput.length; j++) 
+            {
+                if (LookupInput[i].compareTo(LookupInput[j])&gt;0) 
+                {
+			String temp;
+                    temp = LookupInput[i];
+                    LookupInput[i] = LookupInput[j];
+                    LookupInput[j] = temp;
+                }
+            }
+        }
+*/
+Arrays.sort(LookupInput);
+SortedLookup=Arrays.copyOf(LookupInput,LookupInput.length);
+}
+}
+
+</fullsource>
+            <inputData>
+                <row>
+                    <fieldName>LookupInput</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>repeating</fieldRequired>
+                </row>
+            </inputData>
+            <outputData>
+                <row>
+                    <fieldName>SortedLookup</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>repeating</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>ParseLookupCSVJavaCode</name>
+                    <byteCode>yv66vgAAADQAKQkABwAbCQAHABwKAAgAHQoAHgAfCgAeACAHAAoHACEHACIBAAtMb29rdXBJbnB1dAEAE1tMamF2YS9sYW5nL1N0cmluZzsBAAxTb3J0ZWRMb29rdXABAA5nZXRMb29rdXBJbnB1dAEAFSgpW0xqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAA5zZXRMb29rdXBJbnB1dAEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAA9nZXRTb3J0ZWRMb29rdXABAA9zZXRTb3J0ZWRMb29rdXABAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAApFeGNlcHRpb25zBwAjAQAKU291cmNlRmlsZQEAG1BhcnNlTG9va3VwQ1NWSmF2YUNvZGUuamF2YQwACQAKDAALAAoMABQAFQcAJAwAJQAmDAAnACgBAGFQcm9jZXNzZXMvRk9TQlBNSW50ZXJmYWNlL0FkYXB0ZXIvRk9TQlBNSW50ZXJmYWNlL1Byb2Nlc3Nlcy9QYXJzZUxvb2t1cENTVi9QYXJzZUxvb2t1cENTVkphdmFDb2RlAQAQamF2YS9sYW5nL09iamVjdAEAE2phdmEvbGFuZy9FeGNlcHRpb24BABBqYXZhL3V0aWwvQXJyYXlzAQAEc29ydAEAFihbTGphdmEvbGFuZy9PYmplY3Q7KVYBAAZjb3B5T2YBACkoW0xqYXZhL2xhbmcvT2JqZWN0O0kpW0xqYXZhL2xhbmcvT2JqZWN0OwAhAAcACAAAAAIABAAJAAoAAAAEAAsACgAAAAYAAQAMAA0AAQAOAAAAHQABAAEAAAAFKrQAAbAAAAABAA8AAAAGAAEAAAAKAAEAEAARAAEADgAAACIAAgACAAAABiortQABsQAAAAEADwAAAAoAAgAAAA0ABQAOAAEAEgANAAEADgAAAB0AAQABAAAABSq0AAKwAAAAAQAPAAAABgABAAAAEAABABMAEQABAA4AAAAiAAIAAgAAAAYqK7UAArEAAAABAA8AAAAKAAIAAAATAAUAFAABABQAFQABAA4AAAAzAAIAAQAAAA8qtwADKgG1AAEqAbUAArEAAAABAA8AAAASAAQAAAAWAAQABwAJAAgADgAXAAEAFgAVAAIADgAAADsAAwABAAAAGyq0AAG4AAQqKrQAASq0AAG+uAAFwAAGtQACsQAAAAEADwAAAA4AAwAAACsABwAsABoALQAXAAAABAABABgAAQAZAAAAAgAa</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <xsl:for-each select="$Map-Data/root/LookupData">
+                    <LookupInput>
+                        <xsl:value-of select="."/>
+                    </LookupInput>
+                </xsl:for-each>
+            </javaCodeActivityInput>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -80,9 +208,31 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Parse Data</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Java Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java Code</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/FullName="PORT_NUMBER.csv" or $Start/root/FullName="BUILDING_FLOOR_TYPE.csv"</pd:xpath>
     </pd:transition>
 </pd:ProcessDefinition>

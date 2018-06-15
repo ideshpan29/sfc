@@ -20,7 +20,18 @@
     <pd:endName>End</pd:endName>
     <pd:endX>1568</pd:endX>
     <pd:endY>557</pd:endY>
-    <pd:errorSchemas/>
+    <pd:errorSchemas>
+        <Error>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ErrorCode" type="xsd:string"/>
+                        <xsd:element name="ErrorMsg" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Error>
+    </pd:errorSchemas>
     <pd:processVariables>
         <Counter>
             <xsd:element name="count" type="xsd:int"/>
@@ -1074,7 +1085,7 @@
             <pd:y>753</pd:y>
             <pd:handler>true</pd:handler>
             <config>
-                <catchAll>true</catchAll>
+                <catchAll>false</catchAll>
                 <fault>localname=caseDataAccessFault</fault>
             </config>
             <pd:inputBindings/>
@@ -1272,7 +1283,7 @@
                                 <xsl:value-of select="ns6:CommentsDecommission"/>
                             </ns6:CommentsDecommission>
                             <ns6:status>
-                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;ERROR CODE&quot;,$_error/ns5:ErrorReport/MsgCode,&quot;ERROR MESSAGE&quot;,$_error/ns5:ErrorReport/Msg)"/>
+                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;,&quot;,$Catch/caseDataAccessFault/faultcode,&quot;,&quot;,substring-before($Catch/caseDataAccessFault/faultstring,&quot;[CasePayload&quot;))"/>
                             </ns6:status>
                         </ns6:root>
                     </xsl:for-each>
@@ -1302,6 +1313,33 @@
             </pd:inputBindings>
         </pd:activity>
     </pd:group>
+    <pd:activity name="CatchALL">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1564</pd:x>
+        <pd:y>783</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="ErrorLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>1566</pd:x>
+        <pd:y>659</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$CatchALL/exceptiondata/*"/>
+                </message>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>Group (2)</pd:to>
@@ -1311,6 +1349,20 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Group (2)</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchALL</pd:from>
+        <pd:to>ErrorLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ErrorLog</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

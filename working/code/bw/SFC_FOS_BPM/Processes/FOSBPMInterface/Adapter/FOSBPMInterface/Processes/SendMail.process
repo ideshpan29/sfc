@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:ns="http://api.bds.tibco.com" xmlns:pfx3="http://bizData.fosImpl.sfc.com/dataModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/mail" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType">
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/mail" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://api.bds.tibco.com" xmlns:ns3="http://xmlns.tibco.com/body" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pfx2="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
@@ -17,18 +17,28 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx:SendMailResponse"/>
-    <pd:endX>784</pd:endX>
-    <pd:endY>64</pd:endY>
+    <pd:endX>987</pd:endX>
+    <pd:endY>59</pd:endY>
     <pd:errorSchemas/>
-    <pd:processVariables/>
+    <pd:processVariables>
+        <MailContent>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Contents" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </MailContent>
+    </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1528193223693</pd:targetNamespace>
     <pd:activity name="FindCustomerInformation">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>394</pd:x>
-        <pd:y>70</pd:y>
+        <pd:x>364</pd:x>
+        <pd:y>63</pd:y>
         <config>
-            <timeout>0</timeout>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
             <timeoutType>Seconds</timeoutType>
             <service>pfx2:BusinessDataServices_1.2.0</service>
@@ -57,8 +67,8 @@
     <pd:activity name="Render XML">
         <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
         <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>283</pd:x>
-        <pd:y>68</pd:y>
+        <pd:x>249</pd:x>
+        <pd:y>62</pd:y>
         <config>
             <renderAsText>text</renderAsText>
             <validateInput>false</validateInput>
@@ -78,12 +88,12 @@
     <pd:activity name="Send Mail">
         <pd:type>com.tibco.plugin.mail.MailPubActivity</pd:type>
         <pd:resourceType>ae.activities.MailActivityResource</pd:resourceType>
-        <pd:x>581</pd:x>
-        <pd:y>71</pd:y>
+        <pd:x>862</pd:x>
+        <pd:y>62</pd:y>
         <config>
             <newMimeSupport>true</newMimeSupport>
             <inputOutputVersion>5.2.0</inputOutputVersion>
-            <host>%%BPM/SendMailOperation/MailHost%%:%%BPM/SendMailOperation/MailPort%%</host>
+            <host>rajagtap-t470:25</host>
             <authenticate>true</authenticate>
             <username>%%BPM/SendMailOperation/AuthenticateUser%%</username>
             <password>%%BPM/SendMailOperation/UserPassword%%</password>
@@ -99,12 +109,96 @@
         </config>
         <pd:inputBindings>
             <ns2:mailActivityInput>
+                <from>
+                    <xsl:value-of select="'alan@demogmail.com'"/>
+                </from>
+                <to>
+                    <xsl:value-of select="'alan@demogmail.com'"/>
+                </to>
+                <ns3:bodyElement>
+                    <bodyText>
+                        <xsl:value-of select="$MailContent/root/Contents"/>
+                    </bodyText>
+                </ns3:bodyElement>
                 <Headers>
                     <Content-Type>
                         <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SendMailOperation/MailContentType"/>
                     </Content-Type>
                 </Headers>
             </ns2:mailActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>743</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <variableName>MailContent</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="$Start/pfx:SentMailRequest/pfx:EmailType=&quot;Success&quot;">
+                        <Contents>
+                            <xsl:value-of select="concat('&lt;html>&lt;body>&lt;h1 style=&quot;background-color:#41B83B;&quot;>&lt;font color=&quot;white&quot;>Welcome to Safaricom&lt;/font>&lt;/h1>&lt;p style=&quot;background-color:#41B83B;&quot;>&lt;p>Dear Aluko,&lt;/p>&lt;p>We have successfully implemented the service below.&lt;/p>&lt;!--&lt;h2 style=&quot;background-color:#41B83B;&quot;>&lt;font color=&quot;black&quot; size=&quot;4&quot;>Order Details&lt;/font>&lt;/h2>-->&lt;table>  &lt;tr>&#x9;&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>CIRCUIT ID&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>MONTHLY FEE (Excl VAT)&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>CUSTOMER NAME&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>SERVICE TYPE&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>ACCESS MEDIUM&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>BANDWIDTH&lt;/th>&lt;/tr>&lt;tr>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/siebelCircuitID,'&lt;/td>&lt;td align=center>', &quot;100&quot; ,'/td>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/clientName,'&lt;/td>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/serviceType,'&lt;/td> &lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/technology,'&lt;/td>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/bandwidthupdown,'&lt;/td> &lt;/tr>&lt;/table>&lt;p style=&quot;background-color:#41B83B;&quot;>&lt;p>Kindly let us know which numbers you anticipate will be calling the Support Number (0722002222) so we can whitelist them.&lt;/p>&lt;br/>&lt;p>Support Matrix is as below:&lt;/p>&lt;/p>&lt;table>&lt;th style=&quot;background-color:#ECEE22;&quot;>TECHNICAL SUPPORT&lt;/th>&lt;th style=&quot;background-color:#32D916;&quot;>BILLING ISSUES&lt;/th>&lt;th style=&quot;background-color:#F25ABD;&quot;>ACCOUNT MANAGEMENT&lt;/th>&lt;tr>&lt;td style=&quot;background-color:#ECEE22;&quot;>+254722002222&lt;/td>&lt;td style=&quot;background-color:#32D916;&quot;>&lt;a href=&quot;mailto:Fdcc@Safaricom.co.ke&quot;>Fdcc@Safaricom.co.ke&lt;/a>&lt;/td>&lt;td style=&quot;background-color:#F25ABD;&quot;>',$Parse-XML/pfx3:Customer_InformationElement/accountManager,'&lt;/td>&lt;/tr>&lt;tr>&lt;td style=&quot;background-color:#ECEE22;&quot;> &lt;a href=&quot;mailto:Business.support@safaricom.co.ke&quot;>Business.support@safaric&lt;br/>om.co.ke&lt;/a>&lt;/td>&lt;td style=&quot;background-color:#32D916;&quot;> &lt;a href=&quot;mailto:creditcontrolcorrespondence@safaricom.co.ke&quot;>creditcontrolcorrespondence@&lt;br/>safaricom.co.ke&lt;/a>&lt;/td>&lt;td style=&quot;background-color:#F25ABD;&quot;>',$Parse-XML/pfx3:Customer_InformationElement/accountManager,'&lt;/td>&lt;/tr>&lt;tr>&lt;td style=&quot;background-color:#ECEE22;&quot;>&lt;/td>&lt;td style=&quot;background-color:#32D916;&quot;>&lt;/td>&lt;td style=&quot;background-color:#F25ABD;&quot;>',&quot;8080978988&quot;,'&lt;/td>&lt;/tr>&lt;tr>&lt;td style=&quot;background-color:#ECEE22;&quot;>&lt;/td>&lt;td style=&quot;background-color:#32D916;&quot;>&lt;/td>&lt;td style=&quot;background-color:#F25ABD;&quot;>',&quot;alan@demogmail.com&quot;,'&lt;/td>&lt;/tr>&lt;/table>&lt;p style=&quot;background-color:#41B83B;&quot;>&lt;p>It was a pleasure running the project. Thank you for your continued support.&lt;/p>&lt;p>Warm Regards,&lt;/p>&lt;p>',$Parse-XML/pfx3:Customer_InformationElement/projectManager,'&lt;/p>&lt;/p>')"/>
+                        </Contents>
+                    </xsl:when>
+                    <xsl:when test="$Start/pfx:SentMailRequest/pfx:EmailType=&quot;Failure&quot;">
+                        <Contents>
+                            <xsl:value-of select="concat('&lt;html>&lt;body>&lt;h1 style=&quot;background-color:#41B83B;&quot;>&lt;font color=&quot;white&quot;>Welcome to Safaricom&lt;/font>&lt;/h1>&lt;p style=&quot;background-color:#41B83B;&quot;>&lt;p>Dear Aluko,&lt;/p>&lt;p>The request for the service below could not be completed. Please reach out to the support team in case of any query.&lt;/p>&lt;!--&lt;h2 style=&quot;background-color:#41B83B;&quot;>&lt;font color=&quot;black&quot; size=&quot;4&quot;>Order Details&lt;/font>&lt;/h2>-->&lt;table> &lt;tr>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>CIRCUIT ID&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>MONTHLY FEE (Excl VAT)&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>CUSTOMER NAME&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>SERVICE TYPE&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>ACCESS MEDIUM&lt;/th>&lt;th scope=col, width=&quot;100&quot;, style=&quot;background-color:#96D916;&quot;>BANDWIDTH&lt;/th>&lt;/tr>&lt;tr> &lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/siebelCircuitID,'&lt;/td> &lt;td align=center>874&lt;/td> &lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/clientName,'&lt;/td>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/serviceType,'&lt;/td> &lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/technology,'&lt;/td>&lt;td align=center>',$Parse-XML/pfx3:Customer_InformationElement/bandwidthupdown,'&lt;/td> &lt;/tr>&lt;/table>&lt;p style=&quot;background-color:#41B83B;&quot;>&lt;p>Kindly let us know which numbers you anticipate will be calling the Support Number (0722002222) so we can whitelist them.&lt;/p>&lt;br/>&lt;p>Support Matrix is as below:&lt;/p>&lt;/p>&lt;table>&lt;th style=&quot;background-color:#ECEE22;&quot;>TECHNICAL SUPPORT&lt;/th>&lt;th style=&quot;background-color:#32D916;&quot;>BILLING ISSUES&lt;/th>&lt;th style=&quot;background-color:#F25ABD;&quot;>ACCOUNT MANAGEMENT&lt;/th>&lt;tr>&lt;td style=&quot;background-color:#ECEE22;&quot;>+254722002222&lt;/td>&lt;td style=&quot;background-color:#32D916;&quot;>&lt;a href=&quot;mailto:Fdcc@Safaricom.co.ke&quot;>Fdcc@Safaricom.co.ke&lt;/a>&lt;/td> &#xA;&lt;td style=&quot;background-color:#F25ABD;&quot;>',$Parse-XML/pfx3:Customer_InformationElement/accountManager,'&lt;/td>&#xA;&lt;/tr>&#xA;&lt;tr>&#xA;&lt;td style=&quot;background-color:#ECEE22;&quot;> &lt;a href=&quot;mailto:Business.support@safaricom.co.ke&quot;>Business.support@safaric&lt;br/>om.co.ke&lt;/a>&lt;/td>&#xA;&lt;td style=&quot;background-color:#32D916;&quot;> &lt;a href=&quot;mailto:creditcontrolcorrespondence@safaricom.co.ke&quot;>creditcontrolcorrespondence@&lt;br/>safaricom.co.ke&lt;/a>&lt;/td>&#xA;&lt;td style=&quot;background-color:#F25ABD;&quot;>',$Parse-XML/pfx3:Customer_InformationElement/accountManager,'&lt;/td>&#xA;&lt;/tr>&#xA;&lt;tr>&#xA;&lt;td style=&quot;background-color:#ECEE22;&quot;>&lt;/td>&#xA;&lt;td style=&quot;background-color:#32D916;&quot;>&lt;/td>&#xA;&lt;td style=&quot;background-color:#F25ABD;&quot;>8888812345&lt;/td>&#xA;&lt;/tr>&#xA;&lt;tr>&#xA;&lt;td style=&quot;background-color:#ECEE22;&quot;>&lt;/td>&#xA;&lt;td style=&quot;background-color:#32D916;&quot;>&lt;/td>&#xA;&lt;td style=&quot;background-color:#F25ABD;&quot;>abc@abc.com&lt;/td>&#xA;&lt;/tr>&#xA;&lt;/table>&#xA;&lt;p style=&quot;background-color:#41B83B;&quot;>&#xA;&lt;p>It was a pleasure running the project. Thank you for your continued support.&lt;/p>&#xA;&lt;p>Warm Regards,&lt;/p>&#xA;&lt;p>',$Parse-XML/pfx3:Customer_InformationElement/projectManager,'&lt;/p>&#xA;&lt;/p>')"/>
+                        </Contents>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Contents>
+                            <xsl:value-of select="concat('&lt;html>&lt;body>&lt;h1 style=&quot;background-color:#009933;&quot;, align=&quot;center&quot;, height=&quot;200&quot;>&lt;font color=&quot;white&quot;, size=&quot;4&quot;>&lt;br/>WELCOME &lt;br/>TO SAFARICOM&lt;/font>&lt;/h1>&lt;p style=&quot;background-color:#009933;&quot;>&lt;p>Dear Customer,&lt;/p>&lt;p>Thankyou for choosing Safaricom as your Digital Enterprise Solutions Provider.&lt;p>Below please find your Order Details, Contact Details, Project Manager Details, Installation Details, Installation Schedule and responsibilities of each party. &lt;/p>&lt;h2 style=&quot;background-color:#009933;&quot; >&lt;font color=&quot;white&quot;>Order Details&lt;/font>&lt;/h2>&lt;table>&lt;tr>&lt;td>Siebel Circuit ID&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/siebelCircuitID,'&lt;/td> &lt;/tr> &lt;tr>&lt;td>Customer Name&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/clientName,'&lt;/td> &lt;/tr>&lt;tr>&lt;td>Service Type&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/serviceType,'&lt;/td>&lt;/tr>&lt;tr> &lt;td>Medium&lt;/td>&lt;td>',$Parse-XML/pfx3:Customer_InformationElement/technology,'&lt;/td>  &lt;/tr>&lt;tr> &lt;td>Bandwidth&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/bandwidthupdown,'&lt;/td> &lt;/tr> &lt;/table>&lt;br/>&lt;h2 style=&quot;background-color:#009933;&quot;>&lt;font color=&quot;white&quot;>Customer Contacts&lt;/font>&lt;/h2>&lt;table> &lt;tr> &lt;td>Physical Location&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/location,' &lt;/td>  &lt;/tr> &lt;tr> &lt;td>Building Name&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/buildingName,'&lt;/td>  &lt;/tr> &lt;tr> &lt;td>Contact Person&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/contactPerson,' &lt;/td> &lt;/tr>&lt;tr> &lt;td>Phone Number&lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/mobile,' &lt;/td> &lt;/tr>&lt;tr> &lt;td> E-Mail &lt;/td> &lt;td> ',$Parse-XML/pfx3:Customer_InformationElement/email,' &lt;/td>   &lt;/tr>&lt;/table>&lt;br/>&lt;h2 style=&quot;background-color:#009933;&quot;>&lt;font color=&quot;white&quot;>Project Manager Contacts&lt;/font>&lt;/h2>&lt;table> &lt;tr> &lt;td> Name &lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/projectManager,'&lt;/td> &lt;/tr> &lt;tr> &lt;td> Phone Number &lt;/td> &lt;td> ',&quot;9090909090&quot;,' &lt;/td> &lt;/tr> &lt;tr> &lt;td> Email &lt;/td> &lt;td>',&quot;pm@safaricom.co.ke&quot;,' &lt;/td> &lt;/tr>&lt;/table>&lt;br/>&lt;h2 style=&quot;background-color:#009933;&quot;>&lt;font color=&quot;white&quot;>Installer Details&lt;/font>&lt;/h2>&lt;table> &lt;tr> &lt;td> Company Name &lt;/td> &lt;td>',&quot;Clint and Sons&quot;,' &lt;/td>&lt;/tr> &lt;tr> &lt;td> Contact Person &lt;/td> &lt;td>',$Parse-XML/pfx3:Customer_InformationElement/contractor_Engineer,'&lt;/td>  &lt;/tr> &lt;tr> &lt;td> Phone Number &lt;/td> &lt;td>',&quot;8888812345&quot;,'&lt;/td> &lt;/tr> &lt;tr> &lt;td> E-mail &lt;/td>&lt;td> ',&quot;clint@clint.com&quot;,' &lt;/td> &lt;/tr>&lt;/table>&lt;br/>&lt;h2 style=&quot;background-color:#009933;&quot;>&lt;font color=&quot;white&quot;>Key responsibilities&lt;/font>&lt;/h2>&lt;table>&lt;tr>&lt;th scope=&quot;col&quot;>Customer responsibilities&lt;/th>&lt;th scope=&quot;col&quot;>Installers responsibilities&lt;/th>&lt;tr>&lt;td>&lt;ul>&lt;li>Customer should facilitate access to the building through the relevant authorities.&lt;/li>&lt;li>Customer to physically supervise the setup and assess quality of workmanship before acceptance and sign-off.&lt;/li>&lt;li>Escalate any concerns regarding the project to the Project Manager&lt;/li>&lt;/ul>&lt;/td>&lt;td>&lt;ul>&lt;li>Ensure the installation is started and completed on schedule.&lt;/li>&lt;li>Adhere to Safaricom Quality Standards.&lt;/li>&lt;li>Educate the customer on basic troubleshooting and trouble escalation.&lt;/li>&lt;li>Escalate any issues that are likely to impact on the project performance to the Project Manager.&lt;/li>&lt;/ul>&lt;/td>&lt;/tr>&lt;/tr>&lt;/table>&lt;br/>&lt;h2 style=&quot;background-color:#009933;&quot;>&lt;font color=&quot;white&quot;>Installation Schedule&lt;/font>&lt;/h2>&lt;table> &lt;tr> &lt;td> Planned Start Date &lt;/td> &lt;td> 4 th jan 2018 &lt;/td>  &lt;/tr> &lt;tr> &lt;td> Planned Finish Date &lt;/td> &lt;td> 5 th April 8765 &lt;/td> &lt;/tr>&lt;/table>&lt;hr>&lt;p style=&quot;background-color:#009933;&quot;>&lt;p>Looking forward to a speedy deployment!&lt;/p>&lt;p>Sincerely,&lt;/p>&lt;p>',$Parse-XML/pfx3:Customer_InformationElement/projectManager,'&lt;/p> &lt;/p>&lt;/body>&lt;/html>')"/>
+                        </Contents>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ReadCustomerInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>493</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <service>pfx2:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:ReadCaseRequest>
+                    <xsl:for-each select="$FindCustomerInformation/outputMessage/ns:FindCaseByCIDResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>621</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx3:Customer_InformationElement"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$ReadCustomerInformation/outputMessage/ns:ReadCaseResponse/caseData[1]/casePayload"/>
+            </xmlString>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -116,7 +210,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>FindCustomerInformation</pd:from>
-        <pd:to>Send Mail</pd:to>
+        <pd:to>ReadCustomerInformation</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -131,6 +225,27 @@
     <pd:transition>
         <pd:from>Send Mail</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>Send Mail</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ReadCustomerInformation</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>Assign</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

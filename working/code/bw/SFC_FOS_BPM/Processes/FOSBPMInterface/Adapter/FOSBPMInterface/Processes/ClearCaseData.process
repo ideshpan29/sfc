@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://bizData.fosImpl.sfc.com/dataModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://api.bds.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:ns3="http://www.tibco.com/pe/WriteToLogActivitySchema">
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <xsd:import namespace="http://fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMDataModel.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ClearCaseData.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1709</pd:endX>
+    <pd:endY>57</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1529902758089</pd:targetNamespace>
+    <pd:activity name="FindCommentDataCaseToClear">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>475</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/CommentCaseDataModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/CommentCaseDataCaseType"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="concat(&quot;siebelCircuitID =&quot;,$Start/root/SiebelCircuitID)"/>
+                        </queryString>
+                    </criteria>
+                </ns2:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderCommentDataPayload">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>292</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://fosImpl.sfc.com/dataModel}CommentDataCaseElement"/>
+            </cdataSections>
+            <term ref="pfx2:CommentDataCaseElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:CommentDataCaseElement>
+                <siebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </siebelCircuitID>
+            </pfx2:CommentDataCaseElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ClearTechnicalInformationCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1523</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>deleteCaseByRef</operation>
+            <soapAction>deleteCaseByRef</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:DeleteCaseByRefRequest>
+                    <caseReference>
+                        <xsl:value-of select="$FindTechnicalInfoCase/outputMessage/ns2:FindCaseByCIDResponse/caseReference"/>
+                    </caseReference>
+                </ns2:DeleteCaseByRefRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ClearCommentsCaseData">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>667</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>deleteCaseByRef</operation>
+            <soapAction>deleteCaseByRef</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:DeleteCaseByRefRequest>
+                    <xsl:for-each select="$FindCommentDataCaseToClear/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns2:DeleteCaseByRefRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ClearCustomerInformationCaseData">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1084</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>deleteCaseByRef</operation>
+            <soapAction>deleteCaseByRef</soapAction>
+            <endpointURL>http://0.0.0.0:8090/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:DeleteCaseByRefRequest>
+                    <caseReference>
+                        <xsl:value-of select="$FindCustomerInfoCase/outputMessage/ns2:FindCaseByCIDResponse/caseReference"/>
+                    </caseReference>
+                </ns2:DeleteCaseByRefRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderCustomerInfoPayload">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>815</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://bizData.fosImpl.sfc.com/dataModel}Customer_InformationElement"/>
+            </cdataSections>
+            <term ref="pfx4:Customer_InformationElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx4:Customer_InformationElement>
+                <siebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </siebelCircuitID>
+            </pfx4:Customer_InformationElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderTechnicalInfoPayload">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>1240</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <cdataSections>
+                <row expandedName="{http://bizData.fosImpl.sfc.com/dataModel}Technical_InformationElement"/>
+            </cdataSections>
+            <term ref="pfx4:Technical_InformationElement"/>
+        </config>
+        <pd:inputBindings>
+            <pfx4:Technical_InformationElement>
+                <siebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </siebelCircuitID>
+            </pfx4:Technical_InformationElement>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>664</pd:x>
+        <pd:y>148</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="FindCustomerInfoCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>940</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCID</operation>
+            <soapAction>findCaseByCID</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCIDRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/CustomerInfoCaseModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/CustomerInfoCaseType"/>
+                    </caseType>
+                    <casePayload>
+                        <xsl:value-of select="$RenderCustomerInfoPayload/xmlString"/>
+                    </casePayload>
+                </ns2:FindCaseByCIDRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindTechnicalInfoCase">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1382</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCID</operation>
+            <soapAction>findCaseByCID</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns2:FindCaseByCIDRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/TechnicalInfoCaseModelVersion"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/BPM/ClearCaseData/TechnicalInfoCaseType"/>
+                    </caseType>
+                    <casePayload>
+                        <xsl:value-of select="$RenderTechnicalInfoPayload/xmlString"/>
+                    </casePayload>
+                </ns2:FindCaseByCIDRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null-1">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>1072</pd:x>
+        <pd:y>151</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Null-2">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>1523</pd:x>
+        <pd:y>138</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1708</pd:x>
+        <pd:y>250</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>1709</pd:x>
+        <pd:y>155</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns3:ActivityInput>
+                <message>
+                    <xsl:value-of select="$Catch/exceptiondata/*"/>
+                </message>
+            </ns3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>RenderCommentDataPayload</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderCommentDataPayload</pd:from>
+        <pd:to>FindCommentDataCaseToClear</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ClearTechnicalInformationCase</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCommentDataCaseToClear</pd:from>
+        <pd:to>ClearCommentsCaseData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($FindCommentDataCaseToClear/outputMessage/ns2:FindCaseByCriteriaResponse/caseReference)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ClearCommentsCaseData</pd:from>
+        <pd:to>RenderCustomerInfoPayload</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ClearCustomerInformationCaseData</pd:from>
+        <pd:to>RenderTechnicalInfoPayload</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderTechnicalInfoPayload</pd:from>
+        <pd:to>FindTechnicalInfoCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderCustomerInfoPayload</pd:from>
+        <pd:to>FindCustomerInfoCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCommentDataCaseToClear</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>RenderCustomerInfoPayload</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCustomerInfoCase</pd:from>
+        <pd:to>ClearCustomerInformationCaseData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($FindCustomerInfoCase/outputMessage/ns2:FindCaseByCIDResponse/caseReference)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindTechnicalInfoCase</pd:from>
+        <pd:to>ClearTechnicalInformationCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($FindTechnicalInfoCase/outputMessage/ns2:FindCaseByCIDResponse/caseReference)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCustomerInfoCase</pd:from>
+        <pd:to>Null-1</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-1</pd:from>
+        <pd:to>RenderTechnicalInfoPayload</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindTechnicalInfoCase</pd:from>
+        <pd:to>Null-2</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

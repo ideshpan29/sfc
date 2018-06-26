@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file">
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportGenericReport.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                    <xsd:element name="ClientName" type="xsd:string"/>
+                    <xsd:element name="ServiceType" type="xsd:string"/>
+                    <xsd:element name="Technology" type="xsd:string"/>
+                    <xsd:element name="ServiceStatus" type="xsd:string"/>
+                    <xsd:element name="BuildingName" type="xsd:string"/>
+                    <xsd:element name="AccountManager" type="xsd:string"/>
+                    <xsd:element name="ProjectManager" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>30</pd:startX>
+    <pd:startY>127</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <FileContents>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </FileContents>
+            <FileName>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileInfo/fullName"/>
+            </FileName>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="FileContents" type="xsd:string"/>
+                    <xsd:element name="FileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>924</pd:endX>
+    <pd:endY>133</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root" type="xsd:string"/>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1524292575464</pd:targetNamespace>
+    <pd:activity name="Export Siebel Data Call">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>143</pd:x>
+        <pd:y>137</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportSiebelData.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SiebelCircuitID>
+                    <xsl:value-of select="$Start/root/SiebelCircuitID"/>
+                </SiebelCircuitID>
+                <ClientName>
+                    <xsl:value-of select="$Start/root/ClientName"/>
+                </ClientName>
+                <ServiceType>
+                    <xsl:value-of select="$Start/root/ServiceType"/>
+                </ServiceType>
+                <Technology>
+                    <xsl:value-of select="$Start/root/Technology"/>
+                </Technology>
+                <ServiceStatus>
+                    <xsl:value-of select="$Start/root/ServiceStatus"/>
+                </ServiceStatus>
+                <BuildingName>
+                    <xsl:value-of select="$Start/root/BuildingName"/>
+                </BuildingName>
+                <AccountManager>
+                    <xsl:value-of select="$Start/root/AccountManager"/>
+                </AccountManager>
+                <ProjectManager>
+                    <xsl:value-of select="$Start/root/ProjectManager"/>
+                </ProjectManager>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Customer Information">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>276</pd:x>
+        <pd:y>136</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:Customer_InformationElement" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Export-Siebel-Data-Call/SiebelData/data"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Iterate on Information">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>382</pd:x>
+        <pd:y>36</pd:y>
+        <pd:width>202</pd:width>
+        <pd:height>168</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Customer-Information/root/pfx:Customer_InformationElement</pd:over>
+            <pd:iterationElementSlot>rootXml</pd:iterationElementSlot>
+            <pd:indexSlot>idx</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>PrepareData for Excel</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PrepareData for Excel</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="PrepareData for Excel">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>478</pd:x>
+            <pd:y>137</pd:y>
+            <config>
+                <variableName>Variable0</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:value-of select="concat($Variable0/root,$rootXml/pfx:Customer_InformationElement/siebelCircuitID,',', $rootXml/pfx:Customer_InformationElement/projectManager,',',$rootXml/pfx:Customer_InformationElement/clientName,',',$rootXml/pfx:Customer_InformationElement/accountManager,',',$rootXml/pfx:Customer_InformationElement/account,',',$rootXml/pfx:Customer_InformationElement/contractor,',',$rootXml/pfx:Customer_InformationElement/location,',',$rootXml/pfx:Customer_InformationElement/regionView,',',$rootXml/pfx:Customer_InformationElement/floor,',',$rootXml/pfx:Customer_InformationElement/clientID,',',$rootXml/pfx:Customer_InformationElement/serviceType,',',$rootXml/pfx:Customer_InformationElement/GPSCoordinates,',',$rootXml/pfx:Customer_InformationElement/bandwidthupdown,',',$rootXml/pfx:Customer_InformationElement/technology,',',$rootXml/pfx:Customer_InformationElement/serviceStatus,',',$rootXml/pfx:Customer_InformationElement/buildingName,',',$rootXml/pfx:Customer_InformationElement/buildingID,',',$rootXml/pfx:Customer_InformationElement/contactPerson,',',$rootXml/pfx:Customer_InformationElement/mobile,',',$rootXml/pfx:Customer_InformationElement/sector,',',$rootXml/pfx:Customer_InformationElement/email,',',$rootXml/pfx:Customer_InformationElement/serviceStart,',',$rootXml/pfx:Customer_InformationElement/serviceEnd,',',$rootXml/pfx:Customer_InformationElement/requestDate,',',$rootXml/pfx:Customer_InformationElement/installDate,',',$rootXml/pfx:Customer_InformationElement/notesComments,',',$rootXml/pfx:Customer_InformationElement/address,',',$rootXml/pfx:Customer_InformationElement/engineer,',',$rootXml/pfx:Customer_InformationElement/lastNotificationBy,',',$rootXml/pfx:Customer_InformationElement/lastNotificationDate,',',$rootXml/pfx:Customer_InformationElement/recordStatus,&quot;&#xA;&quot;)"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>808</pd:x>
+        <pd:y>129</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns2:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SupportModule/ExportCustomerInformation/FileName"/>
+                </fileName>
+            </ns2:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Write File">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>659</pd:x>
+        <pd:y>130</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <createMissingDirectories>true</createMissingDirectories>
+        </config>
+        <pd:inputBindings>
+            <ns3:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SupportModule/ExportCustomerInformation/FileName"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/SupportModule/ExportCustomerInformation/CSVFileRowHeader,&quot;&#xA;&quot;,$Variable0/root)"/>
+                </textContent>
+            </ns3:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Export Siebel Data Call</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Export Siebel Data Call</pd:from>
+        <pd:to>Parse Customer Information</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Customer Information</pd:from>
+        <pd:to>Iterate on Information</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate on Information</pd:from>
+        <pd:to>Write File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write File</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

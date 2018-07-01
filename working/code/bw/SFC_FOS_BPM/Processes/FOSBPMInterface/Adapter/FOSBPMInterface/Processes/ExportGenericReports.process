@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema">
+    <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
+    <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportGenericReports.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                    <xsd:element name="ProjectManager" type="xsd:string"/>
+                    <xsd:element name="StartDate" type="xsd:string"/>
+                    <xsd:element name="ClientName" type="xsd:string"/>
+                    <xsd:element name="EndDate" type="xsd:string"/>
+                    <xsd:element name="ProcessName" type="xsd:string"/>
+                    <xsd:element name="ContractorMaster" type="xsd:string"/>
+                    <xsd:element name="ContractorAgency" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>30</pd:startX>
+    <pd:startY>108</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <FileContents>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </FileContents>
+            <FileName>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileInfo/fullName"/>
+            </FileName>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="FileContents" type="xsd:string"/>
+                    <xsd:element name="FileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1482</pd:endX>
+    <pd:endY>140</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <InputFilter>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FilterQuery" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </InputFilter>
+        <Variable0>
+            <xsd:element name="root" type="xsd:string"/>
+        </Variable0>
+        <SiebeliDSet>
+            <xsd:element name="StringSet" type="xsd:string"/>
+        </SiebeliDSet>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1524292575464</pd:targetNamespace>
+    <pd:activity name="SQL Direct">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>237</pd:x>
+        <pd:y>107</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <statement>
+                    <xsl:value-of select="concat(&quot;select  process_template, PROCESS_INSTANCE, attribute3,attribute2,attribute9,cur_activity,status,EXEC_MILLIS,start_time from EC_PE_STATUS where&quot; ,$InputFilter/root/FilterQuery)"/>
+                </statement>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>123</pd:x>
+        <pd:y>108</pd:y>
+        <config>
+            <variableName>InputFilter</variableName>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="ProcessName" select="if(contains($Start/root/ProcessName,&quot;,&quot;))&#xA;then concat(&quot;and PROCESS_TEMPLATE in (&quot;,$Start/root/ProcessName,&quot;)&quot;)&#xA;else&#xA;concat(&quot;and PROCESS_TEMPLATE ='&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
+            <xsl:variable name="TimeInterval" select="if($Start/root/StartDate!=&quot;&quot;)&#xA;then concat(&quot; and START_TIME between '&quot;,$Start/root/StartDate,&quot;' and '&quot;,$Start/root/EndDate,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+            <root>
+                <FilterQuery>
+                    <xsl:value-of select="substring-after(concat($TimeInterval,$ProcessName),&quot;and&quot;)"/>
+                </FilterQuery>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>337</pd:x>
+        <pd:y>28</pd:y>
+        <pd:width>244</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$SQL-Direct/jdbcGeneralActivityOutput/unknownResultset/row</pd:over>
+            <pd:iterationElementSlot>Record</pd:iterationElementSlot>
+            <pd:indexSlot>Index</pd:indexSlot>
+            <pd:outSlot>SiebelCircuitIDSet</pd:outSlot>
+            <pd:activityOutputName>Render XML</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Render XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render XML</pd:from>
+            <pd:to>Assign-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Render XML">
+            <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+            <pd:x>413</pd:x>
+            <pd:y>100</pd:y>
+            <config>
+                <renderAsText>text</renderAsText>
+                <validateInput>false</validateInput>
+                <term ref="pfx:Customer_InformationElement"/>
+            </config>
+            <pd:inputBindings>
+                <pfx:Customer_InformationElement>
+                    <siebelCircuitID>
+                        <xsl:value-of select="$Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value"/>
+                    </siebelCircuitID>
+                </pfx:Customer_InformationElement>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Assign-1">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>499</pd:x>
+            <pd:y>102</pd:y>
+            <config>
+                <variableName>SiebeliDSet</variableName>
+            </config>
+            <pd:inputBindings>
+                <StringSet>
+                    <xsl:value-of select="concat($SiebeliDSet/StringSet,&quot; or siebelCircuitID='&quot;,$Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value,&quot;'&quot;)"/>
+                </StringSet>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="FindCustomerInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>815</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx3:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="2"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Technical_Information'"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="substring-after($SiebeliDSet/StringSet,&quot;or &quot;)"/>
+                        </queryString>
+                    </criteria>
+                </ns4:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>648</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$SiebeliDSet/StringSet"/>
+                </message>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ReadCustomerInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>953</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <service>pfx3:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <timeoutType>Seconds</timeoutType>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:ReadCaseRequest>
+                    <xsl:for-each select="$FindCustomerInformation/outputMessage/ns4:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns4:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FindTechnicalInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>793</pd:x>
+        <pd:y>193</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx3:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>findCaseByCriteria</operation>
+            <soapAction>findCaseByCriteria</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:FindCaseByCriteriaRequest>
+                    <caseModelVersion>
+                        <xsl:value-of select="2"/>
+                    </caseModelVersion>
+                    <caseType>
+                        <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Technical_Information'"/>
+                    </caseType>
+                    <criteria>
+                        <queryString>
+                            <xsl:value-of select="substring-after($SiebeliDSet/StringSet,&quot;or &quot;)"/>
+                        </queryString>
+                    </criteria>
+                </ns4:FindCaseByCriteriaRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ReadTechnicalInformation">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>961</pd:x>
+        <pd:y>196</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <service>pfx3:BusinessDataServices_1.2.0</service>
+            <servicePort>BusinessDataServices.soap</servicePort>
+            <operation>readCase</operation>
+            <soapAction>readCase</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/BusinessDataServices</endpointURL>
+            <timeoutType>Seconds</timeoutType>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns4:ReadCaseRequest>
+                    <xsl:for-each select="$FindTechnicalInformation/outputMessage/ns4:FindCaseByCriteriaResponse/caseReference">
+                        <caseReference>
+                            <xsl:value-of select="."/>
+                        </caseReference>
+                    </xsl:for-each>
+                </ns4:ReadCaseRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>1126</pd:x>
+        <pd:y>116</pd:y>
+        <config>
+            <fileName>ExportGenericReportsJavaCode</fileName>
+            <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ExportGenericReports</packageName>
+            <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ExportGenericReports;
+import java.util.*;
+import java.io.*;
+public class ExportGenericReportsJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public ExportGenericReportsJavaCode() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+* Available Variables: DO NOT MODIFY *****/
+	for (int i = 0; i &lt; nList.getLength(); i++) {
+    	//System.out.println("Processing element " + (i+1) + "/" + nList.getLength());
+    	Node node = nList.item(i);
+   		if (node.getNodeType() == Node.ELEMENT_NODE) {
+        		Element element = (Element) node;
+        		String substanceName = element.getElementsByTagName("Name").item(0).getTextContent();
+        		String entryForce = element.getElementsByTagName("entry_force").item(0).getTextContent();
+        		String directive = element.getElementsByTagName("directive").item(0).getTextContent();
+
+        NodeList prods = element.getElementsByTagName("Product");
+}
+}
+</fullsource>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>1109</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <inputStyle>binary</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>SQL Direct</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SQL Direct</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindCustomerInformation</pd:from>
+        <pd:to>ReadCustomerInformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>FindCustomerInformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>FindTechnicalInformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FindTechnicalInformation</pd:from>
+        <pd:to>ReadTechnicalInformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ReadCustomerInformation</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

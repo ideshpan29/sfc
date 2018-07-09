@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns13="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdlPfx="http://xmlns.example.com/1509116125289" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns13="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd">
     <wsdl:import namespace="http://xmlns.example.com/1509116125289" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/FOSBPMInterface.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Operations/PortTypeOnboarding.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -70,7 +70,7 @@
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType wsMsgRef="wsdlPfx:Onbordingoutput"/>
-    <pd:endX>1048</pd:endX>
+    <pd:endX>771</pd:endX>
     <pd:endY>86</pd:endY>
     <pd:errorSchemas>
         <Schema1 wsMsgRef="wsdlPfx:Onbordingfault"/>
@@ -85,9 +85,9 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>351</pd:x>
-        <pd:y>10</pd:y>
-        <pd:width>192</pd:width>
+        <pd:x>239</pd:x>
+        <pd:y>2</pd:y>
+        <pd:width>248</pd:width>
         <pd:height>156</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
@@ -121,8 +121,8 @@
         <pd:activity name="Call LdapEntry">
             <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
             <pd:resourceType>ae.process.subprocess</pd:resourceType>
-            <pd:x>453</pd:x>
-            <pd:y>97</pd:y>
+            <pd:x>356</pd:x>
+            <pd:y>85</pd:y>
             <config>
                 <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/LdapEntry.process</processName>
             </config>
@@ -229,8 +229,8 @@
     <pd:activity name="send Log Request AUDIT 2">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>793</pd:x>
-        <pd:y>94</pd:y>
+        <pd:x>611</pd:x>
+        <pd:y>92</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendLogRequest.process</processName>
             <spawn>true</spawn>
@@ -269,8 +269,8 @@
     <pd:activity name="Catch All Eception">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>799</pd:x>
-        <pd:y>354</pd:y>
+        <pd:x>774</pd:x>
+        <pd:y>410</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -280,8 +280,8 @@
     <pd:activity name="Call Send Exception Request">
         <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
         <pd:resourceType>ae.process.subprocess</pd:resourceType>
-        <pd:x>1049</pd:x>
-        <pd:y>362</pd:y>
+        <pd:x>773</pd:x>
+        <pd:y>205</pd:y>
         <config>
             <processName>/Processes/CLE/Internal/Log/Operations/sendExceptionRequest.process</processName>
             <spawn>true</spawn>
@@ -317,6 +317,22 @@
             </ns12:ExceptionRequest>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Error Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>771</pd:x>
+        <pd:y>308</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns4:ActivityInput>
+                <message>
+                    <xsl:value-of select="$Catch-All-Eception/exceptiondata/*"/>
+                </message>
+            </ns4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>send Log Request AUDIT 1</pd:to>
@@ -341,7 +357,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Catch All Eception</pd:from>
-        <pd:to>Call Send Exception Request</pd:to>
+        <pd:to>Error Log</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -356,6 +372,13 @@
     <pd:transition>
         <pd:from>Group</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Error Log</pd:from>
+        <pd:to>Call Send Exception Request</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

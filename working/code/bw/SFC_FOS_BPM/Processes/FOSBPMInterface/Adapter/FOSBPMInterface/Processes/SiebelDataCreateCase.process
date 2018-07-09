@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx4="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://exception.api.bds.tibco.com" xmlns:ns3="http://api.bds.tibco.com" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/Schema.xsd" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx2="http://bizData.fosImpl.sfc.com/dataModel" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx4="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://exception.api.bds.tibco.com" xmlns:ns3="http://api.bds.tibco.com" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/Schema.xsd" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns7="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd"/>
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/Schema.xsd2" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/AnyElementError.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/SiebelDataCreateCase.process</pd:name>
     <pd:startName>Start</pd:startName>
@@ -343,6 +344,99 @@
                         <recordStatus>
                             <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/SiebelDataCaseCreation/RecordStatus"/>
                         </recordStatus>
+                        <deviceRequest>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:CircuitID">
+                                <siebelCircuitID>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:CircuitID"/>
+                                </siebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:EquipmentType1">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:EquipmentType1"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:MacAddress1">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:MacAddress1"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:Vlan">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:Vlan"/>
+                                </VLAN>
+                            </xsl:if>
+                        </deviceRequest>
+                        <deviceRequest>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:CircuitID">
+                                <siebelCircuitID>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:CircuitID"/>
+                                </siebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:EquipmentType2">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:EquipmentType2"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:MacAddress2">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:MacAddress2"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:Vlan2">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:Vlan2"/>
+                                </VLAN>
+                            </xsl:if>
+                        </deviceRequest>
+                        <deviceRequest>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:CircuitID">
+                                <siebelCircuitID>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:CircuitID"/>
+                                </siebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:EquipmentType3">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:EquipmentType3"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:MacAddress3">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:MacAddress3"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:Vlan3">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:Vlan3"/>
+                                </VLAN>
+                            </xsl:if>
+                        </deviceRequest>
+                        <deviceRequest>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:CircuitID">
+                                <siebelCircuitID>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:CircuitID"/>
+                                </siebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:EquipmentType4">
+                                <type>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:EquipmentType4"/>
+                                </type>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:MacAddress4">
+                                <address>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:MacAddress4"/>
+                                </address>
+                            </xsl:if>
+                            <xsl:if test="$TechnicalEntry/ns6:root/ns6:Vlan4">
+                                <VLAN>
+                                    <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:Vlan4"/>
+                                </VLAN>
+                            </xsl:if>
+                        </deviceRequest>
+                        <xsl:if test="$TechnicalEntry/ns6:root/ns6:BusinessName">
+                            <clientName>
+                                <xsl:value-of select="$TechnicalEntry/ns6:root/ns6:BusinessName"/>
+                            </clientName>
+                        </xsl:if>
                     </pfx2:Technical_InformationElement>
                 </pd:inputBindings>
             </pd:activity>
@@ -1085,7 +1179,7 @@
             <pd:y>753</pd:y>
             <pd:handler>true</pd:handler>
             <config>
-                <catchAll>false</catchAll>
+                <catchAll>true</catchAll>
                 <fault>localname=caseDataAccessFault</fault>
             </config>
             <pd:inputBindings/>
@@ -1283,7 +1377,7 @@
                                 <xsl:value-of select="ns6:CommentsDecommission"/>
                             </ns6:CommentsDecommission>
                             <ns6:status>
-                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;,&quot;,$Catch/caseDataAccessFault/faultcode,&quot;,&quot;,substring-before($Catch/caseDataAccessFault/faultstring,&quot;[CasePayload&quot;))"/>
+                                <xsl:value-of select="concat(&quot;FAILED&quot;,&quot;,&quot;,$_error/ns5:ErrorReport/MsgCode,&quot;,&quot;,$_error/ns5:ErrorReport/Msg)"/>
                             </ns6:status>
                         </ns6:root>
                     </xsl:for-each>

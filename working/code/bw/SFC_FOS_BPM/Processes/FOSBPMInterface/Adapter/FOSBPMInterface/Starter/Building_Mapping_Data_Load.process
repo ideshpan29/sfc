@@ -8,10 +8,10 @@
     <pd:starter name="Timer">
         <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
         <pd:resourceType>ae.activities.timer</pd:resourceType>
-        <pd:x>51</pd:x>
-        <pd:y>81</pd:y>
+        <pd:x>62</pd:x>
+        <pd:y>80</pd:y>
         <config>
-            <StartTime>1524208341000</StartTime>
+            <StartTime>1530636362000</StartTime>
             <Frequency>false</Frequency>
             <TimeInterval>%%BPM/BuildingDataCreation/StartTimerValue%%</TimeInterval>
             <FrequencyIndex>Millisecond</FrequencyIndex>
@@ -72,13 +72,6 @@
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
-        <pd:from>Timer</pd:from>
-        <pd:to>Get Building Data</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Get Building Data</pd:from>
         <pd:to>DeleteBuildingData</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -95,6 +88,13 @@
     <pd:transition>
         <pd:from>Render Create Building Data</pd:from>
         <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Timer</pd:from>
+        <pd:to>Get Building Data</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>

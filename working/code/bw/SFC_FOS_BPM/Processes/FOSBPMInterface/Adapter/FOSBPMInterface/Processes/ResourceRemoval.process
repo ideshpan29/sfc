@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:ns="http://directory.api.de.bpm.tibco.com" xmlns:pfx4="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx5="http://orgmodel.api.de.bpm.tibco.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://resource.api.de.bpm.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+<pd:ProcessDefinition xmlns:pfx6="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pfx7="http://xmlns.example.com/1506501044804" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://services.de.n2.tibco.com/DirectoryService_1.8.0" xmlns:ns="http://directory.api.de.bpm.tibco.com" xmlns:pfx4="http://services.de.n2.tibco.com/OrgModelService_1.8.0" xmlns:pfx5="http://orgmodel.api.de.bpm.tibco.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://resource.api.de.bpm.tibco.com" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:ns3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
-    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/WSDL/DirectoryService.wsdl"/>
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgModelService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/WSDL/OrgModelService.wsdl"/>
     <wsdl:import namespace="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/OrgResourceService.wsdl"/>
+    <wsdl:import namespace="http://services.de.n2.tibco.com/DirectoryService_1.8.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/DirectoryService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ResourceRemoval.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx6:createresourceinput"/>
@@ -64,7 +64,17 @@
     <pd:endType ref="pfx6:createresourceinput"/>
     <pd:endX>1499</pd:endX>
     <pd:endY>281</pd:endY>
-    <pd:errorSchemas/>
+    <pd:errorSchemas>
+        <NoUserFoundError>
+            <xsd:element name="Error">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ErrorMessage" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </NoUserFoundError>
+    </pd:errorSchemas>
     <pd:processVariables>
         <Removal>
             <xsd:element name="status" type="xsd:string"/>
@@ -101,8 +111,8 @@
     <pd:activity name="AssignContainerDetails">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>416</pd:x>
-        <pd:y>281</pd:y>
+        <pd:x>391</pd:x>
+        <pd:y>280</pd:y>
         <config>
             <variableName>Container</variableName>
         </config>
@@ -195,8 +205,8 @@
     <pd:activity name="GetResourceGUID">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>600</pd:x>
-        <pd:y>281</pd:y>
+        <pd:x>643</pd:x>
+        <pd:y>280</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -215,7 +225,7 @@
                         <xsl:value-of select="$Container/data/LdapAlias"/>
                     </xsl:attribute>
                     <xsl:attribute name="ldap-dn">
-                        <xsl:value-of select="concat(&quot;ou=&quot;,$Start/pfx6:createresourceinput/pfx6:createresourcerequest[1]/pfx6:name,&quot;,&quot;,$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn)"/>
+                        <xsl:value-of select="$ExecuteLdapQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                     </xsl:attribute>
                     <xsl:attribute name="container-id">
                         <xsl:value-of select="$Container/data/id"/>
@@ -279,6 +289,75 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="ExecuteLdapQuery">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>515</pd:x>
+        <pd:y>279</pd:y>
+        <config>
+            <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx3:DirectoryService_1.8.0</service>
+            <servicePort>DirectoryService.soap</servicePort>
+            <operation>executeLdapQuery</operation>
+            <soapAction>executeLdapQuery</soapAction>
+            <endpointURL>http://%%BPM/BPMAPICall/HostName%%:%%BPM/BPMAPICall/port%%/amxbpm/DirectoryService</endpointURL>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:choose>
+                    <xsl:when test="$Start/pfx6:createresourceinput/pfx6:createresourcerequest/pfx6:entityname='Contractor'">
+                        <ns:executeLdapQuery>
+                            <xsl:attribute name="base-dn">
+                                <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="ldap-alias">
+                                <xsl:value-of select="$Container/data/LdapAlias"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="ldap-query">
+                                <xsl:value-of select="concat(&quot;(&quot;,$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPQueryAttribute,&quot;=&quot;,$Start/pfx6:createresourceinput/pfx6:createresourcerequest[1]/pfx6:name,&quot;)&quot;)"/>
+                            </xsl:attribute>
+                        </ns:executeLdapQuery>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <ns:executeLdapQuery>
+                            <xsl:attribute name="base-dn">
+                                <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="ldap-alias">
+                                <xsl:value-of select="$Container/data/LdapAlias"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="ldap-query">
+                                <xsl:value-of select="concat(&quot;(&quot;,$_globalVariables/pfx:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPQueryAttribute,&quot;=&quot;,$Start/pfx6:createresourceinput/pfx6:createresourcerequest[1]/pfx6:name,&quot;)&quot;)"/>
+                            </xsl:attribute>
+                        </ns:executeLdapQuery>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="NoUserFoundError">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>519</pd:x>
+        <pd:y>399</pd:y>
+        <config>
+            <faultName>NoUserFoundError</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns3:ActivityInput>
+                <data>
+                    <Error>
+                        <ErrorMessage>
+                            <xsl:value-of select="'NO SUCH USER FOUND'"/>
+                        </ErrorMessage>
+                    </Error>
+                </data>
+            </ns3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>Assign Failure Status Intially</pd:to>
@@ -337,7 +416,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>AssignContainerDetails</pd:from>
-        <pd:to>GetResourceGUID</pd:to>
+        <pd:to>ExecuteLdapQuery</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -355,5 +434,20 @@
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExecuteLdapQuery</pd:from>
+        <pd:to>GetResourceGUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($ExecuteLdapQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry)=1</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExecuteLdapQuery</pd:from>
+        <pd:to>NoUserFoundError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>

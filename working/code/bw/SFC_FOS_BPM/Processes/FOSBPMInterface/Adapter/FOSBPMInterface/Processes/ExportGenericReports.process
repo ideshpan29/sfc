@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:ns6="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportGenericReports.process</pd:name>
@@ -8,20 +8,20 @@
         <xsd:element name="root">
             <xsd:complexType>
                 <xsd:sequence>
-                    <xsd:element name="SiebelCircuitID" type="xsd:string"/>
-                    <xsd:element name="ProjectManager" type="xsd:string"/>
-                    <xsd:element name="StartDate" type="xsd:string"/>
-                    <xsd:element name="ClientName" type="xsd:string"/>
-                    <xsd:element name="EndDate" type="xsd:string"/>
-                    <xsd:element name="ProcessName" type="xsd:string"/>
-                    <xsd:element name="ContractorMaster" type="xsd:string"/>
-                    <xsd:element name="ContractorAgency" type="xsd:string"/>
+                    <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ProjectManager" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="StartDate" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ClientName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="EndDate" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ProcessName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ContractorMaster" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ContractorAgency" type="xsd:string" minOccurs="0"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
     </pd:startType>
-    <pd:startX>30</pd:startX>
-    <pd:startY>108</pd:startY>
+    <pd:startX>29</pd:startX>
+    <pd:startY>152</pd:startY>
     <pd:returnBindings>
         <root>
             <FileContents>
@@ -37,14 +37,14 @@
         <xsd:element name="root">
             <xsd:complexType>
                 <xsd:sequence>
-                    <xsd:element name="FileContents" type="xsd:string"/>
-                    <xsd:element name="FileName" type="xsd:string"/>
+                    <xsd:element name="FileContents" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="FileName" type="xsd:string" minOccurs="0"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
     </pd:endType>
-    <pd:endX>1482</pd:endX>
-    <pd:endY>140</pd:endY>
+    <pd:endX>2089</pd:endX>
+    <pd:endY>151</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <InputFilter>
@@ -56,9 +56,9 @@
                 </xsd:complexType>
             </xsd:element>
         </InputFilter>
-        <Variable0>
-            <xsd:element name="root" type="xsd:string"/>
-        </Variable0>
+        <SiebelIDString>
+            <xsd:element name="SiebelIDString" type="xsd:string"/>
+        </SiebelIDString>
         <SiebeliDSet>
             <xsd:element name="StringSet" type="xsd:string"/>
         </SiebeliDSet>
@@ -67,8 +67,8 @@
     <pd:activity name="SQL Direct">
         <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-        <pd:x>237</pd:x>
-        <pd:y>107</pd:y>
+        <pd:x>225</pd:x>
+        <pd:y>151</pd:y>
         <config>
             <timeout>10</timeout>
             <commit>false</commit>
@@ -86,17 +86,20 @@
     <pd:activity name="Assign">
         <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
         <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-        <pd:x>123</pd:x>
-        <pd:y>108</pd:y>
+        <pd:x>119</pd:x>
+        <pd:y>152</pd:y>
         <config>
             <variableName>InputFilter</variableName>
         </config>
         <pd:inputBindings>
+            <xsl:variable name="ClientName" select="if($Start/root/ClientName!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE3='&quot;,$Start/root/ClientName,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+            <xsl:variable name="ContractorMaster" select="if($Start/root/ContractorMaster!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE37 ='&quot;,$Start/root/ContractorMaster,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+            <xsl:variable name="ProjectManager" select="if($Start/root/ProjectManager!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE9 ='&quot;,$Start/root/ProjectManager,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
             <xsl:variable name="ProcessName" select="if(contains($Start/root/ProcessName,&quot;,&quot;))&#xA;then concat(&quot;and PROCESS_TEMPLATE in (&quot;,$Start/root/ProcessName,&quot;)&quot;)&#xA;else&#xA;concat(&quot;and PROCESS_TEMPLATE ='&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
             <xsl:variable name="TimeInterval" select="if($Start/root/StartDate!=&quot;&quot;)&#xA;then concat(&quot; and START_TIME between '&quot;,$Start/root/StartDate,&quot;' and '&quot;,$Start/root/EndDate,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
             <root>
                 <FilterQuery>
-                    <xsl:value-of select="substring-after(concat($TimeInterval,$ProcessName),&quot;and&quot;)"/>
+                    <xsl:value-of select="substring-after(concat($TimeInterval,$ProcessName,$ClientName,$ContractorMaster,$ProjectManager),&quot;and&quot;)"/>
                 </FilterQuery>
             </root>
         </pd:inputBindings>
@@ -104,10 +107,10 @@
     <pd:group name="Group">
         <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
         <pd:resourceType>ae.process.group</pd:resourceType>
-        <pd:x>337</pd:x>
-        <pd:y>28</pd:y>
-        <pd:width>244</pd:width>
-        <pd:height>140</pd:height>
+        <pd:x>299</pd:x>
+        <pd:y>37</pd:y>
+        <pd:width>249</pd:width>
+        <pd:height>208</pd:height>
         <pd:collapsedWidth>57</pd:collapsedWidth>
         <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
@@ -134,22 +137,36 @@
         <pd:transition>
             <pd:from>Assign-1</pd:from>
             <pd:to>end</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign-2</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:transition>
             <pd:from>Render XML</pd:from>
             <pd:to>Assign-1</pd:to>
-            <pd:lineType>Default</pd:lineType>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render XML</pd:from>
+            <pd:to>Assign-2</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
             <pd:lineColor>-16777216</pd:lineColor>
             <pd:conditionType>always</pd:conditionType>
         </pd:transition>
         <pd:activity name="Render XML">
             <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
             <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-            <pd:x>413</pd:x>
-            <pd:y>100</pd:y>
+            <pd:x>367</pd:x>
+            <pd:y>151</pd:y>
             <config>
                 <renderAsText>text</renderAsText>
                 <validateInput>false</validateInput>
@@ -166,8 +183,8 @@
         <pd:activity name="Assign-1">
             <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
             <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
-            <pd:x>499</pd:x>
-            <pd:y>102</pd:y>
+            <pd:x>463</pd:x>
+            <pd:y>108</pd:y>
             <config>
                 <variableName>SiebeliDSet</variableName>
             </config>
@@ -177,12 +194,26 @@
                 </StringSet>
             </pd:inputBindings>
         </pd:activity>
+        <pd:activity name="Assign-2">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>465</pd:x>
+            <pd:y>190</pd:y>
+            <config>
+                <variableName>SiebelIDString</variableName>
+            </config>
+            <pd:inputBindings>
+                <SiebelIDString>
+                    <xsl:value-of select="concat($SiebelIDString/SiebelIDString,&quot;,'&quot;,$Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value,&quot;'&quot;)"/>
+                </SiebelIDString>
+            </pd:inputBindings>
+        </pd:activity>
     </pd:group>
     <pd:activity name="FindCustomerInformation">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>815</pd:x>
-        <pd:y>56</pd:y>
+        <pd:x>794</pd:x>
+        <pd:y>92</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -201,7 +232,7 @@
                         <xsl:value-of select="2"/>
                     </caseModelVersion>
                     <caseType>
-                        <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Technical_Information'"/>
+                        <xsl:value-of select="'com.sfc.fosImpl.bizData.dataModel.Customer_Information'"/>
                     </caseType>
                     <criteria>
                         <queryString>
@@ -212,27 +243,11 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Log">
-        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
-        <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>648</pd:x>
-        <pd:y>92</pd:y>
-        <config>
-            <role>User</role>
-        </config>
-        <pd:inputBindings>
-            <pfx2:ActivityInput>
-                <message>
-                    <xsl:value-of select="$SiebeliDSet/StringSet"/>
-                </message>
-            </pfx2:ActivityInput>
-        </pd:inputBindings>
-    </pd:activity>
     <pd:activity name="ReadCustomerInformation">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>953</pd:x>
-        <pd:y>56</pd:y>
+        <pd:x>934</pd:x>
+        <pd:y>90</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -259,8 +274,8 @@
     <pd:activity name="FindTechnicalInformation">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>793</pd:x>
-        <pd:y>193</pd:y>
+        <pd:x>797</pd:x>
+        <pd:y>211</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -293,8 +308,8 @@
     <pd:activity name="ReadTechnicalInformation">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>961</pd:x>
-        <pd:y>196</pd:y>
+        <pd:x>935</pd:x>
+        <pd:y>211</pd:y>
         <config>
             <timeout>%%BPM/BPMAPICall/timeout%%</timeout>
             <soapAttachmentStyle>SwA</soapAttachmentStyle>
@@ -318,64 +333,1106 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Java Code">
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1633</pd:x>
+        <pd:y>144</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="LinkOverview">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="CustomerName" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ServiceType" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="AccessMedium" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="Bandwidth" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="TES_PM" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="Partner" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="DateReceived" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ModificationDate" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="BuildingName" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="BuildingID" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ClientIP" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ClientVLAN" type="xsd:string" minOccurs="0"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="TaskDetails">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="CustomerName" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ServiceType" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="AccessMedium" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="TESPM" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="TaskName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="SLA" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="Status" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="DeviceDetails">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Record" minOccurs="0" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="CustomerName" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ServiceType" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="AccessMedium" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="TESPM" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="Devices" minOccurs="0" maxOccurs="unbounded">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="DeviceName" type="xsd:string" minOccurs="0"/>
+                                                                <xsd:element name="DeviceSerialNumber" type="xsd:string" minOccurs="0"/>
+                                                                <xsd:element name="DeviceSerialIMEI" type="xsd:string" minOccurs="0"/>
+                                                                <xsd:element name="DeviceMACAddress" type="xsd:string" minOccurs="0"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LinkOverview>
+                    <xsl:for-each select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement">
+                        <Record>
+                            <SiebelCircuitID>
+                                <xsl:value-of select="siebelCircuitID"/>
+                            </SiebelCircuitID>
+                            <xsl:if test="clientName">
+                                <CustomerName>
+                                    <xsl:value-of select="clientName"/>
+                                </CustomerName>
+                            </xsl:if>
+                            <xsl:if test="serviceType">
+                                <ServiceType>
+                                    <xsl:value-of select="serviceType"/>
+                                </ServiceType>
+                            </xsl:if>
+                            <xsl:if test="technology">
+                                <AccessMedium>
+                                    <xsl:value-of select="technology"/>
+                                </AccessMedium>
+                            </xsl:if>
+                            <xsl:if test="bandwidthupdown">
+                                <Bandwidth>
+                                    <xsl:value-of select="bandwidthupdown"/>
+                                </Bandwidth>
+                            </xsl:if>
+                            <xsl:if test="projectManager">
+                                <TES_PM>
+                                    <xsl:value-of select="projectManager"/>
+                                </TES_PM>
+                            </xsl:if>
+                            <xsl:if test="contractor">
+                                <Partner>
+                                    <xsl:value-of select="contractor"/>
+                                </Partner>
+                            </xsl:if>
+                            <DateReceived>
+                                <xsl:value-of select="'10-12-2017'"/>
+                            </DateReceived>
+                            <ModificationDate>
+                                <xsl:value-of select="'12-12-2017'"/>
+                            </ModificationDate>
+                            <xsl:if test="recordStatus">
+                                <Status>
+                                    <xsl:value-of select="recordStatus"/>
+                                </Status>
+                            </xsl:if>
+                            <xsl:if test="buildingName">
+                                <BuildingName>
+                                    <xsl:value-of select="buildingName"/>
+                                </BuildingName>
+                            </xsl:if>
+                            <xsl:if test="buildingID">
+                                <BuildingID>
+                                    <xsl:value-of select="buildingID"/>
+                                </BuildingID>
+                            </xsl:if>
+                            <xsl:variable name="var" select="current()/siebelCircuitID"/>
+                            <ClientIP>
+                                <xsl:value-of select="$AccumulatedTechnicalInfo/AccumulatedOutput/pfx:Technical_InformationElement[siebelCircuitID=$var]/clientIP"/>
+                            </ClientIP>
+                            <xsl:variable name="var2" select="current()/siebelCircuitID"/>
+                            <ClientVLAN>
+                                <xsl:value-of select="$AccumulatedTechnicalInfo/AccumulatedOutput/pfx:Technical_InformationElement[siebelCircuitID=$var2]/clientVLAN"/>
+                            </ClientVLAN>
+                        </Record>
+                    </xsl:for-each>
+                </LinkOverview>
+                <TaskDetails>
+                    <xsl:for-each select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement">
+                        <Record>
+                            <SiebelCircuitID>
+                                <xsl:value-of select="siebelCircuitID"/>
+                            </SiebelCircuitID>
+                            <xsl:if test="clientName">
+                                <CustomerName>
+                                    <xsl:value-of select="clientName"/>
+                                </CustomerName>
+                            </xsl:if>
+                            <xsl:if test="serviceType">
+                                <ServiceType>
+                                    <xsl:value-of select="serviceType"/>
+                                </ServiceType>
+                            </xsl:if>
+                            <xsl:if test="technology">
+                                <AccessMedium>
+                                    <xsl:value-of select="technology"/>
+                                </AccessMedium>
+                            </xsl:if>
+                            <xsl:if test="projectManager">
+                                <TESPM>
+                                    <xsl:value-of select="projectManager"/>
+                                </TESPM>
+                            </xsl:if>
+                            <xsl:variable name="var3" select="current()/siebelCircuitID"/>
+                            <TaskName>
+                                <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/TaskName"/>
+                            </TaskName>
+                            <SLA>
+                                <xsl:value-of select="'10'"/>
+                            </SLA>
+                        </Record>
+                    </xsl:for-each>
+                </TaskDetails>
+                <DeviceDetails>
+                    <xsl:for-each select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement">
+                        <Record>
+                            <SiebelCircuitID>
+                                <xsl:value-of select="siebelCircuitID"/>
+                            </SiebelCircuitID>
+                            <xsl:if test="clientName">
+                                <CustomerName>
+                                    <xsl:value-of select="clientName"/>
+                                </CustomerName>
+                            </xsl:if>
+                            <xsl:if test="serviceType">
+                                <ServiceType>
+                                    <xsl:value-of select="serviceType"/>
+                                </ServiceType>
+                            </xsl:if>
+                            <xsl:if test="technology">
+                                <AccessMedium>
+                                    <xsl:value-of select="technology"/>
+                                </AccessMedium>
+                            </xsl:if>
+                            <xsl:if test="projectManager">
+                                <TESPM>
+                                    <xsl:value-of select="projectManager"/>
+                                </TESPM>
+                            </xsl:if>
+                            <xsl:for-each select="$AccumulatedTechnicalInfo/AccumulatedOutput/pfx:Technical_InformationElement/deviceRequest">
+                                <Devices>
+                                    <xsl:if test="deviceName">
+                                        <DeviceName>
+                                            <xsl:value-of select="deviceName"/>
+                                        </DeviceName>
+                                    </xsl:if>
+                                    <xsl:if test="serial_Number">
+                                        <DeviceSerialNumber>
+                                            <xsl:value-of select="serial_Number"/>
+                                        </DeviceSerialNumber>
+                                    </xsl:if>
+                                    <xsl:if test="IMEI">
+                                        <DeviceSerialIMEI>
+                                            <xsl:value-of select="IMEI"/>
+                                        </DeviceSerialIMEI>
+                                    </xsl:if>
+                                    <xsl:if test="address">
+                                        <DeviceMACAddress>
+                                            <xsl:value-of select="address"/>
+                                        </DeviceMACAddress>
+                                    </xsl:if>
+                                </Devices>
+                            </xsl:for-each>
+                        </Record>
+                    </xsl:for-each>
+                </DeviceDetails>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group (1)">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>1047</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>135</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$ReadCustomerInformation/outputMessage/ns4:ReadCaseResponse/caseData</pd:over>
+            <pd:iterationElementSlot>CustomerRecords</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:outSlot>AccumulatedCustomerInfo</pd:outSlot>
+            <pd:activityOutputName>Parse XML</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Parse XML</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse XML</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Parse XML">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>1108</pd:x>
+            <pd:y>80</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx:Customer_InformationElement"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$CustomerRecords/caseData/casePayload"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:group name="Group (2)">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>1045</pd:x>
+        <pd:y>145</pd:y>
+        <pd:width>147</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$ReadTechnicalInformation/outputMessage/ns4:ReadCaseResponse/caseData</pd:over>
+            <pd:iterationElementSlot>TechnicalRecords</pd:iterationElementSlot>
+            <pd:indexSlot>j</pd:indexSlot>
+            <pd:outSlot>AccumulatedTechnicalInfo</pd:outSlot>
+            <pd:activityOutputName>Parse-XML-1</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Parse-XML-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse-XML-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Parse-XML-1">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>1113</pd:x>
+            <pd:y>224</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx:Technical_InformationElement"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$TechnicalRecords/caseData/casePayload"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Write Excel Sheet">
         <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
         <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
-        <pd:x>1126</pd:x>
-        <pd:y>116</pd:y>
+        <pd:x>1870</pd:x>
+        <pd:y>148</pd:y>
         <config>
-            <fileName>ExportGenericReportsJavaCode</fileName>
+            <fileName>ExportGenericReportsWriteExcelSheet</fileName>
             <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ExportGenericReports</packageName>
             <fullsource>package Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ExportGenericReports;
 import java.util.*;
 import java.io.*;
-public class ExportGenericReportsJavaCode{
+import org.xml.sax.InputSource;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFCell; 
+import org.apache.poi.ss.usermodel.Cell; 
+import org.apache.poi.ss.usermodel.CellStyle; 
+import org.apache.poi.ss.usermodel.DataFormat;
+//import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Workbook; 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+
+public class ExportGenericReportsWriteExcelSheet{
 /****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String LinkOverview = "";
+	protected String TaskDetails = "";
+	protected String DeviceDetails = "";
+	protected String Sheet1 = "";
+	protected String Sheet2 = "";
+	protected String Sheet3 = "";
+	protected String filename = "";
+	public String getLinkOverview() {
+		return LinkOverview;
+	}
+	public void setLinkOverview(String val) {
+		LinkOverview = val;
+	}
+	public String getTaskDetails() {
+		return TaskDetails;
+	}
+	public void setTaskDetails(String val) {
+		TaskDetails = val;
+	}
+	public String getDeviceDetails() {
+		return DeviceDetails;
+	}
+	public void setDeviceDetails(String val) {
+		DeviceDetails = val;
+	}
+	public String getSheet1() {
+		return Sheet1;
+	}
+	public void setSheet1(String val) {
+		Sheet1 = val;
+	}
+	public String getSheet2() {
+		return Sheet2;
+	}
+	public void setSheet2(String val) {
+		Sheet2 = val;
+	}
+	public String getSheet3() {
+		return Sheet3;
+	}
+	public void setSheet3(String val) {
+		Sheet3 = val;
+	}
+	public String getfilename() {
+		return filename;
+	}
+	public void setfilename(String val) {
+		filename = val;
+	}
 /****** END SET/GET METHOD, DO NOT MODIFY *****/
-	public ExportGenericReportsJavaCode() {
+	
+	public ExportGenericReportsWriteExcelSheet() {
 	}
 	public void invoke() throws Exception {
 /* Available Variables: DO NOT MODIFY
+	In  : String LinkOverview
+	In  : String TaskDetails
+	In  : String DeviceDetails
+	In  : String Sheet1
+	In  : String Sheet2
+	In  : String Sheet3
+	In  : String filename
 * Available Variables: DO NOT MODIFY *****/
-	for (int i = 0; i &lt; nList.getLength(); i++) {
-    	//System.out.println("Processing element " + (i+1) + "/" + nList.getLength());
-    	Node node = nList.item(i);
-   		if (node.getNodeType() == Node.ELEMENT_NODE) {
-        		Element element = (Element) node;
-        		String substanceName = element.getElementsByTagName("Name").item(0).getTextContent();
-        		String entryForce = element.getElementsByTagName("entry_force").item(0).getTextContent();
-        		String directive = element.getElementsByTagName("directive").item(0).getTextContent();
 
-        NodeList prods = element.getElementsByTagName("Product");
+//Create Excel columns		
+XSSFWorkbook workbook = new XSSFWorkbook();
+
+		CellStyle cellStyle = workbook.createCellStyle();
+		 	cellStyle.setBorderBottom(CellStyle.BORDER_THICK);
+			cellStyle.setBorderLeft(CellStyle.BORDER_THICK);
+			cellStyle.setBorderRight(CellStyle.BORDER_THICK);
+			cellStyle.setBorderTop(CellStyle.BORDER_THICK);
+			Font boldFont = workbook.createFont();
+			//boldFont.setBold(true);
+			cellStyle.setFont(boldFont);
+			cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+
+			//Sheet 1
+			XSSFSheet sheet1 = workbook.createSheet(Sheet1);
+			XSSFRow rowhead = sheet1.createRow((short)0);
+		            rowhead.createCell(0).setCellValue("Siebel Circuit ID");             
+		            rowhead.createCell(1).setCellValue("Customer Name");
+		            rowhead.createCell(2).setCellValue("Service Type");
+		            rowhead.createCell(3).setCellValue("Access Medium");
+		            rowhead.createCell(4).setCellValue("Bandwidth");
+		            rowhead.createCell(5).setCellValue("TES PM");
+		            rowhead.createCell(6).setCellValue("Partner");
+		            rowhead.createCell(7).setCellValue("Date Received");
+		            rowhead.createCell(8).setCellValue("Modification date");
+		            rowhead.createCell(9).setCellValue("Status");
+		            rowhead.createCell(10).setCellValue("Building Name");
+		            rowhead.createCell(11).setCellValue("Building ID");
+		            rowhead.createCell(12).setCellValue("Client IPs");
+		            rowhead.createCell(13).setCellValue("Client VLAN");
+
+			//Sheet 2
+			 XSSFSheet sheet2 = workbook.createSheet(Sheet2);  
+		     XSSFRow rowhead2 = sheet2.createRow((short)0);
+		            rowhead2.createCell(0).setCellValue("Siebel Circuit ID"); 
+		            rowhead2.createCell(1).setCellValue("Customer Name"); 
+		 			rowhead2.createCell(2).setCellValue("Service Type"); 
+		 			rowhead2.createCell(3).setCellValue("Access Medium"); 
+					rowhead2.createCell(4).setCellValue("TES PM"); 
+					rowhead2.createCell(5).setCellValue("Task Name"); 
+		  			rowhead2.createCell(6).setCellValue("SLA");
+
+			//Sheet 3
+			 XSSFSheet sheet3 = workbook.createSheet(Sheet3);  
+		     XSSFRow rowhead3 = sheet3.createRow((short)0);
+		            rowhead3.createCell(0).setCellValue("Siebel Circuit ID");             
+		            rowhead3.createCell(1).setCellValue("Customer Name");
+		            rowhead3.createCell(2).setCellValue("Service Type");
+		            rowhead3.createCell(3).setCellValue("Access Medium");
+					rowhead3.createCell(4).setCellValue("TES PM");
+					rowhead3.createCell(5).setCellValue("Device Name");
+					rowhead3.createCell(6).setCellValue("Device Serial Number");
+					rowhead3.createCell(7).setCellValue("Device Serial IMEI");
+					rowhead3.createCell(8).setCellValue("Device MAC Address");
+
+					
+					
+			//Writing data to excel sheet
+					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.parse(new InputSource(new StringReader(LinkOverview)));
+
+					NodeList nList = doc.getElementsByTagName("Record");
+					for (int i = 0; i &lt; nList.getLength(); i++) {
+						Node node = nList.item(i);
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+								Element element = (Element) node;
+								rowhead = sheet1.createRow((short)(i+1));						
+								String siebelCircuitID = element.getElementsByTagName("SiebelCircuitID").item(0).getTextContent();
+								rowhead.createCell(0).setCellValue(siebelCircuitID);
+								if(element.getElementsByTagName("CustomerName").item(0)!=null)
+									{
+										String customerName = element.getElementsByTagName("CustomerName").item(0).getTextContent();
+										rowhead.createCell(1).setCellValue(customerName);
+									}
+								else
+									{
+										rowhead.createCell(1).setCellValue("");
+									}
+								
+								if(element.getElementsByTagName("ServiceType").item(0)!=null)
+									{
+										String serviceType = element.getElementsByTagName("ServiceType").item(0).getTextContent();
+										rowhead.createCell(2).setCellValue(serviceType);
+									}
+								else
+									{
+										rowhead.createCell(2).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("AccessMedium").item(0)!=null)
+									{
+										String accessMedium = element.getElementsByTagName("AccessMedium").item(0).getTextContent();
+										rowhead.createCell(3).setCellValue(accessMedium);
+									}
+								else
+									{
+										rowhead.createCell(3).setCellValue("");
+									}
+				       
+								if(element.getElementsByTagName("Bandwidth").item(0)!=null)
+									{
+										String bandwidth = element.getElementsByTagName("Bandwidth").item(0).getTextContent();
+										rowhead.createCell(4).setCellValue(bandwidth);
+									}
+								else
+									{
+										rowhead.createCell(4).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("TES_PM").item(0)!=null)
+									{
+										String TESPM = element.getElementsByTagName("TES_PM").item(0).getTextContent();
+										rowhead.createCell(5).setCellValue(TESPM);
+									}
+								else
+									{
+										rowhead.createCell(5).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("Partner").item(0)!=null)
+									{
+										String Partner = element.getElementsByTagName("Partner").item(0).getTextContent();
+										rowhead.createCell(6).setCellValue(Partner);
+									}
+								else
+									{
+										rowhead.createCell(6).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("DateReceived").item(0)!=null)
+									{
+										String dateReceived = element.getElementsByTagName("DateReceived").item(0).getTextContent();
+										rowhead.createCell(7).setCellValue(dateReceived);
+									}
+								else
+									{
+										rowhead.createCell(7).setCellValue("");
+									}
+								
+								if(element.getElementsByTagName("ModificationDate").item(0)!=null)
+									{
+										String modificationDate = element.getElementsByTagName("ModificationDate").item(0).getTextContent();
+										rowhead.createCell(8).setCellValue(modificationDate);
+									}
+								else
+									{
+										rowhead.createCell(8).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("Status").item(0)!=null)
+									{
+									String status = element.getElementsByTagName("Status").item(0).getTextContent();
+									rowhead.createCell(9).setCellValue(status);
+									}
+								else
+									{
+										rowhead.createCell(9).setCellValue("");
+									}	
+				        
+								if(element.getElementsByTagName("BuildingName").item(0)!=null)
+									{
+										String buildingName = element.getElementsByTagName("BuildingName").item(0).getTextContent();
+										rowhead.createCell(10).setCellValue(buildingName);
+									}
+								else
+									{
+										rowhead.createCell(10).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("BuildingID").item(0)!=null)
+									{
+										String buildingID = element.getElementsByTagName("BuildingID").item(0).getTextContent();
+										rowhead.createCell(11).setCellValue(buildingID);
+									}
+								else
+									{
+										rowhead.createCell(11).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("ClientIP").item(0)!=null)
+									{
+										String clientIP = element.getElementsByTagName("ClientIP").item(0).getTextContent();
+										rowhead.createCell(12).setCellValue(clientIP);
+									}
+								else
+									{
+										rowhead.createCell(12).setCellValue("");
+									}
+				        
+								if(element.getElementsByTagName("ClientVLAN").item(0)!=null)
+									{
+										String clientVLAN = element.getElementsByTagName("ClientVLAN").item(0).getTextContent();
+										rowhead.createCell(13).setCellValue(clientVLAN);
+									}
+								else
+									{
+										rowhead.createCell(13).setCellValue("");
+									}
+					
+								}
+					}
+					
+			
+					//Writing sheet 2
+					String TaskDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;TaskDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;90981&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;tibco-admin&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;34567643&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;77777777&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;3333333&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;888888888&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111222&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;1906201899&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;ES Bank&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;CERAGON&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181090&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181011&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Microwave&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;323221323&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Fiber&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201803&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;/TaskDetails&gt;";
+					doc = dBuilder.parse(new InputSource(new StringReader(TaskDetails)));
+					nList = doc.getElementsByTagName("Record");
+					for (int i = 0; i &lt; nList.getLength(); i++) {
+						Node node = nList.item(i);
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element element = (Element) node;
+							rowhead = sheet2.createRow((short)(i+1));
+							String siebelCircuitID = element.getElementsByTagName("SiebelCircuitID").item(0).getTextContent();
+							rowhead.createCell(0).setCellValue(siebelCircuitID);
+				       
+							if(element.getElementsByTagName("CustomerName").item(0)!=null)
+								{
+									String customerName = element.getElementsByTagName("CustomerName").item(0).getTextContent();
+									rowhead.createCell(1).setCellValue(customerName);
+								}
+							else
+								{
+									rowhead.createCell(1).setCellValue("");
+								}
+				        
+							if(element.getElementsByTagName("ServiceType").item(0)!=null)
+								{
+									String serviceType = element.getElementsByTagName("ServiceType").item(0).getTextContent();
+									rowhead.createCell(2).setCellValue(serviceType);
+								}
+							else
+								{
+									rowhead.createCell(2).setCellValue("");
+								}
+				        
+							if(element.getElementsByTagName("AccessMedium").item(0)!=null)
+								{
+									String accessMedium = element.getElementsByTagName("AccessMedium").item(0).getTextContent();
+									rowhead.createCell(3).setCellValue(accessMedium);
+								}
+							else
+								{
+									rowhead.createCell(3).setCellValue("");
+								}
+				       
+							if(element.getElementsByTagName("TES_PM").item(0)!=null)
+								{
+									String TESPM = element.getElementsByTagName("TES_PM").item(0).getTextContent();
+									rowhead.createCell(4).setCellValue(TESPM);
+								}
+							else
+								{
+									rowhead.createCell(4).setCellValue("");
+								}
+				        
+							if(element.getElementsByTagName("TaskName").item(0)!=null)
+								{
+									String TaskName = element.getElementsByTagName("TaskName").item(0).getTextContent();
+									rowhead.createCell(5).setCellValue(TaskName);
+								}
+							else
+								{
+									rowhead.createCell(5).setCellValue("");
+								}
+							
+							if(element.getElementsByTagName("SLA").item(0)!=null)
+								{
+									String SLA = element.getElementsByTagName("SLA").item(0).getTextContent();
+									rowhead.createCell(6).setCellValue(SLA);
+								}
+							else
+								{
+									rowhead.createCell(6).setCellValue("");
+								}
+					
+						}
+					}
+			
+					
+					
+					//Writing sheet 3
+					String DeviceDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;DeviceDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;90981&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;tibco-admin&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;34567643&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;77777777&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;3333333&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;888888888&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111222&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;1906201899&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;ES Bank&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;CERAGON&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181090&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181011&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Microwave&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;323221323&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Fiber&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201803&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;/DeviceDetails&gt;";
+					doc = dBuilder.parse(new InputSource(new StringReader(DeviceDetails)));
+					nList = doc.getElementsByTagName("Record");
+					String siebelCircuitID,customerName,serviceType,accessMedium,TESPM;
+					int DrowNum=1;
+					for (int i = 0; i &lt; nList.getLength(); i++) {
+						Node node = nList.item(i);
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element element = (Element) node;
+							siebelCircuitID = element.getElementsByTagName("SiebelCircuitID").item(0).getTextContent();
+							if(element.getElementsByTagName("CustomerName").item(0)!=null)
+								{
+									customerName = element.getElementsByTagName("CustomerName").item(0).getTextContent();
+								}
+							else
+								{
+									customerName="";
+								}
+				 
+							if(element.getElementsByTagName("ServiceType").item(0)!=null)
+								{
+									serviceType = element.getElementsByTagName("ServiceType").item(0).getTextContent();
+								}
+							else
+								{
+									serviceType="";
+								}
+						
+							if(element.getElementsByTagName("AccessMedium").item(0)!=null)
+								{
+									accessMedium = element.getElementsByTagName("AccessMedium").item(0).getTextContent();
+				                }
+							else
+								{
+									accessMedium="";
+								}
+				       
+							if(element.getElementsByTagName("TES_PM").item(0)!=null)
+								{
+									TESPM = element.getElementsByTagName("TES_PM").item(0).getTextContent();
+								}
+							else
+								{
+									TESPM="";
+								}
+					
+							NodeList DeviceList=element.getElementsByTagName("Devices");
+							for (int j = 0; j &lt; DeviceList.getLength(); j++) {
+								Node node1 = DeviceList.item(j);
+								if (node1.getNodeType() == Node.ELEMENT_NODE) {
+				        				Element element1 = (Element) node1;
+				        				rowhead = sheet3.createRow((short)DrowNum++);
+										rowhead.createCell(0).setCellValue(siebelCircuitID);
+				       					rowhead.createCell(1).setCellValue(customerName);
+				       					rowhead.createCell(2).setCellValue(serviceType);
+				       					rowhead.createCell(3).setCellValue(accessMedium);
+				       					rowhead.createCell(4).setCellValue(TESPM);
+				       					
+				       					if(element1.getElementsByTagName("DeviceName").item(0)!=null)
+									        {
+									        	String DeviceName = element1.getElementsByTagName("DeviceName").item(0).getTextContent();
+									        	rowhead.createCell(5).setCellValue(DeviceName);
+									        }
+									    else
+									        {
+									        	rowhead.createCell(5).setCellValue("");
+									        }
+							        
+				       					if(element1.getElementsByTagName("DeviceSerialNumber").item(0)!=null)
+				       						{
+				       							String DeviceSerialNumber = element1.getElementsByTagName("DeviceSerialNumber").item(0).getTextContent();
+							                	rowhead.createCell(6).setCellValue(DeviceSerialNumber);
+				       						}
+				       					else
+				       						{
+				       							rowhead.createCell(6).setCellValue("");
+				       						}
+							        
+				       					if(element1.getElementsByTagName("DeviceSerialIMEI").item(0)!=null)
+				       						{
+				       							String DeviceSerialIMEI = element1.getElementsByTagName("DeviceSerialIMEI").item(0).getTextContent();
+				       							rowhead.createCell(7).setCellValue(DeviceSerialIMEI);
+				       						}
+				       					else
+				       						{
+				       							rowhead.createCell(7).setCellValue("");
+				       						}
+				       					
+				       					if(element1.getElementsByTagName("DeviceSerialNumber").item(0)!=null)
+				       						{
+				       							String DeviceSerialNumber = element1.getElementsByTagName("DeviceSerialNumber").item(0).getTextContent();
+							        	       	rowhead.createCell(8).setCellValue(DeviceSerialNumber);
+				       						}
+				       					else
+				       						{
+				       							rowhead.createCell(8).setCellValue("");
+				       						}
+							        
+				       					if(element1.getElementsByTagName("DeviceMACAddress").item(0)!=null)
+				       						{
+				       							String DeviceMACAddress = element1.getElementsByTagName("DeviceMACAddress").item(0).getTextContent();
+				       							rowhead.createCell(9).setCellValue(DeviceMACAddress);
+				       						}
+				       					else
+				       						{
+				       							rowhead.createCell(9).setCellValue("");
+				       						}
+				        				}
+				        		}
+				        }
+					}
+					String filename="D:/GenericReports.xlsx";
+					FileOutputStream fileOut = new FileOutputStream(filename);
+					workbook.write(fileOut);
+					fileOut.close();
+
 }
 }
 </fullsource>
+            <inputData>
+                <row>
+                    <fieldName>LinkOverview</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>TaskDetails</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>DeviceDetails</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>Sheet1</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>Sheet2</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>Sheet3</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>filename</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+            </inputData>
+            <byteCode>
+                <class>
+                    <name>ExportGenericReportsWriteExcelSheet</name>
+                    <byteCode>yv66vgAAADIBEAkAUwCECQBTAIUJAFMAhgkAUwCHCQBTAIgJAFMAiQkAUwCKCgBUAIsIAIwHAI0KAAoAiwoACgCOCwCPAJALAI8AkQsAjwCSCwCPAJMKAAoAlAsAjwCVCwCPAJYKAAoAlwoAmACZCgCaAJsIAJwKAJ0AnggAnwgAoAgAoQgAoggAowgApAgApQgApggApwgAqAgAqQgAqggAqwgArAgArQgArggArwgAsAgAsQoAsgCzCgCyALQHALUHALYKAC8AtwoALgC4CgC5ALoIALsLALwAvQsAvgC/CwC+AMALAMEAwgcAwwgAxAsAOAC9CwDBAMUIAMYIAMcIAMgIAMkIAMoIAMsIAMwIAM0IAM4IAM8IANAIANEIANIIANMIANQIANUIANYIANcIANgHANkKAE8AtwoACgDaCgBPANsHANwHAN0BAAxMaW5rT3ZlcnZpZXcBABJMamF2YS9sYW5nL1N0cmluZzsBAAtUYXNrRGV0YWlscwEADURldmljZURldGFpbHMBAAZTaGVldDEBAAZTaGVldDIBAAZTaGVldDMBAAhmaWxlbmFtZQEAD2dldExpbmtPdmVydmlldwEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAD3NldExpbmtPdmVydmlldwEAFShMamF2YS9sYW5nL1N0cmluZzspVgEADmdldFRhc2tEZXRhaWxzAQAOc2V0VGFza0RldGFpbHMBABBnZXREZXZpY2VEZXRhaWxzAQAQc2V0RGV2aWNlRGV0YWlscwEACWdldFNoZWV0MQEACXNldFNoZWV0MQEACWdldFNoZWV0MgEACXNldFNoZWV0MgEACWdldFNoZWV0MwEACXNldFNoZWV0MwEAC2dldGZpbGVuYW1lAQALc2V0ZmlsZW5hbWUBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwDcBwCNBwDeBwDfBwDgBwDhBwDiBwDjBwDkBwDlBwDmBwDDBwDnAQAKRXhjZXB0aW9ucwcA6AEAClNvdXJjZUZpbGUBAChFeHBvcnRHZW5lcmljUmVwb3J0c1dyaXRlRXhjZWxTaGVldC5qYXZhDABVAFYMAFcAVgwAWABWDABZAFYMAFoAVgwAWwBWDABcAFYMAG8AcAEAAAEAKm9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZXb3JrYm9vawwA6QDqBwDeDADrAOwMAO0A7AwA7gDsDADvAOwMAPAA8QwA8gDzDAD0AOwMAPUA9gcA4AwA9wD4BwDhDAD5APoBABFTaWViZWwgQ2lyY3VpdCBJRAcA+wwA/ABiAQANQ3VzdG9tZXIgTmFtZQEADFNlcnZpY2UgVHlwZQEADUFjY2VzcyBNZWRpdW0BAAlCYW5kd2lkdGgBAAZURVMgUE0BAAdQYXJ0bmVyAQANRGF0ZSBSZWNlaXZlZAEAEU1vZGlmaWNhdGlvbiBkYXRlAQAGU3RhdHVzAQANQnVpbGRpbmcgTmFtZQEAC0J1aWxkaW5nIElEAQAKQ2xpZW50IElQcwEAC0NsaWVudCBWTEFOAQAJVGFzayBOYW1lAQADU0xBAQALRGV2aWNlIE5hbWUBABREZXZpY2UgU2VyaWFsIE51bWJlcgEAEkRldmljZSBTZXJpYWwgSU1FSQEAEkRldmljZSBNQUMgQWRkcmVzcwcA4gwA/QD+DAD/AQABABdvcmcveG1sL3NheC9JbnB1dFNvdXJjZQEAFGphdmEvaW8vU3RyaW5nUmVhZGVyDABvAGIMAG8BAQcA4wwBAgEDAQAGUmVjb3JkBwDkDAEEAQUHAOUMAQYBBwwBCAEJBwDmDAEKAQsBABNvcmcvdzNjL2RvbS9FbGVtZW50AQAPU2llYmVsQ2lyY3VpdElEDAEMAF4BAAxDdXN0b21lck5hbWUBAAtTZXJ2aWNlVHlwZQEADEFjY2Vzc01lZGl1bQEABlRFU19QTQEADERhdGVSZWNlaXZlZAEAEE1vZGlmaWNhdGlvbkRhdGUBAAxCdWlsZGluZ05hbWUBAApCdWlsZGluZ0lEAQAIQ2xpZW50SVABAApDbGllbnRWTEFOAQwZPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPFRhc2tEZXRhaWxzPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD45MDk4MTwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT50aWJjby1hZG1pbjwvVEVTUE0+PFRhc2tOYW1lPkluaXRpYWxpemF0aW9uPC9UYXNrTmFtZT48U0xBPjEwPC9TTEE+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjM0NTY3NjQzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD43Nzc3Nzc3NzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MzMzMzMzMzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+ODg4ODg4ODg4PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkV1c3RhY2U8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xMTExMTExMTIyMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MTkwNjIwMTg5OTwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RVMgQmFuazwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5Db2xsb2NhdGlvbjwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5DRVJBR09OPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwOTA8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwMTE8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5NaWNyb3dhdmU8L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PFRhc2tOYW1lPkluaXRpYWxpemF0aW9uPC9UYXNrTmFtZT48U0xBPjEwPC9TTEE+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjMyMzIyMTMyMzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjgwNjIwMTgwMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPkZpYmVyPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODAzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjgwNjIwMTgwNDwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48L1Rhc2tEZXRhaWxzPgEACFRhc2tOYW1lAQxePD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPERldmljZURldGFpbHM+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjkwOTgxPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPnRpYmNvLWFkbWluPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4zNDU2NzY0MzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD43Nzc3Nzc3NzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4zMzMzMzMzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkV1c3RhY2U8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjg4ODg4ODg4ODwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xMTExMTExMTIyMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xOTA2MjAxODk5PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FUyBCYW5rPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkNvbGxvY2F0aW9uPC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPkNFUkFHT048L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PERldmljZXM+PERldmljZU5hbWU+Q0lTQ08gODgxPC9EZXZpY2VOYW1lPjwvRGV2aWNlcz48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjUwNjIwMTgxMDkwPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwMTE8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5NaWNyb3dhdmU8L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PERldmljZXM+PERldmljZU5hbWU+Q0lTQ08gODgxPC9EZXZpY2VOYW1lPjwvRGV2aWNlcz48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MzIzMjIxMzIzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjI4MDYyMDE4MDI8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5GaWJlcjwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODAzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODA0PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PC9EZXZpY2VEZXRhaWxzPgEAB0RldmljZXMBAApEZXZpY2VOYW1lAQASRGV2aWNlU2VyaWFsTnVtYmVyAQAQRGV2aWNlU2VyaWFsSU1FSQEAEERldmljZU1BQ0FkZHJlc3MBABZEOi9HZW5lcmljUmVwb3J0cy54bHN4AQAYamF2YS9pby9GaWxlT3V0cHV0U3RyZWFtDAENAQ4MAQ8AcAEAdFByb2Nlc3Nlcy9GT1NCUE1JbnRlcmZhY2UvQWRhcHRlci9GT1NCUE1JbnRlcmZhY2UvUHJvY2Vzc2VzL0V4cG9ydEdlbmVyaWNSZXBvcnRzL0V4cG9ydEdlbmVyaWNSZXBvcnRzV3JpdGVFeGNlbFNoZWV0AQAQamF2YS9sYW5nL09iamVjdAEAJW9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9DZWxsU3R5bGUBACBvcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvRm9udAEAJ29yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZTaGVldAEAJW9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZSb3cBAChqYXZheC94bWwvcGFyc2Vycy9Eb2N1bWVudEJ1aWxkZXJGYWN0b3J5AQAhamF2YXgveG1sL3BhcnNlcnMvRG9jdW1lbnRCdWlsZGVyAQAUb3JnL3czYy9kb20vRG9jdW1lbnQBABRvcmcvdzNjL2RvbS9Ob2RlTGlzdAEAEG9yZy93M2MvZG9tL05vZGUBABBqYXZhL2xhbmcvU3RyaW5nAQATamF2YS9sYW5nL0V4Y2VwdGlvbgEAD2NyZWF0ZUNlbGxTdHlsZQEALygpTG9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZDZWxsU3R5bGU7AQAPc2V0Qm9yZGVyQm90dG9tAQAEKFMpVgEADXNldEJvcmRlckxlZnQBAA5zZXRCb3JkZXJSaWdodAEADHNldEJvcmRlclRvcAEACmNyZWF0ZUZvbnQBACooKUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGRm9udDsBAAdzZXRGb250AQAlKExvcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvRm9udDspVgEADHNldEFsaWdubWVudAEAC2NyZWF0ZVNoZWV0AQA9KExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9wb2kveHNzZi91c2VybW9kZWwvWFNTRlNoZWV0OwEACWNyZWF0ZVJvdwEAKihJKUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGUm93OwEACmNyZWF0ZUNlbGwBACsoSSlMb3JnL2FwYWNoZS9wb2kveHNzZi91c2VybW9kZWwvWFNTRkNlbGw7AQAmb3JnL2FwYWNo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</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <LinkOverview>
+                    <xsl:value-of select="tib:render-xml($Map-Data/root/LinkOverview)"/>
+                </LinkOverview>
+                <TaskDetails>
+                    <xsl:value-of select="tib:render-xml($Map-Data/root/TaskDetails)"/>
+                </TaskDetails>
+                <DeviceDetails>
+                    <xsl:value-of select="tib:render-xml($Map-Data/root/DeviceDetails)"/>
+                </DeviceDetails>
+                <Sheet1>
+                    <xsl:value-of select="'Link Overview'"/>
+                </Sheet1>
+                <Sheet2>
+                    <xsl:value-of select="'Task wise Details'"/>
+                </Sheet2>
+                <Sheet3>
+                    <xsl:value-of select="'Device Details'"/>
+                </Sheet3>
+                <filename>
+                    <xsl:value-of select="$Create-File/ns3:CreateActivityOutputClass/fileInfo/fullName"/>
+                </filename>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create File">
+        <pd:type>com.tibco.plugin.file.FileCreateActivity</pd:type>
+        <pd:resourceType>ae.activities.FileCreateActivity</pd:resourceType>
+        <pd:x>1746</pd:x>
+        <pd:y>147</pd:y>
+        <config>
+            <overwrite>true</overwrite>
+        </config>
+        <pd:inputBindings>
+            <ns3:CreateActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="'D:/GenericReports.xlsx'"/>
+                </fileName>
+            </ns3:CreateActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="fetchTaskDetails">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>1360</pd:x>
+        <pd:y>142</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <jdbcGeneralActivityInput>
+                <statement>
+                    <xsl:value-of select="concat(&quot;select ATTRIBUTE2 as SIEBELCIRCUITID, PROCESS_INSTANCE, FIRST_OFFER_TIME, ACTIVE_DUR, WAIT_DUR, WORK_TIME_DUR, STATUS, ATTRIBUTE3, ATTRIBUTE8, ATTRIBUTE23 , ATTRIBUTE9 , ACTIVITY_NAME as TASKNAME from EC_WI_STATUS where attribute2 in  (&quot;,substring-after($SiebelIDString/SiebelIDString, &quot;,&quot;),&quot;)&quot;)"/>
+                </statement>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map-Data-1">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1499</pd:x>
+        <pd:y>144</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="SiebelCircuitID" type="xsd:string"/>
+                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="Status" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each-group select="$fetchTaskDetails/jdbcGeneralActivityOutput/unknownResultset/row" group-by="column[name='SIEBELCIRCUITID']/value">
+                    <root>
+                        <SiebelCircuitID>
+                            <xsl:value-of select="current-group()/column[name='SIEBELCIRCUITID']/value"/>
+                        </SiebelCircuitID>
+                        <xsl:if test="current-group()/column[name=&quot;TASKNAME&quot;]/value">
+                            <TaskName>
+                                <xsl:value-of select="current-group()/column[name=&quot;TASKNAME&quot;]/value"/>
+                            </TaskName>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;PROCESS_INSTANCE&quot;]/value">
+                            <ProcessInstance>
+                                <xsl:value-of select="current-group()/column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
+                            </ProcessInstance>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;FIRST_OFFER_TIME&quot;]/value">
+                            <FirstOfferTime>
+                                <xsl:value-of select="current-group()/column[name=&quot;FIRST_OFFER_TIME&quot;]/value"/>
+                            </FirstOfferTime>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;ACTIVE_DUR&quot;]/value">
+                            <ActiveDuration>
+                                <xsl:value-of select="current-group()/column[name=&quot;ACTIVE_DUR&quot;]/value"/>
+                            </ActiveDuration>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;WAIT_DUR&quot;]/value">
+                            <WaitDuration>
+                                <xsl:value-of select="current-group()/column[name=&quot;WAIT_DUR&quot;]/value"/>
+                            </WaitDuration>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;WORK_TIME_DUR&quot;]/value">
+                            <WorkTimeDuration>
+                                <xsl:value-of select="current-group()/column[name=&quot;WORK_TIME_DUR&quot;]/value"/>
+                            </WorkTimeDuration>
+                        </xsl:if>
+                        <xsl:if test="current-group()/column[name=&quot;STATUS&quot;]/value">
+                            <Status>
+                                <xsl:value-of select="current-group()/column[name=&quot;STATUS&quot;]/value"/>
+                            </Status>
+                        </xsl:if>
+                    </root>
+                </xsl:for-each-group>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>1988</pd:x>
+        <pd:y>149</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns2:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$Create-File/ns3:CreateActivityOutputClass/fileInfo/fullName"/>
+                </fileName>
+            </ns2:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>2086</pd:x>
+        <pd:y>347</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
         </config>
         <pd:inputBindings/>
     </pd:activity>
-    <pd:activity name="Parse XML">
-        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
-        <pd:x>1109</pd:x>
-        <pd:y>201</pd:y>
+    <pd:activity name="Log-1">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>2087</pd:x>
+        <pd:y>252</pd:y>
         <config>
-            <inputStyle>binary</inputStyle>
-            <xsdVersion>default</xsdVersion>
-            <validateOutput>true</validateOutput>
+            <role>User</role>
         </config>
-        <pd:inputBindings/>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$Catch/exceptiondata/*"/>
+                </message>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
         <pd:to>Assign</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Straight</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
         <pd:from>Assign</pd:from>
         <pd:to>SQL Direct</pd:to>
-        <pd:lineType>Default</pd:lineType>
+        <pd:lineType>Straight</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
@@ -387,29 +1444,8 @@ public class ExportGenericReportsJavaCode{
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Group</pd:from>
-        <pd:to>Log</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>FindCustomerInformation</pd:from>
         <pd:to>ReadCustomerInformation</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Log</pd:from>
-        <pd:to>FindCustomerInformation</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Log</pd:from>
-        <pd:to>FindTechnicalInformation</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -423,8 +1459,99 @@ public class ExportGenericReportsJavaCode{
     </pd:transition>
     <pd:transition>
         <pd:from>ReadCustomerInformation</pd:from>
-        <pd:to>Parse XML</pd:to>
+        <pd:to>Group (1)</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ReadTechnicalInformation</pd:from>
+        <pd:to>Group (2)</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Create File</pd:to>
         <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write Excel Sheet</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create File</pd:from>
+        <pd:to>Write Excel Sheet</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group (1)</pd:from>
+        <pd:to>fetchTaskDetails</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group (2)</pd:from>
+        <pd:to>fetchTaskDetails</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>fetchTaskDetails</pd:from>
+        <pd:to>Map-Data-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map-Data-1</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Log-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>FindCustomerInformation</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>FindTechnicalInformation</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

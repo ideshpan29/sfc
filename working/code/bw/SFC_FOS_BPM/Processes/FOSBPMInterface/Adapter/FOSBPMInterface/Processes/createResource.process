@@ -69,6 +69,15 @@
     <pd:endX>2155</pd:endX>
     <pd:endY>295</pd:endY>
     <pd:errorSchemas>
+        <NoUserFoundException>
+            <xsd:element name="Error">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ErrorMessage" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </NoUserFoundException>
         <ParseDataError>
             <xsd:element name="root">
                 <xsd:complexType>
@@ -120,7 +129,7 @@
         </config>
         <pd:inputBindings>
             <Email>
-                <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=&quot;mail&quot;]/value"/>
+                <xsl:value-of select="if($Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor') then $getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/EmailAttribute]/value&#xA;else&#xA;$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/EmailAttribute]/value"/>
             </Email>
         </pd:inputBindings>
     </pd:activity>
@@ -180,33 +189,59 @@
             <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/BussniessUsersCreateCase.process</processName>
         </config>
         <pd:inputBindings>
-            <input>
-                <LoginName>
-                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
-                </LoginName>
-                <FirstName>
-                    <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=&quot;givenname&quot;]/value"/>
-                </FirstName>
-                <LastName>
-                    <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=&quot;sn&quot;]/value"/>
-                </LastName>
-                <Email>
-                    <xsl:value-of select="$Attribute/Email"/>
-                </Email>
-                <GroupName>
-                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname"/>
-                </GroupName>
-                <AddedBy>
-                    <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:addby"/>
-                </AddedBy>
-            </input>
+            <xsl:choose>
+                <xsl:when test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor'">
+                    <input>
+                        <LoginName>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
+                        </LoginName>
+                        <FirstName>
+                            <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/GivenNameAttribute]/value"/>
+                        </FirstName>
+                        <LastName>
+                            <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SNAttribute]/value"/>
+                        </LastName>
+                        <Email>
+                            <xsl:value-of select="$Attribute/Email"/>
+                        </Email>
+                        <GroupName>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname"/>
+                        </GroupName>
+                        <AddedBy>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:addby"/>
+                        </AddedBy>
+                    </input>
+                </xsl:when>
+                <xsl:otherwise>
+                    <input>
+                        <LoginName>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name"/>
+                        </LoginName>
+                        <FirstName>
+                            <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/GivenNameAttribute]/value"/>
+                        </FirstName>
+                        <LastName>
+                            <xsl:value-of select="$getLdapEntry/outputMessage/ns:getLdapEntryResponse/attribute[@name=$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/SNAttribute]/value"/>
+                        </LastName>
+                        <Email>
+                            <xsl:value-of select="$Attribute/Email"/>
+                        </Email>
+                        <GroupName>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname"/>
+                        </GroupName>
+                        <AddedBy>
+                            <xsl:value-of select="$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:addby"/>
+                        </AddedBy>
+                    </input>
+                </xsl:otherwise>
+            </xsl:choose>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Catch">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
         <pd:x>2157</pd:x>
-        <pd:y>430</pd:y>
+        <pd:y>489</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -275,21 +310,54 @@
                     <xsl:attribute name="ldap-dn">
                         <xsl:value-of select="$ExecuteLDAPQuery/outputMessage/ns:executeLdapQueryResponse/ldap-entry[1]/@ldap-dn"/>
                     </xsl:attribute>
-                    <attribute>
-                        <xsl:attribute name="name">
-                            <xsl:value-of select="'sn'"/>
-                        </xsl:attribute>
-                    </attribute>
-                    <attribute>
-                        <xsl:attribute name="name">
-                            <xsl:value-of select="&quot;mail&quot;"/>
-                        </xsl:attribute>
-                    </attribute>
-                    <attribute>
-                        <xsl:attribute name="name">
-                            <xsl:value-of select="&quot;givenname&quot;"/>
-                        </xsl:attribute>
-                    </attribute>
+                    <xsl:choose>
+                        <xsl:when test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor'">
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/EmailAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/EmailAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor'">
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/SNAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/SNAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="$Start/pfx17:createresourceinput/pfx17:createresourcerequest/pfx17:entityname='Contractor'">
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/GivenNameAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <attribute>
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/GivenNameAttribute"/>
+                                </xsl:attribute>
+                            </attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </ns:getLdapEntry>
             </inputMessage>
         </pd:inputBindings>
@@ -341,7 +409,7 @@
                                 <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/ResourceCreationName"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-query">
-                                <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
+                                <xsl:value-of select="concat(&quot;(&quot;,$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/ExternalLDAP/LDAPQueryAttribute,&quot;=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-alias">
                                 <xsl:value-of select="$LDAPContainerDetails/Container/alias"/>
@@ -356,7 +424,7 @@
                                 <xsl:value-of select="$LDAPContainerDetails/Container/alias"/>
                             </xsl:attribute>
                             <xsl:attribute name="ldap-query">
-                                <xsl:value-of select="concat(&quot;(cn=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
+                                <xsl:value-of select="concat(&quot;(&quot;,$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LDAPQueryAttribute,&quot;=&quot;,$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:name,&quot;)&quot;)"/>
                             </xsl:attribute>
                             <xsl:attribute name="base-dn">
                                 <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/BPM/CreateResource/InternalLDAP/LdapBaseDn"/>
@@ -533,6 +601,42 @@
             </inputMessage>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>2160</pd:x>
+        <pd:y>390</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx8:ActivityInput>
+                <message>
+                    <xsl:value-of select="$Catch/exceptiondata/*"/>
+                </message>
+            </pfx8:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>703</pd:x>
+        <pd:y>419</pd:y>
+        <config>
+            <faultName>NoUserFoundException</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx13:ActivityInput>
+                <data>
+                    <Error>
+                        <ErrorMessage>
+                            <xsl:value-of select="&quot;NO SUCH FOUND USER IN LDAP&quot;"/>
+                        </ErrorMessage>
+                    </Error>
+                </data>
+            </pfx13:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>createResource</pd:from>
         <pd:to>getLdapEntry</pd:to>
@@ -627,7 +731,7 @@
     </pd:transition>
     <pd:transition>
         <pd:from>Catch</pd:from>
-        <pd:to>End</pd:to>
+        <pd:to>Log</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
@@ -653,5 +757,19 @@
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>xpath</pd:conditionType>
         <pd:xpath>$Start/pfx17:createresourceinput/pfx17:createresourcerequest[1]/pfx17:entityname="Contractor"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ExecuteLDAPQuery</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>

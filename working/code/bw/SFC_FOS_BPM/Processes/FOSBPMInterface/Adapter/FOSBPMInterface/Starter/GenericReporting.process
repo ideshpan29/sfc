@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:pfx3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://xmlns.example.com/1509116125289" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:pfx="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2" xmlns:ns2="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns4="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx2="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd">
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/SharedResources/SchemaDefinitions/Schema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/sfcfosbpmschema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd"/>
     <xsd:import namespace="http://www.tibco.com/schemas/SFC_FOS_BPM/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/SubProcesses/ReportGeneration/Schemas/Schema.xsd2"/>
@@ -154,6 +154,7 @@
                 <xsd:element name="root">
                     <xsd:complexType>
                         <xsd:sequence>
+                            <xsd:element name="Content-disposition" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="Access-Control-Allow-Origin" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="StatusLine" type="xsd:string" minOccurs="0"/>
                             <xsd:element name="Content-Type" type="xsd:string" minOccurs="0"/>
@@ -221,18 +222,41 @@
                             </asciiContent>
                         </xsl:if>
                     </xsl:when>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports'">
+                        <xsl:if test="$exportGenericReports/root/FileContents">
+                            <asciiContent>
+                                <xsl:value-of select="$exportGenericReports/root/FileContents"/>
+                            </asciiContent>
+                        </xsl:if>
+                    </xsl:when>
                     <xsl:otherwise>
                         <asciiContent>
                             <xsl:value-of select="'so such resource'"/>
                         </asciiContent>
                     </xsl:otherwise>
                 </xsl:choose>
-                <Headers>
-                    <Access-Control-Allow-Origin>
-                        <xsl:value-of select="'*'"/>
-                    </Access-Control-Allow-Origin>
-                </Headers>
-                <DynamicHeaders/>
+                <xsl:choose>
+                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports'">
+                        <Headers>
+                            <Content-disposition>
+                                <xsl:value-of select="concat(&quot;attachment;filename=&quot;, $exportGenericReports/root/FileName)"/>
+                            </Content-disposition>
+                            <Access-Control-Allow-Origin>
+                                <xsl:value-of select="&quot;*&quot;"/>
+                            </Access-Control-Allow-Origin>
+                            <Content-Type>
+                                <xsl:value-of select="&quot;application/vnd.ms-excel&quot;"/>
+                            </Content-Type>
+                        </Headers>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Headers>
+                            <Access-Control-Allow-Origin>
+                                <xsl:value-of select="&quot;*&quot;"/>
+                            </Access-Control-Allow-Origin>
+                        </Headers>
+                    </xsl:otherwise>
+                </xsl:choose>
             </ResponseActivityInput>
         </pd:inputBindings>
     </pd:activity>
@@ -944,6 +968,59 @@
             </root>
         </pd:inputBindings>
     </pd:activity>
+    <pd:activity name="exportGenericReports">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>743</pd:x>
+        <pd:y>875</pd:y>
+        <config>
+            <processName>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportGenericReports.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID">
+                    <SiebelCircuitID>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/SiebelCircuitID"/>
+                    </SiebelCircuitID>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager">
+                    <ProjectManager>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ProjectManager"/>
+                    </ProjectManager>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/StartDate">
+                    <StartDate>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/StartDate"/>
+                    </StartDate>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/ClientName">
+                    <ClientName>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ClientName"/>
+                    </ClientName>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/EndDate">
+                    <EndDate>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/EndDate"/>
+                    </EndDate>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/processname">
+                    <ProcessName>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/processname"/>
+                    </ProcessName>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/ContractorMaster">
+                    <ContractorMaster>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/ContractorMaster"/>
+                    </ContractorMaster>
+                </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/parameters/Contractor">
+                    <ContractorAgency>
+                        <xsl:value-of select="$HTTP-Receiver/ProcessStarterOutput/parameters/Contractor"/>
+                    </ContractorAgency>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
     <pd:transition>
         <pd:from>Send HTTP Response</pd:from>
         <pd:to>send Log Request AUDIT 2</pd:to>
@@ -1138,6 +1215,21 @@
     </pd:transition>
     <pd:transition>
         <pd:from>RenderGetCaseStatus</pd:from>
+        <pd:to>Send HTTP Response</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>send Log Request AUDIT 1</pd:from>
+        <pd:to>exportGenericReports</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>exportGenericReports</pd:from>
         <pd:to>Send HTTP Response</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

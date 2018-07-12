@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:ns6="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<pd:ProcessDefinition xmlns:pfx="http://bizData.fosImpl.sfc.com/dataModel" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns="http://www.tibco.com/schemas/TempCaseAdd/Schemas/Schema2.xsd" xmlns:pfx3="http://services.bds.tibco.com/BusinessDataServices_1.2.0" xmlns:pfx4="http://services.de.n2.tibco.com/OrgResourceService_1.8.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://api.bds.tibco.com" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://xmlns.tibco.com/bw/activity/xml/render/bytesEnvelope/2003/05" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
     <xsd:import namespace="http://bizData.fosImpl.sfc.com/dataModel" schemaLocation="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SchemaDefinitions/BPMBIZData.xsd"/>
     <wsdl:import namespace="http://services.bds.tibco.com/BusinessDataServices_1.2.0" location="/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/WSDL/BussinessdataService.wsdl"/>
     <pd:name>Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Processes/ExportGenericReports.process</pd:name>
@@ -25,10 +25,10 @@
     <pd:returnBindings>
         <root>
             <FileContents>
-                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileContent/textContent"/>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputBinaryClass/fileContent/binaryContent"/>
             </FileContents>
             <FileName>
-                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputTextClass/fileInfo/fullName"/>
+                <xsl:value-of select="$Read-File/ns3:ReadActivityOutputBinaryClass/fileInfo/fullName"/>
             </FileName>
         </root>
     </pd:returnBindings>
@@ -190,7 +190,7 @@
             </config>
             <pd:inputBindings>
                 <StringSet>
-                    <xsl:value-of select="concat($SiebeliDSet/StringSet,&quot; or siebelCircuitID='&quot;,$Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value,&quot;'&quot;)"/>
+                    <xsl:value-of select="if($Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value!='')&#xA;then&#xA;concat($SiebeliDSet/StringSet,&quot; or siebelCircuitID='&quot;,$Record/row/column[name=&quot;ATTRIBUTE2&quot;]/value,&quot;'&quot;)&#xA;else&#xA;$SiebeliDSet/StringSet"/>
                 </StringSet>
             </pd:inputBindings>
         </pd:activity>
@@ -380,14 +380,14 @@
                                                     <xsd:element name="ServiceType" type="xsd:string" minOccurs="0"/>
                                                     <xsd:element name="AccessMedium" type="xsd:string" minOccurs="0"/>
                                                     <xsd:element name="TESPM" type="xsd:string" minOccurs="0"/>
-                                                    <xsd:element name="TaskName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="SLA" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                                    <xsd:element name="Status" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                                    <xsd:element name="TaskName" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="SLA" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0"/>
+                                                    <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
                                                 </xsd:sequence>
                                             </xsd:complexType>
                                         </xsd:element>
@@ -501,66 +501,66 @@
                     </xsl:for-each>
                 </LinkOverview>
                 <TaskDetails>
-                    <xsl:for-each select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement">
+                    <xsl:for-each select="$Map-Data-1/root/root">
                         <Record>
-                            <SiebelCircuitID>
-                                <xsl:value-of select="siebelCircuitID"/>
-                            </SiebelCircuitID>
-                            <xsl:if test="clientName">
+                            <xsl:if test="SiebelCircuitID">
+                                <SiebelCircuitID>
+                                    <xsl:value-of select="SiebelCircuitID"/>
+                                </SiebelCircuitID>
+                            </xsl:if>
+                            <xsl:if test="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[$Map-Data-1/root/root/SiebelCircuitID]/clientName">
                                 <CustomerName>
-                                    <xsl:value-of select="clientName"/>
+                                    <xsl:value-of select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/clientName"/>
                                 </CustomerName>
                             </xsl:if>
-                            <xsl:if test="serviceType">
+                            <xsl:if test="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/serviceType">
                                 <ServiceType>
-                                    <xsl:value-of select="serviceType"/>
+                                    <xsl:value-of select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/serviceType"/>
                                 </ServiceType>
                             </xsl:if>
-                            <xsl:if test="technology">
+                            <xsl:if test="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/technology">
                                 <AccessMedium>
-                                    <xsl:value-of select="technology"/>
+                                    <xsl:value-of select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/technology"/>
                                 </AccessMedium>
                             </xsl:if>
-                            <xsl:if test="projectManager">
+                            <xsl:if test="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/projectManager">
                                 <TESPM>
-                                    <xsl:value-of select="projectManager"/>
+                                    <xsl:value-of select="$AccumulatedCustomerInfo/AccumulatedOutput/pfx:Customer_InformationElement[siebelCircuitID=$Map-Data-1/root/root/SiebelCircuitID]/projectManager"/>
                                 </TESPM>
                             </xsl:if>
-                            <xsl:variable name="var3" select="current()/siebelCircuitID"/>
-                            <TaskName>
-                                <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/TaskName"/>
-                            </TaskName>
-                            <SLA>
-                                <xsl:value-of select="'10'"/>
-                            </SLA>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/ProcessInstance">
+                            <xsl:if test="TaskName">
+                                <TaskName>
+                                    <xsl:value-of select="TaskName"/>
+                                </TaskName>
+                            </xsl:if>
+                            <xsl:if test="ProcessInstance">
                                 <ProcessInstance>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/ProcessInstance"/>
+                                    <xsl:value-of select="ProcessInstance"/>
                                 </ProcessInstance>
                             </xsl:if>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/FirstOfferTime">
+                            <xsl:if test="FirstOfferTime">
                                 <FirstOfferTime>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/FirstOfferTime"/>
+                                    <xsl:value-of select="FirstOfferTime"/>
                                 </FirstOfferTime>
                             </xsl:if>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/ActiveDuration">
+                            <xsl:if test="ActiveDuration">
                                 <ActiveDuration>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/ActiveDuration"/>
+                                    <xsl:value-of select="ActiveDuration"/>
                                 </ActiveDuration>
                             </xsl:if>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/WaitDuration">
+                            <xsl:if test="WaitDuration">
                                 <WaitDuration>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/WaitDuration"/>
+                                    <xsl:value-of select="WaitDuration"/>
                                 </WaitDuration>
                             </xsl:if>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/WorkTimeDuration">
+                            <xsl:if test="WorkTimeDuration">
                                 <WorkTimeDuration>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/WorkTimeDuration"/>
+                                    <xsl:value-of select="WorkTimeDuration"/>
                                 </WorkTimeDuration>
                             </xsl:if>
-                            <xsl:if test="$Map-Data-1/root/root[SiebelCircuitID=$var3]/Status">
+                            <xsl:if test="Status">
                                 <Status>
-                                    <xsl:value-of select="$Map-Data-1/root/root[SiebelCircuitID=$var3]/Status"/>
+                                    <xsl:value-of select="Status"/>
                                 </Status>
                             </xsl:if>
                         </Record>
@@ -1036,84 +1036,272 @@ XSSFWorkbook workbook = new XSSFWorkbook();
 					
 			
 					//Writing sheet 2
-					String TaskDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;TaskDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;90981&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;tibco-admin&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;34567643&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;77777777&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;3333333&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;888888888&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111222&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;1906201899&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;ES Bank&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;CERAGON&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181090&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181011&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Microwave&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;323221323&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Fiber&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201803&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;TaskName&gt;Initialization&lt;/TaskName&gt;&lt;SLA&gt;10&lt;/SLA&gt;&lt;/Record&gt;&lt;/TaskDetails&gt;";
+
+					//String TaskDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;TaskDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:35:29.145+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;128266&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10113&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;118153&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:37:43.594+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;146106&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;50614&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;95492&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:40:18.063+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;240627&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;125645&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;114982&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:46:32.539+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration&gt;19621&lt;/WaitDuration&gt;&lt;WorkTimeDuration/&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:26:52.385+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;21324&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;5875&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;15449&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:27:19.571+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;48264&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;4866&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;43398&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:27:22.534+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;55379&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;15368&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;40011&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T05:01:33.777+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;150158&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;43244&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;106914&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:07:44.356+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;618713&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;560608&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;58105&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:27:29.192+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;75094&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10267&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;64827&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:27:32.05+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;186937&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;154635&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;32302&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:30:40.901+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;34672&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;11140&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;23532&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:44:23.951+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;123380&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;35113&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;88267&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:53:24.779+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;382786&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;311438&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;71348&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100004&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T05:54:55.241+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;59819&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10315&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;49504&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100004&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T05:56:00.616+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration&gt;6404&lt;/WaitDuration&gt;&lt;WorkTimeDuration/&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:18:08.436+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;84026&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;19483&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;64543&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:21:09.83+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;183650&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;14026&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;169624&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100001&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:40:15.542+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;110749&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;43897&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;66852&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T14:41:30.823+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;1567351&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;539931&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;96208&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:18:10.764+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;173710&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;103321&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;70389&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:24:18.557+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;118512&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;39446&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;79066&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:26:23.57+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;60507&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;18639&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;41868&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0605201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;VerificationOfCustomerAcknowledgement&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-06T15:28:49.092+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;57048&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;18617&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;38431&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:18:20.67+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;267631&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;59940&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;51495&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:22:54.443+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;72190&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;4987&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;67203&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:51:03.147+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;74874&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;31455&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;43419&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:52:23.229+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;54358&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;5721&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;48637&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:53:22.475+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;287558&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;14528&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;273030&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;100003&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-04T04:59:52.386+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;96531&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;5836&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;90695&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:24:12.051+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;34515&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;6798&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;27717&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:24:14.292+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;85366&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;55531&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;29835&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:25:45.093+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;20379&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;5311&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;15068&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:26:10.431+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;35645&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;7618&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;28027&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:28:20.095+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;25370&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;22529&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;2841&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:28:47.5+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;47826&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;38014&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;9812&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:38:45.745+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;58097&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;7033&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;51064&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:41:45.814+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;31536&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10666&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;20870&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:42:22.321+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;70917&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;32510&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;38407&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Review&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:43:44.955+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;472200&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;14554&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;91192&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:45:09.374+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;21221&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;9038&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;12183&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:51:42.03+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;432488&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;390280&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;42208&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:29:37.44+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;14184&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;6989&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;7195&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:37:31.599+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;68762&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;12452&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;56310&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:27:55.398+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;42658&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;6216&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;36442&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:11:10.938+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;412681&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;298349&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;114332&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:21:14.443+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;612502&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;397599&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;214903&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:21:16.759+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;195405&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;79651&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;115754&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:41:28.658+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;239590&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;154165&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;85425&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;VerificationOfCustomerAcknowledgement&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:45:33.204+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;88726&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;34158&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;54568&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:39:51.361+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;109702&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;79115&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;30587&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:44:28.091+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;39381&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;3147&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;36234&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:51:40.924+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;117564&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;18471&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;99093&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:54:26.675+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;58262&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;31421&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;26841&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:27:02.212+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;47990&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;16634&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;31356&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Review&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:37:19.001+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;234980&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;88983&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;145997&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:41:18.53+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;174787&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;106041&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;68746&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;123&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-08T06:32:05.956+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration/&gt;&lt;WorkTimeDuration/&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:43:39.211+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;41291&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;23027&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;18264&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:44:25.359+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;182197&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;167989&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;14208&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:51:43.235+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;371610&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;270033&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;101577&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation_Removal&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:53:41.008+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;43358&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;7868&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;35490&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:28:43.525+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;52789&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;11369&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;41420&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:28:46.047+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;88472&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;65039&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;23433&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:30:19.376+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;50412&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;23529&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;26883&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:31:14.409+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;60767&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10147&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;50620&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201801&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;VerificationOfCustomerAcknowledgement&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:28:13.139+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;65481&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;36614&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;28867&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:39:49.229+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;69169&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10175&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;58994&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;VerificationOfCustomerAcknowledgement&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T05:47:32.353+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;35638&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;10997&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;24641&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:32:21.256+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;162785&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;96198&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;66587&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:35:09.377+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration&gt;7683366&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;40172&lt;/WorkTimeDuration&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:18:08.903+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;180503&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;57792&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;122711&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:31:32.434+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;175622&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;112405&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;63217&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Track_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:26:36.741+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;44217&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;5370&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;38847&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:34:33.178+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;183512&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;57155&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;126357&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:37:42.872+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;220615&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;73408&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;147207&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:41:31.387+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;518025&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;425572&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;92453&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T08:50:11.597+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;73565&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;27961&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;45604&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:27:26.942+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;43166&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;18070&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;25096&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:28:15.535+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;36872&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;9965&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;26907&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:29:39.676+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;57041&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;18071&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;38970&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Provision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:30:41.668+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;36335&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;9395&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;26940&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ConfiguretheIPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:31:23.385+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;42565&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;22937&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;19628&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;VerificationOfCustomerAcknowledgement&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:34:16.286+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;25661&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;7815&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;17846&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;PM_Review&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:36:11.941+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;30442&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;7633&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;22809&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:36:47.557+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;24557&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;8294&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;16263&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation_Removal&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:37:15.634+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration/&gt;&lt;WorkTimeDuration/&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:41:19.982+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;693097&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;618374&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;74723&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:41:22.068+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;567654&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;499645&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;68009&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation_Removal&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:44:16.81+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;137957&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;63209&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;74748&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T06:35:11.808+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration&gt;111136437&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;177670&lt;/WorkTimeDuration&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:28:18.111+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;76446&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;45836&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;30610&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;ObtainCustomerConfirmation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:32:10.835+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;120777&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;99900&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;20877&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Add_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:32:13.347+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;50559&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;24901&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;25658&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Review_Bill_Of_Materials&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:33:05.564+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;19676&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;12561&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;7115&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_IPs&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:36:49.255+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;84337&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;71540&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;12797&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201805&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Deprovision_Management_IP&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T09:36:51.377+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;47125&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;32240&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;14885&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;0705201811&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;TES_OSG_Verification&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-07T11:46:38.362+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration/&gt;&lt;WorkTimeDuration/&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Select_Contractor&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-08T15:03:24.767+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration&gt;175237&lt;/ActiveDuration&gt;&lt;WaitDuration&gt;13960&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;161277&lt;/WorkTimeDuration&gt;&lt;Status&gt;COMPLETED&lt;/Status&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;PM01&lt;/TESPM&gt;&lt;TaskName&gt;Manual_Installation&lt;/TaskName&gt;&lt;FirstOfferTime&gt;2018-05-08T15:06:26.179+05:30&lt;/FirstOfferTime&gt;&lt;ActiveDuration/&gt;&lt;WaitDuration&gt;1713191&lt;/WaitDuration&gt;&lt;WorkTimeDuration&gt;23795&lt;/WorkTimeDuration&gt;&lt;Status&gt;CANCELLED&lt;/Status&gt;&lt;/Record&gt;&lt;/TaskDetails&gt;";
+
 					doc = dBuilder.parse(new InputSource(new StringReader(TaskDetails)));
+
 					nList = doc.getElementsByTagName("Record");
+
 					for (int i = 0; i &lt; nList.getLength(); i++) {
+
 						Node node = nList.item(i);
+
 						if (node.getNodeType() == Node.ELEMENT_NODE) {
+
 							Element element = (Element) node;
+
 							rowhead = sheet2.createRow((short)(i+1));
+
 							String siebelCircuitID = element.getElementsByTagName("SiebelCircuitID").item(0).getTextContent();
+
 							rowhead.createCell(0).setCellValue(siebelCircuitID);
+
 				       
+
 							if(element.getElementsByTagName("CustomerName").item(0)!=null)
+
 								{
+
 									String customerName = element.getElementsByTagName("CustomerName").item(0).getTextContent();
+
 									rowhead.createCell(1).setCellValue(customerName);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(1).setCellValue("");
+
 								}
+
 				        
+
 							if(element.getElementsByTagName("ServiceType").item(0)!=null)
+
 								{
+
 									String serviceType = element.getElementsByTagName("ServiceType").item(0).getTextContent();
+
 									rowhead.createCell(2).setCellValue(serviceType);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(2).setCellValue("");
+
 								}
+
 				        
+
 							if(element.getElementsByTagName("AccessMedium").item(0)!=null)
+
 								{
+
 									String accessMedium = element.getElementsByTagName("AccessMedium").item(0).getTextContent();
+
 									rowhead.createCell(3).setCellValue(accessMedium);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(3).setCellValue("");
+
 								}
+
 				       
-							if(element.getElementsByTagName("TES_PM").item(0)!=null)
+
+							if(element.getElementsByTagName("TESPM").item(0)!=null)
+
 								{
-									String TESPM = element.getElementsByTagName("TES_PM").item(0).getTextContent();
+
+									String TESPM = element.getElementsByTagName("TESPM").item(0).getTextContent();
+
 									rowhead.createCell(4).setCellValue(TESPM);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(4).setCellValue("");
+
 								}
+
 				        
+
 							if(element.getElementsByTagName("TaskName").item(0)!=null)
+
 								{
+
 									String TaskName = element.getElementsByTagName("TaskName").item(0).getTextContent();
+
 									rowhead.createCell(5).setCellValue(TaskName);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(5).setCellValue("");
+
 								}
+
 							
+
 							if(element.getElementsByTagName("SLA").item(0)!=null)
+
 								{
+
 									String SLA = element.getElementsByTagName("SLA").item(0).getTextContent();
+
 									rowhead.createCell(6).setCellValue(SLA);
+
 								}
+
 							else
+
 								{
+
 									rowhead.createCell(6).setCellValue("");
+
 								}
-					
+
+							
+
+							if(element.getElementsByTagName("ProcessInstance").item(0)!=null)
+
+								{
+
+									String processInstance = element.getElementsByTagName("ProcessInstance").item(0).getTextContent();
+
+									rowhead.createCell(7).setCellValue(processInstance);
+
+								}
+
+								else
+
+								{
+
+									rowhead.createCell(7).setCellValue("");
+
+								}
+
+							
+
+							if(element.getElementsByTagName("FirstOfferTime").item(0)!=null)
+
+								{
+
+									String firstOfferTime = element.getElementsByTagName("FirstOfferTime").item(0).getTextContent();
+
+									rowhead.createCell(8).setCellValue(firstOfferTime);
+
+								}
+
+							else
+
+								{
+
+									rowhead.createCell(8).setCellValue("");
+
+								}
+
+							
+
+							if(element.getElementsByTagName("ActiveDuration").item(0)!=null)
+
+							{
+
+								String activeDuration = element.getElementsByTagName("ActiveDuration").item(0).getTextContent();
+
+								rowhead.createCell(9).setCellValue(activeDuration);
+
+							}
+
+							else
+
+							{
+
+								rowhead.createCell(9).setCellValue("");
+
+							}
+
+							
+
+							if(element.getElementsByTagName("WaitDuration").item(0)!=null)
+
+							{
+
+								String waitDuration = element.getElementsByTagName("WaitDuration").item(0).getTextContent();
+
+								rowhead.createCell(10).setCellValue(waitDuration);
+
+							}
+
+							else
+
+							{
+
+								rowhead.createCell(10).setCellValue("");
+
+							}
+
+							
+
+							if(element.getElementsByTagName("WorkTimeDuration").item(0)!=null)
+
+							{
+
+								String workTimeDuration = element.getElementsByTagName("WorkTimeDuration").item(0).getTextContent();
+
+								rowhead.createCell(11).setCellValue(workTimeDuration);
+
+							}
+
+							else
+
+							{
+
+								rowhead.createCell(11).setCellValue("");
+
+							}
+
+							
+
+							if(element.getElementsByTagName("Status").item(0)!=null)
+
+							{
+
+								String status = element.getElementsByTagName("Status").item(0).getTextContent();
+
+								rowhead.createCell(12).setCellValue(status);
+
+							}
+
+							else
+
+							{
+
+								rowhead.createCell(12).setCellValue("");
+
+							}
+
 						}
+
 					}
-			
-					
-					
 					//Writing sheet 3
-					String DeviceDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;DeviceDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;90981&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;tibco-admin&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;34567643&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;77777777&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;3333333&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;888888888&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111222&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;1906201899&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;ES Bank&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;CERAGON&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181090&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181011&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Microwave&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;323221323&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Fiber&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201803&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;/DeviceDetails&gt;";
+					//String DeviceDetails="&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt; &lt;DeviceDetails&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;90981&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;tibco-admin&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;34567643&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;77777777&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;3333333&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;888888888&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;11111111222&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Eustace&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;1906201899&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;ES Bank&lt;/CustomerName&gt;&lt;ServiceType&gt;Collocation&lt;/ServiceType&gt;&lt;AccessMedium&gt;CERAGON&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181090&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;250620181011&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Microwave&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;323221323&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201802&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;Fiber&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201803&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;Record&gt;&lt;SiebelCircuitID&gt;2806201804&lt;/SiebelCircuitID&gt;&lt;CustomerName&gt;Excel Cinema&lt;/CustomerName&gt;&lt;ServiceType&gt;Internet&lt;/ServiceType&gt;&lt;AccessMedium&gt;PTP&lt;/AccessMedium&gt;&lt;TESPM&gt;Hill&lt;/TESPM&gt;&lt;Devices&gt;&lt;DeviceName&gt;CISCO 881&lt;/DeviceName&gt;&lt;/Devices&gt;&lt;/Record&gt;&lt;/DeviceDetails&gt;";
 					doc = dBuilder.parse(new InputSource(new StringReader(DeviceDetails)));
 					nList = doc.getElementsByTagName("Record");
 					String siebelCircuitID,customerName,serviceType,accessMedium,TESPM;
@@ -1150,9 +1338,9 @@ XSSFWorkbook workbook = new XSSFWorkbook();
 									accessMedium="";
 								}
 				       
-							if(element.getElementsByTagName("TES_PM").item(0)!=null)
+							if(element.getElementsByTagName("TESPM").item(0)!=null)
 								{
-									TESPM = element.getElementsByTagName("TES_PM").item(0).getTextContent();
+									TESPM = element.getElementsByTagName("TESPM").item(0).getTextContent();
 								}
 							else
 								{
@@ -1224,13 +1412,15 @@ XSSFWorkbook workbook = new XSSFWorkbook();
 				        		}
 				        }
 					}
-					String filename="D:/GenericReports.xlsx";
+					String filename=getfilename();
 					FileOutputStream fileOut = new FileOutputStream(filename);
 					workbook.write(fileOut);
 					fileOut.close();
+					System.out.println("done");
 
 }
 }
+
 </fullsource>
             <inputData>
                 <row>
@@ -1269,10 +1459,11 @@ XSSFWorkbook workbook = new XSSFWorkbook();
                     <fieldRequired>required</fieldRequired>
                 </row>
             </inputData>
+            <javaArchive>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/AliasLibraries/ExcelCreationAliasLibrary.aliaslib</javaArchive>
             <byteCode>
                 <class>
                     <name>ExportGenericReportsWriteExcelSheet</name>
-                    <byteCode>yv66vgAAADIBEAkAUwCECQBTAIUJAFMAhgkAUwCHCQBTAIgJAFMAiQkAUwCKCgBUAIsIAIwHAI0KAAoAiwoACgCOCwCPAJALAI8AkQsAjwCSCwCPAJMKAAoAlAsAjwCVCwCPAJYKAAoAlwoAmACZCgCaAJsIAJwKAJ0AnggAnwgAoAgAoQgAoggAowgApAgApQgApggApwgAqAgAqQgAqggAqwgArAgArQgArggArwgAsAgAsQoAsgCzCgCyALQHALUHALYKAC8AtwoALgC4CgC5ALoIALsLALwAvQsAvgC/CwC+AMALAMEAwgcAwwgAxAsAOAC9CwDBAMUIAMYIAMcIAMgIAMkIAMoIAMsIAMwIAM0IAM4IAM8IANAIANEIANIIANMIANQIANUIANYIANcIANgHANkKAE8AtwoACgDaCgBPANsHANwHAN0BAAxMaW5rT3ZlcnZpZXcBABJMamF2YS9sYW5nL1N0cmluZzsBAAtUYXNrRGV0YWlscwEADURldmljZURldGFpbHMBAAZTaGVldDEBAAZTaGVldDIBAAZTaGVldDMBAAhmaWxlbmFtZQEAD2dldExpbmtPdmVydmlldwEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAD3NldExpbmtPdmVydmlldwEAFShMamF2YS9sYW5nL1N0cmluZzspVgEADmdldFRhc2tEZXRhaWxzAQAOc2V0VGFza0RldGFpbHMBABBnZXREZXZpY2VEZXRhaWxzAQAQc2V0RGV2aWNlRGV0YWlscwEACWdldFNoZWV0MQEACXNldFNoZWV0MQEACWdldFNoZWV0MgEACXNldFNoZWV0MgEACWdldFNoZWV0MwEACXNldFNoZWV0MwEAC2dldGZpbGVuYW1lAQALc2V0ZmlsZW5hbWUBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwDcBwCNBwDeBwDfBwDgBwDhBwDiBwDjBwDkBwDlBwDmBwDDBwDnAQAKRXhjZXB0aW9ucwcA6AEAClNvdXJjZUZpbGUBAChFeHBvcnRHZW5lcmljUmVwb3J0c1dyaXRlRXhjZWxTaGVldC5qYXZhDABVAFYMAFcAVgwAWABWDABZAFYMAFoAVgwAWwBWDABcAFYMAG8AcAEAAAEAKm9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZXb3JrYm9vawwA6QDqBwDeDADrAOwMAO0A7AwA7gDsDADvAOwMAPAA8QwA8gDzDAD0AOwMAPUA9gcA4AwA9wD4BwDhDAD5APoBABFTaWViZWwgQ2lyY3VpdCBJRAcA+wwA/ABiAQANQ3VzdG9tZXIgTmFtZQEADFNlcnZpY2UgVHlwZQEADUFjY2VzcyBNZWRpdW0BAAlCYW5kd2lkdGgBAAZURVMgUE0BAAdQYXJ0bmVyAQANRGF0ZSBSZWNlaXZlZAEAEU1vZGlmaWNhdGlvbiBkYXRlAQAGU3RhdHVzAQANQnVpbGRpbmcgTmFtZQEAC0J1aWxkaW5nIElEAQAKQ2xpZW50IElQcwEAC0NsaWVudCBWTEFOAQAJVGFzayBOYW1lAQADU0xBAQALRGV2aWNlIE5hbWUBABREZXZpY2UgU2VyaWFsIE51bWJlcgEAEkRldmljZSBTZXJpYWwgSU1FSQEAEkRldmljZSBNQUMgQWRkcmVzcwcA4gwA/QD+DAD/AQABABdvcmcveG1sL3NheC9JbnB1dFNvdXJjZQEAFGphdmEvaW8vU3RyaW5nUmVhZGVyDABvAGIMAG8BAQcA4wwBAgEDAQAGUmVjb3JkBwDkDAEEAQUHAOUMAQYBBwwBCAEJBwDmDAEKAQsBABNvcmcvdzNjL2RvbS9FbGVtZW50AQAPU2llYmVsQ2lyY3VpdElEDAEMAF4BAAxDdXN0b21lck5hbWUBAAtTZXJ2aWNlVHlwZQEADEFjY2Vzc01lZGl1bQEABlRFU19QTQEADERhdGVSZWNlaXZlZAEAEE1vZGlmaWNhdGlvbkRhdGUBAAxCdWlsZGluZ05hbWUBAApCdWlsZGluZ0lEAQAIQ2xpZW50SVABAApDbGllbnRWTEFOAQwZPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPFRhc2tEZXRhaWxzPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD45MDk4MTwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT50aWJjby1hZG1pbjwvVEVTUE0+PFRhc2tOYW1lPkluaXRpYWxpemF0aW9uPC9UYXNrTmFtZT48U0xBPjEwPC9TTEE+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjM0NTY3NjQzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD43Nzc3Nzc3NzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MzMzMzMzMzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+ODg4ODg4ODg4PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkV1c3RhY2U8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xMTExMTExMTIyMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MTkwNjIwMTg5OTwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RVMgQmFuazwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5Db2xsb2NhdGlvbjwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5DRVJBR09OPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwOTA8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwMTE8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5NaWNyb3dhdmU8L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PFRhc2tOYW1lPkluaXRpYWxpemF0aW9uPC9UYXNrTmFtZT48U0xBPjEwPC9TTEE+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjMyMzIyMTMyMzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjgwNjIwMTgwMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPkZpYmVyPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxUYXNrTmFtZT5Jbml0aWFsaXphdGlvbjwvVGFza05hbWU+PFNMQT4xMDwvU0xBPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODAzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjgwNjIwMTgwNDwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48VGFza05hbWU+SW5pdGlhbGl6YXRpb248L1Rhc2tOYW1lPjxTTEE+MTA8L1NMQT48L1JlY29yZD48L1Rhc2tEZXRhaWxzPgEACFRhc2tOYW1lAQxePD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPERldmljZURldGFpbHM+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjkwOTgxPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPnRpYmNvLWFkbWluPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4zNDU2NzY0MzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD43Nzc3Nzc3NzwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4zMzMzMzMzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkV1c3RhY2U8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjg4ODg4ODg4ODwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xMTExMTExMTIyMjwvU2llYmVsQ2lyY3VpdElEPjxDdXN0b21lck5hbWU+RXhjZWwgQ2luZW1hPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkludGVybmV0PC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5FdXN0YWNlPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4xOTA2MjAxODk5PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FUyBCYW5rPC9DdXN0b21lck5hbWU+PFNlcnZpY2VUeXBlPkNvbGxvY2F0aW9uPC9TZXJ2aWNlVHlwZT48QWNjZXNzTWVkaXVtPkNFUkFHT048L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PERldmljZXM+PERldmljZU5hbWU+Q0lTQ08gODgxPC9EZXZpY2VOYW1lPjwvRGV2aWNlcz48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MjUwNjIwMTgxMDkwPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yNTA2MjAxODEwMTE8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5NaWNyb3dhdmU8L0FjY2Vzc01lZGl1bT48VEVTUE0+SGlsbDwvVEVTUE0+PERldmljZXM+PERldmljZU5hbWU+Q0lTQ08gODgxPC9EZXZpY2VOYW1lPjwvRGV2aWNlcz48L1JlY29yZD48UmVjb3JkPjxTaWViZWxDaXJjdWl0SUQ+MzIzMjIxMzIzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PFJlY29yZD48U2llYmVsQ2lyY3VpdElEPjI4MDYyMDE4MDI8L1NpZWJlbENpcmN1aXRJRD48Q3VzdG9tZXJOYW1lPkV4Y2VsIENpbmVtYTwvQ3VzdG9tZXJOYW1lPjxTZXJ2aWNlVHlwZT5JbnRlcm5ldDwvU2VydmljZVR5cGU+PEFjY2Vzc01lZGl1bT5GaWJlcjwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODAzPC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48QWNjZXNzTWVkaXVtPlBUUDwvQWNjZXNzTWVkaXVtPjxURVNQTT5IaWxsPC9URVNQTT48RGV2aWNlcz48RGV2aWNlTmFtZT5DSVNDTyA4ODE8L0RldmljZU5hbWU+PC9EZXZpY2VzPjwvUmVjb3JkPjxSZWNvcmQ+PFNpZWJlbENpcmN1aXRJRD4yODA2MjAxODA0PC9TaWViZWxDaXJjdWl0SUQ+PEN1c3RvbWVyTmFtZT5FeGNlbCBDaW5lbWE8L0N1c3RvbWVyTmFtZT48U2VydmljZVR5cGU+SW50ZXJuZXQ8L1NlcnZpY2VUeXBlPjxBY2Nlc3NNZWRpdW0+UFRQPC9BY2Nlc3NNZWRpdW0+PFRFU1BNPkhpbGw8L1RFU1BNPjxEZXZpY2VzPjxEZXZpY2VOYW1lPkNJU0NPIDg4MTwvRGV2aWNlTmFtZT48L0RldmljZXM+PC9SZWNvcmQ+PC9EZXZpY2VEZXRhaWxzPgEAB0RldmljZXMBAApEZXZpY2VOYW1lAQASRGV2aWNlU2VyaWFsTnVtYmVyAQAQRGV2aWNlU2VyaWFsSU1FSQEAEERldmljZU1BQ0FkZHJlc3MBABZEOi9HZW5lcmljUmVwb3J0cy54bHN4AQAYamF2YS9pby9GaWxlT3V0cHV0U3RyZWFtDAENAQ4MAQ8AcAEAdFByb2Nlc3Nlcy9GT1NCUE1JbnRlcmZhY2UvQWRhcHRlci9GT1NCUE1JbnRlcmZhY2UvUHJvY2Vzc2VzL0V4cG9ydEdlbmVyaWNSZXBvcnRzL0V4cG9ydEdlbmVyaWNSZXBvcnRzV3JpdGVFeGNlbFNoZWV0AQAQamF2YS9sYW5nL09iamVjdAEAJW9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9DZWxsU3R5bGUBACBvcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvRm9udAEAJ29yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZTaGVldAEAJW9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZSb3cBAChqYXZheC94bWwvcGFyc2Vycy9Eb2N1bWVudEJ1aWxkZXJGYWN0b3J5AQAhamF2YXgveG1sL3BhcnNlcnMvRG9jdW1lbnRCdWlsZGVyAQAUb3JnL3czYy9kb20vRG9jdW1lbnQBABRvcmcvdzNjL2RvbS9Ob2RlTGlzdAEAEG9yZy93M2MvZG9tL05vZGUBABBqYXZhL2xhbmcvU3RyaW5nAQATamF2YS9sYW5nL0V4Y2VwdGlvbgEAD2NyZWF0ZUNlbGxTdHlsZQEALygpTG9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZDZWxsU3R5bGU7AQAPc2V0Qm9yZGVyQm90dG9tAQAEKFMpVgEADXNldEJvcmRlckxlZnQBAA5zZXRCb3JkZXJSaWdodAEADHNldEJvcmRlclRvcAEACmNyZWF0ZUZvbnQBACooKUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGRm9udDsBAAdzZXRGb250AQAlKExvcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvRm9udDspVgEADHNldEFsaWdubWVudAEAC2NyZWF0ZVNoZWV0AQA9KExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2FwYWNoZS9wb2kveHNzZi91c2VybW9kZWwvWFNTRlNoZWV0OwEACWNyZWF0ZVJvdwEAKihJKUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGUm93OwEACmNyZWF0ZUNlbGwBACsoSSlMb3JnL2FwYWNoZS9wb2kveHNzZi91c2VybW9kZWwvWFNTRkNlbGw7AQAmb3JnL2FwYWNo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</byteCode>
+                    <byteCode>yv66vgAAADQBJQkAXACNCQBcAI4JAFwAjwkAXACQCQBcAJEJAFwAkgkAXACTCgBdAJQIAJUHAJYKAAoAlAoACgCXBwCYCwANAJkLAA0AmgsADQCbCwANAJwKAAoAnQsADQCeCwANAJ8KAAoAoAoAoQCiCgCjAKQIAKUKAKYApwgAqAgAqQgAqggAqwgArAgArQgArggArwgAsAgAsQgAsggAswgAtAgAtQgAtggAtwgAuAgAuQgAugoAuwC8CgC7AL0HAL4HAL8KADAAwAoALwDBCgDCAMMIAMQLAMUAxgsAxwDICwDHAMkLADkAygcAywcAzAgAzQsAOgDGCwA5AM4IAM8IANAIANEIANIIANMIANQIANUIANYIANcIANgIANkIANoIANsIANwIAN0IAN4IAN8IAOAIAOEIAOIIAOMIAOQKAFwA5QcA5goAVQDACgAKAOcKAFUA6AkA6QDqCADrCgDsAO0HAO4HAO8BAAxMaW5rT3ZlcnZpZXcBABJMamF2YS9sYW5nL1N0cmluZzsBAAtUYXNrRGV0YWlscwEADURldmljZURldGFpbHMBAAZTaGVldDEBAAZTaGVldDIBAAZTaGVldDMBAAhmaWxlbmFtZQEAD2dldExpbmtPdmVydmlldwEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAD3NldExpbmtPdmVydmlldwEAFShMamF2YS9sYW5nL1N0cmluZzspVgEADmdldFRhc2tEZXRhaWxzAQAOc2V0VGFza0RldGFpbHMBABBnZXREZXZpY2VEZXRhaWxzAQAQc2V0RGV2aWNlRGV0YWlscwEACWdldFNoZWV0MQEACXNldFNoZWV0MQEACWdldFNoZWV0MgEACXNldFNoZWV0MgEACWdldFNoZWV0MwEACXNldFNoZWV0MwEAC2dldGZpbGVuYW1lAQALc2V0ZmlsZW5hbWUBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwDuBwCWBwCYBwDwBwDxBwDyBwDzBwD0BwD1BwD2BwDLBwDMBwD3AQAKRXhjZXB0aW9ucwcA+AEAClNvdXJjZUZpbGUBAChFeHBvcnRHZW5lcmljUmVwb3J0c1dyaXRlRXhjZWxTaGVldC5qYXZhDABeAF8MAGAAXwwAYQBfDABiAF8MAGMAXwwAZABfDABlAF8MAHgAeQEAAAEAKm9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZXb3JrYm9vawwA+QD6AQAlb3JnL2FwYWNoZS9wb2kvc3MvdXNlcm1vZGVsL0NlbGxTdHlsZQwA+wD8DAD9APwMAP4A/AwA/wD8DAEAAQEMAQIBAwwBBAD8DAEFAQYHAPEMAQcBCAcA8gwBCQEKAQARU2llYmVsIENpcmN1aXQgSUQHAQsMAQwAawEADUN1c3RvbWVyIE5hbWUBAAxTZXJ2aWNlIFR5cGUBAA1BY2Nlc3MgTWVkaXVtAQAJQmFuZHdpZHRoAQAGVEVTIFBNAQAHUGFydG5lcgEADURhdGUgUmVjZWl2ZWQBABFNb2RpZmljYXRpb24gZGF0ZQEABlN0YXR1cwEADUJ1aWxkaW5nIE5hbWUBAAtCdWlsZGluZyBJRAEACkNsaWVudCBJUHMBAAtDbGllbnQgVkxBTgEACVRhc2sgTmFtZQEAA1NMQQEAC0RldmljZSBOYW1lAQAURGV2aWNlIFNlcmlhbCBOdW1iZXIBABJEZXZpY2UgU2VyaWFsIElNRUkBABJEZXZpY2UgTUFDIEFkZHJlc3MHAPMMAQ0BDgwBDwEQAQAXb3JnL3htbC9zYXgvSW5wdXRTb3VyY2UBABRqYXZhL2lvL1N0cmluZ1JlYWRlcgwAeABrDAB4AREHAPQMARIBEwEABlJlY29yZAcA9QwBFAEVBwD2DAEWARcMARgBGQwBGgEbAQAQb3JnL3czYy9kb20vTm9kZQEAE29yZy93M2MvZG9tL0VsZW1lbnQBAA9TaWViZWxDaXJjdWl0SUQMARwAZwEADEN1c3RvbWVyTmFtZQEAC1NlcnZpY2VUeXBlAQAMQWNjZXNzTWVkaXVtAQAGVEVTX1BNAQAMRGF0ZVJlY2VpdmVkAQAQTW9kaWZpY2F0aW9uRGF0ZQEADEJ1aWxkaW5nTmFtZQEACkJ1aWxkaW5nSUQBAAhDbGllbnRJUAEACkNsaWVudFZMQU4BAAVURVNQTQEACFRhc2tOYW1lAQAPUHJvY2Vzc0luc3RhbmNlAQAORmlyc3RPZmZlclRpbWUBAA5BY3RpdmVEdXJhdGlvbgEADFdhaXREdXJhdGlvbgEAEFdvcmtUaW1lRHVyYXRpb24BAAdEZXZpY2VzAQAKRGV2aWNlTmFtZQEAEkRldmljZVNlcmlhbE51bWJlcgEAEERldmljZVNlcmlhbElNRUkBABBEZXZpY2VNQUNBZGRyZXNzDAB2AGcBABhqYXZhL2lvL0ZpbGVPdXRwdXRTdHJlYW0MAR0BHgwBHwB5BwEgDAEhASIBAARkb25lBwEjDAEkAGsBAHRQcm9jZXNzZXMvRk9TQlBNSW50ZXJmYWNlL0FkYXB0ZXIvRk9TQlBNSW50ZXJmYWNlL1Byb2Nlc3Nlcy9FeHBvcnRHZW5lcmljUmVwb3J0cy9FeHBvcnRHZW5lcmljUmVwb3J0c1dyaXRlRXhjZWxTaGVldAEAEGphdmEvbGFuZy9PYmplY3QBACBvcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvRm9udAEAJ29yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZTaGVldAEAJW9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZSb3cBAChqYXZheC94bWwvcGFyc2Vycy9Eb2N1bWVudEJ1aWxkZXJGYWN0b3J5AQAhamF2YXgveG1sL3BhcnNlcnMvRG9jdW1lbnRCdWlsZGVyAQAUb3JnL3czYy9kb20vRG9jdW1lbnQBABRvcmcvdzNjL2RvbS9Ob2RlTGlzdAEAEGphdmEvbGFuZy9TdHJpbmcBABNqYXZhL2xhbmcvRXhjZXB0aW9uAQAPY3JlYXRlQ2VsbFN0eWxlAQAvKClMb3JnL2FwYWNoZS9wb2kveHNzZi91c2VybW9kZWwvWFNTRkNlbGxTdHlsZTsBAA9zZXRCb3JkZXJCb3R0b20BAAQoUylWAQANc2V0Qm9yZGVyTGVmdAEADnNldEJvcmRlclJpZ2h0AQAMc2V0Qm9yZGVyVG9wAQAKY3JlYXRlRm9udAEAKigpTG9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZGb250OwEAB3NldEZvbnQBACUoTG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9Gb250OylWAQAMc2V0QWxpZ25tZW50AQALY3JlYXRlU2hlZXQBAD0oTGphdmEvbGFuZy9TdHJpbmc7KUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGU2hlZXQ7AQAJY3JlYXRlUm93AQAqKEkpTG9yZy9hcGFjaGUvcG9pL3hzc2YvdXNlcm1vZGVsL1hTU0ZSb3c7AQAKY3JlYXRlQ2VsbAEAKyhJKUxvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGQ2VsbDsBACZvcmcvYXBhY2hlL3BvaS94c3NmL3VzZXJtb2RlbC9YU1NGQ2VsbAEADHNldENlbGxWYWx1ZQEAC25ld0luc3RhbmNlAQAsKClMamF2YXgveG1sL3BhcnNlcnMvRG9jdW1lbnRCdWlsZGVyRmFjdG9yeTsBABJuZXdEb2N1bWVudEJ1aWxkZXIBACUoKUxqYXZheC94bWwvcGFyc2Vycy9Eb2N1bWVudEJ1aWxkZXI7AQATKExqYXZhL2lvL1JlYWRlcjspVgEABXBhcnNlAQAxKExvcmcveG1sL3NheC9JbnB1dFNvdXJjZTspTG9yZy93M2MvZG9tL0RvY3VtZW50OwEAFGdldEVsZW1lbnRzQnlUYWdOYW1lAQAqKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL3czYy9kb20vTm9kZUxpc3Q7AQAJZ2V0TGVuZ3RoAQADKClJAQAEaXRlbQEAFShJKUxvcmcvdzNjL2RvbS9Ob2RlOwEAC2dldE5vZGVUeXBlAQADKClTAQAOZ2V0VGV4dENvbnRlbnQBAAV3cml0ZQEAGShMamF2YS9pby9PdXRwdXRTdHJlYW07KVYBAAVjbG9zZQEAEGphdmEvbGFuZy9TeXN0ZW0BAANvdXQBABVMamF2YS9pby9QcmludFN0cmVhbTsBABNqYXZhL2lvL1ByaW50U3RyZWFtAQAHcHJpbnRsbgAhAFwAXQAAAAcABABeAF8AAAAEAGAAXwAAAAQAYQBfAAAABABiAF8AAAAEAGMAXwAAAAQAZABfAAAABABlAF8AAAAQAAEAZgBnAAEAaAAAAB0AAQABAAAABSq0AAGwAAAAAQBpAAAABgABAAAAJAABAGoAawABAGgAAAAiAAIAAgAAAAYqK7UAAbEAAAABAGkAAAAKAAIAAAAnAAUAKAABAGwAZwABAGgAAAAdAAEAAQAAAAUqtAACsAAAAAEAaQAAAAYAAQAAACoAAQBtAGsAAQBoAAAAIgAC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</byteCode>
                 </class>
             </byteCode>
         </config>
@@ -1313,7 +1504,7 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         <pd:inputBindings>
             <ns3:CreateActivityInputClass>
                 <fileName>
-                    <xsl:value-of select="'D:/GenericReports.xlsx'"/>
+                    <xsl:value-of select="concat('D:\Reports\GenericReport',tib:timestamp(),'.xlsx')"/>
                 </fileName>
             </ns3:CreateActivityInputClass>
         </pd:inputBindings>
@@ -1350,14 +1541,14 @@ XSSFWorkbook workbook = new XSSFWorkbook();
                             <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
                                 <xsd:complexType>
                                     <xsd:sequence>
-                                        <xsd:element name="SiebelCircuitID" type="xsd:string"/>
-                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-                                        <xsd:element name="Status" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
                                     </xsd:sequence>
                                 </xsd:complexType>
                             </xsd:element>
@@ -1368,48 +1559,48 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each-group select="$fetchTaskDetails/jdbcGeneralActivityOutput/unknownResultset/row" group-by="column[name='SIEBELCIRCUITID']/value">
+                <xsl:for-each select="$fetchTaskDetails/jdbcGeneralActivityOutput/unknownResultset/row">
                     <root>
-                        <SiebelCircuitID>
-                            <xsl:value-of select="current-group()/column[name='SIEBELCIRCUITID']/value"/>
-                        </SiebelCircuitID>
-                        <xsl:if test="current-group()/column[name=&quot;TASKNAME&quot;]/value">
+                        <xsl:if test="not((column[name='SIEBELCIRCUITID']/value/@xsi:nil=(&quot;true&quot;)) or (column[name='SIEBELCIRCUITID']/value/@xsi:nil=(&quot;1&quot;)))">
+                            <SiebelCircuitID>
+                                <xsl:value-of select="column[name='SIEBELCIRCUITID']/value"/>
+                            </SiebelCircuitID>
+                        </xsl:if>
+                        <xsl:if test="column[name='TASKNAME']/value">
                             <TaskName>
-                                <xsl:value-of select="current-group()/column[name=&quot;TASKNAME&quot;]/value"/>
+                                <xsl:value-of select="column[name='TASKNAME']/value"/>
                             </TaskName>
                         </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;PROCESS_INSTANCE&quot;]/value">
-                            <ProcessInstance>
-                                <xsl:value-of select="current-group()/column[name=&quot;PROCESS_INSTANCE&quot;]/value"/>
-                            </ProcessInstance>
-                        </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;FIRST_OFFER_TIME&quot;]/value">
+                        <ProcessInstance>
+                            <xsl:value-of select="column[name='PROCESS_INSTANCE']/value"/>
+                        </ProcessInstance>
+                        <xsl:if test="column[name='FIRST_OFFER_TIME']/value">
                             <FirstOfferTime>
-                                <xsl:value-of select="current-group()/column[name=&quot;FIRST_OFFER_TIME&quot;]/value"/>
+                                <xsl:value-of select="column[name='FIRST_OFFER_TIME']/value"/>
                             </FirstOfferTime>
                         </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;ACTIVE_DUR&quot;]/value">
+                        <xsl:if test="column[name='ACTIVE_DUR']/value">
                             <ActiveDuration>
-                                <xsl:value-of select="current-group()/column[name=&quot;ACTIVE_DUR&quot;]/value"/>
+                                <xsl:value-of select="column[name='ACTIVE_DUR']/value"/>
                             </ActiveDuration>
                         </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;WAIT_DUR&quot;]/value">
+                        <xsl:if test="column[name='WAIT_DUR']/value">
                             <WaitDuration>
-                                <xsl:value-of select="current-group()/column[name=&quot;WAIT_DUR&quot;]/value"/>
+                                <xsl:value-of select="column[name='WAIT_DUR']/value"/>
                             </WaitDuration>
                         </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;WORK_TIME_DUR&quot;]/value">
+                        <xsl:if test="column[name='WORK_TIME_DUR']/value">
                             <WorkTimeDuration>
-                                <xsl:value-of select="current-group()/column[name=&quot;WORK_TIME_DUR&quot;]/value"/>
+                                <xsl:value-of select="column[name='WORK_TIME_DUR']/value"/>
                             </WorkTimeDuration>
                         </xsl:if>
-                        <xsl:if test="current-group()/column[name=&quot;STATUS&quot;]/value">
+                        <xsl:if test="column[name='STATUS']/value">
                             <Status>
-                                <xsl:value-of select="current-group()/column[name=&quot;STATUS&quot;]/value"/>
+                                <xsl:value-of select="column[name='STATUS']/value"/>
                             </Status>
                         </xsl:if>
                     </root>
-                </xsl:for-each-group>
+                </xsl:for-each>
             </root>
         </pd:inputBindings>
     </pd:activity>
@@ -1419,14 +1610,14 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         <pd:x>1988</pd:x>
         <pd:y>149</pd:y>
         <config>
-            <encoding>text</encoding>
+            <encoding>binary</encoding>
         </config>
         <pd:inputBindings>
-            <ns2:ReadActivityInputClass>
+            <ns3:ReadActivityInputClass>
                 <fileName>
                     <xsl:value-of select="$Create-File/ns3:CreateActivityOutputClass/fileInfo/fullName"/>
                 </fileName>
-            </ns2:ReadActivityInputClass>
+            </ns3:ReadActivityInputClass>
         </pd:inputBindings>
     </pd:activity>
     <pd:activity name="Catch">
@@ -1454,6 +1645,84 @@ XSSFWorkbook workbook = new XSSFWorkbook();
                     <xsl:value-of select="$Catch/exceptiondata/*"/>
                 </message>
             </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render-XML-1">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>1498</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <term>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </term>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$fetchTaskDetails/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <root>
+                        <SiebelCircuitID>
+                            <xsl:value-of select="column[name='SIEBELCIRCUITID']/value"/>
+                        </SiebelCircuitID>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <TaskName>
+                                <xsl:value-of select="column[name='TASKNAME']/value"/>
+                            </TaskName>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <ProcessInstance>
+                                <xsl:value-of select="column[name='PROCESS_INSTANCE']/value"/>
+                            </ProcessInstance>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <FirstOfferTime>
+                                <xsl:value-of select="column[name='FIRST_OFFER_TIME']/value"/>
+                            </FirstOfferTime>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <ActiveDuration>
+                                <xsl:value-of select="column[name='ACTIVE_DUR']/value"/>
+                            </ActiveDuration>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <WaitDuration>
+                                <xsl:value-of select="column[name='WAIT_DUR']/value"/>
+                            </WaitDuration>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <WorkTimeDuration>
+                                <xsl:value-of select="column[name='WORK_TIME_DUR']/value"/>
+                            </WorkTimeDuration>
+                        </xsl:if>
+                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                            <Status>
+                                <xsl:value-of select="column[name='STATUS']/value"/>
+                            </Status>
+                        </xsl:if>
+                    </root>
+                </xsl:for-each>
+            </root>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -1586,6 +1855,20 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         <pd:from>Group</pd:from>
         <pd:to>FindTechnicalInformation</pd:to>
         <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>fetchTaskDetails</pd:from>
+        <pd:to>Render-XML-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render-XML-1</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>

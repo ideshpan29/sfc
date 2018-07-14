@@ -43,8 +43,8 @@
             </xsd:complexType>
         </xsd:element>
     </pd:endType>
-    <pd:endX>2089</pd:endX>
-    <pd:endY>151</pd:endY>
+    <pd:endX>2537</pd:endX>
+    <pd:endY>133</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables>
         <InputFilter>
@@ -56,12 +56,15 @@
                 </xsd:complexType>
             </xsd:element>
         </InputFilter>
-        <SiebelIDString>
-            <xsd:element name="SiebelIDString" type="xsd:string"/>
-        </SiebelIDString>
         <SiebeliDSet>
             <xsd:element name="StringSet" type="xsd:string"/>
         </SiebeliDSet>
+        <TaskList>
+            <xsd:element name="TaskList" type="xsd:string"/>
+        </TaskList>
+        <SiebelIDString>
+            <xsd:element name="SiebelIDString" type="xsd:string"/>
+        </SiebelIDString>
     </pd:processVariables>
     <pd:targetNamespace>http://xmlns.example.com/1524292575464</pd:targetNamespace>
     <pd:activity name="SQL Direct">
@@ -97,9 +100,10 @@
             <xsl:variable name="ProjectManager" select="if($Start/root/ProjectManager!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE9 ='&quot;,$Start/root/ProjectManager,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
             <xsl:variable name="ProcessName" select="if(contains($Start/root/ProcessName,&quot;,&quot;))&#xA;then concat(&quot;and PROCESS_TEMPLATE in (&quot;,$Start/root/ProcessName,&quot;)&quot;)&#xA;else&#xA;concat(&quot;and PROCESS_TEMPLATE ='&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
             <xsl:variable name="TimeInterval" select="if($Start/root/StartDate!=&quot;&quot;)&#xA;then concat(&quot; and START_TIME between '&quot;,$Start/root/StartDate,&quot;' and '&quot;,$Start/root/EndDate,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
+            <xsl:variable name="SiebelCircuitID" select="if($Start/root/SiebelCircuitID!=&quot;&quot;)&#xA;then concat(&quot;and ATTRIBUTE2='&quot;,$Start/root/SiebelCircuitID,&quot;'&quot;)&#xA;else&#xA;&quot;&quot;"/>
             <root>
                 <FilterQuery>
-                    <xsl:value-of select="substring-after(concat($TimeInterval,$ProcessName,$ClientName,$ContractorMaster,$ProjectManager),&quot;and&quot;)"/>
+                    <xsl:value-of select="substring-after(concat($TimeInterval,$ProcessName,$ClientName,$ContractorMaster,$ProjectManager,$SiebelCircuitID),&quot;and&quot;)"/>
                 </FilterQuery>
             </root>
         </pd:inputBindings>
@@ -336,8 +340,8 @@
     <pd:activity name="Map Data">
         <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
         <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
-        <pd:x>1633</pd:x>
-        <pd:y>144</pd:y>
+        <pd:x>2097</pd:x>
+        <pd:y>153</pd:y>
         <config>
             <element>
                 <xsd:element name="root">
@@ -532,6 +536,11 @@
                                 <TaskName>
                                     <xsl:value-of select="TaskName"/>
                                 </TaskName>
+                            </xsl:if>
+                            <xsl:if test="$GetVariable/root/SLA[TaskName=$Map-Data-1/root/root/TaskName]/SLAValue">
+                                <SLA>
+                                    <xsl:value-of select="$GetVariable/root/SLA[TaskName=$Map-Data-1/root/root/TaskName]/SLAValue"/>
+                                </SLA>
                             </xsl:if>
                             <xsl:if test="ProcessInstance">
                                 <ProcessInstance>
@@ -735,8 +744,8 @@
     <pd:activity name="Write Excel Sheet">
         <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
         <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
-        <pd:x>1870</pd:x>
-        <pd:y>148</pd:y>
+        <pd:x>2338</pd:x>
+        <pd:y>150</pd:y>
         <config>
             <fileName>ExportGenericReportsWriteExcelSheet</fileName>
             <packageName>Processes.FOSBPMInterface.Adapter.FOSBPMInterface.Processes.ExportGenericReports</packageName>
@@ -1496,8 +1505,8 @@ XSSFWorkbook workbook = new XSSFWorkbook();
     <pd:activity name="Create File">
         <pd:type>com.tibco.plugin.file.FileCreateActivity</pd:type>
         <pd:resourceType>ae.activities.FileCreateActivity</pd:resourceType>
-        <pd:x>1746</pd:x>
-        <pd:y>147</pd:y>
+        <pd:x>2205</pd:x>
+        <pd:y>150</pd:y>
         <config>
             <overwrite>true</overwrite>
         </config>
@@ -1521,9 +1530,10 @@ XSSFWorkbook workbook = new XSSFWorkbook();
             <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
         </config>
         <pd:inputBindings>
+            <xsl:variable name="ProcessName" select="if(contains($Start/root/ProcessName,&quot;,&quot;))&#xA;then concat(&quot;and PROCESS_NAME in (&quot;,$Start/root/ProcessName,&quot;)&quot;)&#xA;else&#xA;concat(&quot;and PROCESS_NAME ='&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
             <jdbcGeneralActivityInput>
                 <statement>
-                    <xsl:value-of select="concat(&quot;select ATTRIBUTE2 as SIEBELCIRCUITID, PROCESS_INSTANCE, FIRST_OFFER_TIME, ACTIVE_DUR, WAIT_DUR, WORK_TIME_DUR, STATUS, ATTRIBUTE3, ATTRIBUTE8, ATTRIBUTE23 , ATTRIBUTE9 , ACTIVITY_NAME as TASKNAME from EC_WI_STATUS where attribute2 in  (&quot;,substring-after($SiebelIDString/SiebelIDString, &quot;,&quot;),&quot;)&quot;)"/>
+                    <xsl:value-of select="concat(&quot;select ATTRIBUTE2 as SIEBELCIRCUITID, PROCESS_INSTANCE, FIRST_OFFER_TIME, ACTIVE_DUR, WAIT_DUR, WORK_TIME_DUR, STATUS, ATTRIBUTE3, ATTRIBUTE8, ATTRIBUTE23 , ATTRIBUTE9 , ACTIVITY_NAME as TASKNAME from EC_WI_STATUS where attribute2 in  (&quot;,substring-after($SiebelIDString/SiebelIDString, &quot;,&quot;),&quot;) &quot;,$ProcessName)"/>
                 </statement>
             </jdbcGeneralActivityInput>
         </pd:inputBindings>
@@ -1607,8 +1617,8 @@ XSSFWorkbook workbook = new XSSFWorkbook();
     <pd:activity name="Read File">
         <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
         <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
-        <pd:x>1988</pd:x>
-        <pd:y>149</pd:y>
+        <pd:x>2448</pd:x>
+        <pd:y>154</pd:y>
         <config>
             <encoding>binary</encoding>
         </config>
@@ -1623,8 +1633,8 @@ XSSFWorkbook workbook = new XSSFWorkbook();
     <pd:activity name="Catch">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>2086</pd:x>
-        <pd:y>347</pd:y>
+        <pd:x>2534</pd:x>
+        <pd:y>329</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
@@ -1634,8 +1644,8 @@ XSSFWorkbook workbook = new XSSFWorkbook();
     <pd:activity name="Log-1">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>2087</pd:x>
-        <pd:y>252</pd:y>
+        <pd:x>2535</pd:x>
+        <pd:y>234</pd:y>
         <config>
             <role>User</role>
         </config>
@@ -1647,83 +1657,81 @@ XSSFWorkbook workbook = new XSSFWorkbook();
             </pfx2:ActivityInput>
         </pd:inputBindings>
     </pd:activity>
-    <pd:activity name="Render-XML-1">
-        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
-        <pd:x>1498</pd:x>
-        <pd:y>226</pd:y>
+    <pd:activity name="FetchTaskSLA">
+        <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
+        <pd:x>1799</pd:x>
+        <pd:y>145</pd:y>
         <config>
-            <renderAsText>text</renderAsText>
-            <validateInput>false</validateInput>
-            <term>
-                <xsd:element name="root">
-                    <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
-                                <xsd:complexType>
-                                    <xsd:sequence>
-                                        <xsd:element name="SiebelCircuitID" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="TaskName" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="ProcessInstance" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="FirstOfferTime" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="ActiveDuration" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="WaitDuration" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="WorkTimeDuration" type="xsd:string" minOccurs="0"/>
-                                        <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
-                                    </xsd:sequence>
-                                </xsd:complexType>
-                            </xsd:element>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                </xsd:element>
-            </term>
+            <timeout>%%SharedResources/Connections/JDBC/BPMDatabaseConnection/timeout%%</timeout>
+            <commit>false</commit>
+            <maxRows>%%SharedResources/Connections/JDBC/BPMDatabaseConnection/MaxRows%%</maxRows>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/BPMDBConnection.sharedjdbc</jdbcSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="ProcessName" select="if(contains($Start/root/ProcessName,&quot;,&quot;))&#xA;then concat(&quot;and PROCESSNAME in (&quot;,$Start/root/ProcessName,&quot;)&quot;)&#xA;else&#xA;concat(&quot;and PROCESSNAME ='&quot;,$Start/root/ProcessName,&quot;'&quot;)"/>
+            <jdbcGeneralActivityInput>
+                <xsl:choose>
+                    <xsl:when test="contains($ProcessName,'Deactivation') and contains($ProcessName,'Activation')">
+                        <statement>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,concat(substring-before(concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,concat(substring-before($ProcessName, 'Activation') ,'Provisioning' ,substring-after($ProcessName,'Activation'))), 'Deactivation') ,'Decomissioning' ,substring-after(concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,concat(substring-before($ProcessName, 'Activation') ,'Provisioning' ,substring-after($ProcessName,'Activation'))),'Deactivation')))"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="contains($ProcessName,'Deactivation')">
+                        <statement>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,concat(substring-before($ProcessName, 'Deactivation') ,'Decomissioning' ,substring-after($ProcessName,'Deactivation')) )"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:when test="contains($ProcessName,'Activation')">
+                        <statement>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,concat(substring-before($ProcessName, 'Activation') ,'Provisioning' ,substring-after($ProcessName,'Activation')) )"/>
+                        </statement>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <statement>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/BPM/GenericReporting/SLAFetchQuery,$ProcessName)"/>
+                        </statement>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </jdbcGeneralActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SetVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>1897</pd:x>
+        <pd:y>152</pd:y>
+        <config>
+            <variableConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SharedVariables/TaskSLA.sharedvariable</variableConfig>
         </config>
         <pd:inputBindings>
             <root>
-                <xsl:for-each select="$fetchTaskDetails/jdbcGeneralActivityOutput/unknownResultset/row">
-                    <root>
-                        <SiebelCircuitID>
-                            <xsl:value-of select="column[name='SIEBELCIRCUITID']/value"/>
-                        </SiebelCircuitID>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
+                <xsl:for-each select="$FetchTaskSLA/jdbcGeneralActivityOutput/unknownResultset/row">
+                    <SLA>
+                        <xsl:if test="not((column[name='SLA_DEADLINE']/value/@xsi:nil=(&quot;true&quot;)) or (column[name='SLA_DEADLINE']/value/@xsi:nil=(&quot;1&quot;)))">
+                            <SLAValue>
+                                <xsl:value-of select="column[name='SLA_DEADLINE']/value"/>
+                            </SLAValue>
+                        </xsl:if>
+                        <xsl:if test="not((column[name='TASKNAME']/value/@xsi:nil=(&quot;true&quot;)) or (column[name='TASKNAME']/value/@xsi:nil=(&quot;1&quot;)))">
                             <TaskName>
                                 <xsl:value-of select="column[name='TASKNAME']/value"/>
                             </TaskName>
                         </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <ProcessInstance>
-                                <xsl:value-of select="column[name='PROCESS_INSTANCE']/value"/>
-                            </ProcessInstance>
-                        </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <FirstOfferTime>
-                                <xsl:value-of select="column[name='FIRST_OFFER_TIME']/value"/>
-                            </FirstOfferTime>
-                        </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <ActiveDuration>
-                                <xsl:value-of select="column[name='ACTIVE_DUR']/value"/>
-                            </ActiveDuration>
-                        </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <WaitDuration>
-                                <xsl:value-of select="column[name='WAIT_DUR']/value"/>
-                            </WaitDuration>
-                        </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <WorkTimeDuration>
-                                <xsl:value-of select="column[name='WORK_TIME_DUR']/value"/>
-                            </WorkTimeDuration>
-                        </xsl:if>
-                        <xsl:if test="column[name='SIEBELCIRCUITID']/value">
-                            <Status>
-                                <xsl:value-of select="column[name='STATUS']/value"/>
-                            </Status>
-                        </xsl:if>
-                    </root>
+                    </SLA>
                 </xsl:for-each>
             </root>
         </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetVariable">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>1989</pd:x>
+        <pd:y>148</pd:y>
+        <config>
+            <variableConfig>/Processes/FOSBPMInterface/Adapter/FOSBPMInterface/Shared Resources/SharedVariables/TaskSLA.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
     </pd:activity>
     <pd:transition>
         <pd:from>Start</pd:from>
@@ -1817,13 +1825,6 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Map-Data-1</pd:from>
-        <pd:to>Map Data</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
         <pd:from>Read File</pd:from>
         <pd:to>End</pd:to>
         <pd:lineType>Default</pd:lineType>
@@ -1859,14 +1860,28 @@ XSSFWorkbook workbook = new XSSFWorkbook();
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>fetchTaskDetails</pd:from>
-        <pd:to>Render-XML-1</pd:to>
+        <pd:from>FetchTaskSLA</pd:from>
+        <pd:to>SetVariable</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
-        <pd:from>Render-XML-1</pd:from>
+        <pd:from>Map-Data-1</pd:from>
+        <pd:to>FetchTaskSLA</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>GetVariable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetVariable</pd:from>
         <pd:to>Map Data</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>

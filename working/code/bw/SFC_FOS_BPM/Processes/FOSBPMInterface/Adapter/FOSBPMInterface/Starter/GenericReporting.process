@@ -168,12 +168,10 @@
         </config>
         <pd:inputBindings>
             <ResponseActivityInput>
-                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports'">
-                    <xsl:if test="$exportGenericReports/root/FileContents">
-                        <binaryContent>
-                            <xsl:value-of select="$exportGenericReports/root/FileContents"/>
-                        </binaryContent>
-                    </xsl:if>
+                <xsl:if test="$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports' and $exportGenericReports/root/FileContents!=&quot;&quot;">
+                    <binaryContent>
+                        <xsl:value-of select="$exportGenericReports/root/FileContents"/>
+                    </binaryContent>
                 </xsl:if>
                 <xsl:choose>
                     <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/getCaseStatus'">
@@ -231,7 +229,7 @@
                     </xsl:when>
                 </xsl:choose>
                 <xsl:choose>
-                    <xsl:when test="$HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports'">
+                    <xsl:when test="($HTTP-Receiver/ProcessStarterOutput/Command='/exportGenericReports') and ($exportGenericReports/root/FileContents!='' )">
                         <Headers>
                             <Content-disposition>
                                 <xsl:value-of select="concat(&quot;attachment;filename=&quot;, $exportGenericReports/root/FileName)"/>
@@ -381,8 +379,8 @@
     <pd:activity name="FetchData">
         <pd:type>com.tibco.plugin.jdbc.JDBCGeneralActivity</pd:type>
         <pd:resourceType>ae.activities.JDBCGeneralActivity</pd:resourceType>
-        <pd:x>516</pd:x>
-        <pd:y>331</pd:y>
+        <pd:x>517</pd:x>
+        <pd:y>334</pd:y>
         <config>
             <timeout>%%BPM/ProcessAnalysis/JDBCTimeOut%%</timeout>
             <commit>false</commit>
